@@ -1,0 +1,26 @@
+<resources>
+
+    <string name="app_name">PixelKnot</string>
+    <string name="save">Save and Share!</string>
+    
+    <string name="choose_photo">Gallery</string>
+    <string name="take_photo">Camera</string>
+    <string name="start_over">Start Over</string>
+    
+    <string name="chars_left">characters left</string>
+    <string name="encryption_select">Encrypt message?  (Must have APG installed!)</string>
+    <string name="password_protect_select">Password Protect?</string>
+    <string name="password_protect_select_">Password Protected!</string>
+    
+    <string name="error_no_secret_message">Wait!\n\nYou haven\'t set a secret message yet\u2026</string>
+    <string name="error_no_cover_image">Wait!\n\nYou haven\'t set a cover image yet\u2026</string>
+    
+    <string name="result_title">Secret Message:</string>
+    <string name="result_save">Save as .txt</string>
+
+    <string name="password">Password</string>
+    <string name="set">Set</string>
+    <string name="ok">OK</string>
+    <string name="please_wait">Please wait\u2026</string>
+    <string name="embed_success">Share your secret image\u2026</string>
+</resources>

@@ -1,0 +1,7 @@
+<resources>
+
+    <style name="action_display">
+        <item name="android:background">#ffcccccc</item>
+    </style>
+
+</resources>

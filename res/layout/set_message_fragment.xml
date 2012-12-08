@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <EditText
+        android:id="@+id/secret_message_holder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/encryption_options_holder"
+        android:gravity="top|left"
+        android:layout_alignParentTop="true" />
+
+    <LinearLayout
+        android:id="@+id/encryption_options_holder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:id="@+id/secret_message_chars_left_holder"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingLeft="6dip"
+            android:paddingRight="6dip" >
+
+            <TextView
+                android:id="@+id/secret_message_chars_left"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dip"
+                android:text="@string/chars_left" />
+        </LinearLayout>
+
+        <CheckBox
+            android:id="@+id/encrypt_message_select"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/encryption_select" />
+
+        <CheckBox
+            android:id="@+id/password_protect_select"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/password_protect_select" />
+    </LinearLayout>
+
+</RelativeLayout>

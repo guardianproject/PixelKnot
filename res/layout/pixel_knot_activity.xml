@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/fragment_holder"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/action_display" />
+
+    <LinearLayout style="@style/action_display"
+        android:id="@+id/action_display"
+        android:layout_width="fill_parent"
+        android:layout_height="40dip"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:id="@+id/progress_holder"
+            android:layout_width="fill_parent"
+            android:layout_height="5dip"
+            android:orientation="horizontal" />
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="35dip"
+            android:orientation="horizontal">
+            <LinearLayout 
+                android:id="@+id/options_holder"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent" />
+
+            <Button
+                android:id="@+id/start_over"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_alignParentRight="true"
+                android:text="@string/start_over" />
+
+        </RelativeLayout>
+    </LinearLayout>
+
+</RelativeLayout>
