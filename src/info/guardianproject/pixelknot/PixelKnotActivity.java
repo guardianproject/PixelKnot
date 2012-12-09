@@ -23,6 +23,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -30,12 +31,17 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Vector;
 
+import javax.crypto.Cipher;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
@@ -50,11 +56,13 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Base64;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -73,10 +81,10 @@ public class PixelKnotActivity extends FragmentActivity implements Constants, Fr
 	private static final String LOG = Logger.UI;
 
 	private PixelKnot pixel_knot = new PixelKnot();
-	
+
 	private ProgressDialog progress_dialog;
 	Handler h = new Handler();
-	
+
 	boolean hasSeenFirstPage = false;
 	boolean hasSuccessfullyEmbed = false;
 	boolean hasSuccessfullyExtracted = false;
@@ -95,7 +103,7 @@ public class PixelKnotActivity extends FragmentActivity implements Constants, Fr
 		d_ = R.drawable.pixelknot_bullet_active;
 
 		setContentView(R.layout.pixel_knot_activity);
-		
+
 		start_over = (Button) findViewById(R.id.start_over);
 		start_over.setText(getString(R.string.start_over));
 		start_over.setOnClickListener(this);
@@ -104,7 +112,7 @@ public class PixelKnotActivity extends FragmentActivity implements Constants, Fr
 		progress_holder = (LinearLayout) findViewById(R.id.progress_holder);
 
 		List<Fragment> fragments = new Vector<Fragment>();
-		
+
 		if(getIntent().getData() == null) {
 			Fragment cover_image_fragment = Fragment.instantiate(this, CoverImageFragment.class.getName());
 			Fragment set_message_fragment = Fragment.instantiate(this, SetMessageFragment.class.getName());
@@ -118,9 +126,9 @@ public class PixelKnotActivity extends FragmentActivity implements Constants, Fr
 			Bundle args = new Bundle();
 			args.putString(Keys.COVER_IMAGE_NAME, IO.pullPathFromUri(this, getIntent().getData()));
 			stego_image_fragment.setArguments(args);
-			
+
 			Fragment decrypt_image_fragment = Fragment.instantiate(this, DecryptImageFragment.class.getName());
-			
+
 			fragments.add(0, stego_image_fragment);
 			fragments.add(1, decrypt_image_fragment);
 		}
@@ -141,24 +149,24 @@ public class PixelKnotActivity extends FragmentActivity implements Constants, Fr
 		}
 
 	}
-	
+
 	private void restart() {
 		h.post(new Runnable() {
 			@Override
 			public void run() {
 				getIntent().setData(null);
-				
+
 				Intent intent = getIntent();
 				intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_ANIMATION);
 				overridePendingTransition(0, 0);
 				finish();
-				
+
 				overridePendingTransition(0, 0);
 				startActivity(intent);
 			}
 		});
 	}
-	
+
 	@Override
 	public void share() {
 		Intent intent = new Intent();
@@ -171,9 +179,8 @@ public class PixelKnotActivity extends FragmentActivity implements Constants, Fr
 	public class PixelKnot extends JSONObject {
 		String cover_image_name = null;
 		String secret_message = null;
-		
+
 		String password = null;
-		byte[] iv = null;
 
 		boolean can_save = false;
 		boolean has_encryption = false;
@@ -181,7 +188,7 @@ public class PixelKnotActivity extends FragmentActivity implements Constants, Fr
 		int capacity = 0;
 		Embed embed = null;
 		File out_file = null;
-		
+
 		Apg apg = null;
 
 		public PixelKnot() {
@@ -225,7 +232,7 @@ public class PixelKnotActivity extends FragmentActivity implements Constants, Fr
 					if(has(Keys.SECRET_MESSAGE))
 						remove(Keys.SECRET_MESSAGE);
 				}
-				
+
 			} catch(JSONException e) {}
 
 			can_save = checkIfReadyToSave();
@@ -234,42 +241,41 @@ public class PixelKnotActivity extends FragmentActivity implements Constants, Fr
 		public void setPassword(String password) {
 			this.password = password;
 			this.has_encryption = false;
-			
+
 			try {
 				put(Keys.PASSWORD, password);
 				if(has(Keys.HAS_ENCRYPTION))
 					remove(Keys.HAS_ENCRYPTION);
 			} catch(JSONException e) {}
 		}
-		
-		public boolean getEncryption() {
-			return has_encryption;
-		}
-		
+
 		public boolean getPassword() {
 			if(has(Keys.PASSWORD))
 				return true;
-			
+
 			return false;
 		}
-		
+
 		public void setEncryption(boolean has_encryption, Apg apg) {
 			this.has_encryption = has_encryption;
 			if(has_encryption) {
 				this.password = null;
 				this.apg = apg;
-			
+
 				try {
 					put(Keys.HAS_ENCRYPTION, true);
-					if(has(Keys.PASSWORD)) {
+					if(has(Keys.PASSWORD))
 						remove(Keys.PASSWORD);
-						iv = null;
-					}
+
 				} catch(JSONException e) {}
 			} else {
 				if(has(Keys.HAS_ENCRYPTION))
 					remove(Keys.HAS_ENCRYPTION);
 			}
+		}
+
+		public boolean getEncryption() {
+			return has_encryption;
 		}
 
 		public void setCapacity(int capacity) {
@@ -283,7 +289,6 @@ public class PixelKnotActivity extends FragmentActivity implements Constants, Fr
 			cover_image_name = null;
 			secret_message = null;
 			password = null;
-			iv = null;
 			can_save = false;
 			has_encryption = false;
 			capacity = 0;
@@ -295,7 +300,7 @@ public class PixelKnotActivity extends FragmentActivity implements Constants, Fr
 			List<String> keys_ = new ArrayList<String>();
 			while(keys.hasNext()) 
 				keys_.add(keys.next());
-			
+
 			for(String key : keys_)
 				remove(key);
 
@@ -307,15 +312,15 @@ public class PixelKnotActivity extends FragmentActivity implements Constants, Fr
 		public void save() {
 			if(hasSuccessfullyEmbed)
 				return;
-			
+
 			if(pixel_knot.getPassword() || !hasSuccessfullyPasswordProtected) {
 				new Thread(new Runnable() {
 					@Override
 					public void run() {
 						try {
-							Entry<byte[], String> pack = Aes.EncryptWithPassword(pixel_knot.getString(Keys.PASSWORD), secret_message).entrySet().iterator().next();
-							iv = pack.getKey();
-							secret_message = PASSWORD_SINTENEL.concat(pack.getValue());
+							Entry<String, String> pack = Aes.EncryptWithPassword(pixel_knot.getString(Keys.PASSWORD), secret_message).entrySet().iterator().next();
+
+							secret_message = PASSWORD_SENTINEL.concat(new String(pack.getKey())).concat(pack.getValue());
 							hasSuccessfullyPasswordProtected = true;
 							h.post(new Runnable() {
 								@Override
@@ -330,14 +335,12 @@ public class PixelKnotActivity extends FragmentActivity implements Constants, Fr
 					}
 				}).start();
 				progress_dialog = ProgressDialog.show(PixelKnotActivity.this, "", PixelKnotActivity.this.getString(R.string.please_wait));
-				return;
 			}
-			
+
 			if(pixel_knot.getEncryption() && !hasSuccessfullyEncrypted) {
 				apg.encrypt(PixelKnotActivity.this, pixel_knot.secret_message);
-				return;
 			}
-			
+
 			if((!pixel_knot.has_encryption && !pixel_knot.getPassword()) || (hasSuccessfullyEncrypted || hasSuccessfullyPasswordProtected)) {
 				new Thread(new Runnable() {
 					@Override
@@ -346,13 +349,13 @@ public class PixelKnotActivity extends FragmentActivity implements Constants, Fr
 					}
 				}).start();
 			}
-			
+
 		}
-		
+
 		private String downsampleImage() {
 			Bitmap b = BitmapFactory.decodeFile(cover_image_name);
 			int scale = 3;
-						
+
 			BitmapFactory.Options opts = new BitmapFactory.Options();
 			opts.inSampleSize = scale;
 			b.recycle();
@@ -364,7 +367,7 @@ public class PixelKnotActivity extends FragmentActivity implements Constants, Fr
 				b_.compress(CompressFormat.JPEG, 80, fos);
 				fos.flush();
 				fos.close();
-				
+
 				b_.recycle();
 				return downsampled_image.getAbsolutePath();
 			} catch (FileNotFoundException e) {
@@ -374,11 +377,11 @@ public class PixelKnotActivity extends FragmentActivity implements Constants, Fr
 				Log.e(Logger.UI, e.toString());
 				e.printStackTrace();
 			}
-			
+
 			return null;
 		}
-		
-		public void decrypt() {
+
+		public void extract() {
 			new Thread(new Runnable() {
 				@Override
 				public void run() {
@@ -393,7 +396,43 @@ public class PixelKnotActivity extends FragmentActivity implements Constants, Fr
 			try {
 				put(Keys.OUT_FILE_NAME, out_file.getAbsolutePath());
 			} catch(JSONException e) {}
-			
+
+		}
+
+		public int checkForProtection(String sm) {
+			if(sm.contains(PGP_SENTINEL) && sm.indexOf(PGP_SENTINEL) == 0)
+				return Apg.DECRYPT_MESSAGE;
+			else if(sm.contains(PASSWORD_SENTINEL) && sm.indexOf(PASSWORD_SENTINEL) == 0)
+				return Cipher.DECRYPT_MODE;
+
+			return Activity.RESULT_OK;
+		}
+
+		public void unlock(String password, String message_string) {
+			message_string = message_string.substring(PASSWORD_SENTINEL.length());
+			Log.d(Logger.UI, message_string);
+
+			byte[] message = Base64.decode(message_string.split("\n")[1], Base64.DEFAULT);
+			byte[] iv =  Base64.decode(message_string.split("\n")[0], Base64.DEFAULT);
+
+			String sm = Aes.DecryptWithPassword(password, iv, message);
+			if(sm != null)
+				pixel_knot.setSecretMessage(sm);
+			else
+				pixel_knot.setSecretMessage(new String(message));
+
+			hasSuccessfullyExtracted = true;
+			h.post(new Runnable() {
+				@Override
+				public void run() {
+					try {
+						progress_dialog.dismiss();
+					} catch(NullPointerException e) {}
+					
+					((ActivityListener) pk_pager.getItem(view_pager.getCurrentItem())).updateUi();
+				}
+			});
+
 		}
 	}
 
@@ -471,18 +510,58 @@ public class PixelKnotActivity extends FragmentActivity implements Constants, Fr
 		h.post(new Runnable() {
 			@Override
 			public void run() {
-				try {
-					progress_dialog.dismiss();
-				} catch(NullPointerException e) {}
-				
-				pixel_knot.setSecretMessage(new String(baos.toByteArray()));
-				hasSuccessfullyExtracted = true;
-				
-				((ActivityListener) pk_pager.getItem(view_pager.getCurrentItem())).updateUi();
+				final String sm = new String(baos.toByteArray());
+
+				switch(pixel_knot.checkForProtection(sm)) {
+				case(Apg.DECRYPT_MESSAGE):
+					pixel_knot.setEncryption(true, Apg.getInstance());
+					pixel_knot.apg.decrypt(PixelKnotActivity.this, sm);
+					break;
+				case(Cipher.DECRYPT_MODE):
+					final EditText password_holder = new EditText(PixelKnotActivity.this);
+					password_holder.setHint(getString(R.string.password));
+
+					Builder builder = new AlertDialog.Builder(PixelKnotActivity.this);
+					builder.setView(password_holder);
+					builder.setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
+
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							if(password_holder.getText().length() > 0) {
+								new Thread(new Runnable() {
+									@Override
+									public void run() {
+										pixel_knot.unlock(password_holder.getText().toString(), sm);
+									}
+								}).start();								
+							}
+						}
+					});
+					builder.setOnCancelListener(new DialogInterface.OnCancelListener() {
+						@Override
+						public void onCancel(DialogInterface dialog) {
+							pixel_knot.setSecretMessage(sm);
+						}
+					});
+	
+					builder.show();
+					break;
+				case(Activity.RESULT_OK):
+					pixel_knot.setSecretMessage(sm);
+					try {
+						progress_dialog.dismiss();
+					} catch(NullPointerException e) {}
+
+					hasSuccessfullyExtracted = true;
+					((ActivityListener) pk_pager.getItem(view_pager.getCurrentItem())).updateUi();
+					break;
+				}
+
+
 			}
 		});
 	}
-	
+
 	@Override
 	public void onEmbedded(final File out_file) {
 		h.post(new Runnable() {
@@ -491,15 +570,15 @@ public class PixelKnotActivity extends FragmentActivity implements Constants, Fr
 				try {
 					progress_dialog.dismiss();
 				} catch(NullPointerException e) {}
-				
+
 				hasSuccessfullyEmbed = true;
 				pixel_knot.setOutFile(out_file);
-				
+
 				((ActivityListener) pk_pager.getItem(view_pager.getCurrentItem())).updateUi();
 				share();
 			}
 		});
-		
+
 	}
 
 	@Override
@@ -508,14 +587,14 @@ public class PixelKnotActivity extends FragmentActivity implements Constants, Fr
 			pixel_knot.clear();
 			restart();
 		}
-		
+
 	}
 
 	@Override
 	public void setEncryption(Apg apg) {
 		pixel_knot.setEncryption(true, apg);
 	}
-	
+
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
@@ -525,12 +604,26 @@ public class PixelKnotActivity extends FragmentActivity implements Constants, Fr
 				pixel_knot.apg.onActivityResult(this, requestCode, resultCode, data);
 				pixel_knot.setSecretMessage(pixel_knot.apg.getEncryptedData());
 				setHasSuccessfullyEncrypted(true);
-				pixel_knot.save();
+				
+				try {
+					progress_dialog.dismiss();
+				} catch(NullPointerException e) {}
+				((ActivityListener) pk_pager.getItem(view_pager.getCurrentItem())).updateUi();
+				break;
+			case Apg.DECRYPT_MESSAGE:
+				pixel_knot.apg.onActivityResult(this, requestCode, resultCode, data);
+				pixel_knot.setSecretMessage(pixel_knot.apg.getDecryptedData());
+				setHasSuccessfullyExtracted(true);
+				
+				try {
+					progress_dialog.dismiss();
+				} catch(NullPointerException e) {}
+				((ActivityListener) pk_pager.getItem(view_pager.getCurrentItem())).updateUi();
 				break;
 			}
 		}
 	}
-	
+
 	@Override
 	public boolean getHasSeenFirstPage() {
 		return hasSeenFirstPage;
@@ -549,7 +642,7 @@ public class PixelKnotActivity extends FragmentActivity implements Constants, Fr
 	@Override
 	public void setHasSuccessfullyEmbed(boolean hasSuccessfullyEmbed) {
 		this.hasSuccessfullyEmbed = hasSuccessfullyEmbed;
-		
+
 	}
 
 	@Override
@@ -561,11 +654,11 @@ public class PixelKnotActivity extends FragmentActivity implements Constants, Fr
 	public void setHasSuccessfullyExtracted(boolean hasSuccessfullyExtracted) {
 		this.hasSuccessfullyExtracted = hasSuccessfullyExtracted;
 	}
-	
+
 	@Override
 	public void setHasSuccessfullyEncrypted(boolean hasSuccessfullyEncrypted) {
 		this.hasSuccessfullyEncrypted = hasSuccessfullyEncrypted; 
-		
+
 	}
 
 	@Override

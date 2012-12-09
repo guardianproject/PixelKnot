@@ -56,7 +56,7 @@ public class ShareFragment extends Fragment implements Constants, ActivityListen
 			return;
 		}
 		
-		error_title.setVisibility(View.GONE);
+		error_title.setVisibility(View.INVISIBLE);
 		((FragmentListener) a).getPixelKnot().save();
 	}
 
