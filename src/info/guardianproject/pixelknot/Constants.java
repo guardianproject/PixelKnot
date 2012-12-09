@@ -25,6 +25,7 @@ public interface Constants {
 			public static final String CAN_SAVE = "can_save";
 			public static final String HAS_ENCRYPTION = "has_encryption";
 			public static final String CAPACITY = "capacity";
+			public static final String OUT_FILE_NAME = "out_file_name";
 		}
 	}
 }

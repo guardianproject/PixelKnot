@@ -8,19 +8,25 @@
     <string name="start_over">Start Over</string>
     
     <string name="chars_left">characters left</string>
-    <string name="encryption_select">Encrypt message?  (Must have APG installed!)</string>
-    <string name="password_protect_select">Password Protect?</string>
-    <string name="password_protect_select_">Password Protected!</string>
+    <string name="encryption_select">Encrypt</string>
+    <string name="password_protect_select">Password</string>
     
-    <string name="error_no_secret_message">Wait!\n\nYou haven\'t set a secret message yet\u2026</string>
-    <string name="error_no_cover_image">Wait!\n\nYou haven\'t set a cover image yet\u2026</string>
+    <string name="wait">Wait!</string>
+    <string name="error_no_secret_message">You haven\'t set a secret message yet\u2026</string>
+    <string name="error_no_cover_image">You haven\'t set a cover image yet\u2026</string>
     
     <string name="result_title">Secret Message:</string>
     <string name="result_save">Save as .txt</string>
+    <string name="share_again">Share Again</string>
 
     <string name="password">Password</string>
     <string name="set">Set</string>
     <string name="ok">OK</string>
     <string name="please_wait">Please wait\u2026</string>
     <string name="embed_success">Share your secret image\u2026</string>
+    
+    <string name="e">E</string>
+    <string name="p">P</string>
+    <string name="e_">E*</string>
+    <string name="p_">P*</string>
 </resources>

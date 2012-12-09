@@ -46,7 +46,6 @@ public class CoverImageFragment extends Fragment implements Constants, MediaScan
 		root_view = li.inflate(R.layout.cover_image_fragment, container, false);
 
 		cover_image_holder = (ImageView) root_view.findViewById(R.id.cover_image_holder);
-		initButtons();
 		return root_view;
 	}
 
@@ -54,6 +53,11 @@ public class CoverImageFragment extends Fragment implements Constants, MediaScan
 	public void onAttach(Activity a) {
 		super.onAttach(a);
 		this.a = a;
+		
+		if(!((FragmentListener) a).getHasSeenFirstPage()) {
+			initButtons();
+			((FragmentListener) a).setHasSeenFirstPage(true);
+		}
 	}
 
 	public void setImageData(String path_to_cover_image) {

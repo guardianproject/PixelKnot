@@ -27,14 +27,13 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class SetMessageFragment extends Fragment implements Constants, OnClickListener, ActivityListener {
+public class SetMessageFragment extends Fragment implements Constants, ActivityListener {
 	Activity a;
 	View root_view;
 	Handler h = new Handler();
 	
 	EditText secret_message_holder;
-	CheckBox encrypt_message_select, password_protect_select;
-	TextView secret_message_chars_left;
+	TextView secret_message_chars_left, encrypt_message_select, password_protect_select;
 	
 	int capacity, charsLeft;
 	
@@ -75,11 +74,11 @@ public class SetMessageFragment extends Fragment implements Constants, OnClickLi
 		
 		secret_message_chars_left = (TextView) root_view.findViewById(R.id.secret_message_chars_left);		
 		
-		encrypt_message_select = (CheckBox) root_view.findViewById(R.id.encrypt_message_select);
-		encrypt_message_select.setOnClickListener(this);
+		encrypt_message_select = (TextView) root_view.findViewById(R.id.encrypt_message_select);
+		encrypt_message_select.setText(getString(R.string.e));
 		
-		password_protect_select = (CheckBox) root_view.findViewById(R.id.password_protect_select);
-		password_protect_select.setOnClickListener(this);
+		password_protect_select = (TextView) root_view.findViewById(R.id.password_protect_select);
+		password_protect_select.setText(getString(R.string.p));
 		
 		updateCapacity();
 		return root_view;
@@ -102,9 +101,23 @@ public class SetMessageFragment extends Fragment implements Constants, OnClickLi
 		secret_message_chars_left.setText(String.valueOf(capacity));
 	}
 	
+	private void setEncryption() {
+		encrypt_message_select.setText(getString(R.string.e_));
+		password_protect_select.setText(getString(R.string.p));
+		((FragmentListener) a).getPixelKnot().setEncryption();
+	}
+	
 	private void setPassword() {
 		final EditText password_holder = new EditText(a);
-		password_holder.setHint(getString(R.string.password));
+		try {
+			if(((FragmentListener) a).getPixelKnot().has(Keys.PASSWORD))
+				password_holder.setText(((FragmentListener) a).getPixelKnot().getString(Keys.PASSWORD));
+			else
+				password_holder.setHint(getString(R.string.password));
+			
+		} catch (JSONException e) {
+			password_holder.setHint(getString(R.string.password));
+		}
 		
 		Builder ad = new AlertDialog.Builder(a);
 		ad.setView(password_holder);
@@ -113,10 +126,11 @@ public class SetMessageFragment extends Fragment implements Constants, OnClickLi
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				if(password_holder.getText().length() > 0) {
-					password_protect_select.setText(getString(R.string.password_protect_select_));
+					password_protect_select.setText(getString(R.string.p_));
+					encrypt_message_select.setText(getText(R.string.e));
 					((FragmentListener) a).getPixelKnot().setPassword(password_holder.getText().toString());
 				} else
-					password_protect_select.setChecked(false);
+					password_protect_select.setText(getString(R.string.p));
 				
 			}
 		});
@@ -126,45 +140,28 @@ public class SetMessageFragment extends Fragment implements Constants, OnClickLi
 	
 	@Override
 	public void initButtons() {
-		Button save = new Button(a);
-		save.setOnClickListener(new OnClickListener() {
+		Button encrypt_message = new Button(a);
+		encrypt_message.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				if(secret_message_holder.getText().length() == 0) {
-					Toast.makeText(a, getString(R.string.error_no_secret_message), Toast.LENGTH_LONG).show();
-					return;
-				}
-				
-				((FragmentListener) a).getPixelKnot().setSecretMessage(secret_message_holder.getText().toString());
-				
-				if(!((FragmentListener) a).getPixelKnot().has(Keys.COVER_IMAGE_NAME)) {
-					Toast.makeText(a, getString(R.string.error_no_cover_image), Toast.LENGTH_LONG).show();
-					return;
-				}
-				
-				((FragmentListener) a).getPixelKnot().save();
+				setEncryption();
 			}
 			
 		});
-		save.setText(getString(R.string.save));
+		encrypt_message.setText(getString(R.string.encryption_select));
 		
-		Button[] options = new Button[] {save};
-		((FragmentListener) a).setButtonOptions(options);
-	}
-
-	@Override
-	public void onClick(View v) {
-		if(v == password_protect_select) {
-			if(!password_protect_select.isChecked()) {
-				((FragmentListener) a).getPixelKnot().setPassword(null);
-				password_protect_select.setText(getString(R.string.password_protect_select));
-			} else
+		Button password_protect = new Button(a);
+		password_protect.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
 				setPassword();
-		} else if(v == encrypt_message_select) {
-			
-		}
+			}
+		});
+		password_protect.setText(getString(R.string.password_protect_select));
 		
+		Button[] options = new Button[] {encrypt_message, password_protect};
+		((FragmentListener) a).setButtonOptions(options);
 	}
 
 	@Override
@@ -174,10 +171,9 @@ public class SetMessageFragment extends Fragment implements Constants, OnClickLi
 			if(secret_message == null) {
 				secret_message_holder.setText("");
 				
-				encrypt_message_select.setChecked(false);
+				encrypt_message_select.setText(getString(R.string.e));
 				
-				password_protect_select.setChecked(false);
-				password_protect_select.setText(getString(R.string.password_protect_select));
+				password_protect_select.setText(getString(R.string.p));
 				
 				capacity = 0;
 				updateCapacity();

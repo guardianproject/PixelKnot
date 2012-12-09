@@ -20,7 +20,6 @@ public class PixelKnotMediaScanner implements MediaScannerConnectionClient {
 		msl = ((MediaScannerListener) a);
 		msc = new MediaScannerConnection(a, this);
 		msc.connect();
-		
 	}
 	
 	@Override
@@ -31,6 +30,7 @@ public class PixelKnotMediaScanner implements MediaScannerConnectionClient {
 	@Override
 	public void onScanCompleted(String path, Uri uri) {
 		msl.onMediaScanned(path, uri);
+		msc.disconnect();
 	}
 
 }
