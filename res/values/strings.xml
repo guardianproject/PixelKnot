@@ -29,4 +29,20 @@
     <string name="p">P</string>
     <string name="e_">E*</string>
     <string name="p_">P*</string>
+    
+    <!-- APG related -->
+    <string name="apg_error_activity_not_found">No suitable application for this action found.</string>
+    <string name="apg_error_apg_version_not_supported">The installed APG version is not supported.</string>
+    <string name="apg_btn_crypto_sign">Sign</string>
+    <string name="apg_btn_encrypt">Encrypt</string>
+    <string name="apg_btn_decrypt">Decrypt</string>
+    <string name="apg_btn_verify">Verify</string>
+    <string name="apg_btn_select">Select</string>
+    <string name="unknown_crypto_signature_user_id">&lt;unknown&gt;</string>
+    <string name="key_id">id: %s</string>
+    <string name="insufficient_apg_permissions">This app doesn\'t have permission to access APG fully, please reinstall the app to fix that.</string>
+    <string name="pgp_mime_unsupported">PGP/MIME messages are not supported yet.</string>
+    <string name="attachment_encryption_unsupported">Warning: attachments are NOT signed or encrypted yet.</string>
+    <string name="send_aborted">Send aborted.</string>
+    
 </resources>

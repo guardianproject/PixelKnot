@@ -3,14 +3,17 @@ package info.guardianproject.pixelknot.screens;
 import org.json.JSONException;
 
 import info.guardianproject.pixelknot.Constants;
+import info.guardianproject.pixelknot.PixelKnotActivity;
 import info.guardianproject.pixelknot.R;
 import info.guardianproject.pixelknot.Constants.PixelKnot.Keys;
+import info.guardianproject.pixelknot.crypto.Apg;
 import info.guardianproject.pixelknot.utils.ActivityListener;
 import info.guardianproject.pixelknot.utils.FragmentListener;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -35,7 +38,11 @@ public class SetMessageFragment extends Fragment implements Constants, ActivityL
 	EditText secret_message_holder;
 	TextView secret_message_chars_left, encrypt_message_select, password_protect_select;
 	
-	int capacity, charsLeft;
+	int capacity = 0;
+	
+	Apg apg = null;
+	long secret_key = 0L;
+	long[] encryption_ids = null;
 	
 	InputFilter monitor_stego_space = new InputFilter() {
 
@@ -56,7 +63,7 @@ public class SetMessageFragment extends Fragment implements Constants, ActivityL
 						}
 					}
 					*/
-					secret_message_chars_left.setText(String.valueOf(charsLeft - bytes.length));
+					secret_message_chars_left.setText(String.valueOf(capacity - bytes.length));
 					((FragmentListener) a).getPixelKnot().setSecretMessage(sm);
 				}
 			});
@@ -92,19 +99,29 @@ public class SetMessageFragment extends Fragment implements Constants, ActivityL
 		capacity = 0;
 		try {
 			capacity = ((FragmentListener) a).getPixelKnot().getInt(Keys.CAPACITY);
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
+		} catch (JSONException e) {}
 	}
 	
 	private void updateCapacity() {
 		secret_message_chars_left.setText(String.valueOf(capacity));
 	}
 	
+	private void setEncryptionIds() {
+		apg.selectEncryptionKeys(this, a, null);
+	}
+	
+	private void setSecretKey() {
+		apg = Apg.getInstance();
+		if(!apg.isAvailable(a.getApplicationContext()))
+			Toast.makeText(a, getString(R.string.apg_error_activity_not_found), Toast.LENGTH_LONG).show();
+		else
+			apg.selectSecretKey(this);
+	}
+	
 	private void setEncryption() {
 		encrypt_message_select.setText(getString(R.string.e_));
 		password_protect_select.setText(getString(R.string.p));
-		((FragmentListener) a).getPixelKnot().setEncryption();
+		((FragmentListener) a).setEncryption(apg);
 	}
 	
 	private void setPassword() {
@@ -139,13 +156,37 @@ public class SetMessageFragment extends Fragment implements Constants, ActivityL
 	}
 	
 	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		Log.d(Logger.UI, "result code: " + resultCode);
+		if(resultCode == Activity.RESULT_OK) {
+			switch(requestCode) {
+			case Apg.SELECT_SECRET_KEY:
+				apg.onActivityResult(a, requestCode, resultCode, data);
+				secret_key = apg.getSignatureKeyId();
+				setEncryptionIds();
+				
+				break;
+			case Apg.SELECT_PUBLIC_KEYS:
+				apg.onActivityResult(a, requestCode, resultCode, data);
+				encryption_ids = apg.getEncryptionKeys();
+				
+				setEncryption();
+				break;
+			case Apg.ENCRYPT_MESSAGE:
+				apg.onActivityResult(a, requestCode, resultCode, data);
+				break;
+			}
+		}
+	}
+	
+	@Override
 	public void initButtons() {
 		Button encrypt_message = new Button(a);
 		encrypt_message.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				setEncryption();
+				setSecretKey();
 			}
 			
 		});
@@ -171,17 +212,23 @@ public class SetMessageFragment extends Fragment implements Constants, ActivityL
 			if(secret_message == null) {
 				secret_message_holder.setText("");
 				
-				encrypt_message_select.setText(getString(R.string.e));
+				String e = getString(R.string.e);
+				String p = getString(R.string.p);
 				
-				password_protect_select.setText(getString(R.string.p));
+				if(((PixelKnotActivity.PixelKnot) ((FragmentListener) a).getPixelKnot()).getEncryption())
+					e = getString(R.string.e_);
+				else if (((PixelKnotActivity.PixelKnot) ((FragmentListener) a).getPixelKnot()).getPassword()) {
+					p = getString(R.string.p_);
+				}
 				
-				capacity = 0;
+				encrypt_message_select.setText(e);
+				password_protect_select.setText(p);
+				
 				updateCapacity();
 			}
 		} catch (JSONException e) {
 			Log.e(Logger.UI, e.toString());
 			e.printStackTrace();
 		}
-		
 	}
 }

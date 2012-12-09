@@ -157,6 +157,8 @@ public class CoverImageFragment extends Fragment implements Constants, MediaScan
 			cover_image_file = null;
 			cover_image_uri = null;
 			cover_image_holder.setImageResource(R.drawable.pixelknot_blank_image);
+		} else {
+			setImageData();
 		}
 
 	}

@@ -3,6 +3,9 @@ package info.guardianproject.pixelknot;
 import android.os.Environment;
 
 public interface Constants {
+	public final static String PASSWORD_SINTENEL = "----* PK v 1.0 REQUIRES PASSWORD ----*";
+	public final static byte[] PASSWORD_SALT = "afik".getBytes();
+	
 	public static class Logger {
 		public final static String UI = "***************** PixelKnot **************";
 	}

@@ -3,45 +3,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-
-    <EditText
-        android:id="@+id/secret_message_holder"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/secret_message_chars_left_holder"
-        android:layout_alignParentTop="true"
-        android:gravity="top|left" />
-
-    <LinearLayout
-        android:id="@+id/encryption_options_holder"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:padding="6dip"
-        android:layout_marginRight="10dip"
-        android:layout_alignParentTop="true"
-        android:orientation="horizontal" >
-
-        <TextView
-            android:id="@+id/encrypt_message_select"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="16dip"
-            android:text="@string/e" />
-
-        <TextView
-            android:id="@+id/password_protect_select"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/p" />
-    </LinearLayout>
-
+    
     <LinearLayout
         android:id="@+id/secret_message_chars_left_holder"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:orientation="horizontal"
+        android:layout_alignParentTop="true"
         android:paddingLeft="6dip"
         android:paddingRight="6dip" >
 
@@ -57,4 +25,35 @@
             android:text="@string/chars_left" />
     </LinearLayout>
 
+    <EditText
+        android:id="@+id/secret_message_holder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/secret_message_chars_left_holder"
+        android:gravity="top|left" />
+
+    <LinearLayout
+        android:id="@+id/encryption_options_holder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/secret_message_holder"
+        android:padding="6dip"
+        android:layout_marginRight="10dip"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/encrypt_message_select"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="16dip"
+            android:text="@string/e" />
+
+        <TextView
+            android:id="@+id/password_protect_select"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/p" />
+    </LinearLayout>
 </RelativeLayout>

@@ -4,7 +4,10 @@ import info.guardianproject.f5android.Embed;
 import info.guardianproject.f5android.Embed.EmbedListener;
 import info.guardianproject.f5android.Extract;
 import info.guardianproject.f5android.Extract.ExtractionListener;
+import info.guardianproject.pixelknot.Constants.Logger;
 import info.guardianproject.pixelknot.Constants.PixelKnot.Keys;
+import info.guardianproject.pixelknot.crypto.Aes;
+import info.guardianproject.pixelknot.crypto.Apg;
 import info.guardianproject.pixelknot.screens.CoverImageFragment;
 import info.guardianproject.pixelknot.screens.DecryptImageFragment;
 import info.guardianproject.pixelknot.screens.SetMessageFragment;
@@ -23,11 +26,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Vector;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -42,6 +48,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
@@ -50,6 +57,7 @@ import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 public class PixelKnotActivity extends FragmentActivity implements Constants, FragmentListener, ViewPager.OnPageChangeListener, View.OnClickListener, MediaScannerListener, EmbedListener, ExtractionListener {
 	private PKPager pk_pager;
@@ -72,6 +80,9 @@ public class PixelKnotActivity extends FragmentActivity implements Constants, Fr
 	boolean hasSeenFirstPage = false;
 	boolean hasSuccessfullyEmbed = false;
 	boolean hasSuccessfullyExtracted = false;
+	boolean hasSuccessfullyEncrypted = false;
+	boolean hasSuccessfullyDecrypted = false;
+	boolean hasSuccessfullyPasswordProtected = false;
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -160,7 +171,9 @@ public class PixelKnotActivity extends FragmentActivity implements Constants, Fr
 	public class PixelKnot extends JSONObject {
 		String cover_image_name = null;
 		String secret_message = null;
+		
 		String password = null;
+		byte[] iv = null;
 
 		boolean can_save = false;
 		boolean has_encryption = false;
@@ -168,6 +181,8 @@ public class PixelKnotActivity extends FragmentActivity implements Constants, Fr
 		int capacity = 0;
 		Embed embed = null;
 		File out_file = null;
+		
+		Apg apg = null;
 
 		public PixelKnot() {
 			try {
@@ -227,15 +242,34 @@ public class PixelKnotActivity extends FragmentActivity implements Constants, Fr
 			} catch(JSONException e) {}
 		}
 		
-		public void setEncryption() {
-			this.has_encryption = true;
-			this.password = null;
+		public boolean getEncryption() {
+			return has_encryption;
+		}
+		
+		public boolean getPassword() {
+			if(has(Keys.PASSWORD))
+				return true;
 			
-			try {
-				put(Keys.HAS_ENCRYPTION, "enc_me");
-				if(has(Keys.PASSWORD))
-					remove(Keys.PASSWORD);
-			} catch(JSONException e) {}
+			return false;
+		}
+		
+		public void setEncryption(boolean has_encryption, Apg apg) {
+			this.has_encryption = has_encryption;
+			if(has_encryption) {
+				this.password = null;
+				this.apg = apg;
+			
+				try {
+					put(Keys.HAS_ENCRYPTION, true);
+					if(has(Keys.PASSWORD)) {
+						remove(Keys.PASSWORD);
+						iv = null;
+					}
+				} catch(JSONException e) {}
+			} else {
+				if(has(Keys.HAS_ENCRYPTION))
+					remove(Keys.HAS_ENCRYPTION);
+			}
 		}
 
 		public void setCapacity(int capacity) {
@@ -249,10 +283,12 @@ public class PixelKnotActivity extends FragmentActivity implements Constants, Fr
 			cover_image_name = null;
 			secret_message = null;
 			password = null;
+			iv = null;
 			can_save = false;
 			has_encryption = false;
 			capacity = 0;
 			out_file = null;
+			apg = null;
 
 			@SuppressWarnings("unchecked")
 			Iterator<String> keys = keys();
@@ -266,20 +302,50 @@ public class PixelKnotActivity extends FragmentActivity implements Constants, Fr
 			try {
 				put(Keys.CAPACITY, capacity);
 			} catch (JSONException e) {}
-
-			
-			Log.d(LOG, "now clear:\n" + toString());
-
 		}
 
 		public void save() {
-			new Thread(new Runnable() {
-				@Override
-				public void run() {
-					Embed embed = new Embed(PixelKnotActivity.this, dump.getName(), downsampleImage(), secret_message);
-				}
-			}).start();
-			progress_dialog = ProgressDialog.show(PixelKnotActivity.this, "", PixelKnotActivity.this.getString(R.string.please_wait));
+			if(hasSuccessfullyEmbed)
+				return;
+			
+			if(pixel_knot.getPassword() || !hasSuccessfullyPasswordProtected) {
+				new Thread(new Runnable() {
+					@Override
+					public void run() {
+						try {
+							Entry<byte[], String> pack = Aes.EncryptWithPassword(pixel_knot.getString(Keys.PASSWORD), secret_message).entrySet().iterator().next();
+							iv = pack.getKey();
+							secret_message = PASSWORD_SINTENEL.concat(pack.getValue());
+							hasSuccessfullyPasswordProtected = true;
+							h.post(new Runnable() {
+								@Override
+								public void run() {
+									try {
+										progress_dialog.dismiss();
+									} catch(NullPointerException e) {}
+									save();
+								}
+							});
+						} catch (JSONException e) {}
+					}
+				}).start();
+				progress_dialog = ProgressDialog.show(PixelKnotActivity.this, "", PixelKnotActivity.this.getString(R.string.please_wait));
+				return;
+			}
+			
+			if(pixel_knot.getEncryption() && !hasSuccessfullyEncrypted) {
+				apg.encrypt(PixelKnotActivity.this, pixel_knot.secret_message);
+				return;
+			}
+			
+			if((!pixel_knot.has_encryption && !pixel_knot.getPassword()) || (hasSuccessfullyEncrypted || hasSuccessfullyPasswordProtected)) {
+				new Thread(new Runnable() {
+					@Override
+					public void run() {
+						Embed embed = new Embed(PixelKnotActivity.this, dump.getName(), downsampleImage(), secret_message);
+					}
+				}).start();
+			}
 			
 		}
 		
@@ -293,7 +359,7 @@ public class PixelKnotActivity extends FragmentActivity implements Constants, Fr
 
 			Bitmap b_ = BitmapFactory.decodeFile(cover_image_name, opts);
 			try {
-				File downsampled_image = new File(dump, cover_image_name.substring(cover_image_name.lastIndexOf("/")).replace(".jpg", "_downsampled.jpg"));
+				File downsampled_image = new File(dump, System.currentTimeMillis() + "_PixelKnot.jpg");
 				FileOutputStream fos = new FileOutputStream(downsampled_image);
 				b_.compress(CompressFormat.JPEG, 80, fos);
 				fos.flush();
@@ -416,7 +482,7 @@ public class PixelKnotActivity extends FragmentActivity implements Constants, Fr
 			}
 		});
 	}
-
+	
 	@Override
 	public void onEmbedded(final File out_file) {
 		h.post(new Runnable() {
@@ -446,6 +512,26 @@ public class PixelKnotActivity extends FragmentActivity implements Constants, Fr
 	}
 
 	@Override
+	public void setEncryption(Apg apg) {
+		pixel_knot.setEncryption(true, apg);
+	}
+	
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		if(resultCode == Activity.RESULT_OK) {
+			switch(requestCode) {
+			case Apg.ENCRYPT_MESSAGE:
+				pixel_knot.apg.onActivityResult(this, requestCode, resultCode, data);
+				pixel_knot.setSecretMessage(pixel_knot.apg.getEncryptedData());
+				setHasSuccessfullyEncrypted(true);
+				pixel_knot.save();
+				break;
+			}
+		}
+	}
+	
+	@Override
 	public boolean getHasSeenFirstPage() {
 		return hasSeenFirstPage;
 	}
@@ -474,5 +560,36 @@ public class PixelKnotActivity extends FragmentActivity implements Constants, Fr
 	@Override
 	public void setHasSuccessfullyExtracted(boolean hasSuccessfullyExtracted) {
 		this.hasSuccessfullyExtracted = hasSuccessfullyExtracted;
+	}
+	
+	@Override
+	public void setHasSuccessfullyEncrypted(boolean hasSuccessfullyEncrypted) {
+		this.hasSuccessfullyEncrypted = hasSuccessfullyEncrypted; 
+		
+	}
+
+	@Override
+	public boolean getHasSuccessfullyEncrypted() {
+		return hasSuccessfullyEncrypted;
+	}
+
+	@Override
+	public boolean getHasSuccessfullyDecrypted() {
+		return hasSuccessfullyDecrypted;
+	}
+
+	@Override
+	public void setHasSuccessfullyDecrypted(boolean hasSuccessfullyDecrypted) {
+		this.hasSuccessfullyDecrypted = hasSuccessfullyDecrypted;
+	}
+
+	@Override
+	public boolean setHasSuccessfullyPasswordProtected() {
+		return hasSuccessfullyPasswordProtected;
+	}
+
+	@Override
+	public void setHasSuccessfullyPasswordProtected(boolean hasSuccessfullyPasswordProtected) {
+		this.hasSuccessfullyPasswordProtected = hasSuccessfullyPasswordProtected;
 	}
 }
