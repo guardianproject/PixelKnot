@@ -10,6 +10,8 @@
     <string name="chars_left">characters left</string>
     <string name="encryption_select">Encrypt</string>
     <string name="password_protect_select">Password</string>
+    <string name="encryption_select_">Encrypt*</string>
+    <string name="password_protect_select_">Password*</string>
     
     <string name="wait">Wait!</string>
     <string name="error_no_secret_message">You haven\'t set a secret message yet\u2026</string>
@@ -19,7 +21,6 @@
     <string name="share_again">Share</string>
     <string name="share_with_selected_apps">Share with these trusted apps:</string>
 
-    <string name="secret_code">Secret Code</string>
     <string name="password">Password</string>
     <string name="set">Set</string>
     <string name="ok">OK</string>

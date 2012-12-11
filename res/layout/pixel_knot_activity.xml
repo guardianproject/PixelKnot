@@ -2,12 +2,19 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/activity_root"
     android:orientation="vertical" >
+    <LinearLayout style="@style/action_display"
+            android:id="@+id/action_display_"
+            android:layout_width="fill_parent"
+            android:layout_height="35dip"
+            android:orientation="horizontal" />
 
     <android.support.v4.view.ViewPager
         android:id="@+id/fragment_holder"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/action_display_"
         android:layout_above="@+id/action_display" />
 
     <LinearLayout

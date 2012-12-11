@@ -34,7 +34,7 @@ public class Image implements Constants {
 		activities.put("com.dropbox.android", ActivityNames.DROPBOX);
 		activities.put("com.bumptech.bumpga", ActivityNames.BUMP);
 		activities.put("com.google.android.apps.docs", ActivityNames.DRIVE);
-		activities.put("GOOGLE_PLUS", ActivityNames.GOOGLE_PLUS);
+		activities.put("com.google.android.apps.plus", ActivityNames.GOOGLE_PLUS);
 		activities.put("com.instagram.android", ActivityNames.INSTAGRAM);
 		activities.put("com.tumblr", ActivityNames.TUMBLR);
 		activities.put("org.wordpress.android", ActivityNames.WORDPRESS);

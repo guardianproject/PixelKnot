@@ -42,10 +42,12 @@ import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.ResultReceiver;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -53,27 +55,33 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Base64;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnFocusChangeListener;
+import android.view.View.OnKeyListener;
+import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.view.WindowManager;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-public class PixelKnotActivity extends FragmentActivity implements Constants, FragmentListener, ViewPager.OnPageChangeListener, View.OnClickListener, MediaScannerListener, EmbedListener, ExtractionListener {
+public class PixelKnotActivity extends FragmentActivity implements Constants, FragmentListener, ViewPager.OnPageChangeListener, View.OnClickListener, OnGlobalLayoutListener, MediaScannerListener, EmbedListener, ExtractionListener {
 	private PKPager pk_pager;
 	private ViewPager view_pager;
-	Button start_over;
-
+	
 	File dump;
-	int d, d_;
+	int d, d_, last_diff;
 
-	private LinearLayout options_holder;
+	private View activity_root;
+	private LinearLayout options_holder, action_display, action_display_;
 	private LinearLayout progress_holder;
+	Button start_over;
 
 	private static final String LOG = Logger.UI;
 
@@ -81,6 +89,7 @@ public class PixelKnotActivity extends FragmentActivity implements Constants, Fr
 
 	private ProgressDialog progress_dialog;
 	Handler h = new Handler();
+	InputMethodManager imm;
 
 	boolean hasSeenFirstPage = false;
 	boolean hasSuccessfullyEmbed = false;
@@ -101,9 +110,15 @@ public class PixelKnotActivity extends FragmentActivity implements Constants, Fr
 		d = R.drawable.pixelknot_bullet_inactive;
 		d_ = R.drawable.pixelknot_bullet_active;
 
-		setContentView(R.layout.pixel_knot_activity);		
+		setContentView(R.layout.pixel_knot_activity);
+
+		imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
 
 		options_holder = (LinearLayout) findViewById(R.id.options_holder);
+
+		action_display = (LinearLayout) findViewById(R.id.action_display);
+		action_display_ = (LinearLayout) findViewById(R.id.action_display_);
+
 		progress_holder = (LinearLayout) findViewById(R.id.progress_holder);
 
 		List<Fragment> fragments = new Vector<Fragment>();
@@ -141,7 +156,11 @@ public class PixelKnotActivity extends FragmentActivity implements Constants, Fr
 			progress_view.setLayoutParams(lp);
 			progress_view.setBackgroundResource(p == 0 ? d_ : d);
 			progress_holder.addView(progress_view);
-		}		
+		}
+
+		last_diff = 0;
+		activity_root = findViewById(R.id.activity_root);
+		activity_root.getViewTreeObserver().addOnGlobalLayoutListener(this);
 	}
 
 	private void restart() {
@@ -170,6 +189,27 @@ public class PixelKnotActivity extends FragmentActivity implements Constants, Fr
 		startActivity(Intent.createChooser(intent, getString(R.string.embed_success)));
 	}
 
+	private void rearrangeForKeyboard(boolean state) {
+		try {
+			action_display_.removeView(options_holder);
+			action_display.removeView(options_holder);
+		} catch(NullPointerException e) {
+			Log.e(Logger.UI, "this view hasn't been set there yet");
+		}
+
+		if(state) {
+			action_display.setVisibility(View.GONE);
+
+			action_display_.setVisibility(View.VISIBLE);
+			action_display_.addView(options_holder, action_display_.getChildCount());
+		} else {
+			action_display_.setVisibility(View.GONE);
+
+			action_display.setVisibility(View.VISIBLE);
+			action_display.addView(options_holder, action_display.getChildCount());
+		}
+	}
+
 	public class TrustedShareActivity {
 		public String app_name, package_name;
 		public Drawable icon;
@@ -189,9 +229,9 @@ public class PixelKnotActivity extends FragmentActivity implements Constants, Fr
 
 		public void setIntent() {
 			intent = new Intent(Intent.ACTION_SEND)
-				.setType("image/jpeg")
-				.setPackage(package_name)
-				.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(pixel_knot.out_file));
+			.setType("image/jpeg")
+			.setPackage(package_name)
+			.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(pixel_knot.out_file));
 
 			view.setOnClickListener(new OnClickListener() {
 
@@ -479,8 +519,20 @@ public class PixelKnotActivity extends FragmentActivity implements Constants, Fr
 			options_holder.addView(o);
 		}
 
+		rearrangeForKeyboard(false);
 	}
 
+	@Override
+	public void updateButtonProminence(final int which, final String new_text) {
+		h.postDelayed(new Runnable() {
+			@Override
+			public void run() {
+				((Button) options_holder.getChildAt(which)).setText(new_text);
+			}
+		}, 1);
+		
+	}
+	
 	@Override
 	public void onPageScrollStateChanged(int arg0) {}
 
@@ -499,23 +551,27 @@ public class PixelKnotActivity extends FragmentActivity implements Constants, Fr
 		((ActivityListener) f).initButtons();
 		((ActivityListener) f).updateUi();
 	}
+	
 
 	@Override
 	public PixelKnot getPixelKnot() {
 		return pixel_knot;
 	}
+	
 
 	@Override
 	public void clearPixelKnot() {
 		pixel_knot.clear();
 		restart();
 	}
+	
 
 	@Override
 	public void onMediaScanned(String path, Uri uri) {
 		pixel_knot.setCoverImageName(path);
 		((CoverImageFragment) pk_pager.fragments.get(0)).setImageData();
 	}
+	
 
 	@Override
 	public void onExtractionResult(final ByteArrayOutputStream baos) {
@@ -573,6 +629,7 @@ public class PixelKnotActivity extends FragmentActivity implements Constants, Fr
 			}
 		});
 	}
+	
 
 	@Override
 	public void onEmbedded(final File out_file) {
@@ -585,6 +642,7 @@ public class PixelKnotActivity extends FragmentActivity implements Constants, Fr
 
 				hasSuccessfullyEmbed = true;
 				pixel_knot.setOutFile(out_file);
+				((Button) options_holder.getChildAt(0)).setEnabled(true);
 				try {
 					progress_dialog.dismiss();
 				} catch(NullPointerException e) {}
@@ -594,6 +652,7 @@ public class PixelKnotActivity extends FragmentActivity implements Constants, Fr
 		});
 
 	}
+	
 
 	@Override
 	public void onClick(View v) {
@@ -604,6 +663,22 @@ public class PixelKnotActivity extends FragmentActivity implements Constants, Fr
 
 	}
 
+	@Override
+	public void onGlobalLayout() {
+		Rect r = new Rect();
+		activity_root.getWindowVisibleDisplayFrame(r);
+		
+		int height_diff = activity_root.getRootView().getHeight() - (r.bottom - r.top);
+		if(height_diff != last_diff) {
+			if (height_diff > 100)
+				rearrangeForKeyboard(true);
+			else
+				rearrangeForKeyboard(false);
+		}
+		
+		last_diff = height_diff;
+	}
+	
 	@Override
 	public void setEncryption(Apg apg) {
 		pixel_knot.setEncryption(true, apg);
@@ -647,7 +722,7 @@ public class PixelKnotActivity extends FragmentActivity implements Constants, Fr
 					try {
 						ApplicationInfo ai = pm.getApplicationInfo(ri.activityInfo.packageName, 0);					
 						TrustedShareActivity tsa = new TrustedShareActivity(Image.Activities.get(ri.activityInfo.packageName), ri.activityInfo.packageName);
-						
+
 						tsa.setIcon(pm.getApplicationIcon(ai));
 						tsa.createView();
 						tsa.setIntent();
@@ -727,4 +802,5 @@ public class PixelKnotActivity extends FragmentActivity implements Constants, Fr
 	public void setHasSuccessfullyPasswordProtected(boolean hasSuccessfullyPasswordProtected) {
 		this.hasSuccessfullyPasswordProtected = hasSuccessfullyPasswordProtected;
 	}
+
 }

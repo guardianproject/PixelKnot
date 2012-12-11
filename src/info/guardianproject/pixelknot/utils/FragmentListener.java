@@ -6,6 +6,7 @@ import info.guardianproject.pixelknot.PixelKnotActivity.PixelKnot;
 import info.guardianproject.pixelknot.PixelKnotActivity.TrustedShareActivity;
 import info.guardianproject.pixelknot.crypto.Apg;
 import android.widget.Button;
+import android.widget.EditText;
 
 public interface FragmentListener {
 	public void setButtonOptions(Button[] options);
@@ -26,4 +27,5 @@ public interface FragmentListener {
 	public void share();
 	public List<TrustedShareActivity> getTrustedShareActivities();
 	public void setEncryption(Apg apg);
+	public void updateButtonProminence(int which, String new_text);
 }

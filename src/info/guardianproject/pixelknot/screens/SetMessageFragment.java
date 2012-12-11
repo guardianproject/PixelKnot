@@ -77,7 +77,7 @@ public class SetMessageFragment extends Fragment implements Constants, ActivityL
 		
 		secret_message_holder = (EditText) root_view.findViewById(R.id.secret_message_holder);
 		secret_message_holder.setFilters(new InputFilter[] {monitor_stego_space});
-		
+
 		secret_message_chars_left = (TextView) root_view.findViewById(R.id.secret_message_chars_left);		
 		
 		encrypt_message_select = (TextView) root_view.findViewById(R.id.encrypt_message_select);
@@ -99,12 +99,36 @@ public class SetMessageFragment extends Fragment implements Constants, ActivityL
 		try {
 			capacity = ((FragmentListener) a).getPixelKnot().getInt(Keys.CAPACITY);
 		} catch (JSONException e) {}
+		
+		
 	}
 	
 	private void updateCapacity() {
 		secret_message_chars_left.setText(String.valueOf(capacity));
 	}
 	
+	public void updateButtonProminence() {		
+		String e = getString(R.string.e);
+		String p = getString(R.string.p);
+		
+		String encrypt_message_text = getString(R.string.encryption_select);
+		String password_protect_text = getString(R.string.password_protect_select);
+		
+		if(((PixelKnotActivity.PixelKnot) ((FragmentListener) a).getPixelKnot()).getEncryption()) {
+			e = getString(R.string.e_);
+			encrypt_message_text = getString(R.string.encryption_select_);
+		} else if (((PixelKnotActivity.PixelKnot) ((FragmentListener) a).getPixelKnot()).getPassword()) {
+			p = getString(R.string.p_);
+			password_protect_text = getString(R.string.password_protect_select_);
+		}
+		
+		encrypt_message_select.setText(e);
+		((FragmentListener) a).updateButtonProminence(0, encrypt_message_text);
+		
+		password_protect_select.setText(p);
+		((FragmentListener) a).updateButtonProminence(1, password_protect_text);
+	}
+
 	private void setEncryptionIds() {
 		apg.selectEncryptionKeys(this, a, null);
 	}
@@ -118,9 +142,8 @@ public class SetMessageFragment extends Fragment implements Constants, ActivityL
 	}
 	
 	private void setEncryption() {
-		encrypt_message_select.setText(getString(R.string.e_));
-		password_protect_select.setText(getString(R.string.p));
 		((FragmentListener) a).setEncryption(apg);
+		updateButtonProminence();
 	}
 	
 	private void setPassword() {
@@ -142,12 +165,9 @@ public class SetMessageFragment extends Fragment implements Constants, ActivityL
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				if(password_holder.getText().length() > 0) {
-					password_protect_select.setText(getString(R.string.p_));
-					encrypt_message_select.setText(getText(R.string.e));
 					((FragmentListener) a).getPixelKnot().setPassword(password_holder.getText().toString());
-				} else
-					password_protect_select.setText(getString(R.string.p));
-				
+					updateButtonProminence();
+				}
 			}
 		});
 		
@@ -203,31 +223,17 @@ public class SetMessageFragment extends Fragment implements Constants, ActivityL
 		Button[] options = new Button[] {encrypt_message, password_protect};
 		((FragmentListener) a).setButtonOptions(options);
 	}
-
+	
 	@Override
 	public void updateUi() {
 		try {
 			String secret_message = ((FragmentListener) a).getPixelKnot().has(Keys.SECRET_MESSAGE) ? ((FragmentListener) a).getPixelKnot().getString(Keys.SECRET_MESSAGE) : null;
 			if(secret_message == null) {
 				secret_message_holder.setText("");
-				
-				String e = getString(R.string.e);
-				String p = getString(R.string.p);
-				
-				if(((PixelKnotActivity.PixelKnot) ((FragmentListener) a).getPixelKnot()).getEncryption())
-					e = getString(R.string.e_);
-				else if (((PixelKnotActivity.PixelKnot) ((FragmentListener) a).getPixelKnot()).getPassword()) {
-					p = getString(R.string.p_);
-				}
-				
-				encrypt_message_select.setText(e);
-				password_protect_select.setText(p);
-				
 				updateCapacity();
 			}
-		} catch (JSONException e) {
-			Log.e(Logger.UI, e.toString());
-			e.printStackTrace();
-		}
+			
+			updateButtonProminence();
+		} catch (JSONException e) {}
 	}
 }

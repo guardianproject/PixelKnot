@@ -10,6 +10,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -64,13 +65,13 @@ public class ShareFragment extends Fragment implements Constants, ActivityListen
 
 	@Override
 	public void updateUi() {
+		content_holder.removeAllViews();
 		
 		if(!((FragmentListener) a).getHasSuccessfullyEmbed()) {
 			title.setText(getString(R.string.wait));
 			embed();
 		} else {
 			title.setText(getString(R.string.share_with_selected_apps));
-			content_holder.removeAllViews();
 			content_holder.addView(LayoutInflater.from(a).inflate(R.layout.share_options, null));
 			
 			TableLayout share_options_holder = (TableLayout) content_holder.findViewById(R.id.share_options_holder);
@@ -99,6 +100,13 @@ public class ShareFragment extends Fragment implements Constants, ActivityListen
 	public void initButtons() {
 		Button share = new Button(a);
 		share.setText(getString(R.string.share_again));
+		Log.d(Logger.UI, "is successfully embed? " + ((FragmentListener) a).getHasSuccessfullyEmbed());
+		
+		if(((FragmentListener) a).getHasSuccessfullyEmbed())
+			share.setEnabled(true);
+		else
+			share.setEnabled(false);
+		
 		share.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
