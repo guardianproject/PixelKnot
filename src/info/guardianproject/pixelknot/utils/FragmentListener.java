@@ -1,6 +1,9 @@
 package info.guardianproject.pixelknot.utils;
 
+import java.util.List;
+
 import info.guardianproject.pixelknot.PixelKnotActivity.PixelKnot;
+import info.guardianproject.pixelknot.PixelKnotActivity.TrustedShareActivity;
 import info.guardianproject.pixelknot.crypto.Apg;
 import android.widget.Button;
 
@@ -21,5 +24,6 @@ public interface FragmentListener {
 	public boolean setHasSuccessfullyPasswordProtected();
 	public void setHasSuccessfullyPasswordProtected(boolean hasSuccessfullyPasswordProtected);
 	public void share();
+	public List<TrustedShareActivity> getTrustedShareActivities();
 	public void setEncryption(Apg apg);
 }

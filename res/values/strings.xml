@@ -16,8 +16,8 @@
     <string name="error_no_cover_image">You haven\'t set a cover image yet\u2026</string>
     
     <string name="result_title">Secret Message:</string>
-    <string name="result_save">Save as .txt</string>
-    <string name="share_again">Share Again</string>
+    <string name="share_again">Share</string>
+    <string name="share_with_selected_apps">Share with these trusted apps:</string>
 
     <string name="secret_code">Secret Code</string>
     <string name="password">Password</string>

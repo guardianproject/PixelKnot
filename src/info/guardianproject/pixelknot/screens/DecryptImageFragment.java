@@ -14,7 +14,9 @@ import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 
 public class DecryptImageFragment extends Fragment implements Constants, ActivityListener {
@@ -56,5 +58,18 @@ public class DecryptImageFragment extends Fragment implements Constants, Activit
 	}
 
 	@Override
-	public void initButtons() {}
+	public void initButtons() {
+		Button start_over = new Button(a);
+		start_over.setText(getString(R.string.start_over));
+		start_over.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				((FragmentListener) a).clearPixelKnot();
+			}
+		});
+		
+		Button[] options = new Button[] {start_over};
+		((FragmentListener) a).setButtonOptions(options);
+	}
 }

@@ -4,7 +4,6 @@ import info.guardianproject.f5android.Embed;
 import info.guardianproject.f5android.Embed.EmbedListener;
 import info.guardianproject.f5android.Extract;
 import info.guardianproject.f5android.Extract.ExtractionListener;
-import info.guardianproject.pixelknot.Constants.Logger;
 import info.guardianproject.pixelknot.Constants.PixelKnot.Keys;
 import info.guardianproject.pixelknot.crypto.Aes;
 import info.guardianproject.pixelknot.crypto.Apg;
@@ -16,18 +15,15 @@ import info.guardianproject.pixelknot.screens.StegoImageFragment;
 import info.guardianproject.pixelknot.utils.ActivityListener;
 import info.guardianproject.pixelknot.utils.FragmentListener;
 import info.guardianproject.pixelknot.utils.IO;
+import info.guardianproject.pixelknot.utils.Image;
 import info.guardianproject.pixelknot.utils.PixelKnotMediaScanner.MediaScannerListener;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Vector;
 
@@ -43,9 +39,10 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.Bitmap.CompressFormat;
-import android.graphics.BitmapFactory;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -65,7 +62,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Toast;
+import android.widget.TextView;
 
 public class PixelKnotActivity extends FragmentActivity implements Constants, FragmentListener, ViewPager.OnPageChangeListener, View.OnClickListener, MediaScannerListener, EmbedListener, ExtractionListener {
 	private PKPager pk_pager;
@@ -92,6 +89,8 @@ public class PixelKnotActivity extends FragmentActivity implements Constants, Fr
 	boolean hasSuccessfullyDecrypted = false;
 	boolean hasSuccessfullyPasswordProtected = false;
 
+	private List<TrustedShareActivity> trusted_share_activities;
+
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
@@ -102,11 +101,7 @@ public class PixelKnotActivity extends FragmentActivity implements Constants, Fr
 		d = R.drawable.pixelknot_bullet_inactive;
 		d_ = R.drawable.pixelknot_bullet_active;
 
-		setContentView(R.layout.pixel_knot_activity);
-
-		start_over = (Button) findViewById(R.id.start_over);
-		start_over.setText(getString(R.string.start_over));
-		start_over.setOnClickListener(this);
+		setContentView(R.layout.pixel_knot_activity);		
 
 		options_holder = (LinearLayout) findViewById(R.id.options_holder);
 		progress_holder = (LinearLayout) findViewById(R.id.progress_holder);
@@ -146,8 +141,7 @@ public class PixelKnotActivity extends FragmentActivity implements Constants, Fr
 			progress_view.setLayoutParams(lp);
 			progress_view.setBackgroundResource(p == 0 ? d_ : d);
 			progress_holder.addView(progress_view);
-		}
-
+		}		
 	}
 
 	private void restart() {
@@ -174,6 +168,50 @@ public class PixelKnotActivity extends FragmentActivity implements Constants, Fr
 		intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(pixel_knot.out_file));
 		intent.setType("image/jpeg");
 		startActivity(Intent.createChooser(intent, getString(R.string.embed_success)));
+	}
+
+	public class TrustedShareActivity {
+		public String app_name, package_name;
+		public Drawable icon;
+		public Intent intent;
+		public View view;
+
+		public TrustedShareActivity() {}
+
+		public TrustedShareActivity(String app_name, String package_name) {
+			this.app_name = app_name;
+			this.package_name = package_name;			
+		}
+
+		public void setIcon(Drawable icon) {
+			this.icon = icon;
+		}
+
+		public void setIntent() {
+			intent = new Intent(Intent.ACTION_SEND)
+				.setType("image/jpeg")
+				.setPackage(package_name)
+				.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(pixel_knot.out_file));
+
+			view.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					PixelKnotActivity.this.startActivity(intent);
+				}
+
+			});
+		}
+
+		public void createView() {
+			view = LayoutInflater.from(PixelKnotActivity.this).inflate(R.layout.trusted_share_activity_view, null);
+
+			TextView app_name_holder = (TextView) view.findViewById(R.id.tsa_title);
+			app_name_holder.setText(app_name);
+
+			ImageView icon_holder = (ImageView) view.findViewById(R.id.tsa_icon);
+			icon_holder.setImageDrawable(icon);
+		}
 	}
 
 	public class PixelKnot extends JSONObject {
@@ -345,46 +383,19 @@ public class PixelKnotActivity extends FragmentActivity implements Constants, Fr
 				new Thread(new Runnable() {
 					@Override
 					public void run() {
-						Embed embed = new Embed(PixelKnotActivity.this, dump.getName(), downsampleImage(), secret_message);
+						@SuppressWarnings("unused")
+						Embed embed = new Embed(PixelKnotActivity.this, dump.getName(), Image.downsampleImage(pixel_knot.cover_image_name, dump), secret_message);
 					}
 				}).start();
 			}
 
 		}
 
-		private String downsampleImage() {
-			Bitmap b = BitmapFactory.decodeFile(cover_image_name);
-			int scale = 3;
-
-			BitmapFactory.Options opts = new BitmapFactory.Options();
-			opts.inSampleSize = scale;
-			b.recycle();
-
-			Bitmap b_ = BitmapFactory.decodeFile(cover_image_name, opts);
-			try {
-				File downsampled_image = new File(dump, System.currentTimeMillis() + "_PixelKnot.jpg");
-				FileOutputStream fos = new FileOutputStream(downsampled_image);
-				b_.compress(CompressFormat.JPEG, 80, fos);
-				fos.flush();
-				fos.close();
-
-				b_.recycle();
-				return downsampled_image.getAbsolutePath();
-			} catch (FileNotFoundException e) {
-				Log.e(Logger.UI, e.toString());
-				e.printStackTrace();
-			} catch (IOException e) {
-				Log.e(Logger.UI, e.toString());
-				e.printStackTrace();
-			}
-
-			return null;
-		}
-
 		public void extract() {
 			new Thread(new Runnable() {
 				@Override
 				public void run() {
+					@SuppressWarnings("unused")
 					Extract extract = new Extract(PixelKnotActivity.this, cover_image_name);
 				}
 			}).start();
@@ -428,7 +439,7 @@ public class PixelKnotActivity extends FragmentActivity implements Constants, Fr
 					try {
 						progress_dialog.dismiss();
 					} catch(NullPointerException e) {}
-					
+
 					((ActivityListener) pk_pager.getItem(view_pager.getCurrentItem())).updateUi();
 				}
 			});
@@ -497,6 +508,7 @@ public class PixelKnotActivity extends FragmentActivity implements Constants, Fr
 	@Override
 	public void clearPixelKnot() {
 		pixel_knot.clear();
+		restart();
 	}
 
 	@Override
@@ -515,46 +527,46 @@ public class PixelKnotActivity extends FragmentActivity implements Constants, Fr
 				switch(pixel_knot.checkForProtection(sm)) {
 				case(Apg.DECRYPT_MESSAGE):
 					pixel_knot.setEncryption(true, Apg.getInstance());
-					pixel_knot.apg.decrypt(PixelKnotActivity.this, sm);
-					break;
+				pixel_knot.apg.decrypt(PixelKnotActivity.this, sm);
+				break;
 				case(Cipher.DECRYPT_MODE):
 					final EditText password_holder = new EditText(PixelKnotActivity.this);
-					password_holder.setHint(getString(R.string.password));
+				password_holder.setHint(getString(R.string.password));
 
-					Builder builder = new AlertDialog.Builder(PixelKnotActivity.this);
-					builder.setView(password_holder);
-					builder.setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
+				Builder builder = new AlertDialog.Builder(PixelKnotActivity.this);
+				builder.setView(password_holder);
+				builder.setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
 
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
-							if(password_holder.getText().length() > 0) {
-								new Thread(new Runnable() {
-									@Override
-									public void run() {
-										pixel_knot.unlock(password_holder.getText().toString(), sm);
-									}
-								}).start();								
-							}
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						if(password_holder.getText().length() > 0) {
+							new Thread(new Runnable() {
+								@Override
+								public void run() {
+									pixel_knot.unlock(password_holder.getText().toString(), sm);
+								}
+							}).start();								
 						}
-					});
-					builder.setOnCancelListener(new DialogInterface.OnCancelListener() {
-						@Override
-						public void onCancel(DialogInterface dialog) {
-							pixel_knot.setSecretMessage(sm);
-						}
-					});
-	
-					builder.show();
-					break;
+					}
+				});
+				builder.setOnCancelListener(new DialogInterface.OnCancelListener() {
+					@Override
+					public void onCancel(DialogInterface dialog) {
+						pixel_knot.setSecretMessage(sm);
+					}
+				});
+
+				builder.show();
+				break;
 				case(Activity.RESULT_OK):
 					pixel_knot.setSecretMessage(sm);
-					try {
-						progress_dialog.dismiss();
-					} catch(NullPointerException e) {}
+				try {
+					progress_dialog.dismiss();
+				} catch(NullPointerException e) {}
 
-					hasSuccessfullyExtracted = true;
-					((ActivityListener) pk_pager.getItem(view_pager.getCurrentItem())).updateUi();
-					break;
+				hasSuccessfullyExtracted = true;
+				((ActivityListener) pk_pager.getItem(view_pager.getCurrentItem())).updateUi();
+				break;
 				}
 
 
@@ -573,9 +585,11 @@ public class PixelKnotActivity extends FragmentActivity implements Constants, Fr
 
 				hasSuccessfullyEmbed = true;
 				pixel_knot.setOutFile(out_file);
+				try {
+					progress_dialog.dismiss();
+				} catch(NullPointerException e) {}
 
 				((ActivityListener) pk_pager.getItem(view_pager.getCurrentItem())).updateUi();
-				share();
 			}
 		});
 
@@ -604,24 +618,52 @@ public class PixelKnotActivity extends FragmentActivity implements Constants, Fr
 				pixel_knot.apg.onActivityResult(this, requestCode, resultCode, data);
 				pixel_knot.setSecretMessage(pixel_knot.apg.getEncryptedData());
 				setHasSuccessfullyEncrypted(true);
-				
-				try {
-					progress_dialog.dismiss();
-				} catch(NullPointerException e) {}
-				((ActivityListener) pk_pager.getItem(view_pager.getCurrentItem())).updateUi();
+				pixel_knot.save();
 				break;
 			case Apg.DECRYPT_MESSAGE:
 				pixel_knot.apg.onActivityResult(this, requestCode, resultCode, data);
 				pixel_knot.setSecretMessage(pixel_knot.apg.getDecryptedData());
 				setHasSuccessfullyExtracted(true);
-				
+				((ActivityListener) pk_pager.getItem(view_pager.getCurrentItem())).updateUi();
 				try {
 					progress_dialog.dismiss();
 				} catch(NullPointerException e) {}
-				((ActivityListener) pk_pager.getItem(view_pager.getCurrentItem())).updateUi();
 				break;
 			}
 		}
+	}
+
+	@Override
+	public List<TrustedShareActivity> getTrustedShareActivities() {
+		if(trusted_share_activities == null) {
+			trusted_share_activities = new Vector<TrustedShareActivity>();
+
+			Intent intent = new Intent(Intent.ACTION_SEND)
+			.setType("image/jpeg");
+
+			PackageManager pm = getPackageManager();
+			for(ResolveInfo ri : pm.queryIntentActivities(intent, 0)) {
+				if(Arrays.asList(Image.TRUSTED_SHARE_ACTIVITIES).contains(Image.Activities.get(ri.activityInfo.packageName))) {
+					try {
+						ApplicationInfo ai = pm.getApplicationInfo(ri.activityInfo.packageName, 0);					
+						TrustedShareActivity tsa = new TrustedShareActivity(Image.Activities.get(ri.activityInfo.packageName), ri.activityInfo.packageName);
+						
+						tsa.setIcon(pm.getApplicationIcon(ai));
+						tsa.createView();
+						tsa.setIntent();
+
+						trusted_share_activities.add(tsa);
+
+					} catch(PackageManager.NameNotFoundException e) {
+						Log.e(Logger.UI, e.toString());
+						e.printStackTrace();
+						continue;
+					}
+				}
+			}
+		}
+
+		return trusted_share_activities;
 	}
 
 	@Override

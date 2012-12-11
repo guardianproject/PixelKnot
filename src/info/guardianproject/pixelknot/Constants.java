@@ -10,8 +10,7 @@ public interface Constants {
 	
 	public static class Logger {
 		public final static String UI = "***************** PixelKnot **************";
-	}
-	
+	}	
 	
 	public final static String DUMP = Environment.getExternalStorageDirectory().getAbsolutePath() + "/PixelKnot";
 	public static final String CURRENT_TAB = "currentTab";
@@ -31,6 +30,23 @@ public interface Constants {
 			public static final String HAS_ENCRYPTION = "has_encryption";
 			public static final String CAPACITY = "capacity";
 			public static final String OUT_FILE_NAME = "out_file_name";
+		}
+		
+		public static class ActivityNames {
+			// package names from appbrain.com
+			public static final String TWITTER = "Twitter";
+			public static final String FACEBOOK = "Facebook";
+			public static final String GMAIL = "GMail";
+			public static final String BLUETOOTH = "Bluetooth";
+			public static final String FLICKR = "Flickr";
+			public static final String DROPBOX = "Dropbox";
+			public static final String BUMP = "Bump";
+			public static final String DRIVE = "Drive";
+			public static final String GOOGLE_PLUS = "Google+";
+			public static final String INSTAGRAM = "Instagram";
+			public static final String TUMBLR = "Tumblr";
+			public static final String WORDPRESS = "Wordpress";
+			public static final String SKYPE = "Skype";
 		}
 	}
 }

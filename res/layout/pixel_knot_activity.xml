@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/action_display" />
 
-    <LinearLayout style="@style/action_display"
+    <LinearLayout
         android:id="@+id/action_display"
         android:layout_width="fill_parent"
         android:layout_height="40dip"
@@ -23,23 +23,11 @@
             android:layout_height="5dip"
             android:orientation="horizontal" />
 
-        <RelativeLayout
+        <LinearLayout style="@style/action_display"
+            android:id="@+id/options_holder"
             android:layout_width="fill_parent"
             android:layout_height="35dip"
-            android:orientation="horizontal">
-            <LinearLayout 
-                android:id="@+id/options_holder"
-                android:layout_width="wrap_content"
-                android:layout_height="fill_parent" />
-
-            <Button
-                android:id="@+id/start_over"
-                android:layout_width="wrap_content"
-                android:layout_height="fill_parent"
-                android:layout_alignParentRight="true"
-                android:text="@string/start_over" />
-
-        </RelativeLayout>
+            android:orientation="horizontal" />
     </LinearLayout>
 
 </RelativeLayout>

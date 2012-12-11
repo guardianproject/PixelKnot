@@ -17,13 +17,13 @@
             android:orientation="vertical" >
 
             <TextView
-                android:id="@+id/error_title"
+                android:id="@+id/title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/wait" />
 
-            <TextView
-                android:id="@+id/error_content"
+            <LinearLayout
+                android:id="@+id/content_holder"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </LinearLayout>
