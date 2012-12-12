@@ -22,8 +22,10 @@ public interface FragmentListener {
 	public void setHasSuccessfullyEncrypted(boolean hasSuccessfullyEncrypted);
 	public boolean getHasSuccessfullyDecrypted();
 	public void setHasSuccessfullyDecrypted(boolean hasSuccessfullyDecrypted);
-	public boolean setHasSuccessfullyPasswordProtected();
+	public boolean getHasSuccessfullyPasswordProtected();
 	public void setHasSuccessfullyPasswordProtected(boolean hasSuccessfullyPasswordProtected);
+	public boolean getHasSuccessfullyUnlocked();
+	public void setHasSuccessfullyUnlocked(boolean hasSuccessfullyUnlocked);
 	public void share();
 	public List<TrustedShareActivity> getTrustedShareActivities();
 	public void setEncryption(Apg apg);

@@ -16,6 +16,8 @@
     <string name="wait">Wait!</string>
     <string name="error_no_secret_message">You haven\'t set a secret message yet\u2026</string>
     <string name="error_no_cover_image">You haven\'t set a cover image yet\u2026</string>
+    <string name="error_bad_password">Bad Password.  Could not decrypt your message.</string>
+    <string name="retry">Retry?</string>
     
     <string name="result_title">Secret Message:</string>
     <string name="share_again">Share</string>

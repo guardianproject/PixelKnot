@@ -20,6 +20,7 @@ import info.guardianproject.pixelknot.utils.PixelKnotMediaScanner.MediaScannerLi
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -97,6 +98,7 @@ public class PixelKnotActivity extends FragmentActivity implements Constants, Fr
 	boolean hasSuccessfullyEncrypted = false;
 	boolean hasSuccessfullyDecrypted = false;
 	boolean hasSuccessfullyPasswordProtected = false;
+	boolean hasSuccessfullyUnlocked = false;
 
 	private List<TrustedShareActivity> trusted_share_activities;
 
@@ -460,6 +462,8 @@ public class PixelKnotActivity extends FragmentActivity implements Constants, Fr
 		}
 
 		public void unlock(String password, String message_string) {
+			final String total_message = message_string;
+			
 			message_string = message_string.substring(PASSWORD_SENTINEL.length());
 			Log.d(Logger.UI, message_string);
 
@@ -467,11 +471,12 @@ public class PixelKnotActivity extends FragmentActivity implements Constants, Fr
 			byte[] iv =  Base64.decode(message_string.split("\n")[0], Base64.DEFAULT);
 
 			String sm = Aes.DecryptWithPassword(password, iv, message);
-			if(sm != null)
+			if(sm != null) {
 				pixel_knot.setSecretMessage(sm);
-			else
+				hasSuccessfullyUnlocked = true;
+			} else
 				pixel_knot.setSecretMessage(new String(message));
-
+			
 			hasSuccessfullyExtracted = true;
 			h.post(new Runnable() {
 				@Override
@@ -481,6 +486,28 @@ public class PixelKnotActivity extends FragmentActivity implements Constants, Fr
 					} catch(NullPointerException e) {}
 
 					((ActivityListener) pk_pager.getItem(view_pager.getCurrentItem())).updateUi();
+					if(!hasSuccessfullyUnlocked) {
+						Builder ad = new AlertDialog.Builder(PixelKnotActivity.this);
+						ad.setMessage(PixelKnotActivity.this.getString(R.string.error_bad_password));
+						ad.setPositiveButton(PixelKnotActivity.this.getString(R.string.retry), new DialogInterface.OnClickListener() {
+							
+							@Override
+							public void onClick(DialogInterface dialog, int which) {
+								progress_dialog = ProgressDialog.show(PixelKnotActivity.this, "", PixelKnotActivity.this.getString(R.string.please_wait));
+								ByteArrayOutputStream baos = new ByteArrayOutputStream();
+								try {
+									baos.write(total_message.getBytes());
+								} catch (IOException e) {
+									Log.e(Logger.UI, e.toString());
+									e.printStackTrace();
+								}
+								onExtractionResult(baos);
+								
+							}
+						});
+						ad.setNegativeButton(PixelKnotActivity.this.getString(R.string.ok), null);
+						ad.show();
+					}
 				}
 			});
 
@@ -583,46 +610,46 @@ public class PixelKnotActivity extends FragmentActivity implements Constants, Fr
 				switch(pixel_knot.checkForProtection(sm)) {
 				case(Apg.DECRYPT_MESSAGE):
 					pixel_knot.setEncryption(true, Apg.getInstance());
-				pixel_knot.apg.decrypt(PixelKnotActivity.this, sm);
-				break;
+					pixel_knot.apg.decrypt(PixelKnotActivity.this, sm);
+					break;
 				case(Cipher.DECRYPT_MODE):
 					final EditText password_holder = new EditText(PixelKnotActivity.this);
-				password_holder.setHint(getString(R.string.password));
-
-				Builder builder = new AlertDialog.Builder(PixelKnotActivity.this);
-				builder.setView(password_holder);
-				builder.setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
-
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						if(password_holder.getText().length() > 0) {
-							new Thread(new Runnable() {
-								@Override
-								public void run() {
-									pixel_knot.unlock(password_holder.getText().toString(), sm);
-								}
-							}).start();								
+					password_holder.setHint(getString(R.string.password));
+	
+					Builder builder = new AlertDialog.Builder(PixelKnotActivity.this);
+					builder.setView(password_holder);
+					builder.setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
+	
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							if(password_holder.getText().length() > 0) {
+								new Thread(new Runnable() {
+									@Override
+									public void run() {
+										pixel_knot.unlock(password_holder.getText().toString(), sm);
+									}
+								}).start();								
+							}
 						}
-					}
-				});
-				builder.setOnCancelListener(new DialogInterface.OnCancelListener() {
-					@Override
-					public void onCancel(DialogInterface dialog) {
-						pixel_knot.setSecretMessage(sm);
-					}
-				});
-
-				builder.show();
+					});
+					builder.setOnCancelListener(new DialogInterface.OnCancelListener() {
+						@Override
+						public void onCancel(DialogInterface dialog) {
+							pixel_knot.setSecretMessage(sm);
+						}
+					});
+	
+					builder.show();
 				break;
 				case(Activity.RESULT_OK):
 					pixel_knot.setSecretMessage(sm);
-				try {
-					progress_dialog.dismiss();
-				} catch(NullPointerException e) {}
-
-				hasSuccessfullyExtracted = true;
-				((ActivityListener) pk_pager.getItem(view_pager.getCurrentItem())).updateUi();
-				break;
+					try {
+						progress_dialog.dismiss();
+					} catch(NullPointerException e) {}
+	
+					hasSuccessfullyExtracted = true;
+					((ActivityListener) pk_pager.getItem(view_pager.getCurrentItem())).updateUi();
+					break;
 				}
 
 
@@ -794,13 +821,23 @@ public class PixelKnotActivity extends FragmentActivity implements Constants, Fr
 	}
 
 	@Override
-	public boolean setHasSuccessfullyPasswordProtected() {
+	public boolean getHasSuccessfullyPasswordProtected() {
 		return hasSuccessfullyPasswordProtected;
 	}
 
 	@Override
 	public void setHasSuccessfullyPasswordProtected(boolean hasSuccessfullyPasswordProtected) {
 		this.hasSuccessfullyPasswordProtected = hasSuccessfullyPasswordProtected;
+	}
+
+	@Override
+	public boolean getHasSuccessfullyUnlocked() {
+		return hasSuccessfullyUnlocked;
+	}
+
+	@Override
+	public void setHasSuccessfullyUnlocked(boolean hasSuccessfullyUnlocked) {
+		this.hasSuccessfullyUnlocked = hasSuccessfullyUnlocked;
 	}
 
 }
