@@ -84,6 +84,7 @@ public class CoverImageFragment extends Fragment implements Constants, MediaScan
 		});
 
 		((FragmentListener) a).getPixelKnot().setCoverImageName(path_to_cover_image);
+		
 	}
 
 	@Override

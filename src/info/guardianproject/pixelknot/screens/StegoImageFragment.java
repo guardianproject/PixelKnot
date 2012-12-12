@@ -76,6 +76,7 @@ public class StegoImageFragment extends Fragment implements Constants, ActivityL
 				((FragmentListener) a).getPixelKnot().setCoverImageName(path_to_cover_image);
 			}
 		}, 200);
+		
 	}
 
 	@Override
