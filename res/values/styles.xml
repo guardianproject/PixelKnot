@@ -1,7 +1,52 @@
-<resources>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <style name="action_display">
-        <item name="android:background">#ffcccccc</item>
+        <item name="android:background">#00000000</item>
+        <item name="android:padding">0dip</item>
+    </style>
+    <style name="progress_button">
+        <item name="android:background">#00000000</item>
+    </style>
+    <style name="message_holder">
+        <item name="android:background">#00000000</item>
+        <item name="android:textColor">#ffffffff</item>
+        <item name="android:layout_margin">2dp</item>
+        <item name="android:gravity">top|left</item>
+    </style>
+    <style name="h1">
+        <item name="android:textSize">26sp</item>
+        <item name="android:textColor">#ffffffff</item>
+    </style>
+    <style name="h2">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">#ffffffff</item>
+        <item name="android:layout_marginBottom">10dip</item>
+        <item name="android:padding">6dip</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+    <style name="p">
+        <item name="android:textSize">20sp</item>
+        <item name="android:padding">6dip</item>
+        <item name="android:textColor">#ffffffff</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+    <style name="p_link">
+        <item name="android:textSize">20sp</item>
+        <item name="android:padding">6dip</item>
+        <item name="android:autoLink">web</item>
+        <item name="android:linksClickable">true</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+    <style name="p_link_email">
+        <item name="android:textSize">20sp</item>
+        <item name="android:padding">6dip</item>
+        <item name="android:autoLink">email</item>
+        <item name="android:linksClickable">true</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
     </style>
 
 </resources>

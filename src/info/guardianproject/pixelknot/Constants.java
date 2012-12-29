@@ -10,7 +10,17 @@ public interface Constants {
 	
 	public static class Logger {
 		public final static String UI = "***************** PixelKnot **************";
-	}	
+		public final static String PREFS = "***************** PixelKnot (Prefs) **************";
+	}
+	
+	public static class Settings {
+		public static final String LANGUAGE = "pk_language";
+		public static final class Locales {
+			public final static int DEFAULT = 0;
+			public final static int EN = 1;
+			public final static int FA = 2;
+		}
+	}
 	
 	public final static String DUMP = Environment.getExternalStorageDirectory().getAbsolutePath() + "/PixelKnot";
 	public static final String CURRENT_TAB = "currentTab";

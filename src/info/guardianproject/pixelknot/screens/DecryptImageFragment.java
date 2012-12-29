@@ -2,6 +2,8 @@ package info.guardianproject.pixelknot.screens;
 
 import org.json.JSONException;
 
+import com.actionbarsherlock.app.SherlockFragment;
+
 import info.guardianproject.pixelknot.Constants;
 import info.guardianproject.pixelknot.R;
 import info.guardianproject.pixelknot.Constants.PixelKnot.Keys;
@@ -10,16 +12,15 @@ import info.guardianproject.pixelknot.utils.FragmentListener;
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 
-public class DecryptImageFragment extends Fragment implements Constants, ActivityListener {
+public class DecryptImageFragment extends SherlockFragment implements Constants, ActivityListener {
 	View root_view;	
 	EditText secret_message_holder;
 
@@ -59,8 +60,10 @@ public class DecryptImageFragment extends Fragment implements Constants, Activit
 
 	@Override
 	public void initButtons() {
-		Button start_over = new Button(a);
-		start_over.setText(getString(R.string.start_over));
+		ImageButton start_over = new ImageButton(a);
+		start_over.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+		start_over.setImageResource(R.drawable.camera_selector);
+		start_over.setPadding(0, 0, 0, 0);
 		start_over.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -69,7 +72,6 @@ public class DecryptImageFragment extends Fragment implements Constants, Activit
 			}
 		});
 		
-		Button[] options = new Button[] {start_over};
-		((FragmentListener) a).setButtonOptions(options);
+		((FragmentListener) a).setButtonOptions(new ImageButton[] {start_over});
 	}
 }

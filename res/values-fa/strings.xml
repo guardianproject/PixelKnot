@@ -1,0 +1,62 @@
+<resources>
+
+    <string name="app_name">PixelKnot</string>
+    <string name="oh_no">Oh no!</string>
+    <string name="uh_oh">Uh oh!</string>
+    <string name="error_no_secret_message">پیام محرمانه خود را وارد نکردید. لطفاً اینکار را بکنی</string>
+    <string name="error_no_cover_image">There\'s no image to embed the message into. Please choose one.</string>
+    <string name="error_bad_password">Bad Password.  Could not decrypt your message.</string>
+    <string name="retry">Retry?</string>
+    
+    <string name="secret_message_hint">Type your hidden message here</string>
+    <string name="result_title">Secret Message:</string>
+    <string name="share_again">Share</string>
+    <string name="share_with_selected_apps">Share with these trusted apps:</string>
+
+    <string name="password">Password</string>
+    <string name="set">Set</string>
+    <string name="ok">OK</string>
+    <string name="please_wait">Please wait\u2026</string>
+    <string name="embed_success">Share your secret image\u2026</string>
+    
+    <string name="about">About</string>
+    <string name="about_us">About Us:</string>
+    <string name="about_us_">The Guardian Project is a research and development effort powered by technology-focused activists, concerned citizen users, and open-source security software hackers. We build open source tools based on real-world experience and feedback. Our process is transparent, inclusive and responsible. Email us at </string>
+    <string name="about_us_gp_email">support@guardianproject.info</string>
+    <string name="about_stego">About Steganography:</string>
+    <string name="about_stego_">The practice of embedding secret messages into a piece of media so that no one, apart from the sender and intended recipient, know that the secret message exists. The newly developed algorithm F5 withstands visual and statistical attacks, yet it still offers a large steganographic capacity. F5 implements matrix encoding to improve the efficiency of embedding. Thus it reduces the number of necessary changes. F5 employs permutative straddling to uniformly spread out the changes over the whole steganogram.</string>
+    <string name="about_version">Version:</string>
+    <string name="about_project_home">Project Home:</string>
+    <string name="about_project_home_">http://guardianproject.info/apps/pixelknot</string>
+    <string name="about_license">License:</string>
+    <string name="about_license_f_5_algorithm">f-5 algorithm</string>
+    <string name="about_license_bcc">Bouncy Castle Crypto</string>
+    <string name="about_license_pgp">PGP</string>
+    <string name="about_license_apg">Android Privacy Guard</string>
+    <string name="about_license_iconmonstr">Iconmonstr</string>
+    <string name="about_license_deviantart">DeviantArt</string>
+    <string name="about_license_">Built using 3rd-Party open source software:</string>
+    <string name="about_lovingly_">Lovingly made in NYC.</string>
+    
+    <string name="preferences">Preferences</string>
+    <string name="prefs_language_title">Language</string>
+    <string name="pref_languages_default">System Default</string>
+    <string name="pref_languages_en_us">English (US)</string>
+    <string name="pref_languages_fa">Farsi</string>
+        
+    <!-- APG related -->
+    <string name="apg_error_activity_not_found">No suitable application for this action found.</string>
+    <string name="apg_error_apg_version_not_supported">The installed APG version is not supported.</string>
+    <string name="apg_btn_crypto_sign">Sign</string>
+    <string name="apg_btn_encrypt">Encrypt</string>
+    <string name="apg_btn_decrypt">Decrypt</string>
+    <string name="apg_btn_verify">Verify</string>
+    <string name="apg_btn_select">Select</string>
+    <string name="unknown_crypto_signature_user_id">&lt;unknown&gt;</string>
+    <string name="key_id">id: %s</string>
+    <string name="insufficient_apg_permissions">This app doesn\'t have permission to access APG fully, please reinstall the app to fix that.</string>
+    <string name="pgp_mime_unsupported">PGP/MIME messages are not supported yet.</string>
+    <string name="attachment_encryption_unsupported">Warning: attachments are NOT signed or encrypted yet.</string>
+    <string name="send_aborted">Send aborted.</string>
+    
+</resources>

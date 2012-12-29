@@ -7,7 +7,6 @@
         android:id="@+id/cover_image_holder"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@drawable/pixelknot_blank_image"
         android:scaleType="fitXY" />
 
 </LinearLayout>

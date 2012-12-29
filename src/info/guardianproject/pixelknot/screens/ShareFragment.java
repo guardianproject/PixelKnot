@@ -1,5 +1,7 @@
 package info.guardianproject.pixelknot.screens;
 
+import com.actionbarsherlock.app.SherlockFragment;
+
 import info.guardianproject.pixelknot.Constants;
 import info.guardianproject.pixelknot.Constants.PixelKnot.Keys;
 import info.guardianproject.pixelknot.PixelKnotActivity.TrustedShareActivity;
@@ -9,19 +11,18 @@ import info.guardianproject.pixelknot.utils.FragmentListener;
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.app.Fragment;
-import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-public class ShareFragment extends Fragment implements Constants, ActivityListener {
+public class ShareFragment extends SherlockFragment implements Constants, ActivityListener {
 	Activity a;
 	View root_view;
 	Handler h = new Handler();
@@ -47,6 +48,8 @@ public class ShareFragment extends Fragment implements Constants, ActivityListen
 	
 	private void embed() {
 		if(!((FragmentListener) a).getPixelKnot().has(Keys.SECRET_MESSAGE)) {
+			title.setText(getString(R.string.oh_no));
+			
 			TextView content = new TextView(a);
 			content.setText(getString(R.string.error_no_secret_message));
 			content_holder.addView(content);
@@ -54,6 +57,8 @@ public class ShareFragment extends Fragment implements Constants, ActivityListen
 		}
 		
 		if(!((FragmentListener) a).getPixelKnot().has(Keys.COVER_IMAGE_NAME)) {
+			title.setText(getString(R.string.uh_oh));
+			
 			TextView content = new TextView(a);
 			content.setText(getString(R.string.error_no_cover_image));
 			content_holder.addView(content);
@@ -68,14 +73,17 @@ public class ShareFragment extends Fragment implements Constants, ActivityListen
 		content_holder.removeAllViews();
 		
 		if(!((FragmentListener) a).getHasSuccessfullyEmbed()) {
-			title.setText(getString(R.string.wait));
+			title.setText(getString(R.string.please_wait));
 			embed();
 		} else {
+			((FragmentListener) a).updateButtonProminence(0, R.drawable.share_selector);
+			
 			title.setText(getString(R.string.share_with_selected_apps));
 			content_holder.addView(LayoutInflater.from(a).inflate(R.layout.share_options, null));
 			
 			TableLayout share_options_holder = (TableLayout) content_holder.findViewById(R.id.share_options_holder);
 			TableRow tr = new TableRow(a);
+			tr.setGravity(Gravity.CENTER);
 			share_options_holder.addView(tr);
 			int t = 0;
 			
@@ -86,6 +94,7 @@ public class ShareFragment extends Fragment implements Constants, ActivityListen
 				
 				if(t % 2 == 0 && t != 0) {
 					tr = new TableRow(a);
+					tr.setGravity(Gravity.CENTER);
 					share_options_holder.addView(tr);
 				}
 				
@@ -98,15 +107,19 @@ public class ShareFragment extends Fragment implements Constants, ActivityListen
 
 	@Override
 	public void initButtons() {
-		Button share = new Button(a);
-		share.setText(getString(R.string.share_again));
-		Log.d(Logger.UI, "is successfully embed? " + ((FragmentListener) a).getHasSuccessfullyEmbed());
+		int share_resource = R.drawable.share_inactive_selector;
 		
-		if(((FragmentListener) a).getHasSuccessfullyEmbed())
+		ImageButton share = new ImageButton(a);
+		share.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+		share.setPadding(0, 0, 0, 0);
+		
+		if(((FragmentListener) a).getHasSuccessfullyEmbed()) {
 			share.setEnabled(true);
-		else
+			share_resource = R.drawable.share_selector;
+		} else
 			share.setEnabled(false);
 		
+		share.setImageResource(share_resource);
 		share.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -114,8 +127,11 @@ public class ShareFragment extends Fragment implements Constants, ActivityListen
 			}
 		});
 		
-		Button start_over = new Button(a);
-		start_over.setText(getString(R.string.start_over));
+		
+		ImageButton start_over = new ImageButton(a);
+		start_over.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+		start_over.setPadding(0, 0, 0, 0);
+		start_over.setImageResource(R.drawable.camera_selector);
 		start_over.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -124,7 +140,7 @@ public class ShareFragment extends Fragment implements Constants, ActivityListen
 			}
 		});
 		
-		((FragmentListener) a).setButtonOptions(new Button[] {share, start_over});
+		((FragmentListener) a).setButtonOptions(new ImageButton[] {share, start_over});
 		
 	}
 }

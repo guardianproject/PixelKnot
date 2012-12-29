@@ -2,6 +2,8 @@ package info.guardianproject.pixelknot.screens;
 
 import java.io.File;
 
+import com.actionbarsherlock.app.SherlockFragment;
+
 import info.guardianproject.pixelknot.Constants;
 import info.guardianproject.pixelknot.R;
 import info.guardianproject.pixelknot.Constants.PixelKnot.Keys;
@@ -12,13 +14,12 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-public class StegoImageFragment extends Fragment implements Constants, ActivityListener {
+public class StegoImageFragment extends SherlockFragment implements Constants, ActivityListener {
 	View root_view;
 	ImageView cover_image_holder;
 	

@@ -16,16 +16,17 @@
             android:layout_height="wrap_content"
             android:orientation="vertical" >
 
-            <TextView
+            <TextView style="@style/h2"
                 android:id="@+id/title"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/wait" />
+                android:layout_height="wrap_content" />
 
             <LinearLayout
                 android:id="@+id/content_holder"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="6dip" />
         </LinearLayout>
     </ScrollView>
 

@@ -5,10 +5,10 @@ import java.util.List;
 import info.guardianproject.pixelknot.PixelKnotActivity.PixelKnot;
 import info.guardianproject.pixelknot.PixelKnotActivity.TrustedShareActivity;
 import info.guardianproject.pixelknot.crypto.Apg;
-import android.widget.Button;
+import android.widget.ImageButton;
 
 public interface FragmentListener {
-	public void setButtonOptions(Button[] options);
+	public void setButtonOptions(ImageButton[] options);
 	public PixelKnot getPixelKnot();
 	public void clearPixelKnot();
 	public boolean getHasSeenFirstPage();
@@ -28,7 +28,7 @@ public interface FragmentListener {
 	public void share();
 	public List<TrustedShareActivity> getTrustedShareActivities();
 	public void setEncryption(Apg apg);
-	public void updateButtonProminence(int which, String new_text);
+	public void updateButtonProminence(int which, int new_resource);
 	public void autoAdvance();
 	public void autoAdvance(int position);
 }

@@ -2,14 +2,20 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:padding="10dip"
+    android:gravity="center" >
     <ImageView
         android:id="@+id/tsa_icon"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-    <TextView
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="6dip"
+        android:src="@drawable/ic_launcher" />
+    <TextView style="@style/p"
         android:id="@+id/tsa_title"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:text="hi"
+        android:gravity="center" />
 
 </LinearLayout>

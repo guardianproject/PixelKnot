@@ -2,6 +2,8 @@ package info.guardianproject.pixelknot.screens;
 
 import org.json.JSONException;
 
+import com.actionbarsherlock.app.SherlockFragment;
+
 import info.guardianproject.pixelknot.Constants;
 import info.guardianproject.pixelknot.PixelKnotActivity;
 import info.guardianproject.pixelknot.R;
@@ -16,7 +18,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.app.Fragment;
 import android.text.InputFilter;
 import android.text.Spanned;
 import android.util.Log;
@@ -24,19 +25,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
-public class SetMessageFragment extends Fragment implements Constants, ActivityListener {
+public class SetMessageFragment extends SherlockFragment implements Constants, ActivityListener {
 	Activity a;
 	View root_view;
 	Handler h = new Handler();
 	
 	EditText secret_message_holder;
-	TextView secret_message_chars_left, encrypt_message_select, password_protect_select;
-	
 	int capacity = 0;
 	
 	Apg apg = null;
@@ -50,20 +48,7 @@ public class SetMessageFragment extends Fragment implements Constants, ActivityL
 			h.post(new Runnable() {
 				@Override
 				public void run() {
-					String sm = secret_message_holder.getText().toString();
-					byte[] bytes = sm.getBytes(); 
-					/*
-					String binary = "";
-					for(byte b : bytes) {
-						int val = b;
-						for(int i=0; i < 8; i++) {
-							binary += ((val & 128) == 0 ? 0 : 1);
-							val <<= 1;
-						}
-					}
-					*/
-					secret_message_chars_left.setText(String.valueOf(capacity - bytes.length));
-					((FragmentListener) a).getPixelKnot().setSecretMessage(sm);
+					((FragmentListener) a).getPixelKnot().setSecretMessage(secret_message_holder.getText().toString());
 				}
 			});
 			return source;
@@ -78,14 +63,6 @@ public class SetMessageFragment extends Fragment implements Constants, ActivityL
 		secret_message_holder = (EditText) root_view.findViewById(R.id.secret_message_holder);
 		secret_message_holder.setFilters(new InputFilter[] {monitor_stego_space});
 
-		secret_message_chars_left = (TextView) root_view.findViewById(R.id.secret_message_chars_left);		
-		
-		encrypt_message_select = (TextView) root_view.findViewById(R.id.encrypt_message_select);
-		encrypt_message_select.setText(getString(R.string.e));
-		
-		password_protect_select = (TextView) root_view.findViewById(R.id.password_protect_select);
-		password_protect_select.setText(getString(R.string.p));
-		
 		updateCapacity();
 		return root_view;
 	}
@@ -104,29 +81,20 @@ public class SetMessageFragment extends Fragment implements Constants, ActivityL
 	}
 	
 	private void updateCapacity() {
-		secret_message_chars_left.setText(String.valueOf(capacity));
+		
 	}
 	
 	public void updateButtonProminence() {		
-		String e = getString(R.string.e);
-		String p = getString(R.string.p);
+		int encrypt_message_resource = R.drawable.encrypt_off_selector;
+		int password_protect_resource = R.drawable.password_off_selector;
 		
-		String encrypt_message_text = getString(R.string.encryption_select);
-		String password_protect_text = getString(R.string.password_protect_select);
+		if(((PixelKnotActivity.PixelKnot) ((FragmentListener) a).getPixelKnot()).getEncryption())
+			encrypt_message_resource = R.drawable.encrypt_on_selector;
+		else if (((PixelKnotActivity.PixelKnot) ((FragmentListener) a).getPixelKnot()).getPassword())
+			password_protect_resource = R.drawable.password_on_selector;
 		
-		if(((PixelKnotActivity.PixelKnot) ((FragmentListener) a).getPixelKnot()).getEncryption()) {
-			e = getString(R.string.e_);
-			encrypt_message_text = getString(R.string.encryption_select_);
-		} else if (((PixelKnotActivity.PixelKnot) ((FragmentListener) a).getPixelKnot()).getPassword()) {
-			p = getString(R.string.p_);
-			password_protect_text = getString(R.string.password_protect_select_);
-		}
-		
-		encrypt_message_select.setText(e);
-		((FragmentListener) a).updateButtonProminence(0, encrypt_message_text);
-		
-		password_protect_select.setText(p);
-		((FragmentListener) a).updateButtonProminence(1, password_protect_text);
+		((FragmentListener) a).updateButtonProminence(0, encrypt_message_resource);		
+		((FragmentListener) a).updateButtonProminence(1, password_protect_resource);
 	}
 
 	private void setEncryptionIds() {
@@ -200,7 +168,9 @@ public class SetMessageFragment extends Fragment implements Constants, ActivityL
 	
 	@Override
 	public void initButtons() {
-		Button encrypt_message = new Button(a);
+		ImageButton encrypt_message = new ImageButton(a);
+		encrypt_message.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+		encrypt_message.setPadding(0, 0, 0, 0);
 		encrypt_message.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -209,19 +179,20 @@ public class SetMessageFragment extends Fragment implements Constants, ActivityL
 			}
 			
 		});
-		encrypt_message.setText(getString(R.string.encryption_select));
+		encrypt_message.setImageResource(R.drawable.encrypt_off_selector);
 		
-		Button password_protect = new Button(a);
+		ImageButton password_protect = new ImageButton(a);
+		password_protect.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+		password_protect.setPadding(0, 0, 0, 0);
 		password_protect.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				setPassword();
 			}
 		});
-		password_protect.setText(getString(R.string.password_protect_select));
+		password_protect.setImageResource(R.drawable.password_off_selector);
 		
-		Button[] options = new Button[] {encrypt_message, password_protect};
-		((FragmentListener) a).setButtonOptions(options);
+		((FragmentListener) a).setButtonOptions(new ImageButton[] {encrypt_message, password_protect});
 	}
 	
 	@Override

@@ -13,6 +13,8 @@ import java.io.File;
 
 import org.json.JSONException;
 
+import com.actionbarsherlock.app.SherlockFragment;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -20,19 +22,20 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.provider.MediaStore;
-import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 
-public class CoverImageFragment extends Fragment implements Constants, MediaScannerListener, ActivityListener {
+public class CoverImageFragment extends SherlockFragment implements Constants, MediaScannerListener, ActivityListener {
 	View root_view;
 	ImageView cover_image_holder;
+	int blank_image;
 
 	Uri cover_image_uri = null;
 	String path_to_cover_image = null;
@@ -44,8 +47,8 @@ public class CoverImageFragment extends Fragment implements Constants, MediaScan
 	@Override
 	public View onCreateView(LayoutInflater li, ViewGroup container, Bundle savedInstanceState) {
 		root_view = li.inflate(R.layout.cover_image_fragment, container, false);
-
 		cover_image_holder = (ImageView) root_view.findViewById(R.id.cover_image_holder);
+		cover_image_holder.setImageResource(blank_image);
 		return root_view;
 	}
 
@@ -53,7 +56,16 @@ public class CoverImageFragment extends Fragment implements Constants, MediaScan
 	public void onAttach(Activity a) {
 		super.onAttach(a);
 		this.a = a;
-		
+
+		switch(Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(this.a).getString(Settings.LANGUAGE, String.valueOf(Settings.Locales.DEFAULT)))) {
+		case Settings.Locales.FA:
+			blank_image = R.drawable.pixelknot_blank_image_fa;
+			break;
+		default:
+			blank_image = R.drawable.pixelknot_blank_image_en;
+			break;
+		}
+
 		if(!((FragmentListener) a).getHasSeenFirstPage()) {
 			initButtons();
 			((FragmentListener) a).setHasSeenFirstPage(true);
@@ -84,7 +96,7 @@ public class CoverImageFragment extends Fragment implements Constants, MediaScan
 		});
 
 		((FragmentListener) a).getPixelKnot().setCoverImageName(path_to_cover_image);
-		
+
 	}
 
 	@Override
@@ -114,7 +126,9 @@ public class CoverImageFragment extends Fragment implements Constants, MediaScan
 
 	@Override
 	public void initButtons() {
-		Button take_picture = new Button(a);
+		ImageButton take_picture = new ImageButton(a);
+		take_picture.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+		take_picture.setPadding(0, 0, 0, 0);
 		take_picture.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -127,9 +141,11 @@ public class CoverImageFragment extends Fragment implements Constants, MediaScan
 			}
 
 		});
-		take_picture.setText(getString(R.string.take_photo));
+		take_picture.setImageResource(R.drawable.camera_selector);
 
-		Button choose_picture = new Button(a);
+		ImageButton choose_picture = new ImageButton(a);
+		choose_picture.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+		choose_picture.setPadding(0, 0, 0, 0);
 		choose_picture.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -139,10 +155,9 @@ public class CoverImageFragment extends Fragment implements Constants, MediaScan
 			}
 
 		});
-		choose_picture.setText(getString(R.string.choose_photo));
+		choose_picture.setImageResource(R.drawable.gallery_selector);
 
-		Button[] options = new Button[] {take_picture, choose_picture};
-		((FragmentListener) a).setButtonOptions(options);
+		((FragmentListener) a).setButtonOptions(new ImageButton[] {take_picture, choose_picture});
 	}
 
 	@Override
@@ -157,7 +172,7 @@ public class CoverImageFragment extends Fragment implements Constants, MediaScan
 		if(path_to_cover_image == null) {
 			cover_image_file = null;
 			cover_image_uri = null;
-			cover_image_holder.setImageResource(R.drawable.pixelknot_blank_image);
+			cover_image_holder.setImageResource(blank_image);
 		} else {
 			setImageData();
 		}

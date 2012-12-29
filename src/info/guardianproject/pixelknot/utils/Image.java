@@ -17,11 +17,11 @@ import android.graphics.Bitmap.CompressFormat;
 import android.util.Log;
 
 public class Image implements Constants {
-	
+
 	public static class ShareActivity {
 		String name, package_name, starting_activity, starting_intent;
 	}
-	
+
 	public final static Map<String, String> Activities;
 	static {
 		// package names from appbrain.com
@@ -41,7 +41,7 @@ public class Image implements Constants {
 		activities.put("com.skype.raider", ActivityNames.SKYPE);
 		Activities = Collections.unmodifiableMap(activities);
 	}
-	
+
 	public final static Map<String, Integer[]> Resize;
 	static {
 		Map<String, Integer[]> resize = new HashMap<String, Integer[]>();
@@ -49,7 +49,7 @@ public class Image implements Constants {
 		resize.put(ActivityNames.FLICKR, new Integer[] {1024, 768});
 		Resize = Collections.unmodifiableMap(resize);
 	}
-	
+
 	public final static String[] TRUSTED_SHARE_ACTIVITIES = {
 		ActivityNames.GMAIL,
 		ActivityNames.BLUETOOTH,
@@ -59,10 +59,9 @@ public class Image implements Constants {
 		ActivityNames.FLICKR,
 		ActivityNames.SKYPE
 	};
-	
-	public static String downsampleImage(String cover_image_name, File dump) {
+
+	public static String downsampleImage(String cover_image_name, File dump, int scale) {
 		Bitmap b = BitmapFactory.decodeFile(cover_image_name);
-		int scale = 3;
 
 		BitmapFactory.Options opts = new BitmapFactory.Options();
 		opts.inSampleSize = scale;
@@ -88,7 +87,7 @@ public class Image implements Constants {
 
 		return null;
 	}
-	
+
 	public static String cropFor3rdParty(String cover_image_name, File dump, String for_name) {
 		Bitmap b = BitmapFactory.decodeFile(cover_image_name);
 		Bitmap b_ = Bitmap.createBitmap(b, 0, 0, Resize.get(for_name)[0], Resize.get(for_name)[1]);
@@ -110,5 +109,19 @@ public class Image implements Constants {
 		}
 
 		return null;
+	}
+
+	public static int getScale(int memory_class) {
+		Log.d(Logger.UI, "memory class: " + memory_class);
+		switch(memory_class) {
+		case 24:
+			return 4;
+		case 32:
+			return 4;
+		case 60:
+			return 3;
+		default:
+			return 4;
+		}
 	}
 }
