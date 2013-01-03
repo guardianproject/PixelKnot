@@ -69,7 +69,7 @@ public class Image implements Constants {
 
 		Bitmap b_ = BitmapFactory.decodeFile(cover_image_name, opts);
 		try {
-			File downsampled_image = new File(dump, System.currentTimeMillis() + "_PixelKnot.jpg");
+			File downsampled_image = new File(dump, System.currentTimeMillis() + ".jpg"); // + "_PixelKnot.jpg"); we shouldn't indicate this is a pixelkno image
 			FileOutputStream fos = new FileOutputStream(downsampled_image);
 			b_.compress(CompressFormat.JPEG, 80, fos);
 			fos.flush();
@@ -92,7 +92,7 @@ public class Image implements Constants {
 		Bitmap b = BitmapFactory.decodeFile(cover_image_name);
 		Bitmap b_ = Bitmap.createBitmap(b, 0, 0, Resize.get(for_name)[0], Resize.get(for_name)[1]);
 		try {
-			File downsampled_image = new File(dump, System.currentTimeMillis() + "_PixelKnot.jpg");
+            File downsampled_image = new File(dump, System.currentTimeMillis() + ".jpg"); // + "_PixelKnot.jpg"); we shouldn't indicate this is a pixelkno image
 			FileOutputStream fos = new FileOutputStream(downsampled_image);
 			b_.compress(CompressFormat.JPEG, 80, fos);
 			fos.flush();
