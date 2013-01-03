@@ -29,7 +29,7 @@ public class Image implements Constants {
 		activities.put("com.twitter.android", ActivityNames.TWITTER);
 		activities.put("com.facebook.katana", ActivityNames.FACEBOOK);
 		activities.put("com.google.android.gm", ActivityNames.GMAIL);
-		activities.put("BLUETOOTH", ActivityNames.BLUETOOTH);
+		activities.put("com.android.bluetooth", ActivityNames.BLUETOOTH);
 		activities.put("com.yahoo.mobile.client.android.flickr", ActivityNames.FLICKR);
 		activities.put("com.dropbox.android", ActivityNames.DROPBOX);
 		activities.put("com.bumptech.bumpga", ActivityNames.BUMP);
