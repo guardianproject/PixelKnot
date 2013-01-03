@@ -29,7 +29,7 @@ public class Image implements Constants {
 		activities.put("com.twitter.android", ActivityNames.TWITTER);
 		activities.put("com.facebook.katana", ActivityNames.FACEBOOK);
 		activities.put("com.google.android.gm", ActivityNames.GMAIL);
-		activities.put("BLUETOOTH", ActivityNames.BLUETOOTH);
+		activities.put("com.android.bluetooth", ActivityNames.BLUETOOTH);
 		activities.put("com.yahoo.mobile.client.android.flickr", ActivityNames.FLICKR);
 		activities.put("com.dropbox.android", ActivityNames.DROPBOX);
 		activities.put("com.bumptech.bumpga", ActivityNames.BUMP);
@@ -69,7 +69,7 @@ public class Image implements Constants {
 
 		Bitmap b_ = BitmapFactory.decodeFile(cover_image_name, opts);
 		try {
-			File downsampled_image = new File(dump, System.currentTimeMillis() + "_PixelKnot.jpg");
+			File downsampled_image = new File(dump, System.currentTimeMillis() + ".jpg"); // + "_PixelKnot.jpg"); we shouldn't indicate this is a pixelkno image
 			FileOutputStream fos = new FileOutputStream(downsampled_image);
 			b_.compress(CompressFormat.JPEG, 80, fos);
 			fos.flush();
@@ -92,7 +92,7 @@ public class Image implements Constants {
 		Bitmap b = BitmapFactory.decodeFile(cover_image_name);
 		Bitmap b_ = Bitmap.createBitmap(b, 0, 0, Resize.get(for_name)[0], Resize.get(for_name)[1]);
 		try {
-			File downsampled_image = new File(dump, System.currentTimeMillis() + "_PixelKnot.jpg");
+            File downsampled_image = new File(dump, System.currentTimeMillis() + ".jpg"); // + "_PixelKnot.jpg"); we shouldn't indicate this is a pixelkno image
 			FileOutputStream fos = new FileOutputStream(downsampled_image);
 			b_.compress(CompressFormat.JPEG, 80, fos);
 			fos.flush();
