@@ -75,6 +75,9 @@ public class StegoImageFragment extends SherlockFragment implements Constants, A
 			@Override
 			public void run() {
 				((FragmentListener) a).getPixelKnot().setCoverImageName(path_to_cover_image);
+				
+				((FragmentListener) a).setCanAutoAdvance(true);
+				((FragmentListener) a).autoAdvance();
 			}
 		}, 200);
 		
@@ -90,6 +93,11 @@ public class StegoImageFragment extends SherlockFragment implements Constants, A
 	public void initButtons() {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	@Override
+	public boolean getShouldShowKeyboard() {
+		return false;
 	}
 
 }

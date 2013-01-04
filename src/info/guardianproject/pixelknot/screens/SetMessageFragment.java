@@ -112,6 +112,9 @@ public class SetMessageFragment extends SherlockFragment implements Constants, A
 	private void setEncryption() {
 		((FragmentListener) a).setEncryption(apg);
 		updateButtonProminence();
+		
+		((FragmentListener) a).setCanAutoAdvance(true);
+		((FragmentListener) a).autoAdvance();
 	}
 	
 	private void setPassword() {
@@ -135,6 +138,9 @@ public class SetMessageFragment extends SherlockFragment implements Constants, A
 				if(password_holder.getText().length() > 0) {
 					((FragmentListener) a).getPixelKnot().setPassword(password_holder.getText().toString());
 					updateButtonProminence();
+					
+					((FragmentListener) a).setCanAutoAdvance(true);
+					((FragmentListener) a).autoAdvance();
 				}
 			}
 		});
@@ -206,5 +212,10 @@ public class SetMessageFragment extends SherlockFragment implements Constants, A
 			
 			updateButtonProminence();
 		} catch (JSONException e) {}
+	}
+
+	@Override
+	public boolean getShouldShowKeyboard() {
+		return true;
 	}
 }

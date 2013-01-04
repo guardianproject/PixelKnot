@@ -113,15 +113,9 @@ public class Image implements Constants {
 
 	public static int getScale(int memory_class) {
 		Log.d(Logger.UI, "memory class: " + memory_class);
-		switch(memory_class) {
-		case 24:
-			return 4;
-		case 32:
-			return 4;
-		case 60:
+		if(memory_class >= 60)
 			return 3;
-		default:
+		else
 			return 4;
-		}
 	}
 }

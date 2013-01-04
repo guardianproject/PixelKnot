@@ -109,6 +109,7 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements Const
 	boolean hasSuccessfullyDecrypted = false;
 	boolean hasSuccessfullyPasswordProtected = false;
 	boolean hasSuccessfullyUnlocked = false;
+	boolean canAutoAdvance = false;
 
 	private List<TrustedShareActivity> trusted_share_activities;
 
@@ -192,8 +193,6 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements Const
 		String currentLocale = PreferenceManager.getDefaultSharedPreferences(this).getString(Settings.LANGUAGE, "0");
 		if(!last_locale.equals(currentLocale))
 			setNewLocale(currentLocale);
-		else
-			Log.d(LOG, "no need to reset locale");
 	}
 	
 	@Override
@@ -305,7 +304,7 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements Const
 			action_display.addView(options_holder, action_display.getChildCount());
 		}
 	}
-
+	
 	public class TrustedShareActivity {
 		public String app_name, package_name;
 		public Drawable icon;
@@ -325,17 +324,15 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements Const
 
 		private void setIntent() {
 			intent = new Intent(Intent.ACTION_SEND)
-			.setType("image/jpeg")
-			.setPackage(package_name)
-			.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(pixel_knot.out_file));
+				.setType("image/jpeg")
+				.setPackage(package_name)
+				.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(pixel_knot.out_file));
 
 			view.setOnClickListener(new OnClickListener() {
-
 				@Override
 				public void onClick(View v) {
 					PixelKnotActivity.this.startActivity(intent);
 				}
-
 			});
 		}
 
@@ -679,6 +676,12 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements Const
 					Fragment f = pk_pager.getItem(page);
 					((ActivityListener) f).initButtons();
 					((ActivityListener) f).updateUi();
+					
+					if(((ActivityListener) f).getShouldShowKeyboard())
+						imm.toggleSoftInput(0, InputMethodManager.SHOW_IMPLICIT);
+					else
+						imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+
 				}
 			});
 			
@@ -956,7 +959,20 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements Const
 
 	@Override
 	public void autoAdvance() {
-		autoAdvance(view_pager.getCurrentItem() == pk_pager.getCount() - 1 ? 0 : view_pager.getCurrentItem() + 1);
+		if(this.getCanAutoAdvance()) {
+			autoAdvance(view_pager.getCurrentItem() == pk_pager.getCount() - 1 ? 0 : view_pager.getCurrentItem() + 1);
+			setCanAutoAdvance(false);
+		}
+	}
+	
+	@Override
+	public boolean getCanAutoAdvance() {
+		return this.canAutoAdvance;
+	}
+
+	@Override
+	public void setCanAutoAdvance(boolean canAutoAdvance) {
+		this.canAutoAdvance = canAutoAdvance;
 	}
 
 	@Override
@@ -980,5 +996,4 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements Const
 		getResources().updateConfiguration(configuration, getResources().getDisplayMetrics());
 		restart();
 	}
-
 }

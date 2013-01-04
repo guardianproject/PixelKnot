@@ -16,6 +16,7 @@ import org.json.JSONException;
 import com.actionbarsherlock.app.SherlockFragment;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -43,6 +44,7 @@ public class CoverImageFragment extends SherlockFragment implements Constants, M
 
 	Activity a;
 	Handler h = new Handler();
+	ProgressDialog progress_dialog;
 
 	@Override
 	public View onCreateView(LayoutInflater li, ViewGroup container, Bundle savedInstanceState) {
@@ -92,18 +94,31 @@ public class CoverImageFragment extends SherlockFragment implements Constants, M
 
 				Bitmap b_ = BitmapFactory.decodeFile(path_to_cover_image, opts);
 				cover_image_holder.setImageBitmap(b_);
+				
+				try {
+					progress_dialog.dismiss();
+				} catch(NullPointerException e) {}
+				
 			}
 		});
 
 		((FragmentListener) a).getPixelKnot().setCoverImageName(path_to_cover_image);
+		h.postDelayed(new Runnable() {
+			@Override
+			public void run() {
+				((FragmentListener) a).autoAdvance();
+			}
+		}, 1000);
 
 	}
 
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
+		
 		if(resultCode == Activity.RESULT_OK) {
 			if(requestCode == Source.GALLERY || requestCode == Source.CAMERA) {
+				((FragmentListener) a).setCanAutoAdvance(true);
 				if(requestCode == Source.GALLERY) {
 					cover_image_uri = data.getData();
 					path_to_cover_image = IO.pullPathFromUri(a, cover_image_uri);
@@ -133,6 +148,8 @@ public class CoverImageFragment extends SherlockFragment implements Constants, M
 
 			@Override
 			public void onClick(View v) {
+				progress_dialog = ProgressDialog.show(a, "", getString(R.string.please_wait));
+				
 				cover_image_file = new File(DUMP, "temp_img.jpg");
 				cover_image_uri = Uri.fromFile(cover_image_file);
 				path_to_cover_image = cover_image_file.getAbsolutePath();
@@ -150,6 +167,8 @@ public class CoverImageFragment extends SherlockFragment implements Constants, M
 
 			@Override
 			public void onClick(View v) {
+				progress_dialog = ProgressDialog.show(a, "", getString(R.string.please_wait));
+				
 				Intent galleryIntent = new Intent(Intent.ACTION_GET_CONTENT).setType("image/*");
 				startActivityForResult(galleryIntent, Source.GALLERY);
 			}
@@ -177,5 +196,10 @@ public class CoverImageFragment extends SherlockFragment implements Constants, M
 			setImageData();
 		}
 
+	}
+	
+	@Override
+	public boolean getShouldShowKeyboard() {
+		return false;
 	}
 }
