@@ -1,0 +1,3 @@
+[submodule "external/F5Android"]
+	path = external/F5Android
+	url = https://github.com/harlo/F5Android.git

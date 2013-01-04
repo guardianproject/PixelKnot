@@ -855,7 +855,7 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements Const
 			trusted_share_activities = new Vector<TrustedShareActivity>();
 
 			Intent intent = new Intent(Intent.ACTION_SEND)
-			.setType("image/jpeg");
+			.setType("image/*");
 
 			PackageManager pm = getPackageManager();
 			for(ResolveInfo ri : pm.queryIntentActivities(intent, 0)) {
