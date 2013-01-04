@@ -195,11 +195,7 @@ public class CoverImageFragment extends SherlockFragment implements Constants, M
 		} else {
 			setImageData();
 		}
+		
 
-	}
-	
-	@Override
-	public boolean getShouldShowKeyboard() {
-		return false;
 	}
 }

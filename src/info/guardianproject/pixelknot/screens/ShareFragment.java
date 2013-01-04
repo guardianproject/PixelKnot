@@ -102,7 +102,6 @@ public class ShareFragment extends SherlockFragment implements Constants, Activi
 				t++;
 			}
 		}
-		
 	}
 
 	@Override
@@ -141,11 +140,5 @@ public class ShareFragment extends SherlockFragment implements Constants, Activi
 		});
 		
 		((FragmentListener) a).setButtonOptions(new ImageButton[] {share, start_over});
-		
-	}
-	
-	@Override
-	public boolean getShouldShowKeyboard() {
-		return false;
 	}
 }

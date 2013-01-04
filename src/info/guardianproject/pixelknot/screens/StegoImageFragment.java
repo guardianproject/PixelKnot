@@ -94,10 +94,4 @@ public class StegoImageFragment extends SherlockFragment implements Constants, A
 		// TODO Auto-generated method stub
 		
 	}
-	
-	@Override
-	public boolean getShouldShowKeyboard() {
-		return false;
-	}
-
 }

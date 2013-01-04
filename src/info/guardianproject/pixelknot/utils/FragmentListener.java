@@ -5,6 +5,7 @@ import java.util.List;
 import info.guardianproject.pixelknot.PixelKnotActivity.PixelKnot;
 import info.guardianproject.pixelknot.PixelKnotActivity.TrustedShareActivity;
 import info.guardianproject.pixelknot.crypto.Apg;
+import android.view.View;
 import android.widget.ImageButton;
 
 public interface FragmentListener {
@@ -33,4 +34,6 @@ public interface FragmentListener {
 	public void updateButtonProminence(int which, int new_resource);
 	public void autoAdvance();
 	public void autoAdvance(int position);
+	public void showKeyboard(View target);
+	public void hideKeyboard();
 }

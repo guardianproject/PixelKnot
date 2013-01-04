@@ -56,6 +56,7 @@ public class DecryptImageFragment extends SherlockFragment implements Constants,
 			e.printStackTrace();
 		}
 
+		((FragmentListener) a).showKeyboard(secret_message_holder);
 	}
 
 	@Override
@@ -73,10 +74,5 @@ public class DecryptImageFragment extends SherlockFragment implements Constants,
 		});
 		
 		((FragmentListener) a).setButtonOptions(new ImageButton[] {start_over});
-	}
-	
-	@Override
-	public boolean getShouldShowKeyboard() {
-		return true;
 	}
 }

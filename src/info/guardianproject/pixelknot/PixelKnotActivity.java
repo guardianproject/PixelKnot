@@ -101,6 +101,7 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements Const
 	private ProgressDialog progress_dialog;
 	Handler h = new Handler();
 	InputMethodManager imm;
+	boolean keyboardIsShowing = false;
 
 	boolean hasSeenFirstPage = false;
 	boolean hasSuccessfullyEmbed = false;
@@ -297,12 +298,28 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements Const
 
 			action_display_.setVisibility(View.VISIBLE);
 			action_display_.addView(options_holder, action_display_.getChildCount());
+			keyboardIsShowing = true;
 		} else {
 			action_display_.setVisibility(View.GONE);
 
 			action_display.setVisibility(View.VISIBLE);
 			action_display.addView(options_holder, action_display.getChildCount());
+			keyboardIsShowing = false;
 		}
+	}
+	
+	@Override
+	public void showKeyboard(View target) {
+		if(!keyboardIsShowing) {
+			imm.toggleSoftInput(0, InputMethodManager.SHOW_IMPLICIT);
+			target.requestFocus();
+		}
+	}
+	
+	@Override
+	public void hideKeyboard() {
+		if(keyboardIsShowing)
+			imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
 	}
 	
 	public class TrustedShareActivity {
@@ -661,40 +678,31 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements Const
 	}
 
 	@Override
-	public void onPageScrollStateChanged(int state) {
-		if(state == ViewPager.SCROLL_STATE_IDLE) {
-			h.post(new Runnable() {
-				@Override
-				public void run() {
-					int page = view_pager.getCurrentItem();
-					for(int v=0; v<progress_holder.getChildCount(); v++) {
-						View view = progress_holder.getChildAt(v);
-						if(view instanceof ImageView)
-							((ImageView) view).setBackgroundResource(page == v ? d_ : d);
-					}
-
-					Fragment f = pk_pager.getItem(page);
-					((ActivityListener) f).initButtons();
-					((ActivityListener) f).updateUi();
-					
-					if(((ActivityListener) f).getShouldShowKeyboard())
-						imm.toggleSoftInput(0, InputMethodManager.SHOW_IMPLICIT);
-					else
-						imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
-
-				}
-			});
-			
-		}
-		
-		
-	}
+	public void onPageScrollStateChanged(int state) {}
 
 	@Override
 	public void onPageScrolled(int arg0, float arg1, int arg2) {}
 
 	@Override
-	public void onPageSelected(int page) {}
+	public void onPageSelected(final int page) {
+		h.post(new Runnable() {
+			@Override
+			public void run() {
+				for(int v=0; v<progress_holder.getChildCount(); v++) {
+					View view = progress_holder.getChildAt(v);
+					if(view instanceof ImageView)
+						((ImageView) view).setBackgroundResource(page == v ? d_ : d);
+				}
+
+				Fragment f = pk_pager.getItem(page);
+				if(page != 1)
+					hideKeyboard();
+				
+				((ActivityListener) f).initButtons();
+				((ActivityListener) f).updateUi();
+			}
+		});
+	}
 
 
 	@Override

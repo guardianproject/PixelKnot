@@ -62,7 +62,6 @@ public class SetMessageFragment extends SherlockFragment implements Constants, A
 		
 		secret_message_holder = (EditText) root_view.findViewById(R.id.secret_message_holder);
 		secret_message_holder.setFilters(new InputFilter[] {monitor_stego_space});
-
 		updateCapacity();
 		return root_view;
 	}
@@ -146,6 +145,7 @@ public class SetMessageFragment extends SherlockFragment implements Constants, A
 		});
 		
 		ad.show();
+		((FragmentListener) a).showKeyboard(password_holder);
 	}
 	
 	@Override
@@ -211,11 +211,7 @@ public class SetMessageFragment extends SherlockFragment implements Constants, A
 			}
 			
 			updateButtonProminence();
+			((FragmentListener) a).showKeyboard(secret_message_holder);
 		} catch (JSONException e) {}
-	}
-
-	@Override
-	public boolean getShouldShowKeyboard() {
-		return true;
 	}
 }
