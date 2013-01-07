@@ -12,6 +12,7 @@
     <string name="result_title">Secret Message:</string>
     <string name="share_again">Share</string>
     <string name="share_with_selected_apps">Share with these trusted apps:</string>
+    <string name="share_no_apps">There doesn\'t appear to be any apps you can share your image with.\n\nWhy not try using GMail, Dropbox, or Flickr?  Or try your luck by clicking the share button below.</string>
 
     <string name="password">Password</string>
     <string name="set">Set</string>

@@ -57,6 +57,7 @@ public interface Constants {
 			public static final String TUMBLR = "Tumblr";
 			public static final String WORDPRESS = "Wordpress";
 			public static final String SKYPE = "Skype";
+			public static final String EMAIL = "Email";
 		}
 	}
 }

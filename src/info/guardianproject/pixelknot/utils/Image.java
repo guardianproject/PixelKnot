@@ -39,6 +39,7 @@ public class Image implements Constants {
 		activities.put("com.tumblr", ActivityNames.TUMBLR);
 		activities.put("org.wordpress.android", ActivityNames.WORDPRESS);
 		activities.put("com.skype.raider", ActivityNames.SKYPE);
+		activities.put("com.google.android.email", ActivityNames.EMAIL);
 		Activities = Collections.unmodifiableMap(activities);
 	}
 
@@ -51,8 +52,9 @@ public class Image implements Constants {
 	}
 
 	public final static String[] TRUSTED_SHARE_ACTIVITIES = {
-		ActivityNames.GMAIL,
 		ActivityNames.BLUETOOTH,
+		ActivityNames.EMAIL,
+		ActivityNames.GMAIL,
 		ActivityNames.BUMP,
 		ActivityNames.DRIVE,
 		ActivityNames.DROPBOX,

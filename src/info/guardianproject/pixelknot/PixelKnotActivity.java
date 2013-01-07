@@ -399,7 +399,6 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements Const
 
 		public void setCoverImageName(String cover_image_name) {
 			this.cover_image_name = cover_image_name;
-
 			// TODO: get and set new capacity!
 			try {
 				put(Keys.COVER_IMAGE_NAME, cover_image_name);
@@ -544,7 +543,8 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements Const
 					@Override
 					public void run() {
 						@SuppressWarnings("unused")
-						Embed embed = new Embed(PixelKnotActivity.this, dump.getName(), Image.downsampleImage(pixel_knot.cover_image_name, dump, scale), secret_message);
+						Embed embed = new Embed(PixelKnotActivity.this, dump.getName(), Image.downsampleImage(pixel_knot.cover_image_name, dump, 4), secret_message);
+						//Embed embed = new Embed(PixelKnotActivity.this, dump.getName(), pixel_knot.cover_image_name, secret_message);
 					}
 				}).start();
 			}
