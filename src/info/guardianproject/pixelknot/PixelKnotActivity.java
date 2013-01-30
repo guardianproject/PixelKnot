@@ -4,11 +4,14 @@ import info.guardianproject.f5android.Embed;
 import info.guardianproject.f5android.Embed.EmbedListener;
 import info.guardianproject.f5android.Extract;
 import info.guardianproject.f5android.Extract.ExtractionListener;
+import info.guardianproject.f5android.F5Buffers.F5Notification;
 import info.guardianproject.pixelknot.Constants.PixelKnot.Keys;
+import info.guardianproject.pixelknot.Constants.Screens.Loader;
 import info.guardianproject.pixelknot.crypto.Aes;
 import info.guardianproject.pixelknot.crypto.Apg;
 import info.guardianproject.pixelknot.screens.CoverImageFragment;
 import info.guardianproject.pixelknot.screens.DecryptImageFragment;
+import info.guardianproject.pixelknot.screens.PixelKnotLoader;
 import info.guardianproject.pixelknot.screens.SetMessageFragment;
 import info.guardianproject.pixelknot.screens.ShareFragment;
 import info.guardianproject.pixelknot.screens.StegoImageFragment;
@@ -44,7 +47,6 @@ import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
@@ -81,7 +83,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 @SuppressLint("NewApi")
-public class PixelKnotActivity extends SherlockFragmentActivity implements Constants, FragmentListener, ViewPager.OnPageChangeListener, View.OnClickListener, OnGlobalLayoutListener, MediaScannerListener, EmbedListener, ExtractionListener {
+public class PixelKnotActivity extends SherlockFragmentActivity implements F5Notification, Constants, FragmentListener, ViewPager.OnPageChangeListener, View.OnClickListener, OnGlobalLayoutListener, MediaScannerListener, EmbedListener, ExtractionListener {
 	private PKPager pk_pager;
 	private ViewPager view_pager;
 
@@ -98,7 +100,8 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements Const
 
 	private PixelKnot pixel_knot = new PixelKnot();
 
-	private ProgressDialog progress_dialog;
+	PixelKnotLoader loader;
+
 	Handler h = new Handler();
 	InputMethodManager imm;
 	boolean keyboardIsShowing = false;
@@ -113,6 +116,8 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements Const
 	boolean canAutoAdvance = false;
 
 	private List<TrustedShareActivity> trusted_share_activities;
+	
+	//private int steps_taken = 0;
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -500,7 +505,9 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements Const
 			if(hasSuccessfullyEmbed)
 				return;
 
-			progress_dialog = ProgressDialog.show(PixelKnotActivity.this, "", PixelKnotActivity.this.getString(R.string.please_wait));
+			loader = new PixelKnotLoader(PixelKnotActivity.this);
+			loader.show();
+			loader.init(Loader.Steps.EMBED);
 
 			if(pixel_knot.getPassword() && !hasSuccessfullyPasswordProtected) {
 				new Thread(new Runnable() {
@@ -515,7 +522,7 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements Const
 								@Override
 								public void run() {
 									try {
-										progress_dialog.dismiss();
+										loader.finish();
 									} catch(NullPointerException e) {}
 									save();
 								}
@@ -531,7 +538,7 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements Const
 					@Override
 					public void run() {
 						try {
-							progress_dialog.dismiss();
+							loader.finish();
 						} catch(NullPointerException e) {}
 					}
 				});
@@ -543,7 +550,7 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements Const
 					@Override
 					public void run() {
 						@SuppressWarnings("unused")
-						Embed embed = new Embed(PixelKnotActivity.this, dump.getName(), Image.downsampleImage(pixel_knot.cover_image_name, dump, 4), secret_message);
+						Embed embed = new Embed(PixelKnotActivity.this, dump.getName(), Image.downsampleImage(pixel_knot.cover_image_name, dump), secret_message);
 						//Embed embed = new Embed(PixelKnotActivity.this, dump.getName(), pixel_knot.cover_image_name, secret_message);
 					}
 				}).start();
@@ -559,7 +566,10 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements Const
 					Extract extract = new Extract(PixelKnotActivity.this, cover_image_name);
 				}
 			}).start();
-			progress_dialog = ProgressDialog.show(PixelKnotActivity.this, "", PixelKnotActivity.this.getString(R.string.please_wait));
+
+			loader = new PixelKnotLoader(PixelKnotActivity.this);
+			loader.show();
+			loader.init(Loader.Steps.EXTRACT);
 		}
 
 		public void setOutFile(File out_file) {
@@ -599,7 +609,7 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements Const
 				@Override
 				public void run() {
 					try {
-						progress_dialog.dismiss();
+						loader.finish();
 					} catch(NullPointerException e) {}
 
 					((ActivityListener) pk_pager.getItem(view_pager.getCurrentItem())).updateUi();
@@ -610,7 +620,10 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements Const
 
 							@Override
 							public void onClick(DialogInterface dialog, int which) {
-								progress_dialog = ProgressDialog.show(PixelKnotActivity.this, "", PixelKnotActivity.this.getString(R.string.please_wait));
+								loader = new PixelKnotLoader(PixelKnotActivity.this);
+								loader.show();
+								loader.init(Loader.Steps.DECRYPT);
+								
 								ByteArrayOutputStream baos = new ByteArrayOutputStream();
 								try {
 									baos.write(total_message.getBytes());
@@ -769,7 +782,7 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements Const
 				case(Activity.RESULT_OK):
 					pixel_knot.setSecretMessage(sm);
 				try {
-					progress_dialog.dismiss();
+					loader.finish();
 				} catch(NullPointerException e) {}
 
 				hasSuccessfullyExtracted = true;
@@ -793,7 +806,7 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements Const
 				((ImageButton) options_holder.getChildAt(0)).setEnabled(true);
 
 				try {
-					progress_dialog.dismiss();
+					loader.finish();
 				} catch(NullPointerException e) {
 					Log.e(Logger.UI, e.toString());
 					e.printStackTrace();
@@ -853,7 +866,7 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements Const
 				setHasSuccessfullyExtracted(true);
 				((ActivityListener) pk_pager.getItem(view_pager.getCurrentItem())).updateUi();
 				try {
-					progress_dialog.dismiss();
+					loader.finish();
 				} catch(NullPointerException e) {}
 				break;
 			}
@@ -1003,5 +1016,18 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements Const
 		}
 		getResources().updateConfiguration(configuration, getResources().getDisplayMetrics());
 		restart();
+	}
+
+	@Override
+	public void onUpdate() {
+		//steps_taken++;
+		loader.post();
+		//Log.d(Logger.UI, "steps taken: " + steps_taken);
+	}
+
+	@Override
+	public void onFailure() {
+		loader.cancel();
+		// TODO: maybe there is a message, too.
 	}
 }

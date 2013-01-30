@@ -62,13 +62,22 @@ public class Image implements Constants {
 		ActivityNames.SKYPE
 	};
 
-	public static String downsampleImage(String cover_image_name, File dump, int scale) {
-		Bitmap b = BitmapFactory.decodeFile(cover_image_name);
+	public static String downsampleImage(String cover_image_name, File dump) {
+		int scale = 1;
 
 		BitmapFactory.Options opts = new BitmapFactory.Options();
+		opts.inJustDecodeBounds = true;
+		BitmapFactory.decodeFile(cover_image_name, opts);
+		int x = Math.max(opts.outHeight, opts.outWidth);
+		
+		if(x > 1280)
+			scale = (int) Math.ceil(x/1280.0);
+		
+		Log.d(Logger.UI, "FYI scale is " + scale + " on img of " + opts.outWidth + " x " + opts.outHeight);
+		
+		opts = new BitmapFactory.Options();
 		opts.inSampleSize = scale;
-		b.recycle();
-
+		
 		Bitmap b_ = BitmapFactory.decodeFile(cover_image_name, opts);
 		try {
 			File downsampled_image = new File(dump, System.currentTimeMillis() + ".jpg"); // + "_PixelKnot.jpg"); we shouldn't indicate this is a pixelkno image

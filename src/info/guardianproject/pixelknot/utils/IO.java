@@ -1,9 +1,18 @@
 package info.guardianproject.pixelknot.utils;
 
+import info.guardianproject.pixelknot.Constants.Logger;
+
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.util.Log;
 
 public class IO {
 	public static String pullPathFromUri(Context context, Uri uri) {
@@ -21,5 +30,27 @@ public class IO {
     		
     		return path;
     	}
+	}
+	
+	public static byte[] getBytesFromFile(String path) {
+		Log.d(Logger.UI, "getting bytes from " + path);
+		
+		try {
+			FileInputStream fis = new FileInputStream(new File(path));
+			byte[] buffer = new byte[fis.available()];
+			fis.read(buffer);
+			fis.close();
+			
+			return buffer;
+			
+		} catch (FileNotFoundException e) {
+			Log.e(Logger.UI, e.toString());
+			e.printStackTrace();
+		} catch (IOException e) {
+			Log.e(Logger.UI, e.toString());
+			e.printStackTrace();
+		}
+		
+		return null;
 	}
 }

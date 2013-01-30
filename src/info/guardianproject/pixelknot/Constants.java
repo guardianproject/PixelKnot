@@ -31,6 +31,24 @@ public interface Constants {
 		public static final String DECRYPT = "doDecryptOn";
 	}
 	
+	public static class Screens {
+		public static class Loader {
+			public static int[] KNOT_IMAGES = {
+				R.drawable.knot_catspaw,
+				R.drawable.knot_lariatloop,
+				R.drawable.knot_overhand,
+				R.drawable.knot_sailors,
+				R.drawable.knot_stevedors
+			};
+			
+			public static class Steps {
+				public static final int EMBED = 7;
+				public static final int EXTRACT = 6;
+				public static final int DECRYPT = 3;
+			}
+		}
+	}
+	
 	public static class PixelKnot {
 		public static class Keys {
 			public static final String COVER_IMAGE_NAME = "cover_image_name";

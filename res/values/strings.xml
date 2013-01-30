@@ -18,6 +18,7 @@
     <string name="set">Set</string>
     <string name="ok">OK</string>
     <string name="please_wait">Please wait\u2026</string>
+    <string name="loading">Loading</string>
     <string name="embed_success">Share your secret image\u2026</string>
     
     <string name="about">About</string>
@@ -44,6 +45,12 @@
     <string name="pref_languages_default">System Default</string>
     <string name="pref_languages_en_us">English (US)</string>
     <string name="pref_languages_fa">Farsi</string>
+    
+    <string name="knot_catspaw">Cat\'s Paw</string>
+    <string name="knot_lariatloop">Lariat Loop</string>
+    <string name="knot_overhand">Overhand</string>
+    <string name="knot_sailors">Sailor\'s</string>
+    <string name="knot_stevedors">Stevedor\'s</string>
         
     <!-- APG related -->
     <string name="apg_error_activity_not_found">No suitable application for this action found.</string>
