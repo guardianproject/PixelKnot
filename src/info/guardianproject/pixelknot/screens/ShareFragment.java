@@ -2,6 +2,8 @@ package info.guardianproject.pixelknot.screens;
 
 import java.util.List;
 
+import org.json.JSONException;
+
 import com.actionbarsherlock.app.SherlockFragment;
 
 import info.guardianproject.pixelknot.Constants;
@@ -11,6 +13,9 @@ import info.guardianproject.pixelknot.R;
 import info.guardianproject.pixelknot.utils.ActivityListener;
 import info.guardianproject.pixelknot.utils.FragmentListener;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Gravity;
@@ -18,6 +23,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TableLayout;
@@ -66,8 +72,66 @@ public class ShareFragment extends SherlockFragment implements Constants, Activi
 			content_holder.addView(content);
 			return;
 		}
+		
+		if(!((FragmentListener) a).getPixelKnot().has(Keys.PASSWORD) && !((FragmentListener) a).getPixelKnot().getPasswordOverride()) {
+			// TODO: pop-up for password set
+			warnPassword();
+			return;
+		}
 
 		((FragmentListener) a).getPixelKnot().save();
+	}
+	
+	private void warnPassword() {
+		Builder ad = new AlertDialog.Builder(a);
+		ad.setTitle(getResources().getString(R.string.wait));
+		ad.setMessage(getResources().getString(R.string.warn_password_message));
+		ad.setPositiveButton(getResources().getString(R.string.warn_password_yes), new DialogInterface.OnClickListener() {
+
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				((FragmentListener) a).getPixelKnot().setPasswordOverride(true);
+			}
+			
+		});
+		ad.setNegativeButton(getResources().getString(R.string.warn_password_no), new DialogInterface.OnClickListener() {
+
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				setPassword();
+			}
+			
+		});
+		ad.show();
+	}
+	
+	private void setPassword() {
+		final EditText password_holder = new EditText(a);
+		try {
+			if(((FragmentListener) a).getPixelKnot().has(Keys.PASSWORD))
+				password_holder.setText(((FragmentListener) a).getPixelKnot().getString(Keys.PASSWORD));
+			else
+				password_holder.setHint(getString(R.string.password));
+			
+		} catch (JSONException e) {
+			password_holder.setHint(getString(R.string.password));
+		}
+		
+		Builder ad = new AlertDialog.Builder(a);
+		ad.setView(password_holder);
+		ad.setPositiveButton(getString(R.string.set), new DialogInterface.OnClickListener() {
+			
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				if(password_holder.getText().length() > 0) {
+					((FragmentListener) a).getPixelKnot().setPassword(password_holder.getText().toString());
+					embed();
+				}
+			}
+		});
+		
+		ad.show();
+		((FragmentListener) a).showKeyboard(password_holder);
 	}
 
 	@Override

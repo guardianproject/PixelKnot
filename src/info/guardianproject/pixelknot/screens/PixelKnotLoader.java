@@ -61,6 +61,11 @@ public class PixelKnotLoader extends AlertDialog {
 		post();
 	}
 	
+	public void update(int additional_steps) {
+		this.num_steps += additional_steps;
+		knot_progress.setMax(num_steps);
+	}
+	
 	public void post() {
 		h.post(r);
 	}

@@ -117,7 +117,7 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements F5Not
 
 	private List<TrustedShareActivity> trusted_share_activities;
 	
-	//private int steps_taken = 0;
+	private int steps_taken = 0;
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -377,6 +377,7 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements F5Not
 
 		boolean can_save = false;
 		boolean has_encryption = false;
+		boolean password_override = false;
 
 		int capacity = 0;
 		Embed embed = null;
@@ -428,6 +429,17 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements F5Not
 			} catch(JSONException e) {}
 
 			can_save = checkIfReadyToSave();
+		}
+		
+		public void setPasswordOverride(boolean password_override) {
+			this.password_override = password_override;
+			if(password_override && getPassword())
+				remove(Keys.PASSWORD);
+				
+		}
+		
+		public boolean getPasswordOverride() {
+			return this.password_override;
 		}
 
 		public void setPassword(String password) {
@@ -1017,12 +1029,17 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements F5Not
 		getResources().updateConfiguration(configuration, getResources().getDisplayMetrics());
 		restart();
 	}
+	
+	@Override
+	public void onUpdate(int steps, int interval) {
+		
+	}
 
 	@Override
 	public void onUpdate() {
-		//steps_taken++;
+		steps_taken++;
 		loader.post();
-		//Log.d(Logger.UI, "steps taken: " + steps_taken);
+		Log.d(Logger.UI, "steps taken: " + steps_taken);
 	}
 
 	@Override

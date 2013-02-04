@@ -83,7 +83,15 @@ public class SetMessageFragment extends SherlockFragment implements Constants, A
 		
 	}
 	
-	public void updateButtonProminence() {		
+	public void updateButtonProminence() {
+		int password_protect_resource = R.drawable.password_off_selector;
+		
+		if (((PixelKnotActivity.PixelKnot) ((FragmentListener) a).getPixelKnot()).getPassword())
+			password_protect_resource = R.drawable.password_on_selector;
+		
+		((FragmentListener) a).updateButtonProminence(0, password_protect_resource);
+		
+		/*
 		int encrypt_message_resource = R.drawable.encrypt_off_selector;
 		int password_protect_resource = R.drawable.password_off_selector;
 		
@@ -94,6 +102,7 @@ public class SetMessageFragment extends SherlockFragment implements Constants, A
 		
 		((FragmentListener) a).updateButtonProminence(0, encrypt_message_resource);		
 		((FragmentListener) a).updateButtonProminence(1, password_protect_resource);
+		*/
 	}
 
 	private void setEncryptionIds() {
@@ -174,6 +183,7 @@ public class SetMessageFragment extends SherlockFragment implements Constants, A
 	
 	@Override
 	public void initButtons() {
+		/*
 		ImageButton encrypt_message = new ImageButton(a);
 		encrypt_message.setBackgroundColor(getResources().getColor(android.R.color.transparent));
 		encrypt_message.setPadding(0, 0, 0, 0);
@@ -186,6 +196,7 @@ public class SetMessageFragment extends SherlockFragment implements Constants, A
 			
 		});
 		encrypt_message.setImageResource(R.drawable.encrypt_off_selector);
+		*/
 		
 		ImageButton password_protect = new ImageButton(a);
 		password_protect.setBackgroundColor(getResources().getColor(android.R.color.transparent));
@@ -198,7 +209,8 @@ public class SetMessageFragment extends SherlockFragment implements Constants, A
 		});
 		password_protect.setImageResource(R.drawable.password_off_selector);
 		
-		((FragmentListener) a).setButtonOptions(new ImageButton[] {encrypt_message, password_protect});
+		//((FragmentListener) a).setButtonOptions(new ImageButton[] {encrypt_message, password_protect});
+		((FragmentListener) a).setButtonOptions(new ImageButton[] {password_protect});
 	}
 	
 	@Override

@@ -51,7 +51,12 @@
     <string name="knot_overhand">Overhand</string>
     <string name="knot_sailors">Sailor\'s</string>
     <string name="knot_stevedors">Stevedor\'s</string>
-        
+    
+    <string name="warn_password_message">You haven\'t set a password for your image.  Are you sure you want to continue?</string>
+    <string name="warn_password_yes">Yes, continue.</string>
+    <string name="warn_password_no">No, set my password.</string>
+    <string name="wait">Wait!</string>
+    
     <!-- APG related -->
     <string name="apg_error_activity_not_found">No suitable application for this action found.</string>
     <string name="apg_error_apg_version_not_supported">The installed APG version is not supported.</string>
