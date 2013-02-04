@@ -42,9 +42,10 @@ public interface Constants {
 			};
 			
 			public static class Steps {
-				public static final int EMBED = 46;
+				public static final int EMBED = 12;
 				public static final int EXTRACT = 6;
 				public static final int DECRYPT = 3;
+				public static final int ENCRYPT = 5;
 			}
 		}
 	}

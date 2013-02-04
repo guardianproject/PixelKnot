@@ -6,8 +6,10 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+import info.guardianproject.pixelknot.PixelKnotActivity;
 import info.guardianproject.pixelknot.R;
 import info.guardianproject.pixelknot.Constants.Screens.Loader;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.os.Handler;
@@ -21,7 +23,7 @@ public class PixelKnotLoader extends AlertDialog {
 	Context context;
 	ProgressBar knot_progress;
 	ImageView knot_image;
-	TextView knot_title;
+	TextView knot_title, knot_warning;
 	
 	List<Integer> display_order;
 	Iterator<Integer> load_engine;
@@ -38,7 +40,7 @@ public class PixelKnotLoader extends AlertDialog {
 	int num_steps = 0;
 	int step = -1;
 	
-	public PixelKnotLoader(Context c) {
+	public PixelKnotLoader(Activity c) {
 		super(c);
 		this.context = c;
 		
@@ -46,6 +48,12 @@ public class PixelKnotLoader extends AlertDialog {
 		knot_progress = (ProgressBar) root.findViewById(R.id.knot_progress);
 		knot_image = (ImageView) root.findViewById(R.id.knot_image);
 		knot_title = (TextView) root.findViewById(R.id.knot_title);
+		
+		if(((PixelKnotActivity) c).am.getMemoryClass() <= 64) {
+			knot_warning = (TextView) root.findViewById(R.id.knot_warning);
+			knot_warning.setText(c.getResources().getString(R.string.memory_class_warning));
+			knot_warning.setVisibility(View.VISIBLE);
+		}
 		
 		this.setView(root);
 		this.setCancelable(false);

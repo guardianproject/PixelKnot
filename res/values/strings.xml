@@ -56,6 +56,7 @@
     <string name="warn_password_yes">Yes, continue.</string>
     <string name="warn_password_no">No, set my password.</string>
     <string name="wait">Wait!</string>
+    <string name="memory_class_warning">PixelKnot is working, but it might take awhile to create your image.</string>
     
     <!-- APG related -->
     <string name="apg_error_activity_not_found">No suitable application for this action found.</string>

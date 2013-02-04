@@ -91,6 +91,7 @@ public class ShareFragment extends SherlockFragment implements Constants, Activi
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				((FragmentListener) a).getPixelKnot().setPasswordOverride(true);
+				embed();
 			}
 			
 		});

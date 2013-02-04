@@ -11,9 +11,14 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+import android.content.ContentUris;
+import android.content.Context;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Bitmap.CompressFormat;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.util.Log;
 
 public class Image implements Constants {
@@ -40,6 +45,7 @@ public class Image implements Constants {
 		activities.put("org.wordpress.android", ActivityNames.WORDPRESS);
 		activities.put("com.skype.raider", ActivityNames.SKYPE);
 		activities.put("com.google.android.email", ActivityNames.EMAIL);
+		activities.put("com.htc.android.mail", ActivityNames.EMAIL);
 		Activities = Collections.unmodifiableMap(activities);
 	}
 
@@ -69,24 +75,24 @@ public class Image implements Constants {
 		opts.inJustDecodeBounds = true;
 		BitmapFactory.decodeFile(cover_image_name, opts);
 		int x = Math.max(opts.outHeight, opts.outWidth);
-		
+
 		if(x > 1280)
 			scale = (int) Math.ceil(x/1280.0);
-		
+
 		Log.d(Logger.UI, "FYI scale is " + scale + " on img of " + opts.outWidth + " x " + opts.outHeight);
-		
+
 		opts = new BitmapFactory.Options();
 		opts.inSampleSize = scale;
-		
-		Bitmap b_ = BitmapFactory.decodeFile(cover_image_name, opts);
+
+		Bitmap b = BitmapFactory.decodeFile(cover_image_name, opts);
 		try {
 			File downsampled_image = new File(dump, System.currentTimeMillis() + ".jpg"); // + "_PixelKnot.jpg"); we shouldn't indicate this is a pixelkno image
 			FileOutputStream fos = new FileOutputStream(downsampled_image);
-			b_.compress(CompressFormat.JPEG, 80, fos);
+			b.compress(CompressFormat.JPEG, 100, fos);
 			fos.flush();
 			fos.close();
 
-			b_.recycle();
+			b.recycle();
 			return downsampled_image.getAbsolutePath();
 		} catch (FileNotFoundException e) {
 			Log.e(Logger.UI, e.toString());
@@ -103,7 +109,7 @@ public class Image implements Constants {
 		Bitmap b = BitmapFactory.decodeFile(cover_image_name);
 		Bitmap b_ = Bitmap.createBitmap(b, 0, 0, Resize.get(for_name)[0], Resize.get(for_name)[1]);
 		try {
-            File downsampled_image = new File(dump, System.currentTimeMillis() + ".jpg"); // + "_PixelKnot.jpg"); we shouldn't indicate this is a pixelkno image
+			File downsampled_image = new File(dump, System.currentTimeMillis() + ".jpg"); // + "_PixelKnot.jpg"); we shouldn't indicate this is a pixelkno image
 			FileOutputStream fos = new FileOutputStream(downsampled_image);
 			b_.compress(CompressFormat.JPEG, 80, fos);
 			fos.flush();
@@ -128,5 +134,40 @@ public class Image implements Constants {
 			return 3;
 		else
 			return 4;
+	}
+
+	public static boolean cleanUp(Context c, String[] file_names) {
+		for(String fn : file_names) {
+			File file = new File(fn);
+			Uri uri = Uri.fromFile(file);
+			if(file.exists()) {
+				if(uri.getScheme().equals("file")) {
+					Uri[] bases = {
+							MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+							MediaStore.Images.Media.INTERNAL_CONTENT_URI
+					};
+
+					for(Uri base : bases) {
+						Cursor cursor = c.getContentResolver().query(
+								base, 
+								new String[] {MediaStore.Images.Media._ID, MediaStore.Images.Media.DATA}, 
+								MediaStore.Images.Media.DATA + " =?",
+								new String[] {uri.getPath()},
+								null);
+						while(cursor.moveToNext()) {
+							long id = cursor.getLong(cursor.getColumnIndex(MediaStore.Images.Media._ID));
+							c.getContentResolver().delete(ContentUris.withAppendedId(base, id), null, null);
+						}
+						
+						cursor.close();
+					}
+				} else 
+					c.getContentResolver().delete(uri, null, null);
+				
+				file.delete();
+			}
+		}
+
+		return true;
 	}
 }

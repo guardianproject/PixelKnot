@@ -87,9 +87,7 @@ public class Aes {
 			new_message = Base64.encodeToString(cipher.doFinal(message.getBytes("UTF-8")), Base64.DEFAULT);
 			
 			pack = new HashMap<String, String>();
-			pack.put(iv, new_message);
-			Log.d(Logger.UI, pack.toString());
-			
+			pack.put(iv, new_message);			
 		} catch (IllegalBlockSizeException e) {
 			Log.e(Logger.UI, e.toString());
 			e.printStackTrace();

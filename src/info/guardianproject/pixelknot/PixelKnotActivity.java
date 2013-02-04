@@ -116,6 +116,7 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements F5Not
 	boolean canAutoAdvance = false;
 
 	private List<TrustedShareActivity> trusted_share_activities;
+	public ActivityManager am;
 	
 	private int steps_taken = 0;
 
@@ -131,7 +132,7 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements F5Not
 		
 		setContentView(R.layout.pixel_knot_activity);
 		
-		ActivityManager am = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
+		am = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
 		scale = Image.getScale(am.getMemoryClass());
 		
 		if(Build.VERSION.SDK_INT <= 10)
@@ -405,7 +406,6 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements F5Not
 
 		public void setCoverImageName(String cover_image_name) {
 			this.cover_image_name = cover_image_name;
-			// TODO: get and set new capacity!
 			try {
 				put(Keys.COVER_IMAGE_NAME, cover_image_name);
 				put(Keys.CAPACITY, capacity);
@@ -519,13 +519,15 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements F5Not
 
 			loader = new PixelKnotLoader(PixelKnotActivity.this);
 			loader.show();
-			loader.init(Loader.Steps.EMBED);
+			
 
 			if(pixel_knot.getPassword() && !hasSuccessfullyPasswordProtected) {
 				new Thread(new Runnable() {
 					@Override
 					public void run() {
 						try {
+							loader.init(Loader.Steps.ENCRYPT);
+							onUpdate();
 							Entry<String, String> pack = Aes.EncryptWithPassword(pixel_knot.getString(Keys.PASSWORD), secret_message).entrySet().iterator().next();
 
 							secret_message = PASSWORD_SENTINEL.concat(new String(pack.getKey())).concat(pack.getValue());
@@ -558,12 +560,15 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements F5Not
 			}
 
 			if((!pixel_knot.has_encryption && !pixel_knot.getPassword()) || (hasSuccessfullyEncrypted || hasSuccessfullyPasswordProtected)) {
+				loader.init(Loader.Steps.EMBED);
+				
 				new Thread(new Runnable() {
 					@Override
 					public void run() {
+						pixel_knot.setCoverImageName(Image.downsampleImage(pixel_knot.cover_image_name, dump));
+						
 						@SuppressWarnings("unused")
-						Embed embed = new Embed(PixelKnotActivity.this, dump.getName(), Image.downsampleImage(pixel_knot.cover_image_name, dump), secret_message);
-						//Embed embed = new Embed(PixelKnotActivity.this, dump.getName(), pixel_knot.cover_image_name, secret_message);
+						Embed embed = new Embed(PixelKnotActivity.this, dump.getName(), cover_image_name, secret_message);
 					}
 				}).start();
 			}
@@ -814,7 +819,12 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements F5Not
 			@Override
 			public void run() {
 				hasSuccessfullyEmbed = true;
+				
+				if(Image.cleanUp(PixelKnotActivity.this, new String[] {pixel_knot.cover_image_name, new File(DUMP, "temp_img.jpg").getAbsolutePath()}));
+					out_file.renameTo(new File(pixel_knot.cover_image_name));
+				
 				pixel_knot.setOutFile(out_file);
+				
 				((ImageButton) options_holder.getChildAt(0)).setEnabled(true);
 
 				try {
@@ -824,6 +834,7 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements F5Not
 					e.printStackTrace();
 				}
 
+				
 				((ActivityListener) pk_pager.getItem(view_pager.getCurrentItem())).updateUi();
 			}
 		});
