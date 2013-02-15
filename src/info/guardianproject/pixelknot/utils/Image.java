@@ -86,7 +86,7 @@ public class Image implements Constants {
 
 		Bitmap b = BitmapFactory.decodeFile(cover_image_name, opts);
 		try {
-			File downsampled_image = new File(dump, System.currentTimeMillis() + ".jpg"); // + "_PixelKnot.jpg"); we shouldn't indicate this is a pixelkno image
+			File downsampled_image = new File(dump, System.currentTimeMillis() + ".jpg");
 			FileOutputStream fos = new FileOutputStream(downsampled_image);
 			b.compress(CompressFormat.JPEG, 100, fos);
 			fos.flush();
@@ -126,14 +126,6 @@ public class Image implements Constants {
 		}
 
 		return null;
-	}
-
-	public static int getScale(int memory_class) {
-		Log.d(Logger.UI, "memory class: " + memory_class);
-		if(memory_class >= 60)
-			return 3;
-		else
-			return 4;
 	}
 
 	public static boolean cleanUp(Context c, String[] file_names) {

@@ -19,11 +19,16 @@ import info.guardianproject.pixelknot.utils.ActivityListener;
 import info.guardianproject.pixelknot.utils.FragmentListener;
 import info.guardianproject.pixelknot.utils.IO;
 import info.guardianproject.pixelknot.utils.Image;
+import info.guardianproject.pixelknot.utils.PixelKnotMediaScanner;
 import info.guardianproject.pixelknot.utils.PixelKnotMediaScanner.MediaScannerListener;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -133,7 +138,6 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements F5Not
 		setContentView(R.layout.pixel_knot_activity);
 		
 		am = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
-		scale = Image.getScale(am.getMemoryClass());
 		
 		if(Build.VERSION.SDK_INT <= 10)
 			getSupportActionBar().hide();
@@ -750,8 +754,10 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements F5Not
 
 	@Override
 	public void onMediaScanned(String path, Uri uri) {
-		pixel_knot.setCoverImageName(path);
-		((CoverImageFragment) pk_pager.fragments.get(0)).setImageData();
+		if(!hasSuccessfullyEmbed) {
+			pixel_knot.setCoverImageName(path);
+			((CoverImageFragment) pk_pager.fragments.get(0)).setImageData();
+		}
 	}
 
 
@@ -820,11 +826,18 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements F5Not
 			public void run() {
 				hasSuccessfullyEmbed = true;
 				
-				if(Image.cleanUp(PixelKnotActivity.this, new String[] {pixel_knot.cover_image_name, new File(DUMP, "temp_img.jpg").getAbsolutePath()}));
+				if(Image.cleanUp(PixelKnotActivity.this, new String[] {pixel_knot.cover_image_name, new File(DUMP, "temp_img.jpg").getAbsolutePath()})) {
 					out_file.renameTo(new File(pixel_knot.cover_image_name));
+					pixel_knot.setOutFile(new File(pixel_knot.cover_image_name));
+				} else
+					pixel_knot.setOutFile(out_file);
 				
-				pixel_knot.setOutFile(out_file);
-				
+				try {
+					new PixelKnotMediaScanner(PixelKnotActivity.this, pixel_knot.getString(Keys.OUT_FILE_NAME));
+				} catch (JSONException e) {
+					Log.e(Logger.UI, e.toString());
+					e.printStackTrace();
+				}
 				((ImageButton) options_holder.getChildAt(0)).setEnabled(true);
 
 				try {
@@ -834,7 +847,6 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements F5Not
 					e.printStackTrace();
 				}
 
-				
 				((ActivityListener) pk_pager.getItem(view_pager.getCurrentItem())).updateUi();
 			}
 		});
