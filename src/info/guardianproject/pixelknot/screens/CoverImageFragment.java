@@ -111,7 +111,7 @@ public class CoverImageFragment extends SherlockFragment implements Constants, A
 				BitmapFactory.Options opts = new BitmapFactory.Options();
 				opts.inJustDecodeBounds = true;
 				
-				Bitmap b = BitmapFactory.decodeFile(path_to_cover_image, opts);
+				BitmapFactory.decodeFile(path_to_cover_image, opts);
 				int scale = Math.min(4, opts.outWidth/10);
 				if(opts.outHeight > opts.outWidth)
 					scale = Math.min(4, opts.outHeight/10);

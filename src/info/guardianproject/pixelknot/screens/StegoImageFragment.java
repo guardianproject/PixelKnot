@@ -6,7 +6,6 @@ import com.actionbarsherlock.app.SherlockFragment;
 
 import info.guardianproject.pixelknot.Constants;
 import info.guardianproject.pixelknot.R;
-import info.guardianproject.pixelknot.Constants.Logger;
 import info.guardianproject.pixelknot.Constants.PixelKnot.Keys;
 import info.guardianproject.pixelknot.utils.ActivityListener;
 import info.guardianproject.pixelknot.utils.FragmentListener;
@@ -15,7 +14,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,9 +28,7 @@ public class StegoImageFragment extends SherlockFragment implements Constants, A
 	
 	Activity a;
 	Handler h = new Handler();
-	
-	private static final String LOG = Logger.UI;
-	
+		
 	@Override
 	public View onCreateView(LayoutInflater li, ViewGroup container, Bundle savedInstanceState) {
 		root_view = li.inflate(R.layout.cover_image_fragment, container, false);
@@ -61,7 +57,6 @@ public class StegoImageFragment extends SherlockFragment implements Constants, A
 		h.post(new Runnable() {
 			@Override
 			public void run() {
-				Log.d(LOG, "PATH TO COVER IMAGE: " + path_to_cover_image);
 				
 				BitmapFactory.Options opts = new BitmapFactory.Options();
 				opts.inJustDecodeBounds = true;

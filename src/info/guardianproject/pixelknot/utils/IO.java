@@ -2,11 +2,11 @@ package info.guardianproject.pixelknot.utils;
 
 import info.guardianproject.pixelknot.Constants.Logger;
 
-import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.URLDecoder;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -15,9 +15,10 @@ import android.provider.MediaStore;
 import android.util.Log;
 
 public class IO {
+	@SuppressWarnings("deprecation")
 	public static String pullPathFromUri(Context context, Uri uri) {
 		if(uri.getScheme() != null && uri.getScheme().equals("file"))
-    		return uri.toString().replace("file://", "");
+    		return URLDecoder.decode(uri.toString().replace("file://", ""));
 		else {
     		String path = null;
     		String[] cols = {MediaStore.Images.Media.DATA};

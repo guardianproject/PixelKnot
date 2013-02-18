@@ -162,17 +162,20 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements F5Not
 			fragments.add(1, set_message_fragment);
 			fragments.add(2, share_fragment);
 		} else {
+			Log.d(LOG, "this type: " + getIntent().getType());
+			
 			Fragment stego_image_fragment = Fragment.instantiate(this, StegoImageFragment.class.getName());
 			Bundle args = new Bundle();
+			
 			try {
-				args.putString(Keys.COVER_IMAGE_NAME, getIntent().getStringExtra(Intent.EXTRA_TEXT));
-				
+				args.putString(Keys.COVER_IMAGE_NAME, IO.pullPathFromUri(this, getIntent().getData()));
 			} catch(NullPointerException e) {
-				try {
-					args.putString(Keys.COVER_IMAGE_NAME, IO.pullPathFromUri(this, getIntent().getData()));
-				} catch(NullPointerException e1) {
-					finish();
+				if(getIntent().hasExtra(Intent.EXTRA_STREAM)) {
+					args.putString(Keys.COVER_IMAGE_NAME, IO.pullPathFromUri(this, (Uri) getIntent().getExtras().get(Intent.EXTRA_STREAM)));
+				} else if(getIntent().hasExtra(Intent.EXTRA_TEXT)) {
+					args.putString(Keys.COVER_IMAGE_NAME, IO.pullPathFromUri(this, Uri.parse(getIntent().getStringExtra(Intent.EXTRA_TEXT))));
 				}
+				
 			}
 			
 			stego_image_fragment.setArguments(args);
@@ -1054,7 +1057,11 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements F5Not
 
 	@Override
 	public void onFailure() {
-		loader.cancel();
+		try {
+			loader.cancel();
+		} catch(NullPointerException e) {}
+		finish();
+		
 		// TODO: maybe there is a message, too.
 	}
 
