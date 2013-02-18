@@ -13,7 +13,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical" >
 
-            <TextView
+            <info.guardianproject.pixelknot.screens.mods.PKHeader
                 style="@style/h2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -28,7 +28,7 @@
                 style="@style/p_link_email"
                 android:text="@string/about_us_gp_email" />
 
-            <TextView
+            <info.guardianproject.pixelknot.screens.mods.PKHeader
                 style="@style/h2"
                 android:text="@string/about_stego" />
 
@@ -36,7 +36,7 @@
                 style="@style/p"
                 android:text="@string/about_stego_" />
 
-            <TextView
+            <info.guardianproject.pixelknot.screens.mods.PKHeader
                 style="@style/h2"
                 android:text="@string/about_version" />
 
@@ -44,7 +44,7 @@
                 android:id="@+id/about_version"
                 style="@style/p" />
 
-            <TextView
+            <info.guardianproject.pixelknot.screens.mods.PKHeader
                 style="@style/h2"
                 android:text="@string/about_project_home" />
 
@@ -53,7 +53,7 @@
                 android:id="@+id/about_project_home"
                 android:text="@string/about_project_home_" />
 
-            <TextView
+            <info.guardianproject.pixelknot.screens.mods.PKHeader
                 style="@style/h2"
                 android:text="@string/about_license" />
 
@@ -68,8 +68,8 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/about_license_holder" />
 
-            <TextView
-                style="@style/p"
+            <info.guardianproject.pixelknot.screens.mods.PKSubHeader
+                style="@style/h2"
                 android:text="@string/about_lovingly_" />
         </LinearLayout>
     </ScrollView>

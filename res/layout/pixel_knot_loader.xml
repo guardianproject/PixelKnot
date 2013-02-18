@@ -6,24 +6,17 @@
     android:weightSum="1.0"
     android:gravity="center"
     android:background="#ff000000" >
-    <TextView
-        android:id="@+id/knot_warning"
-        android:layout_width="fill_parent"
-        android:layout_height="0dip"
-        android:layout_weight="0.05"
-        android:visibility="gone" />
     <ImageView
         android:id="@+id/knot_image"
         android:layout_width="fill_parent"
         android:layout_height="0dip"
         android:layout_weight="0.55"
         android:gravity="center" />
-    <TextView
+    <info.guardianproject.pixelknot.screens.mods.PKHeader style="@style/h1"
         android:id="@+id/knot_title"
         android:layout_width="fill_parent"
         android:layout_height="0dip"
         android:layout_weight="0.25"
-        android:textSize="26sp"
         android:paddingTop="8dip"
         android:paddingBottom="8dip"
         android:gravity="center" />
@@ -35,15 +28,16 @@
         android:layout_weight="0.05"
         android:paddingLeft="8dip"
         android:paddingRight="8dip"
-        android:gravity="center" />
+        android:gravity="center"
+        android:progressDrawable="@drawable/progress_bar"
+         />
 
-    <TextView 
+    <info.guardianproject.pixelknot.screens.mods.PKSubHeader  style="@style/h2"
         android:layout_width="fill_parent"
         android:layout_height="0dip"
         android:layout_weight="0.1"
         android:paddingTop="8dip"
         android:paddingBottom="8dip"
-        android:textSize="16sp"
         android:gravity="center"
         android:text="@string/loading" />
     

@@ -36,4 +36,5 @@ public interface FragmentListener {
 	public void autoAdvance(int position);
 	public void showKeyboard(View target);
 	public void hideKeyboard();
+	public void doWait(boolean status);
 }

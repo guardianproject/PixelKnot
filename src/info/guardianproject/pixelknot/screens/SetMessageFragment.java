@@ -62,7 +62,6 @@ public class SetMessageFragment extends SherlockFragment implements Constants, A
 		
 		secret_message_holder = (EditText) root_view.findViewById(R.id.secret_message_holder);
 		secret_message_holder.setFilters(new InputFilter[] {monitor_stego_space});
-		updateCapacity();
 		return root_view;
 	}
 	
@@ -77,52 +76,6 @@ public class SetMessageFragment extends SherlockFragment implements Constants, A
 		} catch (JSONException e) {}
 		
 		
-	}
-	
-	private void updateCapacity() {
-		
-	}
-	
-	public void updateButtonProminence() {
-		int password_protect_resource = R.drawable.password_off_selector;
-		
-		if (((PixelKnotActivity.PixelKnot) ((FragmentListener) a).getPixelKnot()).getPassword())
-			password_protect_resource = R.drawable.password_on_selector;
-		
-		((FragmentListener) a).updateButtonProminence(0, password_protect_resource);
-		
-		/*
-		int encrypt_message_resource = R.drawable.encrypt_off_selector;
-		int password_protect_resource = R.drawable.password_off_selector;
-		
-		if(((PixelKnotActivity.PixelKnot) ((FragmentListener) a).getPixelKnot()).getEncryption())
-			encrypt_message_resource = R.drawable.encrypt_on_selector;
-		else if (((PixelKnotActivity.PixelKnot) ((FragmentListener) a).getPixelKnot()).getPassword())
-			password_protect_resource = R.drawable.password_on_selector;
-		
-		((FragmentListener) a).updateButtonProminence(0, encrypt_message_resource);		
-		((FragmentListener) a).updateButtonProminence(1, password_protect_resource);
-		*/
-	}
-
-	private void setEncryptionIds() {
-		apg.selectEncryptionKeys(this, a, null);
-	}
-	
-	private void setSecretKey() {
-		apg = Apg.getInstance();
-		if(!apg.isAvailable(a.getApplicationContext()))
-			Toast.makeText(a, getString(R.string.apg_error_activity_not_found), Toast.LENGTH_LONG).show();
-		else
-			apg.selectSecretKey(this);
-	}
-	
-	private void setEncryption() {
-		((FragmentListener) a).setEncryption(apg);
-		updateButtonProminence();
-		
-		((FragmentListener) a).setCanAutoAdvance(true);
-		((FragmentListener) a).autoAdvance();
 	}
 	
 	private void setPassword() {
@@ -145,7 +98,6 @@ public class SetMessageFragment extends SherlockFragment implements Constants, A
 			public void onClick(DialogInterface dialog, int which) {
 				if(password_holder.getText().length() > 0) {
 					((FragmentListener) a).getPixelKnot().setPassword(password_holder.getText().toString());
-					updateButtonProminence();
 					
 					((FragmentListener) a).setCanAutoAdvance(true);
 					((FragmentListener) a).autoAdvance();
@@ -158,45 +110,22 @@ public class SetMessageFragment extends SherlockFragment implements Constants, A
 	}
 	
 	@Override
-	public void onActivityResult(int requestCode, int resultCode, Intent data) {
-		Log.d(Logger.UI, "result code: " + resultCode);
-		if(resultCode == Activity.RESULT_OK) {
-			switch(requestCode) {
-			case Apg.SELECT_SECRET_KEY:
-				apg.onActivityResult(a, requestCode, resultCode, data);
-				secret_key = apg.getSignatureKeyId();
-				setEncryptionIds();
-				
-				break;
-			case Apg.SELECT_PUBLIC_KEYS:
-				apg.onActivityResult(a, requestCode, resultCode, data);
-				encryption_ids = apg.getEncryptionKeys();
-				
-				setEncryption();
-				break;
-			case Apg.ENCRYPT_MESSAGE:
-				apg.onActivityResult(a, requestCode, resultCode, data);
-				break;
-			}
-		}
-	}
-	
-	@Override
 	public void initButtons() {
-		/*
-		ImageButton encrypt_message = new ImageButton(a);
-		encrypt_message.setBackgroundColor(getResources().getColor(android.R.color.transparent));
-		encrypt_message.setPadding(0, 0, 0, 0);
-		encrypt_message.setOnClickListener(new OnClickListener() {
+		
+		ImageButton share_unprotected = new ImageButton(a);
+		share_unprotected.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+		share_unprotected.setPadding(0, 0, 0, 0);
+		share_unprotected.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				setSecretKey();
+				((FragmentListener) a).getPixelKnot().setPasswordOverride(true);
+				((FragmentListener) a).setCanAutoAdvance(true);
+				((FragmentListener) a).autoAdvance();
 			}
 			
 		});
-		encrypt_message.setImageResource(R.drawable.encrypt_off_selector);
-		*/
+		share_unprotected.setImageResource(R.drawable.share_selector);
 		
 		ImageButton password_protect = new ImageButton(a);
 		password_protect.setBackgroundColor(getResources().getColor(android.R.color.transparent));
@@ -207,22 +136,18 @@ public class SetMessageFragment extends SherlockFragment implements Constants, A
 				setPassword();
 			}
 		});
-		password_protect.setImageResource(R.drawable.password_off_selector);
+		password_protect.setImageResource(R.drawable.password_selector);
 		
-		//((FragmentListener) a).setButtonOptions(new ImageButton[] {encrypt_message, password_protect});
-		((FragmentListener) a).setButtonOptions(new ImageButton[] {password_protect});
+		((FragmentListener) a).setButtonOptions(new ImageButton[] {share_unprotected, password_protect});
 	}
 	
 	@Override
 	public void updateUi() {
 		try {
 			String secret_message = ((FragmentListener) a).getPixelKnot().has(Keys.SECRET_MESSAGE) ? ((FragmentListener) a).getPixelKnot().getString(Keys.SECRET_MESSAGE) : null;
-			if(secret_message == null) {
+			if(secret_message == null)
 				secret_message_holder.setText("");
-				updateCapacity();
-			}
 			
-			updateButtonProminence();
 			((FragmentListener) a).showKeyboard(secret_message_holder);
 		} catch (JSONException e) {}
 	}

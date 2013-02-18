@@ -49,12 +49,6 @@ public class PixelKnotLoader extends AlertDialog {
 		knot_image = (ImageView) root.findViewById(R.id.knot_image);
 		knot_title = (TextView) root.findViewById(R.id.knot_title);
 		
-		if(((PixelKnotActivity) c).am.getMemoryClass() <= 64) {
-			knot_warning = (TextView) root.findViewById(R.id.knot_warning);
-			knot_warning.setText(c.getResources().getString(R.string.memory_class_warning));
-			knot_warning.setVisibility(View.VISIBLE);
-		}
-		
 		this.setView(root);
 		this.setCancelable(false);
 		randomizeOrder();

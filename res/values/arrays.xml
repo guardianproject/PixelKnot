@@ -17,11 +17,17 @@
     </string-array>
     
     <string-array name="knot_names">
+        <item>@string/knot_bow</item>
         <item>@string/knot_catspaw</item>
+        <item>@string/knot_double_overhand</item>
+        <item>@string/knot_fishermans_eye</item>
         <item>@string/knot_lariatloop</item>
         <item>@string/knot_overhand</item>
+        <item>@string/knot_running</item>
         <item>@string/knot_sailors</item>
+        <item>@string/knot_sheepshank</item>
         <item>@string/knot_stevedors</item>
+        <item>@string/knot_surgeons</item>
     </string-array>
     
     <string-array name="about_software">

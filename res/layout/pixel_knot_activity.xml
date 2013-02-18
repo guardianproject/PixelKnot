@@ -5,53 +5,18 @@
     android:layout_height="match_parent"
     android:background="@drawable/pk_bkg"
     android:orientation="vertical" >
-
-    <RelativeLayout
-        android:id="@+id/pk_header"
-        android:layout_width="fill_parent"
-        android:layout_height="45dip"
-        android:layout_alignParentTop="true"
-        android:orientation="horizontal" >
-
-        <ImageView
-            android:id="@+id/pk_logo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:padding="3dip"
-            android:scaleType="fitCenter"
-            android:src="@drawable/ic_launcher" />
-
-        <TextView
-            style="@style/h1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="2dip"
-            android:layout_toRightOf="@+id/pk_logo"
-            android:text="@string/app_name" />
-    </RelativeLayout>
-
-    <LinearLayout
-        android:id="@+id/action_display_"
-        style="@style/action_display"
-        android:layout_width="wrap_content"
-        android:layout_height="45dip"
-        android:layout_alignParentRight="true"
-        android:orientation="horizontal" />
-
     <android.support.v4.view.ViewPager
         android:id="@+id/fragment_holder"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/action_display"
-        android:layout_below="@+id/pk_header"
         android:background="@drawable/pk_frame" />
 
     <LinearLayout
         android:id="@+id/action_display"
         android:layout_width="fill_parent"
-        android:layout_height="95dip"
+        android:layout_height="110dip"
+        android:layout_marginBottom="6dip"
         android:layout_alignParentBottom="true"
         android:gravity="center_horizontal"
         android:orientation="vertical" >
@@ -67,7 +32,7 @@
             android:id="@+id/options_holder"
             style="@style/action_display"
             android:layout_width="wrap_content"
-            android:layout_height="45dip"
+            android:layout_height="75dip"
             android:orientation="horizontal" />
     </LinearLayout>
 

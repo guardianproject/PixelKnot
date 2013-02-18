@@ -24,11 +24,7 @@ import info.guardianproject.pixelknot.utils.PixelKnotMediaScanner.MediaScannerLi
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -42,6 +38,7 @@ import javax.crypto.Cipher;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
@@ -52,6 +49,7 @@ import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
@@ -62,7 +60,6 @@ import android.content.res.Configuration;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
@@ -84,7 +81,6 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 @SuppressLint("NewApi")
@@ -100,12 +96,14 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements F5Not
 	private LinearLayout options_holder, action_display, action_display_;
 	private LinearLayout progress_holder;
 	private ImageButton start_over;
+	private ActionBar action_bar;
 
 	private static final String LOG = Logger.UI;
 
 	private PixelKnot pixel_knot = new PixelKnot();
 
 	PixelKnotLoader loader;
+	ProgressDialog please_wait;
 
 	Handler h = new Handler();
 	InputMethodManager imm;
@@ -135,22 +133,21 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements F5Not
 		d = R.drawable.progress_off_selected;
 		d_ = R.drawable.progress_on;
 		
+		action_bar = getSupportActionBar();
+		View action_bar_root = LayoutInflater.from(this).inflate(R.layout.action_bar, null);
+		action_bar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+		action_bar.setCustomView(action_bar_root);
+		
 		setContentView(R.layout.pixel_knot_activity);
 		
 		am = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
 		
-		if(Build.VERSION.SDK_INT <= 10)
-			getSupportActionBar().hide();
-		else
-			((RelativeLayout) findViewById(R.id.pk_header)).setVisibility(View.GONE);
-			
-
 		imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
 
 		options_holder = (LinearLayout) findViewById(R.id.options_holder);
 
 		action_display = (LinearLayout) findViewById(R.id.action_display);
-		action_display_ = (LinearLayout) findViewById(R.id.action_display_);
+		action_display_ = (LinearLayout) action_bar_root.findViewById(R.id.action_display_);
 
 		progress_holder = (LinearLayout) findViewById(R.id.progress_holder);
 
@@ -712,31 +709,34 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements F5Not
 	}
 
 	@Override
-	public void onPageScrollStateChanged(int state) {}
+	public void onPageScrollStateChanged(int state) {
+		Log.d(LOG, "state " + state);
+		if(state == 0) {
+			h.post(new Runnable() {
+				@Override
+				public void run() {
+					for(int v=0; v<progress_holder.getChildCount(); v++) {
+						View view = progress_holder.getChildAt(v);
+						if(view instanceof ImageView)
+							((ImageView) view).setBackgroundResource(view_pager.getCurrentItem() == v ? d_ : d);
+					}
+
+					Fragment f = pk_pager.getItem(view_pager.getCurrentItem());
+					if(view_pager.getCurrentItem() != 1)
+						hideKeyboard();
+					
+					((ActivityListener) f).initButtons();
+					((ActivityListener) f).updateUi();
+				}
+			});
+		}
+	}
 
 	@Override
 	public void onPageScrolled(int arg0, float arg1, int arg2) {}
 
 	@Override
-	public void onPageSelected(final int page) {
-		h.post(new Runnable() {
-			@Override
-			public void run() {
-				for(int v=0; v<progress_holder.getChildCount(); v++) {
-					View view = progress_holder.getChildAt(v);
-					if(view instanceof ImageView)
-						((ImageView) view).setBackgroundResource(page == v ? d_ : d);
-				}
-
-				Fragment f = pk_pager.getItem(page);
-				if(page != 1)
-					hideKeyboard();
-				
-				((ActivityListener) f).initButtons();
-				((ActivityListener) f).updateUi();
-			}
-		});
-	}
+	public void onPageSelected(int page) {}
 
 
 	@Override
@@ -754,9 +754,10 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements F5Not
 
 	@Override
 	public void onMediaScanned(String path, Uri uri) {
+		
 		if(!hasSuccessfullyEmbed) {
 			pixel_knot.setCoverImageName(path);
-			((CoverImageFragment) pk_pager.fragments.get(0)).setImageData();
+			((CoverImageFragment) pk_pager.fragments.get(0)).setImageData(path, uri);
 		}
 	}
 
@@ -882,30 +883,6 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements F5Not
 	@Override
 	public void setEncryption(Apg apg) {
 		pixel_knot.setEncryption(true, apg);
-	}
-
-	@Override
-	public void onActivityResult(int requestCode, int resultCode, Intent data) {
-		super.onActivityResult(requestCode, resultCode, data);
-		if(resultCode == Activity.RESULT_OK) {
-			switch(requestCode) {
-			case Apg.ENCRYPT_MESSAGE:
-				pixel_knot.apg.onActivityResult(this, requestCode, resultCode, data);
-				pixel_knot.setSecretMessage(pixel_knot.apg.getEncryptedData());
-				setHasSuccessfullyEncrypted(true);
-				pixel_knot.save();
-				break;
-			case Apg.DECRYPT_MESSAGE:
-				pixel_knot.apg.onActivityResult(this, requestCode, resultCode, data);
-				pixel_knot.setSecretMessage(pixel_knot.apg.getDecryptedData());
-				setHasSuccessfullyExtracted(true);
-				((ActivityListener) pk_pager.getItem(view_pager.getCurrentItem())).updateUi();
-				try {
-					loader.finish();
-				} catch(NullPointerException e) {}
-				break;
-			}
-		}
 	}
 
 	@Override
@@ -1055,7 +1032,7 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements F5Not
 	
 	@Override
 	public void onUpdate(int steps, int interval) {
-		
+		// XXX: I don't use this.
 	}
 
 	@Override
@@ -1069,5 +1046,21 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements F5Not
 	public void onFailure() {
 		loader.cancel();
 		// TODO: maybe there is a message, too.
+	}
+
+	@Override
+	public void doWait(boolean status) {
+		if(status) {
+			please_wait = new ProgressDialog(this);
+			please_wait.setCancelable(false);
+			please_wait.setMessage(getResources().getString(R.string.please_wait));
+			
+			please_wait.show();
+		} else {
+			try {
+				please_wait.dismiss();
+			} catch(NullPointerException e) {}
+		}
+		
 	}
 }

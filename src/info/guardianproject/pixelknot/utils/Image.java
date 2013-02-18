@@ -46,6 +46,7 @@ public class Image implements Constants {
 		activities.put("com.skype.raider", ActivityNames.SKYPE);
 		activities.put("com.google.android.email", ActivityNames.EMAIL);
 		activities.put("com.htc.android.mail", ActivityNames.EMAIL);
+		activities.put("com.android.email", ActivityNames.EMAIL);
 		Activities = Collections.unmodifiableMap(activities);
 	}
 

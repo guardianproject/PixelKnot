@@ -16,7 +16,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical" >
 
-            <TextView style="@style/h2"
+            <info.guardianproject.pixelknot.screens.mods.PKSubHeader style="@style/h2"
                 android:id="@+id/title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
@@ -36,6 +36,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:text="@string/share_again"
-        android:visibility="invisible" />
+        android:visibility="invisible"
+         />
 
 </RelativeLayout>

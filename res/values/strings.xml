@@ -18,7 +18,7 @@
     <string name="set">Set</string>
     <string name="ok">OK</string>
     <string name="please_wait">Please wait\u2026</string>
-    <string name="loading">Loading</string>
+    <string name="loading">Loading\u2026</string>
     <string name="embed_success">Share your secret image\u2026</string>
     
     <string name="about">About</string>
@@ -46,11 +46,18 @@
     <string name="pref_languages_en_us">English (US)</string>
     <string name="pref_languages_fa">Farsi</string>
     
+    <!--  KNOT NAMES -->
+    <string name="knot_bow">Bow</string>
     <string name="knot_catspaw">Cat\'s Paw</string>
+    <string name="knot_double_overhand">Double Overhand</string>
+    <string name="knot_fishermans_eye">Fisherman\'s Eye</string>
     <string name="knot_lariatloop">Lariat Loop</string>
     <string name="knot_overhand">Overhand</string>
+    <string name="knot_running">Running</string>
     <string name="knot_sailors">Sailor\'s</string>
+    <string name="knot_sheepshank">Sheepshank</string>
     <string name="knot_stevedors">Stevedor\'s</string>
+    <string name="knot_surgeons">Surgeon\'s</string>
     
     <string name="warn_password_message">You haven\'t set a password for your image.  Are you sure you want to continue?</string>
     <string name="warn_password_yes">Yes, continue.</string>

@@ -72,67 +72,8 @@ public class ShareFragment extends SherlockFragment implements Constants, Activi
 			content_holder.addView(content);
 			return;
 		}
-		
-		if(!((FragmentListener) a).getPixelKnot().has(Keys.PASSWORD) && !((FragmentListener) a).getPixelKnot().getPasswordOverride()) {
-			// TODO: pop-up for password set
-			warnPassword();
-			return;
-		}
 
 		((FragmentListener) a).getPixelKnot().save();
-	}
-	
-	private void warnPassword() {
-		Builder ad = new AlertDialog.Builder(a);
-		ad.setTitle(getResources().getString(R.string.wait));
-		ad.setMessage(getResources().getString(R.string.warn_password_message));
-		ad.setPositiveButton(getResources().getString(R.string.warn_password_yes), new DialogInterface.OnClickListener() {
-
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				((FragmentListener) a).getPixelKnot().setPasswordOverride(true);
-				embed();
-			}
-			
-		});
-		ad.setNegativeButton(getResources().getString(R.string.warn_password_no), new DialogInterface.OnClickListener() {
-
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				setPassword();
-			}
-			
-		});
-		ad.show();
-	}
-	
-	private void setPassword() {
-		final EditText password_holder = new EditText(a);
-		try {
-			if(((FragmentListener) a).getPixelKnot().has(Keys.PASSWORD))
-				password_holder.setText(((FragmentListener) a).getPixelKnot().getString(Keys.PASSWORD));
-			else
-				password_holder.setHint(getString(R.string.password));
-			
-		} catch (JSONException e) {
-			password_holder.setHint(getString(R.string.password));
-		}
-		
-		Builder ad = new AlertDialog.Builder(a);
-		ad.setView(password_holder);
-		ad.setPositiveButton(getString(R.string.set), new DialogInterface.OnClickListener() {
-			
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				if(password_holder.getText().length() > 0) {
-					((FragmentListener) a).getPixelKnot().setPassword(password_holder.getText().toString());
-					embed();
-				}
-			}
-		});
-		
-		ad.show();
-		((FragmentListener) a).showKeyboard(password_holder);
 	}
 
 	@Override
@@ -143,7 +84,7 @@ public class ShareFragment extends SherlockFragment implements Constants, Activi
 			title.setText(getString(R.string.please_wait));
 			embed();
 		} else {
-			((FragmentListener) a).updateButtonProminence(0, R.drawable.share_selector);
+			((FragmentListener) a).updateButtonProminence(1, R.drawable.share_padded_selector);
 
 
 			List<TrustedShareActivity> trusted_share_activities = ((FragmentListener) a).getTrustedShareActivities();
@@ -179,7 +120,7 @@ public class ShareFragment extends SherlockFragment implements Constants, Activi
 
 	@Override
 	public void initButtons() {
-		int share_resource = R.drawable.share_inactive_selector;
+		int share_resource = R.drawable.share_padded_inactive_selector;
 
 		ImageButton share = new ImageButton(a);
 		share.setBackgroundColor(getResources().getColor(android.R.color.transparent));
@@ -187,7 +128,7 @@ public class ShareFragment extends SherlockFragment implements Constants, Activi
 
 		if(((FragmentListener) a).getHasSuccessfullyEmbed()) {
 			share.setEnabled(true);
-			share_resource = R.drawable.share_selector;
+			share_resource = R.drawable.share_padded_selector;
 		} else
 			share.setEnabled(false);
 
@@ -212,6 +153,6 @@ public class ShareFragment extends SherlockFragment implements Constants, Activi
 			}
 		});
 
-		((FragmentListener) a).setButtonOptions(new ImageButton[] {share, start_over});
+		((FragmentListener) a).setButtonOptions(new ImageButton[] {start_over, share});
 	}
 }

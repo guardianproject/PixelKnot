@@ -34,11 +34,17 @@ public interface Constants {
 	public static class Screens {
 		public static class Loader {
 			public static int[] KNOT_IMAGES = {
+				R.drawable.knot_bow,
 				R.drawable.knot_catspaw,
+				R.drawable.knot_double_overhand,
+				R.drawable.knot_fishermans_eye,
 				R.drawable.knot_lariatloop,
 				R.drawable.knot_overhand,
+				R.drawable.knot_running,
 				R.drawable.knot_sailors,
-				R.drawable.knot_stevedors
+				R.drawable.knot_sheepshank,
+				R.drawable.knot_stevedors,
+				R.drawable.knot_surgeons
 			};
 			
 			public static class Steps {

@@ -7,7 +7,6 @@ import info.guardianproject.pixelknot.utils.ActivityListener;
 import info.guardianproject.pixelknot.utils.FragmentListener;
 import info.guardianproject.pixelknot.utils.IO;
 import info.guardianproject.pixelknot.utils.PixelKnotMediaScanner;
-import info.guardianproject.pixelknot.utils.PixelKnotMediaScanner.MediaScannerListener;
 
 import java.io.File;
 
@@ -16,7 +15,6 @@ import org.json.JSONException;
 import com.actionbarsherlock.app.SherlockFragment;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -33,7 +31,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
-public class CoverImageFragment extends SherlockFragment implements Constants, MediaScannerListener, ActivityListener {
+public class CoverImageFragment extends SherlockFragment implements Constants, ActivityListener {
 	View root_view;
 	ImageView cover_image_holder;
 	int blank_image;
@@ -44,13 +42,31 @@ public class CoverImageFragment extends SherlockFragment implements Constants, M
 
 	Activity a;
 	Handler h = new Handler();
-	ProgressDialog progress_dialog;
+	
+	OnClickListener choose_picture_listener = new OnClickListener() {
+
+		@Override
+		public void onClick(View v) {
+			((FragmentListener) a).doWait(true);
+			
+			Intent galleryIntent = new Intent(Intent.ACTION_GET_CONTENT).setType("image/*");
+			startActivityForResult(galleryIntent, Source.GALLERY);
+		}
+
+	};
 
 	@Override
 	public View onCreateView(LayoutInflater li, ViewGroup container, Bundle savedInstanceState) {
 		root_view = li.inflate(R.layout.cover_image_fragment, container, false);
 		cover_image_holder = (ImageView) root_view.findViewById(R.id.cover_image_holder);
 		cover_image_holder.setImageResource(blank_image);
+		
+		if(!((FragmentListener) a).getHasSuccessfullyEmbed()) {
+			cover_image_holder.setOnClickListener(choose_picture_listener);
+		} else {
+			cover_image_holder.setOnClickListener(null);
+		}
+		
 		return root_view;
 	}
 
@@ -72,10 +88,19 @@ public class CoverImageFragment extends SherlockFragment implements Constants, M
 			initButtons();
 			((FragmentListener) a).setHasSeenFirstPage(true);
 		}
+		
+		
 	}
 
 	public void setImageData(String path_to_cover_image) {
 		this.path_to_cover_image = path_to_cover_image;
+		setImageData();
+	}
+	
+	public void setImageData(String path_to_cover_image, Uri uri) {
+		this.path_to_cover_image = path_to_cover_image;
+		cover_image_file = new File(path_to_cover_image);
+		cover_image_uri = uri;
 		setImageData();
 	}
 
@@ -83,24 +108,26 @@ public class CoverImageFragment extends SherlockFragment implements Constants, M
 		h.post(new Runnable() {
 			@Override
 			public void run() {
-				Bitmap b = BitmapFactory.decodeFile(path_to_cover_image);
-				int scale = Math.min(4, b.getWidth()/10);
-				if(b.getHeight() > b.getWidth())
-					scale = Math.min(4, b.getHeight()/10);
-
 				BitmapFactory.Options opts = new BitmapFactory.Options();
+				opts.inJustDecodeBounds = true;
+				
+				Bitmap b = BitmapFactory.decodeFile(path_to_cover_image, opts);
+				int scale = Math.min(4, opts.outWidth/10);
+				if(opts.outHeight > opts.outWidth)
+					scale = Math.min(4, opts.outHeight/10);
+
+				opts = new BitmapFactory.Options();
 				opts.inSampleSize = scale;
-				b.recycle();
 
 				Bitmap b_ = BitmapFactory.decodeFile(path_to_cover_image, opts);
 				cover_image_holder.setImageBitmap(b_);
 				
-				try {
-					progress_dialog.dismiss();
-				} catch(NullPointerException e) {}
+				
 				
 			}
 		});
+		
+		((FragmentListener) a).doWait(false);
 
 		((FragmentListener) a).getPixelKnot().setCoverImageName(path_to_cover_image);
 		h.postDelayed(new Runnable() {
@@ -115,6 +142,7 @@ public class CoverImageFragment extends SherlockFragment implements Constants, M
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
+		((FragmentListener) a).doWait(false);
 		
 		if(resultCode == Activity.RESULT_OK) {
 			if(requestCode == Source.GALLERY || requestCode == Source.CAMERA) {
@@ -125,18 +153,11 @@ public class CoverImageFragment extends SherlockFragment implements Constants, M
 					cover_image_file = new File(path_to_cover_image);
 					setImageData();
 				} else if(requestCode == Source.CAMERA) {
+					((FragmentListener) a).doWait(true);
 					new PixelKnotMediaScanner(a, path_to_cover_image);
 				}    			
 			}
 		}
-	}
-
-	@Override
-	public void onMediaScanned(String path, Uri uri) {
-		path_to_cover_image = path;
-		cover_image_file = new File(path_to_cover_image);
-		cover_image_uri = uri;
-		setImageData();
 	}
 
 	@Override
@@ -148,7 +169,7 @@ public class CoverImageFragment extends SherlockFragment implements Constants, M
 
 			@Override
 			public void onClick(View v) {
-				progress_dialog = ProgressDialog.show(a, "", getString(R.string.please_wait));
+				((FragmentListener) a).doWait(true);
 				
 				cover_image_file = new File(DUMP, "temp_img.jpg");
 				cover_image_uri = Uri.fromFile(cover_image_file);
@@ -163,17 +184,7 @@ public class CoverImageFragment extends SherlockFragment implements Constants, M
 		ImageButton choose_picture = new ImageButton(a);
 		choose_picture.setBackgroundColor(getResources().getColor(android.R.color.transparent));
 		choose_picture.setPadding(0, 0, 0, 0);
-		choose_picture.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				progress_dialog = ProgressDialog.show(a, "", getString(R.string.please_wait));
-				
-				Intent galleryIntent = new Intent(Intent.ACTION_GET_CONTENT).setType("image/*");
-				startActivityForResult(galleryIntent, Source.GALLERY);
-			}
-
-		});
+		choose_picture.setOnClickListener(choose_picture_listener);
 		choose_picture.setImageResource(R.drawable.gallery_selector);
 
 		((FragmentListener) a).setButtonOptions(new ImageButton[] {take_picture, choose_picture});
@@ -194,6 +205,12 @@ public class CoverImageFragment extends SherlockFragment implements Constants, M
 			cover_image_holder.setImageResource(blank_image);
 		} else {
 			setImageData();
+		}
+		
+		if(!((FragmentListener) a).getHasSuccessfullyEmbed()) {
+			cover_image_holder.setOnClickListener(choose_picture_listener);
+		} else {
+			cover_image_holder.setOnClickListener(null);
 		}
 		
 
