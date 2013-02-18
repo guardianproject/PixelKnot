@@ -153,7 +153,7 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements F5Not
 
 		List<Fragment> fragments = new Vector<Fragment>();
 
-		if(getIntent().getData() == null) {
+		if(Intent.ACTION_MAIN.equals(getIntent().getAction())) {
 			Fragment cover_image_fragment = Fragment.instantiate(this, CoverImageFragment.class.getName());
 			Fragment set_message_fragment = Fragment.instantiate(this, SetMessageFragment.class.getName());
 			Fragment share_fragment = Fragment.instantiate(this, ShareFragment.class.getName());
@@ -164,7 +164,17 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements F5Not
 		} else {
 			Fragment stego_image_fragment = Fragment.instantiate(this, StegoImageFragment.class.getName());
 			Bundle args = new Bundle();
-			args.putString(Keys.COVER_IMAGE_NAME, IO.pullPathFromUri(this, getIntent().getData()));
+			try {
+				args.putString(Keys.COVER_IMAGE_NAME, getIntent().getStringExtra(Intent.EXTRA_TEXT));
+				
+			} catch(NullPointerException e) {
+				try {
+					args.putString(Keys.COVER_IMAGE_NAME, IO.pullPathFromUri(this, getIntent().getData()));
+				} catch(NullPointerException e1) {
+					finish();
+				}
+			}
+			
 			stego_image_fragment.setArguments(args);
 
 			Fragment decrypt_image_fragment = Fragment.instantiate(this, DecryptImageFragment.class.getName());

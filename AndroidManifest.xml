@@ -31,28 +31,27 @@
 				<action android:name="android.intent.action.PICK" />
                 <action android:name="android.intent.action.VIEW" />
                 <action android:name="android.intent.action.SEND" />
+                <action android:name="android.intent.action.EDIT" />
                 <action android:name="android.intent.action.GET_CONTENT" />
 
-                <data
-                    android:host="*"
-                    android:mimeType="*/*"
-                    android:pathPattern=".*.jpg"
-                    android:scheme="content" />
+                <data android:mimeType="image/jpeg" />
             </intent-filter>
+            <!-- 
             <intent-filter>
                 <category android:name="android.intent.category.DEFAULT" />
 
                 <action android:name="android.intent.action.PICK" />
                 <action android:name="android.intent.action.VIEW" />
                 <action android:name="android.intent.action.SEND" />
+                <action android:name="android.intent.action.EDIT" />
                 <action android:name="android.intent.action.GET_CONTENT" />
 
                 <data
                     android:host="*"
-                    android:mimeType="*/*"
-                    android:pathPattern=".*.jpg"
+                    android:mimeType="image/jpeg"
                     android:scheme="file" />
             </intent-filter>
+             -->
         </activity>
         <activity android:name=".Preferences" />
     </application>

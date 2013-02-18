@@ -6,6 +6,7 @@ import com.actionbarsherlock.app.SherlockFragment;
 
 import info.guardianproject.pixelknot.Constants;
 import info.guardianproject.pixelknot.R;
+import info.guardianproject.pixelknot.Constants.Logger;
 import info.guardianproject.pixelknot.Constants.PixelKnot.Keys;
 import info.guardianproject.pixelknot.utils.ActivityListener;
 import info.guardianproject.pixelknot.utils.FragmentListener;
@@ -14,6 +15,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +30,8 @@ public class StegoImageFragment extends SherlockFragment implements Constants, A
 	
 	Activity a;
 	Handler h = new Handler();
+	
+	private static final String LOG = Logger.UI;
 	
 	@Override
 	public View onCreateView(LayoutInflater li, ViewGroup container, Bundle savedInstanceState) {
@@ -57,14 +61,18 @@ public class StegoImageFragment extends SherlockFragment implements Constants, A
 		h.post(new Runnable() {
 			@Override
 			public void run() {
-				Bitmap b = BitmapFactory.decodeFile(path_to_cover_image);
-				int scale = Math.min(4, b.getWidth()/10);
-				if(b.getHeight() > b.getWidth())
-					scale = Math.min(4, b.getHeight()/10);
-
+				Log.d(LOG, "PATH TO COVER IMAGE: " + path_to_cover_image);
+				
 				BitmapFactory.Options opts = new BitmapFactory.Options();
+				opts.inJustDecodeBounds = true;
+				
+				Bitmap b = BitmapFactory.decodeFile(path_to_cover_image, opts);
+				int scale = Math.min(4, opts.outWidth/10);
+				if(opts.outHeight > opts.outWidth)
+					scale = Math.min(4, opts.outHeight/10);
+
+				opts = new BitmapFactory.Options();
 				opts.inSampleSize = scale;
-				b.recycle();
 
 				Bitmap b_ = BitmapFactory.decodeFile(path_to_cover_image, opts);
 				cover_image_holder.setImageBitmap(b_);
