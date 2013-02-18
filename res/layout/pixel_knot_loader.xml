@@ -12,7 +12,7 @@
         android:layout_height="0dip"
         android:layout_weight="0.55"
         android:gravity="center" />
-    <info.guardianproject.pixelknot.screens.mods.PKHeader style="@style/h1"
+    <info.guardianproject.pixelknot.screens.mods.PKHeader style="@style/h1_loader"
         android:id="@+id/knot_title"
         android:layout_width="fill_parent"
         android:layout_height="0dip"

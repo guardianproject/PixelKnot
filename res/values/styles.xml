@@ -1,11 +1,21 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
-
+	<style name="Theme.Pixelknot" parent="Theme.Sherlock">
+	    <item name="actionBarStyle">@style/Widget.Pixelknot.ActionBar</item>
+	    <item name="android:actionBarStyle">@style/Widget.Pixelknot.ActionBar</item>
+	    <item name="android:textAppearance">@style/p</item>
+	</style>
+    
+	<style name="Widget.Pixelknot.ActionBar" parent="Widget.Sherlock.Light.ActionBar.Solid.Inverse">
+	    <item name="background">#ff434343</item>
+	    <item name="android:background">#ff434343</item>
+	</style>
+    
     <style name="action_display">
-        <item name="android:background">#80000000</item>
+        <item name="android:background">#00000000</item>
         <item name="android:padding">0dip</item>
     </style>
     <style name="progress_button">
-        <item name="android:background">#80000000</item>
+        <item name="android:background">#00000000</item>
     </style>
     <style name="message_holder">
         <item name="android:background">#80000000</item>
@@ -25,6 +35,10 @@
         <item name="android:padding">6dip</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
+    </style>
+    <style name="h1_loader">
+        <item name="android:textSize">46sp</item>
+        <item name="android:textColor">#ffffffff</item>
     </style>
     <style name="p">
         <item name="android:textSize">20sp</item>

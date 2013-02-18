@@ -754,7 +754,7 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements F5Not
 
 	@Override
 	public void onMediaScanned(String path, Uri uri) {
-		
+		Log.d(LOG, "media scan finished");
 		if(!hasSuccessfullyEmbed) {
 			pixel_knot.setCoverImageName(path);
 			((CoverImageFragment) pk_pager.fragments.get(0)).setImageData(path, uri);
