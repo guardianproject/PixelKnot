@@ -246,6 +246,14 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements F5Not
 				getIntent().setData(null);
 
 				Intent intent = getIntent();
+				intent.setAction(Intent.ACTION_MAIN);
+				
+				if(intent.hasExtra(Intent.EXTRA_STREAM))
+					intent.removeExtra(Intent.EXTRA_STREAM);
+				else if(intent.hasExtra(Intent.EXTRA_TEXT))
+					intent.removeExtra(Intent.EXTRA_TEXT);
+			
+				
 				intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_ANIMATION);
 				overridePendingTransition(0, 0);
 				finish();
