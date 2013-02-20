@@ -7,6 +7,7 @@ import org.json.JSONException;
 import com.actionbarsherlock.app.SherlockFragment;
 
 import info.guardianproject.pixelknot.Constants;
+import info.guardianproject.pixelknot.Constants.Logger;
 import info.guardianproject.pixelknot.Constants.PixelKnot.Keys;
 import info.guardianproject.pixelknot.PixelKnotActivity.TrustedShareActivity;
 import info.guardianproject.pixelknot.R;
@@ -18,6 +19,7 @@ import android.app.AlertDialog.Builder;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,6 +40,8 @@ public class ShareFragment extends SherlockFragment implements Constants, Activi
 	TextView title;
 	LinearLayout content_holder;
 
+	private static final String LOG = Logger.UI;
+
 	@Override
 	public View onCreateView(LayoutInflater li, ViewGroup container, Bundle savedInstanceState) {
 		root_view = li.inflate(R.layout.share_fragment, container, false);
@@ -52,6 +56,11 @@ public class ShareFragment extends SherlockFragment implements Constants, Activi
 	public void onAttach(Activity a) {
 		super.onAttach(a);
 		this.a = a;
+	}
+
+	@Override
+	public void onActivityCreated(Bundle savedInstanceState) {
+		super.onActivityCreated(savedInstanceState);
 	}
 
 	private void embed() {
@@ -80,79 +89,79 @@ public class ShareFragment extends SherlockFragment implements Constants, Activi
 	public void updateUi() {
 		content_holder.removeAllViews();
 
-		if(!((FragmentListener) a).getHasSuccessfullyEmbed()) {
-			title.setText(getString(R.string.please_wait));
-			embed();
-		} else {
-			((FragmentListener) a).updateButtonProminence(1, R.drawable.share_padded_selector);
-
-
-			List<TrustedShareActivity> trusted_share_activities = ((FragmentListener) a).getTrustedShareActivities();
-			if(trusted_share_activities.size() > 0) {
-				title.setText(getString(R.string.share_with_selected_apps));
-				content_holder.addView(LayoutInflater.from(a).inflate(R.layout.share_options, null));
-
-				TableLayout share_options_holder = (TableLayout) content_holder.findViewById(R.id.share_options_holder);
-				TableRow tr = new TableRow(a);
-				tr.setGravity(Gravity.CENTER);
-				share_options_holder.addView(tr);
-				
-				int t = 0;
-				
-				for(TrustedShareActivity tsa : trusted_share_activities) {
-					try {
-						((TableRow) tsa.view.getParent()).removeView(tsa.view);
-					} catch (NullPointerException e) {}
-
-					if(t % 2 == 0 && t != 0) {
-						tr = new TableRow(a);
-						tr.setGravity(Gravity.CENTER);
-						share_options_holder.addView(tr);
-					}
-
-					tr.addView(tsa.view);
-					t++;
-				}
-			} else
-				title.setText(getString(R.string.share_no_apps));
+		if(!((FragmentListener) a).getIsDecryptOnly() && !((FragmentListener) a).getHasSuccessfullyEmbed()) {
+				title.setText(getString(R.string.please_wait));
+				embed();
+				return;
 		}
-	}
 
-	@Override
-	public void initButtons() {
-		int share_resource = R.drawable.share_padded_inactive_selector;
+		((FragmentListener) a).updateButtonProminence(1, R.drawable.share_padded_selector, true);
 
-		ImageButton share = new ImageButton(a);
-		share.setBackgroundColor(getResources().getColor(android.R.color.transparent));
-		share.setPadding(0, 0, 0, 0);
+		List<TrustedShareActivity> trusted_share_activities = ((FragmentListener) a).getTrustedShareActivities();
+		if(trusted_share_activities.size() > 0) {
+			title.setText(getString(R.string.share_with_selected_apps));
+			content_holder.addView(LayoutInflater.from(a).inflate(R.layout.share_options, null));
 
-		if(((FragmentListener) a).getHasSuccessfullyEmbed()) {
-			share.setEnabled(true);
-			share_resource = R.drawable.share_padded_selector;
+			TableLayout share_options_holder = (TableLayout) content_holder.findViewById(R.id.share_options_holder);
+			TableRow tr = new TableRow(a);
+			tr.setGravity(Gravity.CENTER);
+			share_options_holder.addView(tr);
+
+			int t = 0;
+
+			for(TrustedShareActivity tsa : trusted_share_activities) {
+				try {
+					((TableRow) tsa.view.getParent()).removeView(tsa.view);
+				} catch (NullPointerException e) {}
+
+				if(t % 2 == 0 && t != 0) {
+					tr = new TableRow(a);
+					tr.setGravity(Gravity.CENTER);
+					share_options_holder.addView(tr);
+				}
+
+				tr.addView(tsa.view);
+				t++;
+			}
 		} else
-			share.setEnabled(false);
+			title.setText(getString(R.string.share_no_apps));
+}
 
-		share.setImageResource(share_resource);
-		share.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				((FragmentListener) a).share();
-			}
-		});
+@Override
+public void initButtons() {
+	int share_resource = R.drawable.share_padded_inactive_selector;
+
+	ImageButton share = new ImageButton(a);
+	share.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+	share.setPadding(0, 0, 0, 0);
+
+	if(((FragmentListener) a).getHasSuccessfullyEmbed() || ((FragmentListener) a).getIsDecryptOnly()) {
+		share.setEnabled(true);
+		share_resource = R.drawable.share_padded_selector;
+	} else
+		share.setEnabled(false);
+
+	share.setImageResource(share_resource);
+	share.setOnClickListener(new OnClickListener() {
+		@Override
+		public void onClick(View v) {
+			((FragmentListener) a).share();
+		}
+	});
 
 
-		ImageButton start_over = new ImageButton(a);
-		start_over.setBackgroundColor(getResources().getColor(android.R.color.transparent));
-		start_over.setPadding(0, 0, 0, 0);
-		start_over.setImageResource(R.drawable.camera_selector);
-		start_over.setOnClickListener(new OnClickListener() {
+	ImageButton start_over = new ImageButton(a);
+	start_over.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+	start_over.setPadding(0, 0, 0, 0);
+	start_over.setImageResource(R.drawable.camera_selector);
+	start_over.setOnClickListener(new OnClickListener() {
 
-			@Override
-			public void onClick(View v) {
-				((FragmentListener) a).clearPixelKnot();
-			}
-		});
+		@Override
+		public void onClick(View v) {
+			((FragmentListener) a).clearPixelKnot();
+		}
+	});
 
-		((FragmentListener) a).setButtonOptions(new ImageButton[] {start_over, share});
-	}
+	((FragmentListener) a).setButtonOptions(new ImageButton[] {start_over, share});
+}
 }

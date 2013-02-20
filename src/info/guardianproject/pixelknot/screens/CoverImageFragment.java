@@ -2,6 +2,7 @@ package info.guardianproject.pixelknot.screens;
 
 import info.guardianproject.pixelknot.Constants;
 import info.guardianproject.pixelknot.R;
+import info.guardianproject.pixelknot.Constants.Logger;
 import info.guardianproject.pixelknot.Constants.PixelKnot.Keys;
 import info.guardianproject.pixelknot.utils.ActivityListener;
 import info.guardianproject.pixelknot.utils.FragmentListener;
@@ -43,6 +44,8 @@ public class CoverImageFragment extends SherlockFragment implements Constants, A
 	Activity a;
 	Handler h = new Handler();
 	
+	private static final String LOG = Logger.UI;
+	
 	OnClickListener choose_picture_listener = new OnClickListener() {
 
 		@Override
@@ -57,6 +60,7 @@ public class CoverImageFragment extends SherlockFragment implements Constants, A
 
 	@Override
 	public View onCreateView(LayoutInflater li, ViewGroup container, Bundle savedInstanceState) {
+		Log.d(LOG, "onCreateView (fragment) called");
 		root_view = li.inflate(R.layout.cover_image_fragment, container, false);
 		cover_image_holder = (ImageView) root_view.findViewById(R.id.cover_image_holder);
 		cover_image_holder.setImageResource(blank_image);
@@ -73,6 +77,7 @@ public class CoverImageFragment extends SherlockFragment implements Constants, A
 	@Override
 	public void onAttach(Activity a) {
 		super.onAttach(a);
+		Log.d(LOG, "onAttach (fragment) called");
 		this.a = a;
 
 		switch(Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(this.a).getString(Settings.LANGUAGE, String.valueOf(Settings.Locales.DEFAULT)))) {
@@ -84,12 +89,20 @@ public class CoverImageFragment extends SherlockFragment implements Constants, A
 			break;
 		}
 
+		
+		
+	}
+	
+	@Override
+	public void onActivityCreated(Bundle savedInstanceState) {
+		super.onActivityCreated(savedInstanceState);
+		
 		if(!((FragmentListener) a).getHasSeenFirstPage()) {
 			initButtons();
 			((FragmentListener) a).setHasSeenFirstPage(true);
 		}
 		
-		
+		updateUi();
 	}
 
 	public void setImageData(String path_to_cover_image) {

@@ -84,7 +84,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 @SuppressLint("NewApi")
-public class PixelKnotActivity extends SherlockFragmentActivity implements F5Notification, Constants, FragmentListener, ViewPager.OnPageChangeListener, View.OnClickListener, OnGlobalLayoutListener, MediaScannerListener, EmbedListener, ExtractionListener {
+public class PixelKnotActivity extends SherlockFragmentActivity implements F5Notification, Constants, FragmentListener, ViewPager.OnPageChangeListener, OnGlobalLayoutListener, MediaScannerListener, EmbedListener, ExtractionListener {
 	private PKPager pk_pager;
 	private ViewPager view_pager;
 
@@ -95,7 +95,6 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements F5Not
 	private View activity_root;
 	private LinearLayout options_holder, action_display, action_display_;
 	private LinearLayout progress_holder;
-	private ImageButton start_over;
 	private ActionBar action_bar;
 
 	private static final String LOG = Logger.UI;
@@ -116,6 +115,7 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements F5Not
 	boolean hasSuccessfullyDecrypted = false;
 	boolean hasSuccessfullyPasswordProtected = false;
 	boolean hasSuccessfullyUnlocked = false;
+	boolean isDecryptOnly = false;
 	boolean canAutoAdvance = false;
 
 	private List<TrustedShareActivity> trusted_share_activities;
@@ -125,7 +125,9 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements F5Not
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
+		
+		Log.d(LOG, "onCreate (main) called");
+		
 		dump = new File(DUMP);
 		if(!dump.exists())
 			dump.mkdir();
@@ -164,6 +166,8 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements F5Not
 		} else {
 			Log.d(LOG, "this type: " + getIntent().getType());
 			
+			setIsDecryptOnly(true);
+			
 			Fragment stego_image_fragment = Fragment.instantiate(this, StegoImageFragment.class.getName());
 			Bundle args = new Bundle();
 			
@@ -181,9 +185,11 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements F5Not
 			stego_image_fragment.setArguments(args);
 
 			Fragment decrypt_image_fragment = Fragment.instantiate(this, DecryptImageFragment.class.getName());
+			Fragment share_fragment = Fragment.instantiate(this, ShareFragment.class.getName());
 
 			fragments.add(0, stego_image_fragment);
 			fragments.add(1, decrypt_image_fragment);
+			fragments.add(2, share_fragment);
 		}
 
 		pk_pager = new PKPager(getSupportFragmentManager(), fragments);
@@ -211,9 +217,19 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements F5Not
 	@Override
 	public void onResume() {
 		super.onResume();
+		
+		Log.d(LOG, "onResume (main) called");
+				
 		String currentLocale = PreferenceManager.getDefaultSharedPreferences(this).getString(Settings.LANGUAGE, "0");
 		if(!last_locale.equals(currentLocale))
 			setNewLocale(currentLocale);
+	}
+	
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
+		doWait(false);
+		Log.d(LOG, "onDestroy (main) called");
 	}
 	
 	@Override
@@ -240,6 +256,7 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements F5Not
 	}
 
 	private void restart() {
+		Log.d(LOG, "RESTARTING?");
 		h.post(new Runnable() {
 			@Override
 			public void run() {
@@ -598,6 +615,9 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements F5Not
 		}
 
 		public void extract() {
+			Log.d(LOG, "now extracting " + cover_image_name);
+			pixel_knot.out_file = new File(cover_image_name);
+			
 			new Thread(new Runnable() {
 				@Override
 				public void run() {
@@ -706,24 +726,38 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements F5Not
 
 	@Override
 	public void setButtonOptions(ImageButton[] options) {
-		options_holder.removeAllViews();
-		for(ImageButton o : options) {
-			try {
-				((LinearLayout) o.getParent()).removeView(o);
-			} catch(NullPointerException e) {}
+		// XXX: Samsung Galaxy S3 and Note are bullshit devices that for some reason tosses out declared views?
+		try {
+			Log.d(LOG, "The View in question is " + options_holder.getClass().getName() + "\nand you can see this because the device is functioning as it should...");
+			options_holder.removeAllViews();
+			
+			for(ImageButton o : options) {
+				try {
+					((LinearLayout) o.getParent()).removeView(o);
+				} catch(NullPointerException e) {}
 
-			options_holder.addView(o);
+				options_holder.addView(o);
+			}
+
+			rearrangeForKeyboard(false);
+		} catch(NullPointerException e) {
+			Log.d(LOG, "for some reason, options_holder is null?");	
 		}
-
-		rearrangeForKeyboard(false);
+		
+		
+		
+		
 	}
 
 	@Override
-	public void updateButtonProminence(final int which, final int new_resource) {
+	public void updateButtonProminence(final int which, final int new_resource, final boolean enable) {
 		h.postDelayed(new Runnable() {
 			@Override
 			public void run() {
-				((ImageButton) options_holder.getChildAt(which)).setImageResource(new_resource);
+				ImageButton ib = ((ImageButton) options_holder.getChildAt(which));
+				ib.setImageResource(new_resource);
+				ib.setEnabled(enable);
+					
 			}
 		}, 1);
 
@@ -731,7 +765,6 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements F5Not
 
 	@Override
 	public void onPageScrollStateChanged(int state) {
-		Log.d(LOG, "state " + state);
 		if(state == 0) {
 			h.post(new Runnable() {
 				@Override
@@ -742,12 +775,15 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements F5Not
 							((ImageView) view).setBackgroundResource(view_pager.getCurrentItem() == v ? d_ : d);
 					}
 
+					
 					Fragment f = pk_pager.getItem(view_pager.getCurrentItem());
+					
 					if(view_pager.getCurrentItem() != 1)
 						hideKeyboard();
 					
 					((ActivityListener) f).initButtons();
 					((ActivityListener) f).updateUi();
+					
 				}
 			});
 		}
@@ -757,7 +793,9 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements F5Not
 	public void onPageScrolled(int arg0, float arg1, int arg2) {}
 
 	@Override
-	public void onPageSelected(int page) {}
+	public void onPageSelected(int page) {
+		Log.d(LOG, "the current pager is " + view_pager.getCurrentItem());
+	}
 
 
 	@Override
@@ -872,16 +910,6 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements F5Not
 				((ActivityListener) pk_pager.getItem(view_pager.getCurrentItem())).updateUi();
 			}
 		});
-
-	}
-
-
-	@Override
-	public void onClick(View v) {
-		if(v == start_over) {
-			pixel_knot.clear();
-			restart();
-		}
 
 	}
 
@@ -1010,9 +1038,21 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements F5Not
 	public void setHasSuccessfullyUnlocked(boolean hasSuccessfullyUnlocked) {
 		this.hasSuccessfullyUnlocked = hasSuccessfullyUnlocked;
 	}
+	
+
+	@Override
+	public void setIsDecryptOnly(boolean isDecryptOnly) {
+		this.isDecryptOnly = isDecryptOnly;
+	}
+
+	@Override
+	public boolean getIsDecryptOnly() {
+		return isDecryptOnly;
+	}
 
 	@Override
 	public void autoAdvance() {
+		Log.d(LOG, "AUTO ADVANCING?");
 		if(this.getCanAutoAdvance()) {
 			autoAdvance(view_pager.getCurrentItem() == pk_pager.getCount() - 1 ? 0 : view_pager.getCurrentItem() + 1);
 			setCanAutoAdvance(false);

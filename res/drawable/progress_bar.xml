@@ -5,7 +5,12 @@
         <shape>
             <corners android:radius="5dip" />
 			<solid android:color="#ff000000"/>
-			<stroke android:color="#ffd3d3bc"/>
+			<stroke android:color="#ffd3d3bc" android:width="1dip"/>
+			<padding 
+			    android:bottom="1dip"
+			    android:top="1dip"
+			    android:left="1dip"
+			    android:right="1dip" />
         </shape>
     </item>
     <item android:id="@android:id/secondaryProgress">

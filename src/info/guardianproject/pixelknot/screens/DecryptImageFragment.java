@@ -6,6 +6,7 @@ import com.actionbarsherlock.app.SherlockFragment;
 
 import info.guardianproject.pixelknot.Constants;
 import info.guardianproject.pixelknot.R;
+import info.guardianproject.pixelknot.Constants.Logger;
 import info.guardianproject.pixelknot.Constants.PixelKnot.Keys;
 import info.guardianproject.pixelknot.utils.ActivityListener;
 import info.guardianproject.pixelknot.utils.FragmentListener;
@@ -26,6 +27,8 @@ public class DecryptImageFragment extends SherlockFragment implements Constants,
 
 	Activity a;
 	Handler h = new Handler();
+	
+	private static final String LOG = Logger.UI;
 
 	@Override
 	public View onCreateView(LayoutInflater li, ViewGroup container, Bundle savedInstanceState) {
@@ -41,6 +44,13 @@ public class DecryptImageFragment extends SherlockFragment implements Constants,
 		super.onAttach(a);
 		this.a = a;
 	}
+	
+	@Override
+	public void onActivityCreated(Bundle savedInstanceState) {
+		super.onActivityCreated(savedInstanceState);
+		
+		Log.d(LOG, "onActivityCreated (fragment) called");
+	}
 
 	@Override
 	public void updateUi() {
@@ -51,20 +61,34 @@ public class DecryptImageFragment extends SherlockFragment implements Constants,
 		
 		try {
 			secret_message_holder.setText(((FragmentListener) a).getPixelKnot().getString(Keys.SECRET_MESSAGE));
+			((FragmentListener) a).doWait(false);
 		} catch (JSONException e) {
 			Log.e(Logger.UI, e.toString());
 			e.printStackTrace();
 		}
-
-		((FragmentListener) a).showKeyboard(secret_message_holder);
 	}
 
 	@Override
 	public void initButtons() {
+		ImageButton share = new ImageButton(a);
+		share.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+		share.setPadding(0, 0, 0, 0);
+		share.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				((FragmentListener) a).getPixelKnot().setPasswordOverride(true);
+				((FragmentListener) a).setCanAutoAdvance(true);
+				((FragmentListener) a).autoAdvance();
+			}
+			
+		});
+		share.setImageResource(R.drawable.share_selector);
+		
 		ImageButton start_over = new ImageButton(a);
 		start_over.setBackgroundColor(getResources().getColor(android.R.color.transparent));
-		start_over.setImageResource(R.drawable.camera_selector);
 		start_over.setPadding(0, 0, 0, 0);
+		start_over.setImageResource(R.drawable.camera_selector);
 		start_over.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -72,7 +96,7 @@ public class DecryptImageFragment extends SherlockFragment implements Constants,
 				((FragmentListener) a).clearPixelKnot();
 			}
 		});
-		
-		((FragmentListener) a).setButtonOptions(new ImageButton[] {start_over});
+
+		((FragmentListener) a).setButtonOptions(new ImageButton[] {start_over, share});
 	}
 }

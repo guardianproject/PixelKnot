@@ -7,6 +7,7 @@ import com.actionbarsherlock.app.SherlockFragment;
 import info.guardianproject.pixelknot.Constants;
 import info.guardianproject.pixelknot.PixelKnotActivity;
 import info.guardianproject.pixelknot.R;
+import info.guardianproject.pixelknot.Constants.Logger;
 import info.guardianproject.pixelknot.Constants.PixelKnot.Keys;
 import info.guardianproject.pixelknot.crypto.Apg;
 import info.guardianproject.pixelknot.utils.ActivityListener;
@@ -41,6 +42,8 @@ public class SetMessageFragment extends SherlockFragment implements Constants, A
 	long secret_key = 0L;
 	long[] encryption_ids = null;
 	
+	private static final String LOG = Logger.UI;
+	
 	InputFilter monitor_stego_space = new InputFilter() {
 
 		@Override
@@ -68,6 +71,7 @@ public class SetMessageFragment extends SherlockFragment implements Constants, A
 	@Override
 	public void onAttach(Activity a) {
 		super.onAttach(a);
+		Log.d(LOG, "onAttach (fragment:SetMessageFragment) called");
 		this.a = a;
 		
 		capacity = 0;
@@ -76,6 +80,12 @@ public class SetMessageFragment extends SherlockFragment implements Constants, A
 		} catch (JSONException e) {}
 		
 		
+	}
+	
+	@Override
+	public void onActivityCreated(Bundle savedInstanceState) {
+		super.onActivityCreated(savedInstanceState);
+		Log.d(LOG, "onActivityCreated (fragment:SetMessageFragment) called");
 	}
 	
 	private void setPassword() {

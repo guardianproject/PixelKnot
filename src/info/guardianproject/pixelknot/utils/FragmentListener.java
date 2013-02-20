@@ -27,11 +27,13 @@ public interface FragmentListener {
 	public boolean getHasSuccessfullyUnlocked();
 	public void setHasSuccessfullyUnlocked(boolean hasSuccessfullyUnlocked);
 	public boolean getCanAutoAdvance();
+	public void setIsDecryptOnly(boolean isDecryptOnly);
+	public boolean getIsDecryptOnly();
 	public void setCanAutoAdvance(boolean canAutoAdvance);
 	public void share();
 	public List<TrustedShareActivity> getTrustedShareActivities();
 	public void setEncryption(Apg apg);
-	public void updateButtonProminence(int which, int new_resource);
+	public void updateButtonProminence(int which, int new_resource, boolean enabled);
 	public void autoAdvance();
 	public void autoAdvance(int position);
 	public void showKeyboard(View target);
