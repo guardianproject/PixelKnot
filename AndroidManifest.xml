@@ -37,6 +37,23 @@
                 <action android:name="android.intent.action.GET_CONTENT" />
 
                 <data android:mimeType="image/jpeg" />
+                <data
+                    android:host="*"
+                    android:mimeType="image/*"
+                    android:scheme="content" />
+            </intent-filter>
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <action android:name="android.intent.action.PICK" />
+                <action android:name="android.intent.action.VIEW" />
+                <action android:name="android.intent.action.SEND" />
+                <action android:name="android.intent.action.GET_CONTENT" />
+
+                <data
+                    android:host="*"
+                    android:mimeType="image/*"
+                    android:scheme="file" />
             </intent-filter>
         </activity>
         <activity android:name=".Preferences" />
