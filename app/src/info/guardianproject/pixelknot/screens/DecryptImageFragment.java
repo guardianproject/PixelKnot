@@ -1,15 +1,5 @@
 package info.guardianproject.pixelknot.screens;
 
-import org.json.JSONException;
-
-import com.actionbarsherlock.app.SherlockFragment;
-
-import info.guardianproject.pixelknot.Constants;
-import info.guardianproject.pixelknot.R;
-import info.guardianproject.pixelknot.Constants.Logger;
-import info.guardianproject.pixelknot.Constants.PixelKnot.Keys;
-import info.guardianproject.pixelknot.utils.ActivityListener;
-import info.guardianproject.pixelknot.utils.FragmentListener;
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
@@ -20,6 +10,16 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
+
+import com.actionbarsherlock.app.SherlockFragment;
+
+import info.guardianproject.pixelknot.Constants;
+import info.guardianproject.pixelknot.Constants.PixelKnot.Keys;
+import info.guardianproject.pixelknot.R;
+import info.guardianproject.pixelknot.utils.ActivityListener;
+import info.guardianproject.pixelknot.utils.FragmentListener;
+
+import org.json.JSONException;
 
 public class DecryptImageFragment extends SherlockFragment implements Constants, ActivityListener {
 	View root_view;	

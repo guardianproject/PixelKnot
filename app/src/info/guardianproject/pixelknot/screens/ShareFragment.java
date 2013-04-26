@@ -1,36 +1,29 @@
 package info.guardianproject.pixelknot.screens;
 
-import java.util.List;
-
-import org.json.JSONException;
-
-import com.actionbarsherlock.app.SherlockFragment;
-
-import info.guardianproject.pixelknot.Constants;
-import info.guardianproject.pixelknot.Constants.Logger;
-import info.guardianproject.pixelknot.Constants.PixelKnot.Keys;
-import info.guardianproject.pixelknot.PixelKnotActivity.TrustedShareActivity;
-import info.guardianproject.pixelknot.R;
-import info.guardianproject.pixelknot.utils.ActivityListener;
-import info.guardianproject.pixelknot.utils.FragmentListener;
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.AlertDialog.Builder;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+
+import com.actionbarsherlock.app.SherlockFragment;
+
+import info.guardianproject.pixelknot.Constants;
+import info.guardianproject.pixelknot.Constants.PixelKnot.Keys;
+import info.guardianproject.pixelknot.PixelKnotActivity.TrustedShareActivity;
+import info.guardianproject.pixelknot.R;
+import info.guardianproject.pixelknot.utils.ActivityListener;
+import info.guardianproject.pixelknot.utils.FragmentListener;
+
+import java.util.List;
 
 public class ShareFragment extends SherlockFragment implements Constants, ActivityListener {
 	Activity a;

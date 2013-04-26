@@ -1,25 +1,24 @@
 package info.guardianproject.pixelknot.screens;
 
-import java.io.File;
-
-import com.actionbarsherlock.app.SherlockFragment;
-
-import info.guardianproject.pixelknot.Constants;
-import info.guardianproject.pixelknot.R;
-import info.guardianproject.pixelknot.Constants.Logger;
-import info.guardianproject.pixelknot.Constants.PixelKnot.Keys;
-import info.guardianproject.pixelknot.utils.ActivityListener;
-import info.guardianproject.pixelknot.utils.FragmentListener;
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+
+import com.actionbarsherlock.app.SherlockFragment;
+
+import info.guardianproject.pixelknot.Constants;
+import info.guardianproject.pixelknot.Constants.PixelKnot.Keys;
+import info.guardianproject.pixelknot.R;
+import info.guardianproject.pixelknot.utils.ActivityListener;
+import info.guardianproject.pixelknot.utils.FragmentListener;
+
+import java.io.File;
 
 public class StegoImageFragment extends SherlockFragment implements Constants, ActivityListener {
 	View root_view;

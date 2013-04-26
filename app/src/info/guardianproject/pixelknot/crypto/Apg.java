@@ -4,14 +4,6 @@ package info.guardianproject.pixelknot.crypto;
  * http://code.google.com/p/k9mail/source/browse/k9mail/branches/apg-integration/src/com/fsck/k9/crypto/Apg.java
  */
 
-import info.guardianproject.pixelknot.R;
-
-import java.io.File;
-import java.util.Vector;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.ContentUris;
@@ -22,6 +14,13 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.support.v4.app.Fragment;
 import android.widget.Toast;
+
+import info.guardianproject.pixelknot.R;
+
+import java.io.File;
+import java.util.Vector;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Apg extends CryptoProvider
 {
