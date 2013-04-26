@@ -4,12 +4,12 @@ package info.guardianproject.pixelknot.crypto;
  * http://code.google.com/p/k9mail/source/browse/k9mail/branches/apg-integration/
  */
 
-import java.io.File;
-import java.io.Serializable;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+
+import java.io.File;
+import java.io.Serializable;
 
 
 abstract public class CryptoProvider implements Serializable

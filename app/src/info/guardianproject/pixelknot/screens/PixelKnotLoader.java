@@ -1,14 +1,5 @@
 package info.guardianproject.pixelknot.screens;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
-
-import info.guardianproject.pixelknot.PixelKnotActivity;
-import info.guardianproject.pixelknot.R;
-import info.guardianproject.pixelknot.Constants.Screens.Loader;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -18,6 +9,15 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import info.guardianproject.pixelknot.Constants.Screens.Loader;
+import info.guardianproject.pixelknot.R;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
 
 public class PixelKnotLoader extends AlertDialog {
 	Context context;

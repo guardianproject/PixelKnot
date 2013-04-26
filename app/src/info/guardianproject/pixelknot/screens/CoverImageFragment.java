@@ -1,20 +1,5 @@
 package info.guardianproject.pixelknot.screens;
 
-import info.guardianproject.pixelknot.Constants;
-import info.guardianproject.pixelknot.R;
-import info.guardianproject.pixelknot.Constants.Logger;
-import info.guardianproject.pixelknot.Constants.PixelKnot.Keys;
-import info.guardianproject.pixelknot.utils.ActivityListener;
-import info.guardianproject.pixelknot.utils.FragmentListener;
-import info.guardianproject.pixelknot.utils.IO;
-import info.guardianproject.pixelknot.utils.PixelKnotMediaScanner;
-
-import java.io.File;
-
-import org.json.JSONException;
-
-import com.actionbarsherlock.app.SherlockFragment;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -31,6 +16,20 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+
+import com.actionbarsherlock.app.SherlockFragment;
+
+import info.guardianproject.pixelknot.Constants;
+import info.guardianproject.pixelknot.Constants.PixelKnot.Keys;
+import info.guardianproject.pixelknot.R;
+import info.guardianproject.pixelknot.utils.ActivityListener;
+import info.guardianproject.pixelknot.utils.FragmentListener;
+import info.guardianproject.pixelknot.utils.IO;
+import info.guardianproject.pixelknot.utils.PixelKnotMediaScanner;
+
+import org.json.JSONException;
+
+import java.io.File;
 
 public class CoverImageFragment extends SherlockFragment implements Constants, ActivityListener {
 	View root_view;

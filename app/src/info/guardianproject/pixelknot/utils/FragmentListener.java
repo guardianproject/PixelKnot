@@ -1,12 +1,13 @@
 package info.guardianproject.pixelknot.utils;
 
-import java.util.List;
+import android.view.View;
+import android.widget.ImageButton;
 
 import info.guardianproject.pixelknot.PixelKnotActivity.PixelKnot;
 import info.guardianproject.pixelknot.PixelKnotActivity.TrustedShareActivity;
 import info.guardianproject.pixelknot.crypto.Apg;
-import android.view.View;
-import android.widget.ImageButton;
+
+import java.util.List;
 
 public interface FragmentListener {
 	public void setButtonOptions(ImageButton[] options);

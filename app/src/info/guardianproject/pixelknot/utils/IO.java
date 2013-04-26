@@ -1,5 +1,11 @@
 package info.guardianproject.pixelknot.utils;
 
+import android.content.Context;
+import android.database.Cursor;
+import android.net.Uri;
+import android.provider.MediaStore;
+import android.util.Log;
+
 import info.guardianproject.pixelknot.Constants;
 import info.guardianproject.pixelknot.Constants.Logger;
 
@@ -10,13 +16,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URLDecoder;
-
-import android.content.Context;
-import android.content.res.AssetFileDescriptor;
-import android.database.Cursor;
-import android.net.Uri;
-import android.provider.MediaStore;
-import android.util.Log;
 
 public class IO {
 	private static final String LOG = Logger.UI;
