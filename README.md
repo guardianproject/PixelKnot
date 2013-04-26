@@ -10,20 +10,19 @@ Follow these steps to setup your dev environment:
 1. Checkout PixelKnot git repo
 2. Init and update git submodules
 
+    cd PixelKnot
     git submodule update --init --recursive
 
 3. Import Project
 
    **Using Eclipse**
 
-    I recommend using a new, fresh, empty workspace in Eclipse.
+    Create a new Eclipse workspace in the root directory (PixelKnot) of the repo.
 
-    Import into Eclipse (using the *"existing Android project"* option) the
-    projects in the following order. Do not check "copy projects to workspace".
+    For each of the following directories, "Import -> Android -> Existing Android Code Into Workspace":
 
-    Note:The import order is crucial!
+        external/ActionBarSherlock/library/
+        external/F5Android/
 
-        ./external/ActionBarSherlock/library
-        ./external/F5Android
-        ./ (the PixelKnot root dir)
+    Then, "Import -> General -> Existing Projects Into Workspace" for the `app/` directory.
 
