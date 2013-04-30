@@ -1,4 +1,5 @@
 .DS_Store
-bin/*
-gen/*
-project.properties
+app/bin
+app/gen
+.metadata
+local.properties

@@ -1,49 +1,5 @@
 package info.guardianproject.pixelknot;
 
-import info.guardianproject.f5android.Embed;
-import info.guardianproject.f5android.Embed.EmbedListener;
-import info.guardianproject.f5android.Extract;
-import info.guardianproject.f5android.Extract.ExtractionListener;
-import info.guardianproject.f5android.F5Buffers.F5Notification;
-import info.guardianproject.pixelknot.Constants.PixelKnot.Keys;
-import info.guardianproject.pixelknot.Constants.Screens.Loader;
-import info.guardianproject.pixelknot.crypto.Aes;
-import info.guardianproject.pixelknot.crypto.Apg;
-import info.guardianproject.pixelknot.screens.CoverImageFragment;
-import info.guardianproject.pixelknot.screens.DecryptImageFragment;
-import info.guardianproject.pixelknot.screens.PixelKnotLoader;
-import info.guardianproject.pixelknot.screens.SetMessageFragment;
-import info.guardianproject.pixelknot.screens.ShareFragment;
-import info.guardianproject.pixelknot.screens.StegoImageFragment;
-import info.guardianproject.pixelknot.utils.ActivityListener;
-import info.guardianproject.pixelknot.utils.FragmentListener;
-import info.guardianproject.pixelknot.utils.IO;
-import info.guardianproject.pixelknot.utils.Image;
-import info.guardianproject.pixelknot.utils.PixelKnotMediaScanner;
-import info.guardianproject.pixelknot.utils.PixelKnotMediaScanner.MediaScannerListener;
-
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map.Entry;
-import java.util.Vector;
-
-import javax.crypto.Cipher;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.app.SherlockFragmentActivity;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ActivityManager;
@@ -73,15 +29,59 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
+import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
+
+import info.guardianproject.f5android.Embed;
+import info.guardianproject.f5android.Embed.EmbedListener;
+import info.guardianproject.f5android.Extract;
+import info.guardianproject.f5android.Extract.ExtractionListener;
+import info.guardianproject.f5android.F5Buffers.F5Notification;
+import info.guardianproject.pixelknot.Constants.PixelKnot.Keys;
+import info.guardianproject.pixelknot.Constants.Screens.Loader;
+import info.guardianproject.pixelknot.crypto.Aes;
+import info.guardianproject.pixelknot.crypto.Apg;
+import info.guardianproject.pixelknot.screens.CoverImageFragment;
+import info.guardianproject.pixelknot.screens.DecryptImageFragment;
+import info.guardianproject.pixelknot.screens.PixelKnotLoader;
+import info.guardianproject.pixelknot.screens.SetMessageFragment;
+import info.guardianproject.pixelknot.screens.ShareFragment;
+import info.guardianproject.pixelknot.screens.StegoImageFragment;
+import info.guardianproject.pixelknot.utils.ActivityListener;
+import info.guardianproject.pixelknot.utils.FragmentListener;
+import info.guardianproject.pixelknot.utils.IO;
+import info.guardianproject.pixelknot.utils.Image;
+import info.guardianproject.pixelknot.utils.PixelKnotMediaScanner;
+import info.guardianproject.pixelknot.utils.PixelKnotMediaScanner.MediaScannerListener;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map.Entry;
+import java.util.Vector;
+
+import javax.crypto.Cipher;
 
 @SuppressLint("NewApi")
 public class PixelKnotActivity extends SherlockFragmentActivity implements F5Notification, Constants, FragmentListener, ViewPager.OnPageChangeListener, OnGlobalLayoutListener, MediaScannerListener, EmbedListener, ExtractionListener {

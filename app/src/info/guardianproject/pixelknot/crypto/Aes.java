@@ -1,5 +1,8 @@
 package info.guardianproject.pixelknot.crypto;
 
+import android.util.Base64;
+import android.util.Log;
+
 import info.guardianproject.pixelknot.Constants;
 import info.guardianproject.pixelknot.Constants.Logger;
 
@@ -23,9 +26,6 @@ import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
-
-import android.util.Base64;
-import android.util.Log;
 
 public class Aes {
 	public static String DecryptWithPassword(String password, byte[] iv, byte[] message) {
