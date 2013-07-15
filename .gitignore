@@ -2,4 +2,6 @@
 app/bin
 app/gen
 .metadata
+# files generated for the ant build
 local.properties
+build.xml
