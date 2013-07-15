@@ -37,7 +37,7 @@ public class Aes {
 			SecretKey tmp = factory.generateSecret(spec);
 			SecretKey secret_key = new SecretKeySpec(tmp.getEncoded(), "AES");
 			
-			Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+			Cipher cipher = Cipher.getInstance("AES/GCM/NoPadding");
 			cipher.init(Cipher.DECRYPT_MODE, secret_key, new IvParameterSpec(iv));
 			
 			new_message = new String(cipher.doFinal(message));
@@ -78,7 +78,7 @@ public class Aes {
 			SecretKey tmp = factory.generateSecret(spec);
 			SecretKey secret_key = new SecretKeySpec(tmp.getEncoded(), "AES");
 			
-			Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+			Cipher cipher = Cipher.getInstance("AES/GCM/NoPadding");
 			cipher.init(Cipher.ENCRYPT_MODE, secret_key);
 			
 			AlgorithmParameters params = cipher.getParameters();

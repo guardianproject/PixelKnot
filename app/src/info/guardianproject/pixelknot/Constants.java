@@ -5,8 +5,16 @@ import android.os.Environment;
 public interface Constants {
 	public final static String PASSWORD_SENTINEL = "----* PK v 1.0 REQUIRES PASSWORD ----*";
 	public final static String PGP_SENTINEL = "-----BEGIN PGP MESSAGE-----";
-	public final static byte[] PASSWORD_SALT = {(byte) 0xA4, (byte) 0x0B, (byte) 0xC8,
-	      (byte) 0x34, (byte) 0xD6, (byte) 0x95, (byte) 0xF3, (byte) 0x13};
+	public final static byte[] PASSWORD_SALT = new byte[] {
+		(byte) 0xC3,
+		(byte) 0xAA,
+		(byte) 0xBB,
+		(byte) 0x34,
+		(byte) 0x7B,
+		(byte) 0x66,
+		(byte) 0x3A,
+		(byte) 0x81
+	};
 	
 	public static class Logger {
 		public final static String UI = "***************** PixelKnot **************";
