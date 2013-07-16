@@ -27,6 +27,10 @@ public interface Constants {
 			public final static int DEFAULT = 0;
 			public final static int EN = 1;
 			public final static int FA = 2;
+			public final static int DE = 3;
+			public final static int EL = 4;
+			public final static int ES = 5;
+			public final static int VI = 6;
 		}
 	}
 	

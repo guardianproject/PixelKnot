@@ -4,16 +4,28 @@
         <item>0</item>
         <item>1</item>
         <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
     </string-array>
     <string-array name="languages_">
         <item>@string/pref_languages_default</item>
         <item>@string/pref_languages_en_us</item>
         <item>@string/pref_languages_fa</item>
+        <item>@string/pref_languages_de</item>
+        <item>@string/pref_languages_el</item>
+        <item>@string/pref_languages_es</item>
+        <item>@string/pref_languages_vi</item>
     </string-array>
     <string-array name="locales">
         <item>default</item>
         <item>en</item>
         <item>fa</item>
+        <item>de</item>
+        <item>el</item>
+        <item>es</item>
+        <item>vi</item>
     </string-array>
     
     <string-array name="knot_names">

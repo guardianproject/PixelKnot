@@ -1086,6 +1086,19 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements F5Not
 		case Settings.Locales.FA:
 			configuration.locale = new Locale("fa");
 			break;
+		case Settings.Locales.DE:
+			configuration.locale = new Locale("de");
+			break;
+		case Settings.Locales.EL:
+			configuration.locale = new Locale("el");
+			break;
+		case Settings.Locales.ES:
+			configuration.locale = new Locale("es");
+			break;
+		case Settings.Locales.VI:
+			configuration.locale = new Locale("vi");
+			break;
+			
 		}
 		getResources().updateConfiguration(configuration, getResources().getDisplayMetrics());
 		restart();

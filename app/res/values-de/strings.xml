@@ -1,0 +1,56 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <string name="app_name">PixelKnot</string>
+  <string name="oh_no">Oh nein!</string>
+  <string name="uh_oh">Uh oh!</string>
+  <string name="error_no_secret_message">Es sieht als ob sie keine geheime Botschaft eingetragen haben. Tragen sie bitte eine ein.</string>
+  <string name="error_no_cover_image">Es gibt kein Bild, um die Nachricht einzubetten. Bitte wählen Sie eins.</string>
+  <string name="error_bad_password">Schlechte Passwort. Ihre Nachricht konnte nicht entschlüsselt werden.</string>
+  <string name="retry">Antwort?</string>
+  <string name="secret_message_hint">Geben Sie Ihre versteckte Nachricht hier ein</string>
+  <string name="result_title">Versteckte Nachricht:</string>
+  <string name="share_again">Teilen</string>
+  <string name="share_with_selected_apps">Teilen mit diesen vertrauenswürdigen Anwendungen:</string>
+  <string name="password">Passwort</string>
+  <string name="set">Festlegen</string>
+  <string name="ok">OK</string>
+  <string name="please_wait">Bitte warten\u2026</string>
+  <string name="embed_success">Teilen Sie ihr verstecktes Bild\u2026</string>
+  <string name="about">Über</string>
+  <string name="about_us">Über uns:</string>
+  <string name="about_us_">Das Guardian Project ist ein Forschungs-und Entwicklungsaufwand von Technologie-fokussierten Aktivisten, besorgter Anwender und Open-Source-Sicherheits-Software Hacker. Wir bauen Open-Source-Tools auf der realen Welt Erfahrungen und Feedback. Unser Verfahren ist transparent, integrativ und verantwortlich. Mailen Sie uns an</string>
+  <string name="about_us_gp_email">support@guardianproject.info</string>
+  <string name="about_stego">Über Steganography:</string>
+  <string name="about_stego_">Die Praxis der Einbettung geheimer Nachrichten in ein Stück von Medien, so dass niemand außer dem Absender und Adressat wissen, dass die geheime Nachricht existiert. Der neu entwickelte Algorithmus F5 widersteht visuellen und statistischen Angriffen, aber es bietet immer noch eine große steganographische Kapazität. F5 implementiert Matrix-Kodierung um die Effizienz der Einbettung zu verbessern. So reduziert die Anzahl der notwendigen Änderungen. F5 beschäftigt permutativ beiderseits gleichmäßig verteilt die Änderungen über das gesamte Steganogramm.</string>
+  <string name="about_version">Version:</string>
+  <string name="about_project_home">Projekt Home:</string>
+  <string name="about_project_home_">http://guardianproject.info/apps/pixelknot</string>
+  <string name="about_license">Lizenz:</string>
+  <string name="about_license_f_5_algorithm">f-5-Algorithmus</string>
+  <string name="about_license_bcc">Bouncy Castle Crypto</string>
+  <string name="about_license_pgp">PGP</string>
+  <string name="about_license_apg">Android Privacy Guard</string>
+  <string name="about_license_iconmonstr">Iconmonstr</string>
+  <string name="about_license_deviantart">DeviantArt</string>
+  <string name="about_license_">Errichtet unter Verwendung von 3rd-Party-Open-Source-Software:</string>
+  <string name="about_lovingly_">Liebevoll in NYC gemacht.</string>
+  <string name="preferences">Einstellungen</string>
+  <string name="prefs_language_title">Sprache</string>
+  <string name="pref_languages_default">System Voreinstellung</string>
+  <string name="pref_languages_en_us">Englisch (US)</string>
+  <string name="pref_languages_fa">Farsi</string>
+  <!--APG related-->
+  <string name="apg_error_activity_not_found">Keine geeignete Anwendung für diese Aktion gefunden.</string>
+  <string name="apg_error_apg_version_not_supported">Die installierte APG Version wird nicht unterstützt.</string>
+  <string name="apg_btn_crypto_sign">Registrieren</string>
+  <string name="apg_btn_encrypt">Verschlüsseln</string>
+  <string name="apg_btn_decrypt">Entschlüsseln</string>
+  <string name="apg_btn_verify">Überprüfen</string>
+  <string name="apg_btn_select">Auswählen</string>
+  <string name="unknown_crypto_signature_user_id">&lt;unbekannt&gt;</string>
+  <string name="key_id">id: %s</string>
+  <string name="insufficient_apg_permissions">Diese App hat nicht die Berechtigung für den vollen Zugriff auf APG, installieren Sie bitte die App um das zu beheben.</string>
+  <string name="pgp_mime_unsupported">PGP / MIME-Nachrichten werden noch nicht unterstützt.</string>
+  <string name="attachment_encryption_unsupported">Warnung: Anhänge werden nicht signiert oder verschlüsselt.</string>
+  <string name="send_aborted">Senden abgebrochen.</string>
+</resources>
