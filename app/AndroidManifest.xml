@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="info.guardianproject.pixelknot"
     android:versionCode="4"
-    android:versionName="0.3.1" >
+    android:versionName="0.3.2" >
 
     <uses-sdk
         android:minSdkVersion="9"
@@ -12,6 +12,8 @@
     <!-- 
     <uses-permission android:name="org.thialfihar.android.apg.permission.READ_KEY_DETAILS" />
  	-->
+ 	
+ 	<uses-feature android:name="android.hardware.camera" android:required="false" />
     
     <application
         android:allowBackup="true"
