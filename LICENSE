@@ -1,0 +1,23 @@
+/**
+ * This software is based in part on the work of
+ * James R. Weeks/BioElectroMech, james@obrador.com, and the Independent
+ * JPEG Group (package james)
+ * Sean Breslin/Dr. Ortega (package ortega)
+ *
+ * Original F5 Algo: Andreas Westfeld, westfeld@inf.tu-dresden.de, http://www.inf.tu-dresden.de/~aw4
+ * F5 Algo in Java: Christoph Gaffga, cgaffga@gmail.com, https://code.google.com/p/f5-steganography
+ * The rest of this software is released under the GPL
+ *
+ * PixelKnot is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * version 3 (GPLv3) as published by the Free Software Foundation.
+ * 
+ * PixelKnot is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, see https://www.gnu.org/licenses/ or write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
+**/
