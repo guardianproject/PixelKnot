@@ -36,11 +36,19 @@
     <string name="pref_languages_en_us">انگلیسی ( آمریکایی‌ )</string>
     <string name="pref_languages_fa">فارسی</string>
     
+    <!--  KNOT NAMES -->    
     <string name="knot_catspaw">گره پنجه گربه ای</string>
     <string name="knot_lariatloop">گره کمندی</string>
     <string name="knot_overhand">گره سردست</string>
     <string name="knot_sailors">گره ملوان</string>
     <string name="knot_stevedors">گره استیودر</string>
+    <string name="knot_bow">گره پیکان</string>
+    <string name="knot_catspaw">گره پنجه گربه ای</string>
+    <string name="knot_double_overhand">گره برعکس دوبله</string>
+    <string name="knot_fishermans_eye">گره چشم ماهی گیر </string>
+    <string name="knot_running">گره دونده</string>
+    <string name="knot_sheepshank">گره کور</string>
+    <string name="knot_surgeons">گره جراح</string>
         
     <!-- APG related -->
     <string name="apg_error_activity_not_found">برنامه مناسبی برای این عمل یافت نشد</string>
