@@ -1,6 +1,6 @@
 [main]
 host = https://www.transifex.com
-lang_map = fa_IR: fa
+lang_map = fa_IR: fa, fr_FR: fr, nl_NL: nl, pl_PL: pl, pt_BR: pt, pt_PT: pt-rPT, sl_SI: sl
 
 [pixelknot.stringsxml]
 file_filter = app/res/values-<lang>/strings.xml
