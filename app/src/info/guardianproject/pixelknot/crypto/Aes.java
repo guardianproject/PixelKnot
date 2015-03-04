@@ -29,11 +29,15 @@ import javax.crypto.spec.SecretKeySpec;
 
 public class Aes {
 	public static String DecryptWithPassword(String password, byte[] iv, byte[] message) {
+		return DecryptWithPassword(password, iv, message, Constants.PASSWORD_SALT);
+	}
+	
+	public static String DecryptWithPassword(String password, byte[] iv, byte[] message, byte[] salt) {
 		String new_message = null;
 		
 		try {
 			SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
-			KeySpec spec = new PBEKeySpec(password.toCharArray(), Constants.PASSWORD_SALT, 65536, 256);
+			KeySpec spec = new PBEKeySpec(password.toCharArray(), salt, 65536, 256);
 			SecretKey tmp = factory.generateSecret(spec);
 			SecretKey secret_key = new SecretKeySpec(tmp.getEncoded(), "AES");
 			
@@ -69,16 +73,22 @@ public class Aes {
 	}
 	
 	public static Map<String, String> EncryptWithPassword(String password, String message) {
+		return EncryptWithPassword(password, message, Constants.PASSWORD_SALT);
+	}
+	
+	public static Map<String, String> EncryptWithPassword(String password, String message, byte[] salt) {
 		Map<String, String> pack = null;
 		String new_message = null;
 		
 		try {
 			SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
-			KeySpec spec = new PBEKeySpec(password.toCharArray(), Constants.PASSWORD_SALT, 65536, 256);
+			KeySpec spec = new PBEKeySpec(password.toCharArray(), salt, 65536, 256);
 			SecretKey tmp = factory.generateSecret(spec);
 			SecretKey secret_key = new SecretKeySpec(tmp.getEncoded(), "AES");
 			
 			Cipher cipher = Cipher.getInstance("AES/GCM/NoPadding");
+			
+			// TODO: follow up (https://android-developers.blogspot.com/2013/08/some-securerandom-thoughts.html)
 			cipher.init(Cipher.ENCRYPT_MODE, secret_key);
 			
 			AlgorithmParameters params = cipher.getParameters();
@@ -113,7 +123,6 @@ public class Aes {
 			Log.e(Logger.UI, e.toString());
 			e.printStackTrace();
 		}
-		
 		
 		return pack;
 	}
