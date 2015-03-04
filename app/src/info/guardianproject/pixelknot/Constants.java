@@ -13,7 +13,8 @@ public interface Constants {
 	public static class Logger {
 		public final static String UI = "***************** PixelKnot **************";
 		public final static String PREFS = "***************** PixelKnot (Prefs) **************";
-		public static final String MODEL = "***************** PixelKnot (Model) **************";;
+		public static final String MODEL = "***************** PixelKnot (Model) **************";
+		public static final String AES = "***************** PixelKnot (AES Util) **************";
 	}
 	
 	public static class Settings {

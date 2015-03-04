@@ -426,7 +426,6 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements F5Not
 			imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
 	}
 	
-	
 	public class TrustedShareActivity {
 		public String app_name, package_name;
 		public Drawable icon;
@@ -659,7 +658,6 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements F5Not
 			loader = new PixelKnotLoader(PixelKnotActivity.this);
 			loader.show();
 			
-
 			if(pixel_knot.hasPassword() && !hasSuccessfullyPasswordProtected) {
 				new Thread(new Runnable() {
 					@Override

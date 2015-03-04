@@ -110,8 +110,9 @@ public class SetMessageFragment extends SherlockFragment implements Constants, A
 	public void updateUi() {
 		try {
 			String secret_message = ((PixelKnotListener) a).getPixelKnot().has(Keys.SECRET_MESSAGE) ? ((PixelKnotListener) a).getPixelKnot().getString(Keys.SECRET_MESSAGE) : null;
-			if(secret_message == null)
+			if(secret_message == null) {
 				secret_message_holder.setText("");
+			}
 
 			((PixelKnotListener) a).showKeyboard(secret_message_holder);
 		} catch (JSONException e) {}

@@ -77,7 +77,7 @@ public abstract class SetPassphraseDialog {
 					num_tries++;
 					
 					if(num_tries > 4) {
-						Toast.makeText(a.getActivity(), a.getResources().getString(R.string.password_generating), Toast.LENGTH_SHORT).show();
+						Toast.makeText(a.getActivity(), a.getResources().getString(R.string.password_generating), Toast.LENGTH_LONG).show();
 						((PassphraseDialogListener) a).onRandomPassphraseRequested();
 					} else {
 						Toast.makeText(a.getActivity(), a.getResources().getString(R.string.password_too_short), Toast.LENGTH_SHORT).show();
