@@ -1,6 +1,7 @@
 package info.guardianproject.pixelknot.screens;
 
 import com.actionbarsherlock.app.SherlockFragment;
+
 import info.guardianproject.pixelknot.Constants;
 import info.guardianproject.pixelknot.R;
 import info.guardianproject.pixelknot.utils.PassphraseDialogListener;
@@ -8,10 +9,10 @@ import info.guardianproject.pixelknot.utils.PixelKnotListener;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.view.KeyEvent;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnKeyListener;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -43,14 +44,20 @@ public abstract class SetPassphraseDialog {
 			}
 		});
 		
-		passphrase_holder.setOnKeyListener(new OnKeyListener() {
+		TextWatcher monitor_passphrase_length = new TextWatcher() {
 			@Override
-			public boolean onKey(View v, int keyCode, KeyEvent event) {				
+			public void afterTextChanged(Editable s) {
 				passphrase_monitor.setText(String.format(passphrase_length_string, passphrase_holder.getText().length()));
-				return false;
 			}
-			
-		});
+
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before, int count) {}
+		};
+		
+		passphrase_holder.addTextChangedListener(monitor_passphrase_length);
 		
 		AlertDialog.Builder builder = new AlertDialog.Builder(a.getActivity());
 		

@@ -123,6 +123,7 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements F5Not
 	
 	private int steps_taken = 0;
 
+	@SuppressLint("InflateParams")
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
@@ -319,6 +320,7 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements F5Not
 		});
 	}
 	
+	@SuppressLint("InflateParams")
 	private void showAbout() {
 		AlertDialog.Builder ad = new AlertDialog.Builder(this);
 		View about = LayoutInflater.from(this).inflate(R.layout.about_fragment, null);
@@ -437,6 +439,7 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements F5Not
 			});
 		}
 
+		@SuppressLint("InflateParams")
 		public void createView() {
 			view = LayoutInflater.from(PixelKnotActivity.this).inflate(R.layout.trusted_share_activity_view, null);
 

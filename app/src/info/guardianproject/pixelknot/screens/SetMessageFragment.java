@@ -2,10 +2,6 @@ package info.guardianproject.pixelknot.screens;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.os.Handler;
-import android.text.InputFilter;
-import android.text.Spanned;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -27,58 +23,23 @@ import org.json.JSONException;
 public class SetMessageFragment extends SherlockFragment implements Constants, ActivityListener, PassphraseDialogListener {
 	Activity a;
 	View root_view;
-	Handler h = new Handler();
 
 	EditText secret_message_holder;
 	
-	int capacity = 0;
-	int num_tries_password_set = 0;
-
-	private static final String LOG = Logger.UI;
-	
-	InputFilter monitor_stego_space = new InputFilter() {
-
-		@Override
-		public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
-			h.post(new Runnable() {
-				@Override
-				public void run() {
-					((PixelKnotListener) a).getPixelKnot().setSecretMessage(secret_message_holder.getText().toString());
-				}
-			});
-			return source;
-		}
-
-	};
-
 	@Override
 	public View onCreateView(LayoutInflater li, ViewGroup container, Bundle savedInstanceState) {
 		root_view = li.inflate(R.layout.set_message_fragment, container, false);
 		
-		secret_message_holder = (EditText) root_view.findViewById(R.id.secret_message_holder);
-		secret_message_holder.setFilters(new InputFilter[] {monitor_stego_space});
-		
+		secret_message_holder = (EditText) root_view.findViewById(R.id.secret_message_holder);		
 		return root_view;
 	}
 
 	@Override
 	public void onAttach(Activity a) {
-		super.onAttach(a);
-		Log.d(LOG, "onAttach (fragment:SetMessageFragment) called");
+		super.onAttach(a);		
 		this.a = a;
-		
-		capacity = 0;
-		try {
-			capacity = ((PixelKnotListener) a).getPixelKnot().getInt(Keys.CAPACITY);
-		} catch (JSONException e) {}
 	}
 
-	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
-		super.onActivityCreated(savedInstanceState);
-		Log.d(LOG, "onActivityCreated (fragment:SetMessageFragment) called");
-	}
-	
 	private void setPassphrase() {
 		setPassphrase(null);
 	}
@@ -94,6 +55,10 @@ public class SetMessageFragment extends SherlockFragment implements Constants, A
 
 		SetPassphraseDialog.getDialog(this, passphrase).show();
 	}
+	
+	private void confirmPassphraseOverride() {
+		ConfirmPassphraseOverrideDialog.getDialog(this).show();
+	}
 
 	@Override
 	public void initButtons() {
@@ -104,9 +69,7 @@ public class SetMessageFragment extends SherlockFragment implements Constants, A
 
 			@Override
 			public void onClick(View v) {
-				((PixelKnotListener) a).getPixelKnot().setPasswordOverride(true);
-				((PixelKnotListener) a).setCanAutoAdvance(true);
-				((PixelKnotListener) a).autoAdvance();
+				confirmPassphraseOverride();
 			}
 
 		});
@@ -139,6 +102,7 @@ public class SetMessageFragment extends SherlockFragment implements Constants, A
 
 	@Override
 	public void onPassphraseSuccessfullySet(String passphrase) {
+		((PixelKnotListener) a).getPixelKnot().setSecretMessage(secret_message_holder.getText().toString());
 		((PixelKnotListener) a).getPixelKnot().setPassphrase(passphrase);
 		((PixelKnotListener) a).setCanAutoAdvance(true);
 		((PixelKnotListener) a).autoAdvance();

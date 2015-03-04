@@ -57,6 +57,16 @@ public class ShareFragment extends SherlockFragment implements Constants, Activi
 	}
 
 	private void embed() {
+		if(!((PixelKnotListener) a).getPixelKnot().hasPassword() && !((PixelKnotListener) a).getPixelKnot().getPasswordOverride()) {
+			title.setText(getString(R.string.warning));
+			
+			TextView content = new TextView(a);
+			content.setText(getString(R.string.error_password_required));
+			content_holder.addView(content);
+			
+			return;
+		}
+		
 		if(!((PixelKnotListener) a).getPixelKnot().has(Keys.SECRET_MESSAGE)) {
 			title.setText(getString(R.string.oh_no));
 
