@@ -21,7 +21,7 @@ import info.guardianproject.pixelknot.Constants.PixelKnot.Keys;
 import info.guardianproject.pixelknot.PixelKnotActivity.TrustedShareActivity;
 import info.guardianproject.pixelknot.R;
 import info.guardianproject.pixelknot.utils.ActivityListener;
-import info.guardianproject.pixelknot.utils.FragmentListener;
+import info.guardianproject.pixelknot.utils.PixelKnotListener;
 
 import java.util.List;
 
@@ -57,7 +57,7 @@ public class ShareFragment extends SherlockFragment implements Constants, Activi
 	}
 
 	private void embed() {
-		if(!((FragmentListener) a).getPixelKnot().has(Keys.SECRET_MESSAGE)) {
+		if(!((PixelKnotListener) a).getPixelKnot().has(Keys.SECRET_MESSAGE)) {
 			title.setText(getString(R.string.oh_no));
 
 			TextView content = new TextView(a);
@@ -66,7 +66,7 @@ public class ShareFragment extends SherlockFragment implements Constants, Activi
 			return;
 		}
 
-		if(!((FragmentListener) a).getPixelKnot().has(Keys.COVER_IMAGE_NAME)) {
+		if(!((PixelKnotListener) a).getPixelKnot().has(Keys.COVER_IMAGE_NAME)) {
 			title.setText(getString(R.string.uh_oh));
 
 			TextView content = new TextView(a);
@@ -75,22 +75,22 @@ public class ShareFragment extends SherlockFragment implements Constants, Activi
 			return;
 		}
 
-		((FragmentListener) a).getPixelKnot().save();
+		((PixelKnotListener) a).getPixelKnot().save();
 	}
 
 	@Override
 	public void updateUi() {
 		content_holder.removeAllViews();
 
-		if(!((FragmentListener) a).getIsDecryptOnly() && !((FragmentListener) a).getHasSuccessfullyEmbed()) {
+		if(!((PixelKnotListener) a).getIsDecryptOnly() && !((PixelKnotListener) a).getHasSuccessfullyEmbed()) {
 				title.setText(getString(R.string.please_wait));
 				embed();
 				return;
 		}
 
-		((FragmentListener) a).updateButtonProminence(1, R.drawable.share_padded_selector, true);
+		((PixelKnotListener) a).updateButtonProminence(1, R.drawable.share_padded_selector, true);
 
-		List<TrustedShareActivity> trusted_share_activities = ((FragmentListener) a).getTrustedShareActivities();
+		List<TrustedShareActivity> trusted_share_activities = ((PixelKnotListener) a).getTrustedShareActivities();
 		if(trusted_share_activities.size() > 0) {
 			title.setText(getString(R.string.share_with_selected_apps));
 			content_holder.addView(LayoutInflater.from(a).inflate(R.layout.share_options, null));
@@ -128,7 +128,7 @@ public void initButtons() {
 	share.setBackgroundColor(getResources().getColor(android.R.color.transparent));
 	share.setPadding(0, 0, 0, 0);
 
-	if(((FragmentListener) a).getHasSuccessfullyEmbed() || ((FragmentListener) a).getIsDecryptOnly()) {
+	if(((PixelKnotListener) a).getHasSuccessfullyEmbed() || ((PixelKnotListener) a).getIsDecryptOnly()) {
 		share.setEnabled(true);
 		share_resource = R.drawable.share_padded_selector;
 	} else
@@ -138,7 +138,7 @@ public void initButtons() {
 	share.setOnClickListener(new OnClickListener() {
 		@Override
 		public void onClick(View v) {
-			((FragmentListener) a).share();
+			((PixelKnotListener) a).share();
 		}
 	});
 
@@ -151,10 +151,10 @@ public void initButtons() {
 
 		@Override
 		public void onClick(View v) {
-			((FragmentListener) a).clearPixelKnot();
+			((PixelKnotListener) a).clearPixelKnot();
 		}
 	});
 
-	((FragmentListener) a).setButtonOptions(new ImageButton[] {start_over, share});
+	((PixelKnotListener) a).setButtonOptions(new ImageButton[] {start_over, share});
 }
 }

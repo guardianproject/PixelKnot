@@ -15,12 +15,15 @@
     <string name="share_with_selected_apps">Share with these trusted apps:</string>
     <string name="share_no_apps">There doesn\'t appear to be any apps you can share your image with.\n\nWhy not try using GMail, Dropbox, or Flickr?  Or try your luck by clicking the share button below.</string>
 
-    <string name="password">Password</string>
+    <string name="password">Passphrase must be at least 24 characters long</string>
     <string name="set">Set</string>
     <string name="ok">OK</string>
     <string name="please_wait">Please wait\u2026</string>
     <string name="loading">Loading\u2026</string>
     <string name="embed_success">Share your secret image\u2026</string>
+    <string name="password_monitor">Passphrase length: %1$d</string>
+    <string name="password_too_short">Passphrase is too short! Please try again.</string>
+    <string name="password_generating">Generating a random passphrase for you\u2026</string>
     
     <string name="about">About</string>
     <string name="about_us">About Us:</string>

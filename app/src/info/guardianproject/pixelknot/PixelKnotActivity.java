@@ -61,7 +61,7 @@ import info.guardianproject.pixelknot.screens.SetMessageFragment;
 import info.guardianproject.pixelknot.screens.ShareFragment;
 import info.guardianproject.pixelknot.screens.StegoImageFragment;
 import info.guardianproject.pixelknot.utils.ActivityListener;
-import info.guardianproject.pixelknot.utils.FragmentListener;
+import info.guardianproject.pixelknot.utils.PixelKnotListener;
 import info.guardianproject.pixelknot.utils.IO;
 import info.guardianproject.pixelknot.utils.Image;
 import info.guardianproject.pixelknot.utils.PixelKnotMediaScanner;
@@ -84,7 +84,7 @@ import java.util.Vector;
 import javax.crypto.Cipher;
 
 @SuppressLint("NewApi")
-public class PixelKnotActivity extends SherlockFragmentActivity implements F5Notification, Constants, FragmentListener, ViewPager.OnPageChangeListener, OnGlobalLayoutListener, MediaScannerListener, EmbedListener, ExtractionListener {
+public class PixelKnotActivity extends SherlockFragmentActivity implements F5Notification, Constants, PixelKnotListener, ViewPager.OnPageChangeListener, OnGlobalLayoutListener, MediaScannerListener, EmbedListener, ExtractionListener {
 	private PKPager pk_pager;
 	private ViewPager view_pager;
 
@@ -143,14 +143,11 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements F5Not
 		setContentView(R.layout.pixel_knot_activity);
 		
 		am = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
-		
 		imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
 
 		options_holder = (LinearLayout) findViewById(R.id.options_holder);
-
 		action_display = (LinearLayout) findViewById(R.id.action_display);
 		action_display_ = (LinearLayout) action_bar_root.findViewById(R.id.action_display_);
-
 		progress_holder = (LinearLayout) findViewById(R.id.progress_holder);
 		
 		List<Fragment> fragments = null;
@@ -160,7 +157,10 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements F5Not
 		} else {
 			Log.d(LOG, "this type: " + getIntent().getType());
 			
-			// TODO: if this is a PGP-encrypted message, set to encryption mode and pre-input message
+			/*
+			 *  TODO: if this is a PGP-encrypted message (or just text tbd...), 
+			 *  set to encryption mode and pre-input message
+			 */
 			
 			try {
 				String selected_mode = selectAppMode();
@@ -204,11 +204,6 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements F5Not
 	
 	private String selectAppMode() {
 		// TODO: prompt user for choice
-		return null;
-	}
-	
-	private byte[] inputCustomSeed() {
-		// TODO: prompt user for input
 		return null;
 	}
 	
@@ -453,7 +448,6 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements F5Not
 		}
 	}
 
-	
 	public class PixelKnot extends JSONObject {
 		String cover_image_name = null;
 		String secret_message = null;
@@ -518,9 +512,9 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements F5Not
 		
 		public void setPasswordOverride(boolean password_override) {
 			this.password_override = password_override;
-			if(password_override && hasPassword())
+			if(password_override && hasPassword()) {
 				remove(Keys.PASSWORD);
-				
+			}	
 		}
 		
 		public boolean getPasswordOverride() {
@@ -528,10 +522,11 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements F5Not
 		}
 		
 		public String generateRandomPassword() {
+			// TODO: fun.
 			return new String("OK you wanted a random password here it is.  hope you are happy.");
 		}
 		
-		public void setPassword(String password) {
+		public void setPassphrase(String password) {
 			this.password = password;
 
 			try {
@@ -546,16 +541,16 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements F5Not
 			return false;
 		}
 		
-		private byte[] extractPasswordSalt(String from_password) {
-			return from_password.substring(from_password.length()/3, (from_password.length()/3)*2).getBytes();
+		private String extractPasswordSalt(String from_password) {
+			return from_password.substring((int) (from_password.length()/3), (int) ((from_password.length()/3)*2));
 		}
 		
-		private byte[] extractF5Seed(String from_password) {
-			return from_password.substring((from_password.length()/3)*2).getBytes();
+		private String extractF5Seed(String from_password) {
+			return from_password.substring((int) ((from_password.length()/3)*2));
 		}
 		
 		private String extractPassword(String from_password) {
-			return from_password.substring(0, from_password.length()/3);
+			return from_password.substring(0, (int) (from_password.length()/3));
 		}
 		
 		public String getPassword() {
@@ -571,7 +566,7 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements F5Not
 				return Constants.DEFAULT_PASSWORD_SALT;
 			}
 			
-			return extractPasswordSalt(password);
+			return extractPasswordSalt(password).getBytes();
 		}
 		
 		public byte[] getF5Seed() {
@@ -579,7 +574,7 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements F5Not
 				return Constants.DEFAULT_F5_SEED;
 			}
 			
-			return extractF5Seed(password);
+			return extractF5Seed(password).getBytes();
 		}
 
 		public void setEncryption(boolean has_pgp_encryption, Apg apg) {
@@ -737,7 +732,7 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements F5Not
 			byte[] message = Base64.decode(message_string.split("\n")[1], Base64.DEFAULT);
 			byte[] iv =  Base64.decode(message_string.split("\n")[0], Base64.DEFAULT);
 
-			String sm = Aes.DecryptWithPassword(extractPassword(password), iv, message, extractPasswordSalt(password));
+			String sm = Aes.DecryptWithPassword(extractPassword(password), iv, message, extractPasswordSalt(password).getBytes());
 			if(sm != null) {
 				pixel_knot.setSecretMessage(sm);
 				hasSuccessfullyUnlocked = true;
@@ -807,7 +802,6 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements F5Not
 
 	@Override
 	public void setButtonOptions(ImageButton[] options) {
-		// XXX: Samsung Galaxy S3 and Note are bullshit devices that for some reason tosses out declared views?
 		try {
 			Log.d(LOG, "The View in question is " + options_holder.getClass().getName() + "\nand you can see this because the device is functioning as it should...");
 			options_holder.removeAllViews();
@@ -1186,9 +1180,7 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements F5Not
 	}
 	
 	@Override
-	public void onUpdate(int steps, int interval) {
-		// XXX: I don't use this.
-	}
+	public void onUpdate(int steps, int interval) {}
 
 	@Override
 	public void onUpdate() {

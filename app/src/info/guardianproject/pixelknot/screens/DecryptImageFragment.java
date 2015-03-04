@@ -17,7 +17,7 @@ import info.guardianproject.pixelknot.Constants;
 import info.guardianproject.pixelknot.Constants.PixelKnot.Keys;
 import info.guardianproject.pixelknot.R;
 import info.guardianproject.pixelknot.utils.ActivityListener;
-import info.guardianproject.pixelknot.utils.FragmentListener;
+import info.guardianproject.pixelknot.utils.PixelKnotListener;
 
 import org.json.JSONException;
 
@@ -54,14 +54,14 @@ public class DecryptImageFragment extends SherlockFragment implements Constants,
 
 	@Override
 	public void updateUi() {
-		if(!((FragmentListener) a).getHasSuccessfullyExtracted()) {
-			((FragmentListener) a).getPixelKnot().extract();
+		if(!((PixelKnotListener) a).getHasSuccessfullyExtracted()) {
+			((PixelKnotListener) a).getPixelKnot().extract();
 			return;
 		}
 		
 		try {
-			secret_message_holder.setText(((FragmentListener) a).getPixelKnot().getString(Keys.SECRET_MESSAGE));
-			((FragmentListener) a).doWait(false);
+			secret_message_holder.setText(((PixelKnotListener) a).getPixelKnot().getString(Keys.SECRET_MESSAGE));
+			((PixelKnotListener) a).doWait(false);
 		} catch (JSONException e) {
 			Log.e(Logger.UI, e.toString());
 			e.printStackTrace();
@@ -77,9 +77,9 @@ public class DecryptImageFragment extends SherlockFragment implements Constants,
 
 			@Override
 			public void onClick(View v) {
-				((FragmentListener) a).getPixelKnot().setPasswordOverride(true);
-				((FragmentListener) a).setCanAutoAdvance(true);
-				((FragmentListener) a).autoAdvance();
+				((PixelKnotListener) a).getPixelKnot().setPasswordOverride(true);
+				((PixelKnotListener) a).setCanAutoAdvance(true);
+				((PixelKnotListener) a).autoAdvance();
 			}
 			
 		});
@@ -93,10 +93,10 @@ public class DecryptImageFragment extends SherlockFragment implements Constants,
 
 			@Override
 			public void onClick(View v) {
-				((FragmentListener) a).clearPixelKnot();
+				((PixelKnotListener) a).clearPixelKnot();
 			}
 		});
 
-		((FragmentListener) a).setButtonOptions(new ImageButton[] {start_over, share});
+		((PixelKnotListener) a).setButtonOptions(new ImageButton[] {start_over, share});
 	}
 }

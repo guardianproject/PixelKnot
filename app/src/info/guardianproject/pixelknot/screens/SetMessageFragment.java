@@ -1,9 +1,6 @@
 package info.guardianproject.pixelknot.screens;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.AlertDialog.Builder;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.InputFilter;
@@ -21,28 +18,24 @@ import com.actionbarsherlock.app.SherlockFragment;
 import info.guardianproject.pixelknot.Constants;
 import info.guardianproject.pixelknot.Constants.PixelKnot.Keys;
 import info.guardianproject.pixelknot.R;
-import info.guardianproject.pixelknot.crypto.Apg;
 import info.guardianproject.pixelknot.utils.ActivityListener;
-import info.guardianproject.pixelknot.utils.FragmentListener;
+import info.guardianproject.pixelknot.utils.PassphraseDialogListener;
+import info.guardianproject.pixelknot.utils.PixelKnotListener;
 
 import org.json.JSONException;
 
-public class SetMessageFragment extends SherlockFragment implements Constants, ActivityListener {
+public class SetMessageFragment extends SherlockFragment implements Constants, ActivityListener, PassphraseDialogListener {
 	Activity a;
 	View root_view;
 	Handler h = new Handler();
 
 	EditText secret_message_holder;
+	
 	int capacity = 0;
-
-	Apg apg = null;
-	long secret_key = 0L;
-	long[] encryption_ids = null;
+	int num_tries_password_set = 0;
 
 	private static final String LOG = Logger.UI;
 	
-	int num_tries_password_set = 0;
-
 	InputFilter monitor_stego_space = new InputFilter() {
 
 		@Override
@@ -50,7 +43,7 @@ public class SetMessageFragment extends SherlockFragment implements Constants, A
 			h.post(new Runnable() {
 				@Override
 				public void run() {
-					((FragmentListener) a).getPixelKnot().setSecretMessage(secret_message_holder.getText().toString());
+					((PixelKnotListener) a).getPixelKnot().setSecretMessage(secret_message_holder.getText().toString());
 				}
 			});
 			return source;
@@ -61,9 +54,10 @@ public class SetMessageFragment extends SherlockFragment implements Constants, A
 	@Override
 	public View onCreateView(LayoutInflater li, ViewGroup container, Bundle savedInstanceState) {
 		root_view = li.inflate(R.layout.set_message_fragment, container, false);
-
+		
 		secret_message_holder = (EditText) root_view.findViewById(R.id.secret_message_holder);
 		secret_message_holder.setFilters(new InputFilter[] {monitor_stego_space});
+		
 		return root_view;
 	}
 
@@ -72,10 +66,10 @@ public class SetMessageFragment extends SherlockFragment implements Constants, A
 		super.onAttach(a);
 		Log.d(LOG, "onAttach (fragment:SetMessageFragment) called");
 		this.a = a;
-
+		
 		capacity = 0;
 		try {
-			capacity = ((FragmentListener) a).getPixelKnot().getInt(Keys.CAPACITY);
+			capacity = ((PixelKnotListener) a).getPixelKnot().getInt(Keys.CAPACITY);
 		} catch (JSONException e) {}
 	}
 
@@ -85,57 +79,24 @@ public class SetMessageFragment extends SherlockFragment implements Constants, A
 		Log.d(LOG, "onActivityCreated (fragment:SetMessageFragment) called");
 	}
 	
-	private void setPassword() {
-		setPassword(null);
+	private void setPassphrase() {
+		setPassphrase(null);
 	}
 
-	private void setPassword(String with_password) {
-		final EditText password_holder = new EditText(a);
-		try {
-			if(with_password != null) {
-				password_holder.setText(with_password);
-			} else {
-				if(((FragmentListener) a).getPixelKnot().has(Keys.PASSWORD))
-					password_holder.setText(((FragmentListener) a).getPixelKnot().getString(Keys.PASSWORD));
-				else
-					password_holder.setHint(getString(R.string.password));
-			}
-
-		} catch (JSONException e) {
-			password_holder.setHint(getString(R.string.password));
+	private void setPassphrase(String passphrase) {
+		if(passphrase == null) {
+			try {
+				if(((PixelKnotListener) a).getPixelKnot().has(Keys.PASSWORD)) {
+					passphrase = ((PixelKnotListener) a).getPixelKnot().getString(Keys.PASSWORD);
+				}
+			} catch (JSONException e) {}
 		}
 
-		Builder ad = new AlertDialog.Builder(a);
-		ad.setView(password_holder);
-		ad.setPositiveButton(getString(R.string.set), new DialogInterface.OnClickListener() {
-
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				if(password_holder.getText().length() < 24) {
-					num_tries_password_set++;
-					
-					if(num_tries_password_set > 10) {
-						dialog.dismiss();
-						setPassword(((FragmentListener) a).getPixelKnot().generateRandomPassword());
-					}
-					
-					return;
-				}
-					
-				((FragmentListener) a).getPixelKnot().setPassword(password_holder.getText().toString());
-
-				((FragmentListener) a).setCanAutoAdvance(true);
-				((FragmentListener) a).autoAdvance();
-			}
-		});
-
-		ad.show();
-		((FragmentListener) a).showKeyboard(password_holder);
+		SetPassphraseDialog.getDialog(this, passphrase).show();
 	}
 
 	@Override
 	public void initButtons() {
-
 		ImageButton share_unprotected = new ImageButton(a);
 		share_unprotected.setBackgroundColor(getResources().getColor(android.R.color.transparent));
 		share_unprotected.setPadding(0, 0, 0, 0);
@@ -143,48 +104,49 @@ public class SetMessageFragment extends SherlockFragment implements Constants, A
 
 			@Override
 			public void onClick(View v) {
-				((FragmentListener) a).getPixelKnot().setPasswordOverride(true);
-				((FragmentListener) a).setCanAutoAdvance(true);
-				((FragmentListener) a).autoAdvance();
+				((PixelKnotListener) a).getPixelKnot().setPasswordOverride(true);
+				((PixelKnotListener) a).setCanAutoAdvance(true);
+				((PixelKnotListener) a).autoAdvance();
 			}
 
 		});
 		share_unprotected.setImageResource(R.drawable.share_selector);
 
-		ImageButton password_protect = new ImageButton(a);
-		password_protect.setBackgroundColor(getResources().getColor(android.R.color.transparent));
-		password_protect.setPadding(0, 0, 0, 0);
-		password_protect.setOnClickListener(new OnClickListener() {
+		ImageButton passphrase_protect = new ImageButton(a);
+		passphrase_protect.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+		passphrase_protect.setPadding(0, 0, 0, 0);
+		passphrase_protect.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				setPassword();
+				setPassphrase();
 			}
 		});
-		password_protect.setImageResource(R.drawable.password_selector);
+		passphrase_protect.setImageResource(R.drawable.password_selector);
 		
-		ImageButton generate_random_password = new ImageButton(a);
-		generate_random_password.setBackgroundColor(getResources().getColor(android.R.color.transparent));
-		generate_random_password.setPadding(0, 0, 0, 0);
-		generate_random_password.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				setPassword(((FragmentListener) a).getPixelKnot().generateRandomPassword());
-			}
-		});
-		generate_random_password.setImageResource(R.drawable.password_selector);
-
-		((FragmentListener) a).setButtonOptions(new ImageButton[] {
-				password_protect, generate_random_password, share_unprotected});
+		((PixelKnotListener) a).setButtonOptions(new ImageButton[] {passphrase_protect, share_unprotected});
 	}
 
 	@Override
 	public void updateUi() {
 		try {
-			String secret_message = ((FragmentListener) a).getPixelKnot().has(Keys.SECRET_MESSAGE) ? ((FragmentListener) a).getPixelKnot().getString(Keys.SECRET_MESSAGE) : null;
+			String secret_message = ((PixelKnotListener) a).getPixelKnot().has(Keys.SECRET_MESSAGE) ? ((PixelKnotListener) a).getPixelKnot().getString(Keys.SECRET_MESSAGE) : null;
 			if(secret_message == null)
 				secret_message_holder.setText("");
 
-			((FragmentListener) a).showKeyboard(secret_message_holder);
+			((PixelKnotListener) a).showKeyboard(secret_message_holder);
 		} catch (JSONException e) {}
+	}
+
+	@Override
+	public void onPassphraseSuccessfullySet(String passphrase) {
+		((PixelKnotListener) a).getPixelKnot().setPassphrase(passphrase);
+		((PixelKnotListener) a).setCanAutoAdvance(true);
+		((PixelKnotListener) a).autoAdvance();
+	}
+
+	@Override
+	public void onRandomPassphraseRequested() {
+		String random_passphrase = ((PixelKnotListener) a).getPixelKnot().generateRandomPassword();
+		SetPassphraseDialog.getDialog(this, random_passphrase).show();
 	}
 }

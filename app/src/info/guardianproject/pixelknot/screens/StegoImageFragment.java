@@ -16,7 +16,7 @@ import info.guardianproject.pixelknot.Constants;
 import info.guardianproject.pixelknot.Constants.PixelKnot.Keys;
 import info.guardianproject.pixelknot.R;
 import info.guardianproject.pixelknot.utils.ActivityListener;
-import info.guardianproject.pixelknot.utils.FragmentListener;
+import info.guardianproject.pixelknot.utils.PixelKnotListener;
 
 import java.io.File;
 
@@ -56,7 +56,7 @@ public class StegoImageFragment extends SherlockFragment implements Constants, A
 		super.onActivityCreated(savedInstanceState);
 		
 		
-		((FragmentListener) a).getPixelKnot().setCoverImageName(getArguments().getString(Keys.COVER_IMAGE_NAME));
+		((PixelKnotListener) a).getPixelKnot().setCoverImageName(getArguments().getString(Keys.COVER_IMAGE_NAME));
 	}
 	
 	public void setImageData(String path_to_cover_image) {
@@ -88,10 +88,10 @@ public class StegoImageFragment extends SherlockFragment implements Constants, A
 		h.postDelayed(new Runnable() {
 			@Override
 			public void run() {
-				((FragmentListener) a).getPixelKnot().setCoverImageName(path_to_cover_image);
+				((PixelKnotListener) a).getPixelKnot().setCoverImageName(path_to_cover_image);
 				
-				((FragmentListener) a).setCanAutoAdvance(true);
-				((FragmentListener) a).autoAdvance();
+				((PixelKnotListener) a).setCanAutoAdvance(true);
+				((PixelKnotListener) a).autoAdvance();
 			}
 		}, 200);
 		

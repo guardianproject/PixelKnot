@@ -9,7 +9,7 @@ import info.guardianproject.pixelknot.crypto.Apg;
 
 import java.util.List;
 
-public interface FragmentListener {
+public interface PixelKnotListener {
 	public void setButtonOptions(ImageButton[] options);
 	public PixelKnot getPixelKnot();
 	public void clearPixelKnot();

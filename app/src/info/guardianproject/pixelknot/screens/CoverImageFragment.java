@@ -23,7 +23,7 @@ import info.guardianproject.pixelknot.Constants;
 import info.guardianproject.pixelknot.Constants.PixelKnot.Keys;
 import info.guardianproject.pixelknot.R;
 import info.guardianproject.pixelknot.utils.ActivityListener;
-import info.guardianproject.pixelknot.utils.FragmentListener;
+import info.guardianproject.pixelknot.utils.PixelKnotListener;
 import info.guardianproject.pixelknot.utils.IO;
 import info.guardianproject.pixelknot.utils.PixelKnotMediaScanner;
 
@@ -49,7 +49,7 @@ public class CoverImageFragment extends SherlockFragment implements Constants, A
 
 		@Override
 		public void onClick(View v) {
-			((FragmentListener) a).doWait(true);
+			((PixelKnotListener) a).doWait(true);
 			
 			Intent galleryIntent = new Intent(Intent.ACTION_GET_CONTENT).setType("image/*");
 			startActivityForResult(galleryIntent, Source.GALLERY);
@@ -64,7 +64,7 @@ public class CoverImageFragment extends SherlockFragment implements Constants, A
 		cover_image_holder = (ImageView) root_view.findViewById(R.id.cover_image_holder);
 		cover_image_holder.setImageResource(blank_image);
 		
-		if(!((FragmentListener) a).getHasSuccessfullyEmbed()) {
+		if(!((PixelKnotListener) a).getHasSuccessfullyEmbed()) {
 			cover_image_holder.setOnClickListener(choose_picture_listener);
 		} else {
 			cover_image_holder.setOnClickListener(null);
@@ -96,9 +96,9 @@ public class CoverImageFragment extends SherlockFragment implements Constants, A
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 		
-		if(!((FragmentListener) a).getHasSeenFirstPage()) {
+		if(!((PixelKnotListener) a).getHasSeenFirstPage()) {
 			initButtons();
-			((FragmentListener) a).setHasSeenFirstPage(true);
+			((PixelKnotListener) a).setHasSeenFirstPage(true);
 		}
 		
 		updateUi();
@@ -139,13 +139,13 @@ public class CoverImageFragment extends SherlockFragment implements Constants, A
 			}
 		});
 		
-		((FragmentListener) a).doWait(false);
+		((PixelKnotListener) a).doWait(false);
 
-		((FragmentListener) a).getPixelKnot().setCoverImageName(path_to_cover_image);
+		((PixelKnotListener) a).getPixelKnot().setCoverImageName(path_to_cover_image);
 		h.postDelayed(new Runnable() {
 			@Override
 			public void run() {
-				((FragmentListener) a).autoAdvance();
+				((PixelKnotListener) a).autoAdvance();
 			}
 		}, 1000);
 
@@ -154,18 +154,18 @@ public class CoverImageFragment extends SherlockFragment implements Constants, A
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
-		((FragmentListener) a).doWait(false);
+		((PixelKnotListener) a).doWait(false);
 		
 		if(resultCode == Activity.RESULT_OK) {
 			if(requestCode == Source.GALLERY || requestCode == Source.CAMERA) {
-				((FragmentListener) a).setCanAutoAdvance(true);
+				((PixelKnotListener) a).setCanAutoAdvance(true);
 				if(requestCode == Source.GALLERY) {
 					cover_image_uri = data.getData();
 					path_to_cover_image = IO.pullPathFromUri(a, cover_image_uri);
 					cover_image_file = new File(path_to_cover_image);
 					setImageData();
 				} else if(requestCode == Source.CAMERA) {
-					((FragmentListener) a).doWait(true);
+					((PixelKnotListener) a).doWait(true);
 					new PixelKnotMediaScanner(a, path_to_cover_image);
 				}    			
 			}
@@ -181,7 +181,7 @@ public class CoverImageFragment extends SherlockFragment implements Constants, A
 
 			@Override
 			public void onClick(View v) {
-				((FragmentListener) a).doWait(true);
+				((PixelKnotListener) a).doWait(true);
 				
 				cover_image_file = new File(DUMP, "temp_img.jpg");
 				cover_image_uri = Uri.fromFile(cover_image_file);
@@ -199,13 +199,13 @@ public class CoverImageFragment extends SherlockFragment implements Constants, A
 		choose_picture.setOnClickListener(choose_picture_listener);
 		choose_picture.setImageResource(R.drawable.gallery_selector);
 
-		((FragmentListener) a).setButtonOptions(new ImageButton[] {take_picture, choose_picture});
+		((PixelKnotListener) a).setButtonOptions(new ImageButton[] {take_picture, choose_picture});
 	}
 
 	@Override
 	public void updateUi() {
 		try {
-			path_to_cover_image = ((FragmentListener) a).getPixelKnot().has(Keys.COVER_IMAGE_NAME) ? ((FragmentListener) a).getPixelKnot().getString(Keys.COVER_IMAGE_NAME) : null;
+			path_to_cover_image = ((PixelKnotListener) a).getPixelKnot().has(Keys.COVER_IMAGE_NAME) ? ((PixelKnotListener) a).getPixelKnot().getString(Keys.COVER_IMAGE_NAME) : null;
 		} catch (JSONException e) {
 			Log.e(Logger.UI, e.toString());
 			e.printStackTrace();
@@ -219,7 +219,7 @@ public class CoverImageFragment extends SherlockFragment implements Constants, A
 			setImageData();
 		}
 		
-		if(!((FragmentListener) a).getHasSuccessfullyEmbed()) {
+		if(!((PixelKnotListener) a).getHasSuccessfullyEmbed()) {
 			cover_image_holder.setOnClickListener(choose_picture_listener);
 		} else {
 			cover_image_holder.setOnClickListener(null);
