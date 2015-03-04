@@ -152,44 +152,30 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements F5Not
 		action_display_ = (LinearLayout) action_bar_root.findViewById(R.id.action_display_);
 
 		progress_holder = (LinearLayout) findViewById(R.id.progress_holder);
-
-		List<Fragment> fragments = new Vector<Fragment>();
+		
+		List<Fragment> fragments = null;
 
 		if(Intent.ACTION_MAIN.equals(getIntent().getAction())) {
-			Fragment cover_image_fragment = Fragment.instantiate(this, CoverImageFragment.class.getName());
-			Fragment set_message_fragment = Fragment.instantiate(this, SetMessageFragment.class.getName());
-			Fragment share_fragment = Fragment.instantiate(this, ShareFragment.class.getName());
-
-			fragments.add(0, cover_image_fragment);
-			fragments.add(1, set_message_fragment);
-			fragments.add(2, share_fragment);
+			fragments = initForEncryption();
 		} else {
 			Log.d(LOG, "this type: " + getIntent().getType());
 			
-			setIsDecryptOnly(true);
-			
-			Fragment stego_image_fragment = Fragment.instantiate(this, StegoImageFragment.class.getName());
-			Bundle args = new Bundle();
-			
 			try {
-				args.putString(Keys.COVER_IMAGE_NAME, IO.pullPathFromUri(this, getIntent().getData()));
-			} catch(NullPointerException e) {
-				if(getIntent().hasExtra(Intent.EXTRA_STREAM)) {
-					args.putString(Keys.COVER_IMAGE_NAME, IO.pullPathFromUri(this, (Uri) getIntent().getExtras().get(Intent.EXTRA_STREAM)));
-				} else if(getIntent().hasExtra(Intent.EXTRA_TEXT)) {
-					args.putString(Keys.COVER_IMAGE_NAME, IO.pullPathFromUri(this, Uri.parse(getIntent().getStringExtra(Intent.EXTRA_TEXT))));
+				String selected_mode = selectAppMode();
+				if(selected_mode == "DECRYPT") {
+					fragments = initForDecryption();
+				} else if (selected_mode == "ENCRYPT") {
+					fragments = initForEncryption();
 				}
-				
-			}
-			
-			stego_image_fragment.setArguments(args);
-
-			Fragment decrypt_image_fragment = Fragment.instantiate(this, DecryptImageFragment.class.getName());
-			Fragment share_fragment = Fragment.instantiate(this, ShareFragment.class.getName());
-
-			fragments.add(0, stego_image_fragment);
-			fragments.add(1, decrypt_image_fragment);
-			fragments.add(2, share_fragment);
+			} catch(NullPointerException e) {
+				Log.e(Logger.UI, e.toString());
+				return;
+			}			
+		}
+		
+		if(fragments == null) {
+			// TODO: fail nicely.
+			return;
 		}
 
 		pk_pager = new PKPager(getSupportFragmentManager(), fragments);
@@ -212,6 +198,56 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements F5Not
 		activity_root.getViewTreeObserver().addOnGlobalLayoutListener(this);
 		
 		last_locale = PreferenceManager.getDefaultSharedPreferences(this).getString(Settings.LANGUAGE, "0");
+	}
+	
+	private String selectAppMode() {
+		// TODO: prompt user for choice
+		return null;
+	}
+	
+	private List<Fragment> initForEncryption() {
+		List<Fragment> fragments = new Vector<Fragment>();
+		
+		Fragment cover_image_fragment = Fragment.instantiate(this, CoverImageFragment.class.getName());
+		Fragment set_message_fragment = Fragment.instantiate(this, SetMessageFragment.class.getName());
+		Fragment share_fragment = Fragment.instantiate(this, ShareFragment.class.getName());
+
+		fragments.add(0, cover_image_fragment);
+		fragments.add(1, set_message_fragment);
+		fragments.add(2, share_fragment);
+		
+		return fragments;
+	}
+	
+	private List<Fragment> initForDecryption() {
+		setIsDecryptOnly(true);
+		
+		List<Fragment> fragments = new Vector<Fragment>();
+		
+		Fragment stego_image_fragment = Fragment.instantiate(this, StegoImageFragment.class.getName());
+		Bundle args = new Bundle();
+		
+		try {
+			args.putString(Keys.COVER_IMAGE_NAME, IO.pullPathFromUri(this, getIntent().getData()));
+		} catch(NullPointerException e) {
+			if(getIntent().hasExtra(Intent.EXTRA_STREAM)) {
+				args.putString(Keys.COVER_IMAGE_NAME, IO.pullPathFromUri(this, (Uri) getIntent().getExtras().get(Intent.EXTRA_STREAM)));
+			} else if(getIntent().hasExtra(Intent.EXTRA_TEXT)) {
+				args.putString(Keys.COVER_IMAGE_NAME, IO.pullPathFromUri(this, Uri.parse(getIntent().getStringExtra(Intent.EXTRA_TEXT))));
+			}
+			
+		}
+		
+		stego_image_fragment.setArguments(args);
+
+		Fragment decrypt_image_fragment = Fragment.instantiate(this, DecryptImageFragment.class.getName());
+		Fragment share_fragment = Fragment.instantiate(this, ShareFragment.class.getName());
+
+		fragments.add(0, stego_image_fragment);
+		fragments.add(1, decrypt_image_fragment);
+		fragments.add(2, share_fragment);
+		
+		return fragments;
 	}
 	
 	@Override
