@@ -1,6 +1,7 @@
 .DS_Store
 app/bin
 app/gen
+app/.settings
 .metadata
 # files generated for the ant build
 local.properties
