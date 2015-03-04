@@ -5,16 +5,9 @@ import android.os.Environment;
 public interface Constants {
 	public final static String PASSWORD_SENTINEL = "----* PK v 1.0 REQUIRES PASSWORD ----*";
 	public final static String PGP_SENTINEL = "-----BEGIN PGP MESSAGE-----";
-	public final static byte[] PASSWORD_SALT = new byte[] {
-		(byte) 0xC3,
-		(byte) 0xAA,
-		(byte) 0xBB,
-		(byte) 0x34,
-		(byte) 0x7B,
-		(byte) 0x66,
-		(byte) 0x3A,
-		(byte) 0x81
-	};
+	
+	public final static byte[] DEFAULT_PASSWORD_SALT = new String("When I say \"make some\", you say \"noise\"!").getBytes();
+	public final static byte[] DEFAULT_F5_SEED = new String("Make some [noise!]  Make some [noise!]").getBytes();
 	
 	public static class Logger {
 		public final static String UI = "***************** PixelKnot **************";
@@ -77,6 +70,7 @@ public interface Constants {
 			public static final String HAS_ENCRYPTION = "has_encryption";
 			public static final String CAPACITY = "capacity";
 			public static final String OUT_FILE_NAME = "out_file_name";
+			public static final String CUSTOM_SEED = "custom_seed";
 		}
 		
 		public static class ActivityNames {

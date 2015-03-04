@@ -40,6 +40,8 @@ public class SetMessageFragment extends SherlockFragment implements Constants, A
 	long[] encryption_ids = null;
 
 	private static final String LOG = Logger.UI;
+	
+	int num_tries_password_set = 0;
 
 	InputFilter monitor_stego_space = new InputFilter() {
 
@@ -75,8 +77,6 @@ public class SetMessageFragment extends SherlockFragment implements Constants, A
 		try {
 			capacity = ((FragmentListener) a).getPixelKnot().getInt(Keys.CAPACITY);
 		} catch (JSONException e) {}
-
-
 	}
 
 	@Override
@@ -84,14 +84,22 @@ public class SetMessageFragment extends SherlockFragment implements Constants, A
 		super.onActivityCreated(savedInstanceState);
 		Log.d(LOG, "onActivityCreated (fragment:SetMessageFragment) called");
 	}
-
+	
 	private void setPassword() {
+		setPassword(null);
+	}
+
+	private void setPassword(String with_password) {
 		final EditText password_holder = new EditText(a);
 		try {
-			if(((FragmentListener) a).getPixelKnot().has(Keys.PASSWORD))
-				password_holder.setText(((FragmentListener) a).getPixelKnot().getString(Keys.PASSWORD));
-			else
-				password_holder.setHint(getString(R.string.password));
+			if(with_password != null) {
+				password_holder.setText(with_password);
+			} else {
+				if(((FragmentListener) a).getPixelKnot().has(Keys.PASSWORD))
+					password_holder.setText(((FragmentListener) a).getPixelKnot().getString(Keys.PASSWORD));
+				else
+					password_holder.setHint(getString(R.string.password));
+			}
 
 		} catch (JSONException e) {
 			password_holder.setHint(getString(R.string.password));
@@ -103,12 +111,21 @@ public class SetMessageFragment extends SherlockFragment implements Constants, A
 
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
-				if(password_holder.getText().length() > 0) {
-					((FragmentListener) a).getPixelKnot().setPassword(password_holder.getText().toString());
-
-					((FragmentListener) a).setCanAutoAdvance(true);
-					((FragmentListener) a).autoAdvance();
+				if(password_holder.getText().length() < 24) {
+					num_tries_password_set++;
+					
+					if(num_tries_password_set > 10) {
+						dialog.dismiss();
+						setPassword(((FragmentListener) a).getPixelKnot().generateRandomPassword());
+					}
+					
+					return;
 				}
+					
+				((FragmentListener) a).getPixelKnot().setPassword(password_holder.getText().toString());
+
+				((FragmentListener) a).setCanAutoAdvance(true);
+				((FragmentListener) a).autoAdvance();
 			}
 		});
 
@@ -144,8 +161,20 @@ public class SetMessageFragment extends SherlockFragment implements Constants, A
 			}
 		});
 		password_protect.setImageResource(R.drawable.password_selector);
+		
+		ImageButton generate_random_password = new ImageButton(a);
+		generate_random_password.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+		generate_random_password.setPadding(0, 0, 0, 0);
+		generate_random_password.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				setPassword(((FragmentListener) a).getPixelKnot().generateRandomPassword());
+			}
+		});
+		generate_random_password.setImageResource(R.drawable.password_selector);
 
-		((FragmentListener) a).setButtonOptions(new ImageButton[] {share_unprotected, password_protect});
+		((FragmentListener) a).setButtonOptions(new ImageButton[] {
+				password_protect, generate_random_password, share_unprotected});
 	}
 
 	@Override

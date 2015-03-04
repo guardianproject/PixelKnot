@@ -160,6 +160,8 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements F5Not
 		} else {
 			Log.d(LOG, "this type: " + getIntent().getType());
 			
+			// TODO: if this is a PGP-encrypted message, set to encryption mode and pre-input message
+			
 			try {
 				String selected_mode = selectAppMode();
 				if(selected_mode == "DECRYPT") {
@@ -202,6 +204,11 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements F5Not
 	
 	private String selectAppMode() {
 		// TODO: prompt user for choice
+		return null;
+	}
+	
+	private byte[] inputCustomSeed() {
+		// TODO: prompt user for input
 		return null;
 	}
 	
@@ -446,14 +453,16 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements F5Not
 		}
 	}
 
+	
 	public class PixelKnot extends JSONObject {
 		String cover_image_name = null;
 		String secret_message = null;
-
+		
+		// when password is not null, it will be atomized into 3: password, pw seed, and f5 seed
 		String password = null;
 
 		boolean can_save = false;
-		boolean has_encryption = false;
+		boolean has_pgp_encryption = false;
 		boolean password_override = false;
 
 		int capacity = 0;
@@ -509,7 +518,7 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements F5Not
 		
 		public void setPasswordOverride(boolean password_override) {
 			this.password_override = password_override;
-			if(password_override && getPassword())
+			if(password_override && hasPassword())
 				remove(Keys.PASSWORD);
 				
 		}
@@ -517,28 +526,65 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements F5Not
 		public boolean getPasswordOverride() {
 			return this.password_override;
 		}
-
+		
+		public String generateRandomPassword() {
+			return new String("OK you wanted a random password here it is.  hope you are happy.");
+		}
+		
 		public void setPassword(String password) {
 			this.password = password;
-			this.has_encryption = false;
 
 			try {
 				put(Keys.PASSWORD, password);
-				if(has(Keys.HAS_ENCRYPTION))
-					remove(Keys.HAS_ENCRYPTION);
 			} catch(JSONException e) {}
 		}
 
-		public boolean getPassword() {
+		public boolean hasPassword() {
 			if(has(Keys.PASSWORD))
 				return true;
 
 			return false;
 		}
+		
+		private byte[] extractPasswordSalt(String from_password) {
+			return from_password.substring(from_password.length()/3, (from_password.length()/3)*2).getBytes();
+		}
+		
+		private byte[] extractF5Seed(String from_password) {
+			return from_password.substring((from_password.length()/3)*2).getBytes();
+		}
+		
+		private String extractPassword(String from_password) {
+			return from_password.substring(0, from_password.length()/3);
+		}
+		
+		public String getPassword() {
+			if(!hasPassword()) {
+				return null;
+			}
+			
+			return extractPassword(password);
+		}
+		
+		public byte[] getPasswordSalt() {
+			if(!hasPassword()) {
+				return Constants.DEFAULT_PASSWORD_SALT;
+			}
+			
+			return extractPasswordSalt(password);
+		}
+		
+		public byte[] getF5Seed() {
+			if(!hasPassword()) {
+				return Constants.DEFAULT_F5_SEED;
+			}
+			
+			return extractF5Seed(password);
+		}
 
-		public void setEncryption(boolean has_encryption, Apg apg) {
-			this.has_encryption = has_encryption;
-			if(has_encryption) {
+		public void setEncryption(boolean has_pgp_encryption, Apg apg) {
+			this.has_pgp_encryption = has_pgp_encryption;
+			if(has_pgp_encryption) {
 				this.password = null;
 				this.apg = apg;
 
@@ -555,7 +601,7 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements F5Not
 		}
 
 		public boolean getEncryption() {
-			return has_encryption;
+			return has_pgp_encryption;
 		}
 
 		public void setCapacity(int capacity) {
@@ -570,7 +616,7 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements F5Not
 			secret_message = null;
 			password = null;
 			can_save = false;
-			has_encryption = false;
+			has_pgp_encryption = false;
 			capacity = 0;
 			out_file = null;
 			apg = null;
@@ -597,27 +643,25 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements F5Not
 			loader.show();
 			
 
-			if(pixel_knot.getPassword() && !hasSuccessfullyPasswordProtected) {
+			if(pixel_knot.hasPassword() && !hasSuccessfullyPasswordProtected) {
 				new Thread(new Runnable() {
 					@Override
 					public void run() {
-						try {
-							loader.init(Loader.Steps.ENCRYPT);
-							onUpdate();
-							Entry<String, String> pack = Aes.EncryptWithPassword(pixel_knot.getString(Keys.PASSWORD), secret_message).entrySet().iterator().next();
+						loader.init(Loader.Steps.ENCRYPT);
+						onUpdate();
+						Entry<String, String> pack = Aes.EncryptWithPassword(pixel_knot.getPassword(), secret_message, pixel_knot.getPasswordSalt()).entrySet().iterator().next();
 
-							secret_message = PASSWORD_SENTINEL.concat(new String(pack.getKey())).concat(pack.getValue());
-							hasSuccessfullyPasswordProtected = true;
-							h.post(new Runnable() {
-								@Override
-								public void run() {
-									try {
-										loader.finish();
-									} catch(NullPointerException e) {}
-									save();
-								}
-							});
-						} catch (JSONException e) {}
+						secret_message = PASSWORD_SENTINEL.concat(new String(pack.getKey())).concat(pack.getValue());
+						hasSuccessfullyPasswordProtected = true;
+						h.post(new Runnable() {
+							@Override
+							public void run() {
+								try {
+									loader.finish();
+								} catch(NullPointerException e) {}
+								save();
+							}
+						});
 					}
 				}).start();
 			}
@@ -635,7 +679,7 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements F5Not
 
 			}
 
-			if((!pixel_knot.has_encryption && !pixel_knot.getPassword()) || (hasSuccessfullyEncrypted || hasSuccessfullyPasswordProtected)) {
+			if((!pixel_knot.has_pgp_encryption && !pixel_knot.hasPassword()) || (hasSuccessfullyEncrypted || hasSuccessfullyPasswordProtected)) {
 				loader.init(Loader.Steps.EMBED);
 				
 				new Thread(new Runnable() {
@@ -659,7 +703,7 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements F5Not
 				@Override
 				public void run() {
 					@SuppressWarnings("unused")
-					Extract extract = new Extract(PixelKnotActivity.this, cover_image_name);
+					Extract extract = new Extract(PixelKnotActivity.this, cover_image_name, getF5Seed());
 				}
 			}).start();
 
@@ -693,7 +737,7 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements F5Not
 			byte[] message = Base64.decode(message_string.split("\n")[1], Base64.DEFAULT);
 			byte[] iv =  Base64.decode(message_string.split("\n")[0], Base64.DEFAULT);
 
-			String sm = Aes.DecryptWithPassword(password, iv, message);
+			String sm = Aes.DecryptWithPassword(extractPassword(password), iv, message, extractPasswordSalt(password));
 			if(sm != null) {
 				pixel_knot.setSecretMessage(sm);
 				hasSuccessfullyUnlocked = true;

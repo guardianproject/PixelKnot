@@ -27,11 +27,7 @@ import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
 
-public class Aes {
-	public static String DecryptWithPassword(String password, byte[] iv, byte[] message) {
-		return DecryptWithPassword(password, iv, message, Constants.PASSWORD_SALT);
-	}
-	
+public class Aes {	
 	public static String DecryptWithPassword(String password, byte[] iv, byte[] message, byte[] salt) {
 		String new_message = null;
 		
@@ -70,10 +66,6 @@ public class Aes {
 		}
 		
 		return new_message;
-	}
-	
-	public static Map<String, String> EncryptWithPassword(String password, String message) {
-		return EncryptWithPassword(password, message, Constants.PASSWORD_SALT);
 	}
 	
 	public static Map<String, String> EncryptWithPassword(String password, String message, byte[] salt) {
