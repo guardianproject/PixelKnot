@@ -2,6 +2,8 @@ package info.guardianproject.pixelknot.screens;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -25,12 +27,27 @@ public class SetMessageFragment extends SherlockFragment implements Constants, A
 	View root_view;
 
 	EditText secret_message_holder;
+	TextWatcher secret_message_watcher = new TextWatcher() {
+
+		@Override
+		public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+		@Override
+		public void onTextChanged(CharSequence s, int start, int before, int count) {}
+
+		@Override
+		public void afterTextChanged(Editable s) {
+			((PixelKnotListener) a).getPixelKnot().setSecretMessage(secret_message_holder.getText().toString());
+		}
+		
+	};
 	
 	@Override
 	public View onCreateView(LayoutInflater li, ViewGroup container, Bundle savedInstanceState) {
 		root_view = li.inflate(R.layout.set_message_fragment, container, false);
 		
-		secret_message_holder = (EditText) root_view.findViewById(R.id.secret_message_holder);		
+		secret_message_holder = (EditText) root_view.findViewById(R.id.secret_message_holder);
+		secret_message_holder.addTextChangedListener(secret_message_watcher);
 		return root_view;
 	}
 
@@ -102,7 +119,6 @@ public class SetMessageFragment extends SherlockFragment implements Constants, A
 
 	@Override
 	public void onPassphraseSuccessfullySet(String passphrase) {
-		((PixelKnotListener) a).getPixelKnot().setSecretMessage(secret_message_holder.getText().toString());
 		((PixelKnotListener) a).getPixelKnot().setPassphrase(passphrase);
 		((PixelKnotListener) a).setCanAutoAdvance(true);
 		((PixelKnotListener) a).autoAdvance();

@@ -54,7 +54,6 @@ public class CoverImageFragment extends SherlockFragment implements Constants, A
 			Intent galleryIntent = new Intent(Intent.ACTION_GET_CONTENT).setType("image/*");
 			startActivityForResult(galleryIntent, Source.GALLERY);
 		}
-
 	};
 
 	@Override

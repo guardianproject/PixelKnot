@@ -24,9 +24,10 @@ public abstract class SetPassphraseDialog {
 	@SuppressLint("InflateParams") 
 	public static AlertDialog getDialog(final SherlockFragment a, final String passphrase) {
 		View passphrase_dialog = a.getActivity().getLayoutInflater().inflate(R.layout.set_passphrase_dialog, null);
+		ImageButton generate_random_passphrase = (ImageButton) passphrase_dialog.findViewById(R.id.generate_random_passphrase);
+		ImageButton clear_passphrase = (ImageButton) passphrase_dialog.findViewById(R.id.clear_passphrase);
 		
 		final TextView passphrase_monitor = (TextView) passphrase_dialog.findViewById(R.id.passphrase_monitor);
-		final ImageButton generate_random_password = (ImageButton) passphrase_dialog.findViewById(R.id.generate_random_passphrase);
 		final EditText passphrase_holder = (EditText) passphrase_dialog.findViewById(R.id.passphrase_holder);
 		
 		if(passphrase != null) {
@@ -36,11 +37,18 @@ public abstract class SetPassphraseDialog {
 		final String passphrase_length_string = a.getString(R.string.password_monitor);
 		passphrase_monitor.setText(String.format(passphrase_length_string, passphrase == null ? 0 : passphrase.length()));
 		
-		generate_random_password.setOnClickListener(new OnClickListener() {
+		generate_random_passphrase.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				passphrase_holder.setText(((PixelKnotListener) a.getActivity()).getPixelKnot().generateRandomPassword());
 				
+			}
+		});
+		
+		clear_passphrase.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				passphrase_holder.setText("");
 			}
 		});
 		

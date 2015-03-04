@@ -13,12 +13,18 @@
 	        android:id="@+id/passphrase_monitor"
 	        android:layout_width="0dp"
 	        android:layout_height="match_parent"
-	        android:layout_weight="0.75" />
+	        android:layout_weight="0.5" />
 	    <ImageButton
 	        android:id="@+id/generate_random_passphrase"
 	        android:layout_width="0dp"
 	        android:layout_height="match_parent"
 	        android:src="@drawable/password_selector"
+	        android:layout_weight="0.25" />
+	    <ImageButton
+	        android:id="@+id/clear_passphrase"
+	        android:layout_width="0dp"
+	        android:layout_height="match_parent"
+	        android:src="@drawable/share_inactive_selector"
 	        android:layout_weight="0.25" />
     </LinearLayout>
 
