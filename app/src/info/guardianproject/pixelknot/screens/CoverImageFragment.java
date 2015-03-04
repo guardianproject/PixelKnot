@@ -62,7 +62,12 @@ public class CoverImageFragment extends SherlockFragment implements Constants, A
 		Log.d(LOG, "onCreateView (fragment) called");
 		root_view = li.inflate(R.layout.cover_image_fragment, container, false);
 		cover_image_holder = (ImageView) root_view.findViewById(R.id.cover_image_holder);
-		cover_image_holder.setImageResource(blank_image);
+		
+		if(getArguments() != null && getArguments().containsKey(Keys.COVER_IMAGE_NAME) && getArguments().containsKey(Keys.COVER_IMAGE_URI)) {
+			setImageData(getArguments().getString(Keys.COVER_IMAGE_NAME), Uri.parse(getArguments().getString(Keys.COVER_IMAGE_URI)));
+		} else {
+			cover_image_holder.setImageResource(blank_image);
+		}
 		
 		if(!((PixelKnotListener) a).getHasSuccessfullyEmbed()) {
 			cover_image_holder.setOnClickListener(choose_picture_listener);
@@ -86,10 +91,7 @@ public class CoverImageFragment extends SherlockFragment implements Constants, A
 		default:
 			blank_image = R.drawable.pixelknot_blank_image_en;
 			break;
-		}
-
-		
-		
+		}		
 	}
 	
 	@Override
@@ -133,9 +135,6 @@ public class CoverImageFragment extends SherlockFragment implements Constants, A
 
 				Bitmap b_ = BitmapFactory.decodeFile(path_to_cover_image, opts);
 				cover_image_holder.setImageBitmap(b_);
-				
-				
-				
 			}
 		});
 		

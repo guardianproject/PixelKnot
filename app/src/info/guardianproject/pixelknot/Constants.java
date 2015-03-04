@@ -64,8 +64,14 @@ public interface Constants {
 	}
 	
 	public static class PixelKnot {
+		public static class Modes {
+			public static final int MODE_ENCRYPT = 1;
+			public static final int MODE_DECRYPT = 2;
+		}
+		
 		public static class Keys {
 			public static final String COVER_IMAGE_NAME = "cover_image_name";
+			public static final String COVER_IMAGE_URI = "cover_image_uri";
 			public static final String SECRET_MESSAGE = "secret_message";
 			public static final String PASSWORD = "password";
 			public static final String CAN_SAVE = "can_save";

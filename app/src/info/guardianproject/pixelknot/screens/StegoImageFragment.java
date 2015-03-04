@@ -29,19 +29,18 @@ public class StegoImageFragment extends SherlockFragment implements Constants, A
 	
 	Activity a;
 	Handler h = new Handler();
-	
-	private static final String LOG = Logger.UI;
-		
+			
 	@Override
 	public View onCreateView(LayoutInflater li, ViewGroup container, Bundle savedInstanceState) {
 		root_view = li.inflate(R.layout.cover_image_fragment, container, false);
 		
 		cover_image_holder = (ImageView) root_view.findViewById(R.id.cover_image_holder);
-		if(!getArguments().containsKey(Keys.COVER_IMAGE_NAME))
+		if(!getArguments().containsKey(Keys.COVER_IMAGE_NAME)) {
 			a.finish();
+		}
 		
 		setImageData(getArguments().getString(Keys.COVER_IMAGE_NAME));
-				
+		
 		return root_view;
 	}
 	
@@ -72,6 +71,7 @@ public class StegoImageFragment extends SherlockFragment implements Constants, A
 				BitmapFactory.Options opts = new BitmapFactory.Options();
 				opts.inJustDecodeBounds = true;
 				
+				@SuppressWarnings("unused")
 				Bitmap b = BitmapFactory.decodeFile(path_to_cover_image, opts);
 				int scale = Math.min(4, opts.outWidth/10);
 				if(opts.outHeight > opts.outWidth)

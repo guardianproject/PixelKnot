@@ -1,5 +1,6 @@
 package info.guardianproject.pixelknot.screens;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
@@ -13,16 +14,13 @@ import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
-
 import com.actionbarsherlock.app.SherlockFragment;
-
 import info.guardianproject.pixelknot.Constants;
 import info.guardianproject.pixelknot.Constants.PixelKnot.Keys;
 import info.guardianproject.pixelknot.PixelKnotActivity.TrustedShareActivity;
 import info.guardianproject.pixelknot.R;
 import info.guardianproject.pixelknot.utils.ActivityListener;
 import info.guardianproject.pixelknot.utils.PixelKnotListener;
-
 import java.util.List;
 
 public class ShareFragment extends SherlockFragment implements Constants, ActivityListener {
@@ -32,8 +30,6 @@ public class ShareFragment extends SherlockFragment implements Constants, Activi
 
 	TextView title;
 	LinearLayout content_holder;
-
-	private static final String LOG = Logger.UI;
 
 	@Override
 	public View onCreateView(LayoutInflater li, ViewGroup container, Bundle savedInstanceState) {
@@ -88,6 +84,7 @@ public class ShareFragment extends SherlockFragment implements Constants, Activi
 		((PixelKnotListener) a).getPixelKnot().save();
 	}
 
+	@SuppressLint("InflateParams") 
 	@Override
 	public void updateUi() {
 		content_holder.removeAllViews();

@@ -61,6 +61,7 @@ import info.guardianproject.pixelknot.screens.SetMessageFragment;
 import info.guardianproject.pixelknot.screens.ShareFragment;
 import info.guardianproject.pixelknot.screens.StegoImageFragment;
 import info.guardianproject.pixelknot.utils.ActivityListener;
+import info.guardianproject.pixelknot.utils.ModeListener;
 import info.guardianproject.pixelknot.utils.PixelKnotListener;
 import info.guardianproject.pixelknot.utils.IO;
 import info.guardianproject.pixelknot.utils.Image;
@@ -84,7 +85,7 @@ import java.util.Vector;
 import javax.crypto.Cipher;
 
 @SuppressLint("NewApi")
-public class PixelKnotActivity extends SherlockFragmentActivity implements F5Notification, Constants, PixelKnotListener, ViewPager.OnPageChangeListener, OnGlobalLayoutListener, MediaScannerListener, EmbedListener, ExtractionListener {
+public class PixelKnotActivity extends SherlockFragmentActivity implements F5Notification, Constants, PixelKnotListener, ViewPager.OnPageChangeListener, OnGlobalLayoutListener, MediaScannerListener, EmbedListener, ExtractionListener, ModeListener {
 	private PKPager pk_pager;
 	private ViewPager view_pager;
 
@@ -151,10 +152,8 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements F5Not
 		action_display_ = (LinearLayout) action_bar_root.findViewById(R.id.action_display_);
 		progress_holder = (LinearLayout) findViewById(R.id.progress_holder);
 		
-		List<Fragment> fragments = null;
-
 		if(Intent.ACTION_MAIN.equals(getIntent().getAction())) {
-			fragments = initForEncryption();
+			initFragments(initForEncryption());
 		} else {
 			Log.d(LOG, "this type: " + getIntent().getType());
 			
@@ -163,24 +162,53 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements F5Not
 			 *  set to encryption mode and pre-input message
 			 */
 			
-			try {
-				String selected_mode = selectAppMode();
-				if(selected_mode == "DECRYPT") {
-					fragments = initForDecryption();
-				} else if (selected_mode == "ENCRYPT") {
-					fragments = initForEncryption();
+			DialogInterface.OnClickListener select_encrypt_listener = new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					initFragments(initForEncryption(resolveIntentData(getIntent())));
 				}
-			} catch(NullPointerException e) {
-				Log.e(Logger.UI, e.toString());
-				return;
-			}			
-		}
-		
-		if(fragments == null) {
-			// TODO: fail nicely.
-			return;
+			};
+			
+			DialogInterface.OnClickListener select_decrypt_listener = new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					initFragments(initForDecryption());
+				}
+			};
+			
+			SelectModeDialog.getDialog(this, select_encrypt_listener, select_decrypt_listener).show();
 		}
 
+		last_diff = 0;
+		activity_root = findViewById(R.id.activity_root);
+		activity_root.getViewTreeObserver().addOnGlobalLayoutListener(this);
+		
+		last_locale = PreferenceManager.getDefaultSharedPreferences(this).getString(Settings.LANGUAGE, "0");
+	}
+	
+	private Bundle resolveIntentData(Intent intent) {
+		Bundle args = new Bundle();
+		Uri uri = intent.getData();
+		
+		try {
+			args.putString(Keys.COVER_IMAGE_NAME, IO.pullPathFromUri(this, uri));
+		} catch(NullPointerException e) {
+			if(getIntent().hasExtra(Intent.EXTRA_STREAM)) {
+				uri = (Uri) intent.getExtras().get(Intent.EXTRA_STREAM);
+				args.putString(Keys.COVER_IMAGE_NAME, IO.pullPathFromUri(this, uri));
+			} else if(getIntent().hasExtra(Intent.EXTRA_TEXT)) {
+				uri = Uri.parse(intent.getStringExtra(Intent.EXTRA_TEXT));
+				args.putString(Keys.COVER_IMAGE_NAME, IO.pullPathFromUri(this, uri));
+			}
+		}
+		
+		args.putString(Keys.COVER_IMAGE_URI, uri.toString());
+		
+		Log.d(LOG, args.toString());
+		return args;
+	}
+	
+	private void initFragments(List<Fragment> fragments) {
 		pk_pager = new PKPager(getSupportFragmentManager(), fragments);
 		view_pager = (ViewPager) findViewById(R.id.fragment_holder);
 		view_pager.setAdapter(pk_pager);
@@ -195,23 +223,20 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements F5Not
 			progress_view.setBackgroundResource(p == 0 ? d_ : d);
 			progress_holder.addView(progress_view);
 		}
-
-		last_diff = 0;
-		activity_root = findViewById(R.id.activity_root);
-		activity_root.getViewTreeObserver().addOnGlobalLayoutListener(this);
-		
-		last_locale = PreferenceManager.getDefaultSharedPreferences(this).getString(Settings.LANGUAGE, "0");
-	}
-	
-	private String selectAppMode() {
-		// TODO: prompt user for choice
-		return null;
 	}
 	
 	private List<Fragment> initForEncryption() {
+		return initForEncryption(null);
+	}
+	
+	private List<Fragment> initForEncryption(Bundle image_args) {
 		List<Fragment> fragments = new Vector<Fragment>();
-		
 		Fragment cover_image_fragment = Fragment.instantiate(this, CoverImageFragment.class.getName());
+		
+		if(image_args != null) {
+			cover_image_fragment.setArguments(image_args);
+		}
+		
 		Fragment set_message_fragment = Fragment.instantiate(this, SetMessageFragment.class.getName());
 		Fragment share_fragment = Fragment.instantiate(this, ShareFragment.class.getName());
 
@@ -228,20 +253,14 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements F5Not
 		List<Fragment> fragments = new Vector<Fragment>();
 		
 		Fragment stego_image_fragment = Fragment.instantiate(this, StegoImageFragment.class.getName());
-		Bundle args = new Bundle();
 		
-		try {
-			args.putString(Keys.COVER_IMAGE_NAME, IO.pullPathFromUri(this, getIntent().getData()));
-		} catch(NullPointerException e) {
-			if(getIntent().hasExtra(Intent.EXTRA_STREAM)) {
-				args.putString(Keys.COVER_IMAGE_NAME, IO.pullPathFromUri(this, (Uri) getIntent().getExtras().get(Intent.EXTRA_STREAM)));
-			} else if(getIntent().hasExtra(Intent.EXTRA_TEXT)) {
-				args.putString(Keys.COVER_IMAGE_NAME, IO.pullPathFromUri(this, Uri.parse(getIntent().getStringExtra(Intent.EXTRA_TEXT))));
-			}
-			
+		Bundle image_args = resolveIntentData(getIntent());
+		if(image_args == null) {
+			// TODO: fail nicely.
+			return null;
 		}
 		
-		stego_image_fragment.setArguments(args);
+		stego_image_fragment.setArguments(image_args);
 
 		Fragment decrypt_image_fragment = Fragment.instantiate(this, DecryptImageFragment.class.getName());
 		Fragment share_fragment = Fragment.instantiate(this, ShareFragment.class.getName());
@@ -1215,6 +1234,12 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements F5Not
 				please_wait.dismiss();
 			} catch(NullPointerException e) {}
 		}
+		
+	}
+
+	@Override
+	public void onModeSelected(int mode) {
+		// TODO Auto-generated method stub
 		
 	}
 }

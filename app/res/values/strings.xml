@@ -2,6 +2,8 @@
 
     <string name="app_name">PixelKnot</string>
     <string name="select_image">Select An Image</string>
+    <string name="image_detected">Image Detected!</string>
+    <string name="select_mode_text">Would you like to encrypt or decrypt this image?</string>
     <string name="oh_no">Oh no!</string>
     <string name="uh_oh">Uh oh!</string>
     <string name="error_no_secret_message">It looks like you haven\'t entered a secret message yet. Please enter one.</string>

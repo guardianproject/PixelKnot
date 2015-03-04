@@ -3,7 +3,6 @@ package info.guardianproject.pixelknot.crypto;
 import android.util.Base64;
 import android.util.Log;
 
-import info.guardianproject.pixelknot.Constants;
 import info.guardianproject.pixelknot.Constants.Logger;
 
 import java.io.UnsupportedEncodingException;

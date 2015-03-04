@@ -43,15 +43,12 @@ public class IO {
 			} catch(FileNotFoundException e) {
 				Log.e(LOG, e.toString());
 				e.printStackTrace();
-				return null;
 			} catch (IOException e) {
 				Log.e(LOG, e.toString());
 				e.printStackTrace();
-				return null;
 			}
 	} else {
 		String path = null;
-		String[] cols = {MediaStore.Images.Media.DATA};
 		Cursor c = context.getContentResolver().query(uri, null, null, null, null);
 
 		if(c != null && c.moveToFirst()) {
@@ -64,11 +61,13 @@ public class IO {
 			c.close();
 			Log.d(LOG, "path found: " + path);
 		} else {
-			Log.d(LOG, "fucking URI is null");
+			Log.d(LOG, "URI is null");
 		}
 
 		return path;
 	}
+		
+	return null;
 }
 
 public static byte[] getBytesFromFile(String path) {
