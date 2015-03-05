@@ -33,6 +33,8 @@
     <string name="password_too_short">Passphrase is too short! Please try again.</string>
     <string name="password_generating">Generating a random passphrase for you\u2026</string>
     <string name="confirm_passphrase_override">Without protecting your image with a passphrase, your secret message may be discovered if intercepted.  Continue without passphrase protection?</string>
+    <string name="passphrase_protection">Passphrase Protection!</string>
+    <string name="passphrase_protection_text">Please enter your passphrase.  If you don\'t have one, leave this field blank.</string>
     
     <string name="about">About</string>
     <string name="about_us">About Us:</string>

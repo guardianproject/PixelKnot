@@ -17,11 +17,12 @@ import info.guardianproject.pixelknot.Constants;
 import info.guardianproject.pixelknot.Constants.PixelKnot.Keys;
 import info.guardianproject.pixelknot.R;
 import info.guardianproject.pixelknot.utils.ActivityListener;
+import info.guardianproject.pixelknot.utils.PassphraseDialogListener;
 import info.guardianproject.pixelknot.utils.PixelKnotListener;
 
 import org.json.JSONException;
 
-public class DecryptImageFragment extends SherlockFragment implements Constants, ActivityListener {
+public class DecryptImageFragment extends SherlockFragment implements Constants, ActivityListener, PassphraseDialogListener {
 	View root_view;	
 	EditText secret_message_holder;
 
@@ -54,6 +55,10 @@ public class DecryptImageFragment extends SherlockFragment implements Constants,
 
 	@Override
 	public void updateUi() {
+		if(!((PixelKnotListener) a).getPixelKnot().getPasswordOverride() && !((PixelKnotListener) a).getPixelKnot().hasPassword()) {
+			InputPassphraseDialog.getDialog(this).show();
+		}
+		
 		if(!((PixelKnotListener) a).getHasSuccessfullyExtracted()) {
 			((PixelKnotListener) a).getPixelKnot().extract();
 			return;
@@ -99,4 +104,17 @@ public class DecryptImageFragment extends SherlockFragment implements Constants,
 
 		((PixelKnotListener) a).setButtonOptions(new ImageButton[] {start_over, share});
 	}
+
+	@Override
+	public void onPassphraseSuccessfullySet(String passphrase) {
+		if(passphrase == null) {
+			((PixelKnotListener) a).getPixelKnot().setPasswordOverride(true);
+		} else {
+			((PixelKnotListener) a).getPixelKnot().setPassphrase(passphrase);
+		}
+		updateUi();
+	}
+
+	@Override
+	public void onRandomPassphraseRequested() {}
 }

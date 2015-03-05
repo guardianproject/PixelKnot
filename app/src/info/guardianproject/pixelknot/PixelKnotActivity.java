@@ -61,7 +61,6 @@ import info.guardianproject.pixelknot.screens.SetMessageFragment;
 import info.guardianproject.pixelknot.screens.ShareFragment;
 import info.guardianproject.pixelknot.screens.StegoImageFragment;
 import info.guardianproject.pixelknot.utils.ActivityListener;
-import info.guardianproject.pixelknot.utils.ModeListener;
 import info.guardianproject.pixelknot.utils.PixelKnotListener;
 import info.guardianproject.pixelknot.utils.IO;
 import info.guardianproject.pixelknot.utils.Image;
@@ -85,7 +84,7 @@ import java.util.Vector;
 import javax.crypto.Cipher;
 
 @SuppressLint("NewApi")
-public class PixelKnotActivity extends SherlockFragmentActivity implements F5Notification, Constants, PixelKnotListener, ViewPager.OnPageChangeListener, OnGlobalLayoutListener, MediaScannerListener, EmbedListener, ExtractionListener, ModeListener {
+public class PixelKnotActivity extends SherlockFragmentActivity implements F5Notification, Constants, PixelKnotListener, ViewPager.OnPageChangeListener, OnGlobalLayoutListener, MediaScannerListener, EmbedListener, ExtractionListener {
 	private PKPager pk_pager;
 	private ViewPager view_pager;
 
@@ -531,6 +530,14 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements F5Not
 			can_save = checkIfReadyToSave();
 		}
 		
+		public boolean hasSecretMessage() {
+			if(has(Keys.SECRET_MESSAGE)) {
+				return true;
+			}
+			
+			return false;
+		}
+		
 		public void setPasswordOverride(boolean password_override) {
 			this.password_override = password_override;
 			if(password_override && hasPassword()) {
@@ -735,29 +742,31 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements F5Not
 
 		}
 
-		public int checkForProtection(String sm) {
-			if(sm.contains(PGP_SENTINEL) && sm.indexOf(PGP_SENTINEL) == 0)
-				return Apg.DECRYPT_MESSAGE;
-			else if(sm.contains(PASSWORD_SENTINEL) && sm.indexOf(PASSWORD_SENTINEL) == 0)
-				return Cipher.DECRYPT_MODE;
-
-			return Activity.RESULT_OK;
+		public boolean checkForPGPProtection() {
+			if(hasSecretMessage()) {
+				return (secret_message.contains(PGP_SENTINEL) && secret_message.indexOf(PGP_SENTINEL) == 0);
+			}
+			
+			return false;
 		}
+		
+		private void unlock() {
+			if(!hasPassword() || !hasSecretMessage()) {
+				return;
+			}
 
-		public void unlock(String password, String message_string) {
-			final String total_message = message_string;
+			secret_message = secret_message.substring(PASSWORD_SENTINEL.length());
 
-			message_string = message_string.substring(PASSWORD_SENTINEL.length());
-
-			byte[] message = Base64.decode(message_string.split("\n")[1], Base64.DEFAULT);
-			byte[] iv =  Base64.decode(message_string.split("\n")[0], Base64.DEFAULT);
+			byte[] message = Base64.decode(secret_message.split("\n")[1], Base64.DEFAULT);
+			byte[] iv =  Base64.decode(secret_message.split("\n")[0], Base64.DEFAULT);
 
 			String sm = Aes.DecryptWithPassword(extractPassword(password), iv, message, extractPasswordSalt(password).getBytes());
 			if(sm != null) {
 				pixel_knot.setSecretMessage(sm);
 				hasSuccessfullyUnlocked = true;
-			} else
+			} else {
 				pixel_knot.setSecretMessage(new String(message));
+			}
 
 			hasSuccessfullyExtracted = true;
 			h.post(new Runnable() {
@@ -769,33 +778,15 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements F5Not
 
 					((ActivityListener) pk_pager.getItem(view_pager.getCurrentItem())).updateUi();
 					if(!hasSuccessfullyUnlocked) {
-						Builder ad = new AlertDialog.Builder(PixelKnotActivity.this);
-						ad.setMessage(PixelKnotActivity.this.getString(R.string.error_bad_password));
-						ad.setPositiveButton(PixelKnotActivity.this.getString(R.string.retry), new DialogInterface.OnClickListener() {
-
-							@Override
-							public void onClick(DialogInterface dialog, int which) {
-								loader = new PixelKnotLoader(PixelKnotActivity.this);
-								loader.show();
-								loader.init(Loader.Steps.DECRYPT);
-								
-								ByteArrayOutputStream baos = new ByteArrayOutputStream();
-								try {
-									baos.write(total_message.getBytes());
-								} catch (IOException e) {
-									Log.e(Logger.UI, e.toString());
-									e.printStackTrace();
-								}
-								onExtractionResult(baos);
-
-							}
-						});
-						ad.setNegativeButton(PixelKnotActivity.this.getString(R.string.ok), null);
-						ad.show();
+						// TODO: fail nicely.
 					}
 				}
 			});
 
+		}
+		
+		private void PGPDecrypt() {
+			// TODO: hook into PGP apps
 		}
 	}
 
@@ -892,19 +883,16 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements F5Not
 		Log.d(LOG, "the current pager is " + view_pager.getCurrentItem());
 	}
 
-
 	@Override
 	public PixelKnot getPixelKnot() {
 		return pixel_knot;
 	}
-
 
 	@Override
 	public void clearPixelKnot() {
 		pixel_knot.clear();
 		restart();
 	}
-
 
 	@Override
 	public void onMediaScanned(String path, Uri uri) {
@@ -915,60 +903,36 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements F5Not
 		}
 	}
 
-
 	@Override
 	public void onExtractionResult(final ByteArrayOutputStream baos) {
 		h.post(new Runnable() {
 			@Override
 			public void run() {
-				final String sm = new String(baos.toByteArray());
+				pixel_knot.setSecretMessage(new String(baos.toByteArray()));
 
-				switch(pixel_knot.checkForProtection(sm)) {
-				case(Apg.DECRYPT_MESSAGE):
-					pixel_knot.setEncryption(true, Apg.getInstance());
-				pixel_knot.apg.decrypt(PixelKnotActivity.this, sm);
-				break;
-				case(Cipher.DECRYPT_MODE):
-					final EditText password_holder = new EditText(PixelKnotActivity.this);
-				password_holder.setHint(getString(R.string.password));
-
-				Builder builder = new AlertDialog.Builder(PixelKnotActivity.this);
-				builder.setView(password_holder);
-				builder.setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
-
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						if(password_holder.getText().length() > 0) {
-							new Thread(new Runnable() {
-								@Override
-								public void run() {
-									pixel_knot.unlock(password_holder.getText().toString(), sm);
-								}
-							}).start();								
-						}
-					}
-				});
-				builder.setOnCancelListener(new DialogInterface.OnCancelListener() {
-					@Override
-					public void onCancel(DialogInterface dialog) {
-						pixel_knot.setSecretMessage(sm);
-					}
-				});
-
-				builder.show();
-				break;
-				case(Activity.RESULT_OK):
-					pixel_knot.setSecretMessage(sm);
+				/*
+				 *  TODO: HERE IS WHERE I AM:
+				 *  so...
+				 *  
+				 *   1) if check for pwd protection && hasPassword
+				 *   	- decrypt aes with pwd, pwd salt
+				 *   2) if check for PGP
+				 *   	- send to PGP-enabled APP
+				 */
+				if(pixel_knot.hasPassword()) {
+					pixel_knot.unlock();
+				}
+				
+				if(pixel_knot.checkForPGPProtection()) {
+					pixel_knot.PGPDecrypt();
+				}
+				
 				try {
 					loader.finish();
 				} catch(NullPointerException e) {}
 
 				hasSuccessfullyExtracted = true;
 				((ActivityListener) pk_pager.getItem(view_pager.getCurrentItem())).updateUi();
-				break;
-				}
-
-
 			}
 		});
 	}
@@ -1232,12 +1196,6 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements F5Not
 				please_wait.dismiss();
 			} catch(NullPointerException e) {}
 		}
-		
-	}
-
-	@Override
-	public void onModeSelected(int mode) {
-		// TODO Auto-generated method stub
 		
 	}
 }
