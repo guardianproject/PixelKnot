@@ -33,7 +33,6 @@ public interface PixelKnotListener {
 	public void setCanAutoAdvance(boolean canAutoAdvance);
 	public void share();
 	public List<TrustedShareActivity> getTrustedShareActivities();
-	public void setEncryption(Apg apg);
 	public void updateButtonProminence(int which, int new_resource, boolean enabled);
 	public void autoAdvance();
 	public void autoAdvance(int position);

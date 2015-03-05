@@ -1,10 +1,8 @@
 package info.guardianproject.pixelknot;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.AlertDialog;
-import android.app.AlertDialog.Builder;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -33,7 +31,6 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -72,7 +69,6 @@ import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -81,10 +77,8 @@ import java.util.Locale;
 import java.util.Map.Entry;
 import java.util.Vector;
 
-import javax.crypto.Cipher;
-
 @SuppressLint("NewApi")
-public class PixelKnotActivity extends SherlockFragmentActivity implements F5Notification, Constants, PixelKnotListener, ViewPager.OnPageChangeListener, OnGlobalLayoutListener, MediaScannerListener, EmbedListener, ExtractionListener {
+public class PixelKnotActivity extends SherlockFragmentActivity implements Constants, F5Notification, PixelKnotListener, ViewPager.OnPageChangeListener, OnGlobalLayoutListener, MediaScannerListener, EmbedListener, ExtractionListener {
 	private PKPager pk_pager;
 	private ViewPager view_pager;
 
@@ -425,6 +419,7 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements F5Not
 			imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
 	}
 	
+	
 	public class TrustedShareActivity {
 		public String app_name, package_name;
 		public Drawable icon;
@@ -467,6 +462,7 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements F5Not
 			icon_holder.setImageDrawable(icon);
 		}
 	}
+	
 
 	public class PixelKnot extends JSONObject {
 		String cover_image_name = null;
@@ -482,8 +478,6 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements F5Not
 		int capacity = 0;
 		Embed embed = null;
 		File out_file = null;
-
-		Apg apg = null;
 
 		public PixelKnot() {
 			try {
@@ -605,28 +599,6 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements F5Not
 			return extractF5Seed(password).getBytes();
 		}
 
-		public void setEncryption(boolean has_pgp_encryption, Apg apg) {
-			this.has_pgp_encryption = has_pgp_encryption;
-			if(has_pgp_encryption) {
-				this.password = null;
-				this.apg = apg;
-
-				try {
-					put(Keys.HAS_ENCRYPTION, true);
-					if(has(Keys.PASSWORD))
-						remove(Keys.PASSWORD);
-
-				} catch(JSONException e) {}
-			} else {
-				if(has(Keys.HAS_ENCRYPTION))
-					remove(Keys.HAS_ENCRYPTION);
-			}
-		}
-
-		public boolean getEncryption() {
-			return has_pgp_encryption;
-		}
-
 		public void setCapacity(int capacity) {
 			this.capacity = capacity;
 			try {
@@ -642,7 +614,6 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements F5Not
 			has_pgp_encryption = false;
 			capacity = 0;
 			out_file = null;
-			apg = null;
 
 			@SuppressWarnings("unchecked")
 			Iterator<String> keys = keys();
@@ -659,8 +630,9 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements F5Not
 		}
 
 		public void save() {
-			if(hasSuccessfullyEmbed)
+			if(hasSuccessfullyEmbed) {
 				return;
+			}
 
 			loader = new PixelKnotLoader(PixelKnotActivity.this);
 			loader.show();
@@ -673,7 +645,8 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements F5Not
 						onUpdate();
 						Entry<String, String> pack = Aes.EncryptWithPassword(pixel_knot.getPassword(), secret_message, pixel_knot.getPasswordSalt()).entrySet().iterator().next();
 
-						secret_message = PASSWORD_SENTINEL.concat(new String(pack.getKey())).concat(pack.getValue());
+						pixel_knot.setSecretMessage(PASSWORD_SENTINEL.concat(new String(pack.getKey())).concat(pack.getValue()));
+						
 						hasSuccessfullyPasswordProtected = true;
 						h.post(new Runnable() {
 							@Override
@@ -688,20 +661,7 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements F5Not
 				}).start();
 			}
 
-			if(pixel_knot.getEncryption() && !hasSuccessfullyEncrypted) {
-				apg.encrypt(PixelKnotActivity.this, pixel_knot.secret_message);
-				h.post(new Runnable() {
-					@Override
-					public void run() {
-						try {
-							loader.finish();
-						} catch(NullPointerException e) {}
-					}
-				});
-
-			}
-
-			if((!pixel_knot.has_pgp_encryption && !pixel_knot.hasPassword()) || (hasSuccessfullyEncrypted || hasSuccessfullyPasswordProtected)) {
+			if(!pixel_knot.hasPassword() || hasSuccessfullyPasswordProtected) {
 				loader.init(Loader.Steps.EMBED);
 				
 				new Thread(new Runnable() {
@@ -710,11 +670,11 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements F5Not
 						pixel_knot.setCoverImageName(Image.downsampleImage(pixel_knot.cover_image_name, dump));
 						
 						@SuppressWarnings("unused")
+						// TODO: actually, save to the same dir as original cover image, but with spoofed name
 						Embed embed = new Embed(PixelKnotActivity.this, dump.getName(), cover_image_name, secret_message);
 					}
 				}).start();
 			}
-
 		}
 
 		public void extract() {
@@ -910,15 +870,6 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements F5Not
 			public void run() {
 				pixel_knot.setSecretMessage(new String(baos.toByteArray()));
 
-				/*
-				 *  TODO: HERE IS WHERE I AM:
-				 *  so...
-				 *  
-				 *   1) if check for pwd protection && hasPassword
-				 *   	- decrypt aes with pwd, pwd salt
-				 *   2) if check for PGP
-				 *   	- send to PGP-enabled APP
-				 */
 				if(pixel_knot.hasPassword()) {
 					pixel_knot.unlock();
 				}
@@ -936,7 +887,6 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements F5Not
 			}
 		});
 	}
-
 
 	@Override
 	public void onEmbedded(final File out_file) {
@@ -986,11 +936,6 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements F5Not
 		}
 
 		last_diff = height_diff;
-	}
-
-	@Override
-	public void setEncryption(Apg apg) {
-		pixel_knot.setEncryption(true, apg);
 	}
 
 	@Override
@@ -1098,7 +1043,6 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements F5Not
 		this.hasSuccessfullyUnlocked = hasSuccessfullyUnlocked;
 	}
 	
-
 	@Override
 	public void setIsDecryptOnly(boolean isDecryptOnly) {
 		this.isDecryptOnly = isDecryptOnly;
@@ -1178,9 +1122,9 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements F5Not
 		try {
 			loader.cancel();
 		} catch(NullPointerException e) {}
-		finish();
 		
-		// TODO: maybe there is a message, too.
+		Log.e(Logger.F5, "sorry, we failed to decrypt.");
+		finish();		
 	}
 
 	@Override

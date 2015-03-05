@@ -57,6 +57,7 @@ public class DecryptImageFragment extends SherlockFragment implements Constants,
 	public void updateUi() {
 		if(!((PixelKnotListener) a).getPixelKnot().getPasswordOverride() && !((PixelKnotListener) a).getPixelKnot().hasPassword()) {
 			InputPassphraseDialog.getDialog(this).show();
+			return;
 		}
 		
 		if(!((PixelKnotListener) a).getHasSuccessfullyExtracted()) {
