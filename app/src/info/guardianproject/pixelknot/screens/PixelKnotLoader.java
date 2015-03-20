@@ -4,13 +4,14 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
 import info.guardianproject.pixelknot.Constants.Screens.Loader;
+import info.guardianproject.pixelknot.Constants;
 import info.guardianproject.pixelknot.R;
 
 import java.util.ArrayList;
@@ -27,7 +28,7 @@ public class PixelKnotLoader extends AlertDialog {
 	
 	List<Integer> display_order;
 	Iterator<Integer> load_engine;
-	
+		
 	Handler h = new Handler();
 	Runnable r = new Runnable() {
 		@Override
@@ -39,6 +40,8 @@ public class PixelKnotLoader extends AlertDialog {
 	
 	int num_steps = 0;
 	int step = -1;
+	
+	private final static String LOG = Constants.Logger.LOADER;
 	
 	public PixelKnotLoader(Activity c) {
 		super(c);
@@ -72,6 +75,15 @@ public class PixelKnotLoader extends AlertDialog {
 		h.post(r);
 	}
 	
+	@Override
+	public void onBackPressed() {
+		onBackPressedAlert();
+	}
+	
+	public void onBackPressedAlert() {
+		Log.d(LOG, "ON BACK PRESSED ALERT!");
+	}
+	
 	public void finish() {
 		h.post(new Runnable() {
 			@Override
@@ -82,9 +94,7 @@ public class PixelKnotLoader extends AlertDialog {
 				} else
 					PixelKnotLoader.this.cancel();
 			}
-		});
-		
-		
+		});		
 	}
 	
 	private void loadAKnot() {

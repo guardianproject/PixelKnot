@@ -29,14 +29,11 @@ public class DecryptImageFragment extends SherlockFragment implements Constants,
 	Activity a;
 	Handler h = new Handler();
 	
-	private static final String LOG = Logger.UI;
-
 	@Override
 	public View onCreateView(LayoutInflater li, ViewGroup container, Bundle savedInstanceState) {
 		root_view = li.inflate(R.layout.decryt_image_fragment, container, false);
-
 		secret_message_holder = (EditText) root_view.findViewById(R.id.secret_message_holder);
-
+		
 		return root_view;
 	}
 
@@ -49,8 +46,6 @@ public class DecryptImageFragment extends SherlockFragment implements Constants,
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		
-		Log.d(LOG, "onActivityCreated (fragment) called");
 	}
 
 	@Override

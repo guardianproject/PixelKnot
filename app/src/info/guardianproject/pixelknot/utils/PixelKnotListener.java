@@ -5,7 +5,6 @@ import android.widget.ImageButton;
 
 import info.guardianproject.pixelknot.PixelKnotActivity.PixelKnot;
 import info.guardianproject.pixelknot.PixelKnotActivity.TrustedShareActivity;
-import info.guardianproject.pixelknot.crypto.Apg;
 
 import java.util.List;
 

@@ -16,6 +16,9 @@
     <string name="no">no</string>
     <string name="encrypt">encrypt</string>
     <string name="decrypt">decrypt</string>
+    <string name="nevermind">Nevermind</string>
+    <string name="abort_encryption">Abort Encryption?</string>
+    <string name="abort_decryption">Abort Decryption?</string>
     
     <string name="secret_message_hint">Type your hidden message here</string>
     <string name="result_title">Secret Message:</string>
