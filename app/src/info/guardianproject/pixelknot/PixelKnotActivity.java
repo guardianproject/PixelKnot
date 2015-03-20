@@ -638,18 +638,17 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements Const
 				public void onClick(DialogInterface dialog, int which) {
 					// TODO: abort encryption process
 					Log.d(LOG, "ABORT ENCRYPTION OK?");
-					removeLoader();
+					loader.terminate();
 				}
 			};
 			
 			final String oda_message = PixelKnotActivity.this.getString(R.string.abort_encryption);
 			
-			loader = new PixelKnotLoader(PixelKnotActivity.this) {
+			loader = new PixelKnotLoader(PixelKnotActivity.this, PixelKnotActivity.this.getString(R.string.encrypt)) {
 
 				@Override
-				public void onBackPressedAlert() {
+				public void onBackPressed() {
 					OnLoaderCanceledDialog.getDialog(PixelKnotActivity.this, oda_message, on_encryption_aborted).show();
-					super.onBackPressedAlert();
 				}
 			};
 			loader.show();
@@ -705,18 +704,17 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements Const
 				public void onClick(DialogInterface dialog, int which) {
 					// TODO: abort decryption process
 					Log.d(LOG, "ABORT DECRYPTION OK?");
-					removeLoader();
+					loader.terminate();
 				}
 			};
 			
 			final String oda_message = PixelKnotActivity.this.getString(R.string.abort_decryption);
 			
-			loader = new PixelKnotLoader(PixelKnotActivity.this) {
+			loader = new PixelKnotLoader(PixelKnotActivity.this, PixelKnotActivity.this.getString(R.string.decrypt)) {
 
 				@Override
-				public void onBackPressedAlert() {
+				public void onBackPressed() {
 					OnLoaderCanceledDialog.getDialog(PixelKnotActivity.this, oda_message, on_decryption_aborted).show();
-					super.onBackPressedAlert();
 				}
 			};
 			loader.show();
@@ -773,7 +771,7 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements Const
 						@Override
 						public void run() {
 							try {
-								loader.finish();
+								loader.terminate(true);
 							} catch(NullPointerException e) {}
 
 							((ActivityListener) pk_pager.getItem(view_pager.getCurrentItem())).updateUi();
@@ -1164,7 +1162,12 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements Const
 
 	@Override
 	public void onFailure() {
-		removeLoader();
+		try {
+			loader.terminate();
+		} catch(NullPointerException e) {
+			Log.e(LOG, e.toString());
+		}
+		
 		Log.e(Logger.F5, "sorry, we failed to decrypt.");
 		
 		// TODO: notify of failure instead of finish.  maybe retry.

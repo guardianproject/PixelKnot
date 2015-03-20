@@ -1,9 +1,12 @@
 package info.guardianproject.pixelknot.screens;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.os.Handler;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,6 +29,9 @@ public class PixelKnotLoader extends AlertDialog {
 	ImageView knot_image;
 	TextView knot_title, knot_warning;
 	
+	NotificationCompat.Builder notification;
+	NotificationManager notification_manager;
+	
 	List<Integer> display_order;
 	Iterator<Integer> load_engine;
 		
@@ -43,21 +49,29 @@ public class PixelKnotLoader extends AlertDialog {
 	
 	private final static String LOG = Constants.Logger.LOADER;
 	
-	public PixelKnotLoader(Activity c) {
+	@SuppressLint("InflateParams")
+	public PixelKnotLoader(Activity c, String mode_string) {
 		super(c);
 		this.context = c;
+		
+		notification_manager = (NotificationManager) c.getSystemService(Context.NOTIFICATION_SERVICE);
+		notification = new NotificationCompat.Builder(c)
+			.setContentTitle(c.getString(R.string.app_name))
+			.setContentText(mode_string)
+			.setSmallIcon(R.drawable.ic_launcher);
 		
 		View root = LayoutInflater.from(c).inflate(R.layout.pixel_knot_loader, null);
 		knot_progress = (ProgressBar) root.findViewById(R.id.knot_progress);
 		knot_image = (ImageView) root.findViewById(R.id.knot_image);
 		knot_title = (TextView) root.findViewById(R.id.knot_title);
 		
-		this.setView(root);
-		this.setCancelable(false);
+		setView(root);
+		setCancelable(false);
 		randomizeOrder();
 		
 		load_engine = display_order.iterator();
-		this.show();
+		notification_manager.notify(001, notification.getNotification());
+		show();
 	}
 	
 	public void init(int num_steps) {
@@ -67,7 +81,7 @@ public class PixelKnotLoader extends AlertDialog {
 	}
 	
 	public void update(int additional_steps) {
-		this.num_steps += additional_steps;
+		num_steps += additional_steps;
 		knot_progress.setMax(num_steps);
 	}
 	
@@ -75,13 +89,12 @@ public class PixelKnotLoader extends AlertDialog {
 		h.post(r);
 	}
 	
-	@Override
-	public void onBackPressed() {
-		onBackPressedAlert();
+	public void terminate() {
+		terminate(false);
 	}
 	
-	public void onBackPressedAlert() {
-		Log.d(LOG, "ON BACK PRESSED ALERT!");
+	public void terminate(boolean success) {
+		finish();
 	}
 	
 	public void finish() {
