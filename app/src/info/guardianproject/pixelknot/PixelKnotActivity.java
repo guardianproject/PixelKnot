@@ -694,7 +694,7 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements Const
 						pixel_knot.setCoverImageName(Image.downsampleImage(pixel_knot.cover_image_name, dump));
 						
 						@SuppressWarnings("unused")
-						Embed embed = new Embed(PixelKnotActivity.this, dump.getName(), cover_image_name, secret_message);
+						Embed embed = new Embed(PixelKnotActivity.this, dump.getName(), cover_image_name, secret_message, pixel_knot.getF5Seed());
 					}
 				}).start();
 			}
