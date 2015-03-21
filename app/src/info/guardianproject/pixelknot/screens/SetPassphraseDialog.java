@@ -40,8 +40,7 @@ public abstract class SetPassphraseDialog {
 		generate_random_passphrase.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				passphrase_holder.setText(((PixelKnotListener) a.getActivity()).getPixelKnot().generateRandomPassword());
-				
+				((PassphraseDialogListener) a).onRandomPassphraseRequested();
 			}
 		});
 		

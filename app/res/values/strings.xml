@@ -19,6 +19,17 @@
     <string name="nevermind">Nevermind</string>
     <string name="abort_encryption">Abort Encryption?</string>
     <string name="abort_decryption">Abort Decryption?</string>
+    <string name="success">Success!</string>
+    <string name="failed">Failed.</string>
+    <string name="could_not_encrypt_message">Could not encrypt this message.</string>
+    <string name="message_encrypted">Message successfully encrypted to your password.</string>
+    <string name="could_not_decrypt_message">Could not decrypt this message.</string>
+    <string name="message_decrypted">Message successfully encrypted with your password.</string>
+    <string name="message_extracted">Message successfully extracted from the image.</string>
+    <string name="could_not_extract">Could not extract any message from the image.</string>
+    <string name="message_embedded">Message successfully embedded into image.</string>
+    <string name="could_not_embed">Could not embed your message into image.</string>
+    <string name="process_aborted">Process aborted.</string>
     
     <string name="secret_message_hint">Type your hidden message here</string>
     <string name="result_title">Secret Message:</string>

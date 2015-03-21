@@ -63,6 +63,7 @@ import info.guardianproject.pixelknot.utils.IO;
 import info.guardianproject.pixelknot.utils.Image;
 import info.guardianproject.pixelknot.utils.PixelKnotMediaScanner;
 import info.guardianproject.pixelknot.utils.PixelKnotMediaScanner.MediaScannerListener;
+import info.guardianproject.pixelknot.utils.PixelKnotNotification;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -96,6 +97,7 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements Const
 	private PixelKnot pixel_knot = new PixelKnot();
 
 	PixelKnotLoader loader;
+	PixelKnotNotification notification;
 	ProgressDialog please_wait;
 
 	Handler h = new Handler();
@@ -541,11 +543,6 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements Const
 			return this.password_override;
 		}
 		
-		public String generateRandomPassword() {
-			// TODO: fun.
-			return new String("OK you wanted a random password here it is.  hope you are happy.");
-		}
-		
 		public void setPassphrase(String password) {
 			this.password = password;
 
@@ -638,7 +635,10 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements Const
 				public void onClick(DialogInterface dialog, int which) {
 					// TODO: abort encryption process
 					Log.d(LOG, "ABORT ENCRYPTION OK?");
-					loader.terminate();
+					
+					String with_message = PixelKnotActivity.this.getString(R.string.process_aborted);
+					loader.fail(with_message);
+					notification.fail(with_message);
 				}
 			};
 			
@@ -653,11 +653,15 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements Const
 			};
 			loader.show();
 			
+			notification = new PixelKnotNotification(PixelKnotActivity.this, PixelKnotActivity.this.getString(R.string.encrypt));
+			
 			if(pixel_knot.hasPassword() && !hasSuccessfullyPasswordProtected) {
 				new Thread(new Runnable() {
 					@Override
 					public void run() {
 						loader.init(Loader.Steps.ENCRYPT);
+						notification.init(Loader.Steps.ENCRYPT);
+						
 						onUpdate();
 						Entry<String, String> pack = Aes.EncryptWithPassword(pixel_knot.getPassword(), secret_message, pixel_knot.getPasswordSalt()).entrySet().iterator().next();
 
@@ -668,7 +672,8 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements Const
 							@Override
 							public void run() {
 								try {
-									loader.finish();
+									loader.finish(PixelKnotActivity.this.getString(R.string.message_encrypted));
+									notification.finish(PixelKnotActivity.this.getString(R.string.message_encrypted));
 								} catch(NullPointerException e) {}
 								
 								save();
@@ -680,6 +685,7 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements Const
 
 			if(!pixel_knot.hasPassword() || hasSuccessfullyPasswordProtected) {
 				loader.init(Loader.Steps.EMBED);
+				notification.init(Loader.Steps.EMBED);
 				
 				new Thread(new Runnable() {
 					@Override
@@ -704,7 +710,10 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements Const
 				public void onClick(DialogInterface dialog, int which) {
 					// TODO: abort decryption process
 					Log.d(LOG, "ABORT DECRYPTION OK?");
-					loader.terminate();
+					
+					String with_message = PixelKnotActivity.this.getString(R.string.process_aborted);
+					loader.fail(with_message);
+					notification.fail(with_message);
 				}
 			};
 			
@@ -719,6 +728,9 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements Const
 			};
 			loader.show();
 			loader.init(Loader.Steps.EXTRACT);
+			
+			notification = new PixelKnotNotification(PixelKnotActivity.this, PixelKnotActivity.this.getString(R.string.decrypt));
+			notification.init(Loader.Steps.EXTRACT);
 			
 			new Thread(new Runnable() {
 				@Override
@@ -753,6 +765,7 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements Const
 			new Thread(new Runnable() {
 				@Override
 				public void run() {
+					Log.d(LOG, "SECRET MESSAGE BEFORE DECRYPTING:\n" + secret_message);
 					secret_message = secret_message.substring(PASSWORD_SENTINEL.length());
 					
 					byte[] message = Base64.decode(secret_message.split("\n")[1], Base64.DEFAULT);
@@ -770,14 +783,16 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements Const
 					h.post(new Runnable() {
 						@Override
 						public void run() {
-							try {
-								loader.terminate(true);
-							} catch(NullPointerException e) {}
-
+							String result_text = PixelKnotActivity.this.getString(R.string.success);
 							((ActivityListener) pk_pager.getItem(view_pager.getCurrentItem())).updateUi();
 							if(!hasSuccessfullyUnlocked) {
-								// TODO: fail nicely.
+								result_text = PixelKnotActivity.this.getString(R.string.could_not_decrypt_message);
 							}
+							
+							try {
+								loader.finish(result_text);
+								notification.finish(result_text);
+							} catch(NullPointerException e) {}
 						}
 					});
 				}
@@ -808,13 +823,6 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements Const
 		public int getCount() {
 			return fragments.size();
 		}
-	}
-	
-	private void removeLoader() {
-		try {
-			loader.cancel();
-			// TODO: cancel notification
-		} catch(NullPointerException e) {}
 	}
 
 	@Override
@@ -920,8 +928,11 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements Const
 					pixel_knot.PGPDecrypt();
 				}
 				
+				String result_text = PixelKnotActivity.this.getString(R.string.message_extracted);
+				
 				try {
-					loader.finish();
+					loader.finish(result_text);
+					notification.finish(result_text);
 				} catch(NullPointerException e) {}
 
 				hasSuccessfullyExtracted = true;
@@ -950,9 +961,12 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements Const
 					e.printStackTrace();
 				}
 				((ImageButton) options_holder.getChildAt(0)).setEnabled(true);
+				
+				String result_text = PixelKnotActivity.this.getString(R.string.message_embedded);
 
 				try {
-					loader.finish();
+					loader.finish(result_text);
+					notification.finish(result_text);
 				} catch(NullPointerException e) {
 					Log.e(Logger.UI, e.toString());
 					e.printStackTrace();
@@ -1156,19 +1170,23 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements Const
 	public void onUpdate() {
 		steps_taken++;
 		loader.post();
+		notification.post();
 		// TODO: post to notification
 		Log.d(Logger.UI, "steps taken: " + steps_taken);
 	}
 
 	@Override
 	public void onFailure() {
+		String with_message = getString(R.string.could_not_extract);
+		
 		try {
-			loader.terminate();
+			loader.fail(with_message);
+			notification.fail(with_message);
 		} catch(NullPointerException e) {
 			Log.e(LOG, e.toString());
 		}
 		
-		Log.e(Logger.F5, "sorry, we failed to decrypt.");
+		Log.e(Logger.F5, "sorry, we failed to extract/decrypt.");
 		
 		// TODO: notify of failure instead of finish.  maybe retry.
 		finish();		

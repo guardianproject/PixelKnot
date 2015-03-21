@@ -1,9 +1,11 @@
 package info.guardianproject.pixelknot.screens;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -19,10 +21,12 @@ import info.guardianproject.pixelknot.R;
 import info.guardianproject.pixelknot.utils.ActivityListener;
 import info.guardianproject.pixelknot.utils.PassphraseDialogListener;
 import info.guardianproject.pixelknot.utils.PixelKnotListener;
+import info.guardianproject.pixelknot.utils.PixelKnotRandomPhraseGenerator;
+import info.guardianproject.pixelknot.utils.PixelKnotRandomPhraseGenerator.PixelKnotRandomPhraseGeneratorListener;
 
 import org.json.JSONException;
 
-public class SetMessageFragment extends SherlockFragment implements Constants, ActivityListener, PassphraseDialogListener {
+public class SetMessageFragment extends SherlockFragment implements Constants, ActivityListener, PassphraseDialogListener, PixelKnotRandomPhraseGeneratorListener {
 	Activity a;
 	View root_view;
 
@@ -41,6 +45,9 @@ public class SetMessageFragment extends SherlockFragment implements Constants, A
 		}
 		
 	};
+	
+	AlertDialog passphrase_dialog;
+	private final static String LOG = Logger.UI;
 	
 	@Override
 	public View onCreateView(LayoutInflater li, ViewGroup container, Bundle savedInstanceState) {
@@ -70,7 +77,8 @@ public class SetMessageFragment extends SherlockFragment implements Constants, A
 			} catch (JSONException e) {}
 		}
 
-		SetPassphraseDialog.getDialog(this, passphrase).show();
+		passphrase_dialog = SetPassphraseDialog.getDialog(this, passphrase);
+		passphrase_dialog.show();
 	}
 	
 	private void confirmPassphraseOverride() {
@@ -127,7 +135,16 @@ public class SetMessageFragment extends SherlockFragment implements Constants, A
 
 	@Override
 	public void onRandomPassphraseRequested() {
-		String random_passphrase = ((PixelKnotListener) a).getPixelKnot().generateRandomPassword();
-		SetPassphraseDialog.getDialog(this, random_passphrase).show();
+		PixelKnotRandomPhraseGenerator rpg = new PixelKnotRandomPhraseGenerator(this);
+		rpg.buildRandomPhrase();
+	}
+
+	@Override
+	public void onRandomPhraseGenerated(String random_phrase) {
+		try {
+			((EditText) passphrase_dialog.findViewById(R.id.passphrase_holder)).setText(random_phrase);
+		} catch(NullPointerException e) {
+			Log.e(LOG, e.toString());
+		}
 	}
 }

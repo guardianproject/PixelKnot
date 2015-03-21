@@ -4,11 +4,12 @@
     android:versionName="0.3.1" >
 
     <uses-sdk
-        android:minSdkVersion="11"
+        android:minSdkVersion="14"
         android:targetSdkVersion="17" />
 
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_USER_DICTIONARY" />
     <!-- 
     <uses-permission android:name="org.thialfihar.android.apg.permission.READ_KEY_DETAILS" />
  	-->
