@@ -86,10 +86,10 @@ public class PixelKnotRandomPhraseGenerator implements SpellCheckerSessionListen
 	private String concatPhrase() {
 		String random_phrase_concat = "";
 		for(String s : random_phrase) {
-			random_phrase_concat += s;
+			random_phrase_concat += (s + " ");
 		}
 		
-		return random_phrase_concat;
+		return random_phrase_concat.substring(0, random_phrase_concat.length() - 1);
 	}
 	
 	public boolean buildRandomPhrase() {
@@ -104,8 +104,7 @@ public class PixelKnotRandomPhraseGenerator implements SpellCheckerSessionListen
 				}
 			}
 			
-			Log.d(LOG, "trying seed: " + seed_letters);
-			spell_checker.getSuggestions(new TextInfo(seed_letters), 0);
+			spell_checker.getSuggestions(new TextInfo(seed_letters), 10);
 			return false;
 		}
 
@@ -117,7 +116,6 @@ public class PixelKnotRandomPhraseGenerator implements SpellCheckerSessionListen
 		
 		for(int i=0; i<r.getSuggestionsCount(); i++) {
 			String rw = r.getSuggestionAt(i);
-			Log.d(LOG, rw);
 			if(rw.length() >= 5) {
 				random_word = rw;
 				break;
@@ -136,9 +134,7 @@ public class PixelKnotRandomPhraseGenerator implements SpellCheckerSessionListen
 	
 	@Override
 	public void onGetSuggestions(SuggestionsInfo[] results) {
-		Log.e(LOG, "HELLO SUGGESTIONS (INFO)");
 		for(SuggestionsInfo r : results) {
-			Log.e(LOG, "COUNT: " + r.getSuggestionsCount());
 			parseSuggestions(r);
 		}
 	}
