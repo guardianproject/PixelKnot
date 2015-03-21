@@ -8,7 +8,6 @@ import java.util.Random;
 import com.actionbarsherlock.app.SherlockFragment;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.textservice.SentenceSuggestionsInfo;
 import android.view.textservice.SpellCheckerSession;
 import android.view.textservice.SpellCheckerSession.SpellCheckerSessionListener;
