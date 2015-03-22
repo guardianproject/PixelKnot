@@ -24,10 +24,12 @@ public class PixelKnotNotification implements PixelKnotNotificationListener {
 		this.a = a;
 		
 		// resume intent is default (go back to activity);
-		resume_intent = new Intent(this.a, PixelKnotActivity.class);
+		resume_intent = new Intent(this.a, PixelKnotActivity.class)
+			.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
 		
 		notification_manager = (NotificationManager) a.getSystemService(Context.NOTIFICATION_SERVICE);
 		notification = new NotificationCompat.Builder(a)
+			.setAutoCancel(true)
 			.setContentTitle(a.getString(R.string.app_name))
 			.setSmallIcon(R.drawable.ic_launcher)
 			.setContentText(mode_string);
@@ -39,7 +41,7 @@ public class PixelKnotNotification implements PixelKnotNotificationListener {
 		
 		// set resume intent bundle with default bundle
 		PendingIntent content_intent = PendingIntent.getActivity(a, Constants.Source.NOTIFICATION, 
-				resume_intent, PendingIntent.FLAG_UPDATE_CURRENT);
+				resume_intent, 0);
 		
 		notification.setContentIntent(content_intent);
 		post();
@@ -49,6 +51,12 @@ public class PixelKnotNotification implements PixelKnotNotificationListener {
 	public void update(int additional_steps) {
 		num_steps += additional_steps;
 		// set progress
+		post();
+	}
+	
+	@Override
+	public void post(String with_message) {
+		notification.setContentText(with_message);
 		post();
 	}
 

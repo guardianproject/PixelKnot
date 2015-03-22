@@ -1,7 +1,5 @@
 package info.guardianproject.pixelknot.utils;
 
-import info.guardianproject.pixelknot.Constants;
-
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -49,9 +47,7 @@ public class PixelKnotRandomPhraseGenerator implements SpellCheckerSessionListen
 	private SherlockFragment a;
 	private ArrayList<String> random_phrase;
 	private SpellCheckerSession spell_checker;
-	
-	private static String LOG = Constants.Logger.RPG;
-	
+		
 	public PixelKnotRandomPhraseGenerator(SherlockFragment a) {
 		this.a = a;
 		random_phrase = new ArrayList<String>();
@@ -91,6 +87,7 @@ public class PixelKnotRandomPhraseGenerator implements SpellCheckerSessionListen
 		return random_phrase_concat.substring(0, random_phrase_concat.length() - 1);
 	}
 	
+	@SuppressWarnings("deprecation")
 	public boolean buildRandomPhrase() {
 		if(random_phrase.size() == 0 || !evaluateRandomPhrase(random_phrase, target_length)) {
 			char[] permutation = permutations[r.nextInt(permutations.length - 1)];

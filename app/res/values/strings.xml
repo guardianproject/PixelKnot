@@ -14,6 +14,8 @@
     <string name="warning">Warning!</string>
     <string name="yes">yes</string>
     <string name="no">no</string>
+    <string name="encrypting">Encrypting\u2026</string>
+    <string name="decrypting">Decrypting\u2026</string>
     <string name="encrypt">encrypt</string>
     <string name="decrypt">decrypt</string>
     <string name="nevermind">Nevermind</string>
@@ -30,6 +32,7 @@
     <string name="message_embedded">Message successfully embedded into image.</string>
     <string name="could_not_embed">Could not embed your message into image.</string>
     <string name="process_aborted">Process aborted.</string>
+    <string name="working">Working\u2026</string>
     
     <string name="secret_message_hint">Type your hidden message here</string>
     <string name="result_title">Secret Message:</string>

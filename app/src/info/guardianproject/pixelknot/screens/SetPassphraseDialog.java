@@ -5,7 +5,6 @@ import com.actionbarsherlock.app.SherlockFragment;
 import info.guardianproject.pixelknot.Constants;
 import info.guardianproject.pixelknot.R;
 import info.guardianproject.pixelknot.utils.PassphraseDialogListener;
-import info.guardianproject.pixelknot.utils.PixelKnotListener;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;

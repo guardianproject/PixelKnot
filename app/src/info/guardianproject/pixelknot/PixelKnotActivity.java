@@ -78,7 +78,6 @@ import java.util.Locale;
 import java.util.Map.Entry;
 import java.util.Vector;
 
-@SuppressLint("NewApi")
 public class PixelKnotActivity extends SherlockFragmentActivity implements Constants, F5Notification, PixelKnotListener, ViewPager.OnPageChangeListener, OnGlobalLayoutListener, MediaScannerListener, EmbedListener, ExtractionListener {
 	private PKPager pk_pager;
 	private ViewPager view_pager;
@@ -475,18 +474,10 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements Const
 		boolean has_pgp_encryption = false;
 		boolean password_override = false;
 
-		int capacity = 0;
 		Embed embed = null;
 		File out_file = null;
 
-		public PixelKnot() {
-			try {
-				put(Keys.CAPACITY, capacity);
-			} catch (JSONException e) {
-				Log.e(LOG, e.toString());
-				e.printStackTrace();
-			}
-		}
+		public PixelKnot() {}
 
 		private boolean checkIfReadyToSave() {
 			try {
@@ -501,7 +492,6 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements Const
 			this.cover_image_name = cover_image_name;
 			try {
 				put(Keys.COVER_IMAGE_NAME, cover_image_name);
-				put(Keys.CAPACITY, capacity);
 			} catch (JSONException e) {}
 
 
@@ -594,20 +584,12 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements Const
 			return extractF5Seed(password).getBytes();
 		}
 
-		public void setCapacity(int capacity) {
-			this.capacity = capacity;
-			try {
-				put(Keys.CAPACITY, capacity);
-			} catch (JSONException e) {}
-		}
-
 		public void clear() {
 			cover_image_name = null;
 			secret_message = null;
 			password = null;
 			can_save = false;
 			has_pgp_encryption = false;
-			capacity = 0;
 			out_file = null;
 
 			@SuppressWarnings("unchecked")
@@ -616,12 +598,9 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements Const
 			while(keys.hasNext()) 
 				keys_.add(keys.next());
 
-			for(String key : keys_)
-				remove(key);
-
-			try {
-				put(Keys.CAPACITY, capacity);
-			} catch (JSONException e) {}
+			for(String key : keys_) {
+				remove(key);		
+			}
 		}
 
 		public void save() {
@@ -644,7 +623,7 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements Const
 			
 			final String oda_message = PixelKnotActivity.this.getString(R.string.abort_encryption);
 			
-			loader = new PixelKnotLoader(PixelKnotActivity.this, PixelKnotActivity.this.getString(R.string.encrypt)) {
+			loader = new PixelKnotLoader(PixelKnotActivity.this, PixelKnotActivity.this.getString(R.string.encrypting)) {
 
 				@Override
 				public void onBackPressed() {
@@ -653,7 +632,7 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements Const
 			};
 			loader.show();
 			
-			notification = new PixelKnotNotification(PixelKnotActivity.this, PixelKnotActivity.this.getString(R.string.encrypt));
+			notification = new PixelKnotNotification(PixelKnotActivity.this, PixelKnotActivity.this.getString(R.string.encrypting));
 			
 			if(pixel_knot.hasPassword() && !hasSuccessfullyPasswordProtected) {
 				new Thread(new Runnable() {
@@ -662,7 +641,7 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements Const
 						loader.init(Loader.Steps.ENCRYPT);
 						notification.init(Loader.Steps.ENCRYPT);
 						
-						onUpdate();
+						onUpdate(PixelKnotActivity.this.getString(R.string.encrypting));
 						Entry<String, String> pack = Aes.EncryptWithPassword(pixel_knot.getPassword(), secret_message, pixel_knot.getPasswordSalt()).entrySet().iterator().next();
 
 						pixel_knot.setSecretMessage(PASSWORD_SENTINEL.concat(new String(pack.getKey())).concat(pack.getValue()));
@@ -719,7 +698,7 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements Const
 			
 			final String oda_message = PixelKnotActivity.this.getString(R.string.abort_decryption);
 			
-			loader = new PixelKnotLoader(PixelKnotActivity.this, PixelKnotActivity.this.getString(R.string.decrypt)) {
+			loader = new PixelKnotLoader(PixelKnotActivity.this, PixelKnotActivity.this.getString(R.string.decrypting)) {
 
 				@Override
 				public void onBackPressed() {
@@ -729,7 +708,7 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements Const
 			loader.show();
 			loader.init(Loader.Steps.EXTRACT);
 			
-			notification = new PixelKnotNotification(PixelKnotActivity.this, PixelKnotActivity.this.getString(R.string.decrypt));
+			notification = new PixelKnotNotification(PixelKnotActivity.this, PixelKnotActivity.this.getString(R.string.decrypting));
 			notification.init(Loader.Steps.EXTRACT);
 			
 			new Thread(new Runnable() {
@@ -785,6 +764,7 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements Const
 						public void run() {
 							String result_text = PixelKnotActivity.this.getString(R.string.success);
 							((ActivityListener) pk_pager.getItem(view_pager.getCurrentItem())).updateUi();
+							
 							if(!hasSuccessfullyUnlocked) {
 								result_text = PixelKnotActivity.this.getString(R.string.could_not_decrypt_message);
 							}
@@ -828,7 +808,6 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements Const
 	@Override
 	public void setButtonOptions(ImageButton[] options) {
 		try {
-			Log.d(LOG, "The View in question is " + options_holder.getClass().getName() + "\nand you can see this because the device is functioning as it should...");
 			options_holder.removeAllViews();
 			
 			for(ImageButton o : options) {
@@ -889,9 +868,7 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements Const
 	public void onPageScrolled(int arg0, float arg1, int arg2) {}
 
 	@Override
-	public void onPageSelected(int page) {
-		Log.d(LOG, "the current pager is " + view_pager.getCurrentItem());
-	}
+	public void onPageSelected(int page) {}
 
 	@Override
 	public PixelKnot getPixelKnot() {
@@ -918,10 +895,12 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements Const
 		h.post(new Runnable() {
 			@Override
 			public void run() {
+				boolean update_loader = true;
 				pixel_knot.setSecretMessage(new String(baos.toByteArray()));
 
 				if(pixel_knot.hasPassword()) {
 					pixel_knot.unlock();
+					update_loader = false;
 				}
 				
 				if(pixel_knot.checkForPGPProtection()) {
@@ -930,10 +909,13 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements Const
 				
 				String result_text = PixelKnotActivity.this.getString(R.string.message_extracted);
 				
-				try {
-					loader.finish(result_text);
-					notification.finish(result_text);
-				} catch(NullPointerException e) {}
+				if(update_loader) {
+					try {
+						loader.finish(result_text);
+					} catch(NullPointerException e) {}
+				}
+				
+				notification.finish(result_text);
 
 				hasSuccessfullyExtracted = true;
 				((ActivityListener) pk_pager.getItem(view_pager.getCurrentItem())).updateUi();
@@ -1164,14 +1146,12 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements Const
 	}
 	
 	@Override
-	public void onUpdate(int steps, int interval) {}
-
-	@Override
-	public void onUpdate() {
+	public void onUpdate(String with_message) {
 		steps_taken++;
-		loader.post();
+
+		loader.post(with_message);
 		notification.post();
-		// TODO: post to notification
+		
 		Log.d(Logger.UI, "steps taken: " + steps_taken);
 	}
 

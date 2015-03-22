@@ -3,17 +3,14 @@ package info.guardianproject.pixelknot.screens;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.NotificationManager;
 import android.content.Context;
 import android.os.Handler;
-import android.support.v4.app.NotificationCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import info.guardianproject.pixelknot.Constants.Screens.Loader;
-import info.guardianproject.pixelknot.Constants;
 import info.guardianproject.pixelknot.R;
 import info.guardianproject.pixelknot.utils.PixelKnotNotificationListener;
 
@@ -27,7 +24,7 @@ public class PixelKnotLoader extends AlertDialog implements PixelKnotNotificatio
 	Context context;
 	ProgressBar knot_progress;
 	ImageView knot_image;
-	TextView knot_title, knot_warning;
+	TextView knot_title, knot_warning, current_progress;
 		
 	List<Integer> display_order;
 	Iterator<Integer> load_engine;
@@ -38,14 +35,13 @@ public class PixelKnotLoader extends AlertDialog implements PixelKnotNotificatio
 		public void run() {
 			step++;
 			loadAKnot();
+			
 		}
 	};
 	
 	int num_steps = 0;
 	int step = -1;
-	
-	private final static String LOG = Constants.Logger.LOADER;
-	
+		
 	@SuppressLint("InflateParams")
 	public PixelKnotLoader(Activity c, String mode_string) {
 		super(c);
@@ -55,6 +51,7 @@ public class PixelKnotLoader extends AlertDialog implements PixelKnotNotificatio
 		knot_progress = (ProgressBar) root.findViewById(R.id.knot_progress);
 		knot_image = (ImageView) root.findViewById(R.id.knot_image);
 		knot_title = (TextView) root.findViewById(R.id.knot_title);
+		current_progress = (TextView) root.findViewById(R.id.current_progress);
 		
 		setView(root);
 		setCancelable(false);
@@ -75,6 +72,18 @@ public class PixelKnotLoader extends AlertDialog implements PixelKnotNotificatio
 	public void update(int additional_steps) {
 		num_steps += additional_steps;
 		knot_progress.setMax(num_steps);
+	}
+	
+	@Override
+	public void post(final String with_message) {
+		h.post(new Runnable() {
+			@Override
+			public void run() {
+				current_progress.setText(with_message == null ? context.getString(R.string.working) : with_message);
+			}
+		});
+
+		post();
 	}
 	
 	@Override
