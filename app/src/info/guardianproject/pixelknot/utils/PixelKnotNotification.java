@@ -25,11 +25,12 @@ public class PixelKnotNotification implements PixelKnotNotificationListener {
 		
 		// resume intent is default (go back to activity);
 		resume_intent = new Intent(this.a, PixelKnotActivity.class)
-			.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+			.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP)
+			.setAction(Intent.ACTION_MAIN)
+			.addCategory(Intent.CATEGORY_LAUNCHER);
 		
 		notification_manager = (NotificationManager) a.getSystemService(Context.NOTIFICATION_SERVICE);
 		notification = new NotificationCompat.Builder(a)
-			.setAutoCancel(true)
 			.setContentTitle(a.getString(R.string.app_name))
 			.setSmallIcon(R.drawable.ic_launcher)
 			.setContentText(mode_string);
