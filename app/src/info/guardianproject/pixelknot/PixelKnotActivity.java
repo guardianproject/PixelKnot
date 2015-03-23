@@ -48,12 +48,14 @@ import info.guardianproject.f5android.Extract;
 import info.guardianproject.f5android.Extract.ExtractionListener;
 import info.guardianproject.f5android.F5Buffers.F5Notification;
 import info.guardianproject.pixelknot.Constants.PixelKnot.Keys;
+import info.guardianproject.pixelknot.Constants.PixelKnot.Modes;
 import info.guardianproject.pixelknot.Constants.Screens.Loader;
 import info.guardianproject.pixelknot.crypto.Aes;
 import info.guardianproject.pixelknot.screens.CoverImageFragment;
 import info.guardianproject.pixelknot.screens.DecryptImageFragment;
 import info.guardianproject.pixelknot.screens.OnLoaderCanceledDialog;
 import info.guardianproject.pixelknot.screens.PixelKnotLoader;
+import info.guardianproject.pixelknot.screens.SelectModeDialog;
 import info.guardianproject.pixelknot.screens.SetMessageFragment;
 import info.guardianproject.pixelknot.screens.ShareFragment;
 import info.guardianproject.pixelknot.screens.StegoImageFragment;
@@ -64,6 +66,7 @@ import info.guardianproject.pixelknot.utils.Image;
 import info.guardianproject.pixelknot.utils.PixelKnotMediaScanner;
 import info.guardianproject.pixelknot.utils.PixelKnotMediaScanner.MediaScannerListener;
 import info.guardianproject.pixelknot.utils.PixelKnotNotification;
+import info.guardianproject.stego.StegoProcessThread;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -474,8 +477,28 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements Const
 		boolean has_pgp_encryption = false;
 		boolean password_override = false;
 
-		Embed embed = null;
 		File out_file = null;
+		StegoProcessThread current_process = null;
+		
+		DialogInterface.OnClickListener abort = new DialogInterface.OnClickListener() {
+			
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				Log.d(LOG, "ABORTING THIS THING!");
+				
+				if(current_process != null) {
+					try {
+						current_process.requestInterrupt();
+					} catch(NullPointerException e) {
+						Log.e(LOG, "TRIED TO ABORT BUT NO PROCESS.");
+						Log.e(LOG, e.toString());
+					}
+					
+				} else {
+					Log.d(LOG, "UM WHY NO CURRENT PROCESS?");
+				}
+			}
+		};
 
 		public PixelKnot() {}
 
@@ -487,7 +510,7 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements Const
 
 			return false;
 		}
-
+		
 		public void setCoverImageName(String cover_image_name) {
 			this.cover_image_name = cover_image_name;
 			try {
@@ -591,6 +614,7 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements Const
 			can_save = false;
 			has_pgp_encryption = false;
 			out_file = null;
+			current_process = null;
 
 			@SuppressWarnings("unchecked")
 			Iterator<String> keys = keys();
@@ -608,26 +632,13 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements Const
 				return;
 			}
 
-			final DialogInterface.OnClickListener on_encryption_aborted = new DialogInterface.OnClickListener() {
-				
-				@Override
-				public void onClick(DialogInterface dialog, int which) {
-					// TODO: abort encryption process
-					Log.d(LOG, "ABORT ENCRYPTION OK?");
-					
-					String with_message = PixelKnotActivity.this.getString(R.string.process_aborted);
-					loader.fail(with_message);
-					notification.fail(with_message);
-				}
-			};
-			
 			final String oda_message = PixelKnotActivity.this.getString(R.string.abort_encryption);
 			
 			loader = new PixelKnotLoader(PixelKnotActivity.this, PixelKnotActivity.this.getString(R.string.encrypting)) {
 
 				@Override
 				public void onBackPressed() {
-					OnLoaderCanceledDialog.getDialog(PixelKnotActivity.this, oda_message, on_encryption_aborted).show();
+					OnLoaderCanceledDialog.getDialog(PixelKnotActivity.this, oda_message, PixelKnot.this.abort).show();
 				}
 			};
 			loader.show();
@@ -635,9 +646,12 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements Const
 			notification = new PixelKnotNotification(PixelKnotActivity.this, PixelKnotActivity.this.getString(R.string.encrypting));
 			
 			if(pixel_knot.hasPassword() && !hasSuccessfullyPasswordProtected) {
-				new Thread(new Runnable() {
+				StegoProcessThread encrypt = new StegoProcessThread(Logger.AES) {
+					
 					@Override
 					public void run() {
+						super.run();
+						
 						loader.init(Loader.Steps.ENCRYPT);
 						notification.init(Loader.Steps.ENCRYPT);
 						
@@ -659,7 +673,9 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements Const
 							}
 						});
 					}
-				}).start();
+				};
+				
+				pixel_knot.setCurrentProcess(encrypt, Modes.MODE_ENCRYPT);
 			}
 
 			if(!pixel_knot.hasPassword() || hasSuccessfullyPasswordProtected) {
@@ -672,8 +688,8 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements Const
 						// TODO: actually, save to the same dir as original cover image, but with spoofed name
 						pixel_knot.setCoverImageName(Image.downsampleImage(pixel_knot.cover_image_name, dump));
 						
-						@SuppressWarnings("unused")
 						Embed embed = new Embed(PixelKnotActivity.this, dump.getName(), cover_image_name, secret_message, pixel_knot.getF5Seed());
+						pixel_knot.setCurrentProcess((StegoProcessThread) embed, Modes.MODE_ENCRYPT);
 					}
 				}).start();
 			}
@@ -683,26 +699,13 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements Const
 			Log.d(LOG, "now extracting " + cover_image_name);
 			pixel_knot.out_file = new File(cover_image_name);
 			
-			final DialogInterface.OnClickListener on_decryption_aborted = new DialogInterface.OnClickListener() {
-				
-				@Override
-				public void onClick(DialogInterface dialog, int which) {
-					// TODO: abort decryption process
-					Log.d(LOG, "ABORT DECRYPTION OK?");
-					
-					String with_message = PixelKnotActivity.this.getString(R.string.process_aborted);
-					loader.fail(with_message);
-					notification.fail(with_message);
-				}
-			};
-			
 			final String oda_message = PixelKnotActivity.this.getString(R.string.abort_decryption);
 			
 			loader = new PixelKnotLoader(PixelKnotActivity.this, PixelKnotActivity.this.getString(R.string.decrypting)) {
 
 				@Override
 				public void onBackPressed() {
-					OnLoaderCanceledDialog.getDialog(PixelKnotActivity.this, oda_message, on_decryption_aborted).show();
+					OnLoaderCanceledDialog.getDialog(PixelKnotActivity.this, oda_message, pixel_knot.abort).show();
 				}
 			};
 			loader.show();
@@ -711,13 +714,20 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements Const
 			notification = new PixelKnotNotification(PixelKnotActivity.this, PixelKnotActivity.this.getString(R.string.decrypting));
 			notification.init(Loader.Steps.EXTRACT);
 			
-			new Thread(new Runnable() {
-				@Override
-				public void run() {
-					@SuppressWarnings("unused")
-					Extract extract = new Extract(PixelKnotActivity.this, cover_image_name, getF5Seed());
-				}
-			}).start();
+			Extract extract = new Extract(PixelKnotActivity.this, cover_image_name, getF5Seed());
+			pixel_knot.setCurrentProcess((StegoProcessThread) extract, Modes.MODE_DECRYPT);
+		}
+		
+		private void setCurrentProcess(StegoProcessThread process, int type) {
+			current_process = process;
+			current_process.start();
+			
+			Log.d(LOG, "SETTING CURRENT PROCESS " + current_process.getId());
+			
+			try {
+				put(Keys.CURRENT_PROCESS, current_process != null ? current_process.getId() : null);
+				put(Keys.CURRENT_PROCESS_TYPE, type);
+			} catch(JSONException e) {}
 		}
 
 		public void setOutFile(File out_file) {
@@ -741,10 +751,11 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements Const
 				return;
 			}
 
-			new Thread(new Runnable() {
+			StegoProcessThread decrypt = new StegoProcessThread(Logger.AES) {
+				
 				@Override
 				public void run() {
-					Log.d(LOG, "SECRET MESSAGE BEFORE DECRYPTING:\n" + secret_message);
+					super.run();
 					secret_message = secret_message.substring(PASSWORD_SENTINEL.length());
 					
 					byte[] message = Base64.decode(secret_message.split("\n")[1], Base64.DEFAULT);
@@ -776,7 +787,9 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements Const
 						}
 					});
 				}
-			}).start();
+			};
+			
+			pixel_knot.setCurrentProcess(decrypt, Modes.MODE_DECRYPT);
 		}
 		
 		private void PGPDecrypt() {
@@ -1162,6 +1175,7 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements Const
 		try {
 			loader.fail(with_message);
 			notification.fail(with_message);
+			pixel_knot.setCurrentProcess(null, 0);
 		} catch(NullPointerException e) {
 			Log.e(LOG, e.toString());
 		}
@@ -1169,7 +1183,21 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements Const
 		Log.e(Logger.F5, "sorry, we failed to extract/decrypt.");
 		
 		// TODO: notify of failure instead of finish.  maybe retry.
-		finish();		
+	}
+	
+	@Override
+	public void onThreadInterrupted() {
+		String with_message = getString(R.string.process_aborted);
+		
+		try {
+			loader.fail(with_message);
+			notification.fail(with_message);
+			pixel_knot.setCurrentProcess(null, 0);
+		} catch(NullPointerException e) {
+			Log.e(LOG, e.toString());
+		}
+		
+		Log.e(Logger.F5, "sorry, thread interrupted.");
 	}
 
 	@Override

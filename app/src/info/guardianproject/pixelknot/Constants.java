@@ -84,6 +84,8 @@ public interface Constants {
 			public static final String CAPACITY = "capacity";
 			public static final String OUT_FILE_NAME = "out_file_name";
 			public static final String CUSTOM_SEED = "custom_seed";
+			public static final String CURRENT_PROCESS = "current_process";
+			public static final String CURRENT_PROCESS_TYPE = "current_process_type";
 		}
 		
 		public static class ActivityNames {

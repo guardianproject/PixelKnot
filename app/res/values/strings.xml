@@ -21,6 +21,7 @@
     <string name="nevermind">Nevermind</string>
     <string name="abort_encryption">Abort Encryption?</string>
     <string name="abort_decryption">Abort Decryption?</string>
+    <string name="process_canceled">Process canceled.</string>
     <string name="success">Success!</string>
     <string name="failed">Failed.</string>
     <string name="could_not_encrypt_message">Could not encrypt this message.</string>
