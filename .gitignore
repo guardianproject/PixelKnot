@@ -2,6 +2,7 @@
 app/bin
 app/gen
 app/.settings
+photoshop/
 .metadata
 # files generated for the ant build
 local.properties

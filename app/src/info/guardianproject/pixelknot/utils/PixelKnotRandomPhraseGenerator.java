@@ -1,11 +1,14 @@
 package info.guardianproject.pixelknot.utils;
 
+import info.guardianproject.pixelknot.Constants.Logger;
+
 import java.util.ArrayList;
 import java.util.Random;
 
 import com.actionbarsherlock.app.SherlockFragment;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.textservice.SentenceSuggestionsInfo;
 import android.view.textservice.SpellCheckerSession;
 import android.view.textservice.SpellCheckerSession.SpellCheckerSessionListener;
@@ -47,6 +50,8 @@ public class PixelKnotRandomPhraseGenerator implements SpellCheckerSessionListen
 	private SherlockFragment a;
 	private ArrayList<String> random_phrase;
 	private SpellCheckerSession spell_checker;
+	
+	private static final String LOG = Logger.RPG;
 		
 	public PixelKnotRandomPhraseGenerator(SherlockFragment a) {
 		this.a = a;
@@ -100,7 +105,7 @@ public class PixelKnotRandomPhraseGenerator implements SpellCheckerSessionListen
 				}
 			}
 			
-			spell_checker.getSuggestions(new TextInfo(seed_letters), 10);
+			spell_checker.getSuggestions(new TextInfo(seed_letters), 30);
 			return false;
 		}
 
@@ -108,21 +113,20 @@ public class PixelKnotRandomPhraseGenerator implements SpellCheckerSessionListen
 	}
 	
 	private void parseSuggestions(SuggestionsInfo r) {
-		String random_word = null;
+		ArrayList<String> random_words = new ArrayList<String>();
 		
 		for(int i=0; i<r.getSuggestionsCount(); i++) {
 			String rw = r.getSuggestionAt(i);
 			if(rw.length() >= 5) {
-				random_word = rw;
-				break;
+				random_words.add(rw);
 			}
 		}
 		
-		if(random_word == null) {
+		if(random_words.isEmpty()) {
 			return;
 		}
 		
-		random_phrase.add(random_word);
+		random_phrase.add(random_words.get(this.r.nextInt(random_words.size() - 1)));
 		if(buildRandomPhrase()) {
 			((PixelKnotRandomPhraseGeneratorListener) a).onRandomPhraseGenerated(concatPhrase());
 		}

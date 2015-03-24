@@ -42,11 +42,11 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 
-import info.guardianproject.f5android.Embed;
-import info.guardianproject.f5android.Embed.EmbedListener;
-import info.guardianproject.f5android.Extract;
-import info.guardianproject.f5android.Extract.ExtractionListener;
-import info.guardianproject.f5android.F5Buffers.F5Notification;
+import info.guardianproject.f5android.plugins.f5.Embed;
+import info.guardianproject.f5android.plugins.f5.Embed.EmbedListener;
+import info.guardianproject.f5android.plugins.f5.Extract;
+import info.guardianproject.f5android.plugins.f5.Extract.ExtractionListener;
+import info.guardianproject.f5android.plugins.f5.F5Buffers.F5Notification;
 import info.guardianproject.pixelknot.Constants.PixelKnot.Keys;
 import info.guardianproject.pixelknot.Constants.PixelKnot.Modes;
 import info.guardianproject.pixelknot.Constants.Screens.Loader;
@@ -66,7 +66,8 @@ import info.guardianproject.pixelknot.utils.Image;
 import info.guardianproject.pixelknot.utils.PixelKnotMediaScanner;
 import info.guardianproject.pixelknot.utils.PixelKnotMediaScanner.MediaScannerListener;
 import info.guardianproject.pixelknot.utils.PixelKnotNotification;
-import info.guardianproject.stego.StegoProcessThread;
+import info.guardianproject.f5android.stego.StegoProcessor;
+import info.guardianproject.f5android.stego.StegoProcessThread;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -478,7 +479,7 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements Const
 		boolean password_override = false;
 
 		File out_file = null;
-		StegoProcessThread current_process = null;
+		StegoProcessor current_process = null;
 		
 		DialogInterface.OnClickListener abort = new DialogInterface.OnClickListener() {
 			
@@ -488,7 +489,7 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements Const
 				
 				if(current_process != null) {
 					try {
-						current_process.requestInterrupt();
+						current_process.destroy();
 					} catch(NullPointerException e) {
 						Log.e(LOG, "TRIED TO ABORT BUT NO PROCESS.");
 						Log.e(LOG, e.toString());
@@ -718,14 +719,20 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements Const
 			pixel_knot.setCurrentProcess((StegoProcessThread) extract, Modes.MODE_DECRYPT);
 		}
 		
-		private void setCurrentProcess(StegoProcessThread process, int type) {
-			current_process = process;
-			current_process.start();
-			
-			Log.d(LOG, "SETTING CURRENT PROCESS " + current_process.getId());
+		private void setCurrentProcess(StegoProcessThread thread, int type) {
+			if(thread != null) {
+				if(current_process == null) {
+					Log.d(LOG, "INITING STEGO PROCESS");
+					current_process = new StegoProcessor(PixelKnotActivity.this, thread);
+				} else {
+					current_process.addThread(thread);
+				}
+				
+				Log.d(LOG, "SETTING CURRENT PROCESS " + thread.getId());
+			}
 			
 			try {
-				put(Keys.CURRENT_PROCESS, current_process != null ? current_process.getId() : null);
+				put(Keys.CURRENT_PROCESS, thread != null ? thread.getId() : null);
 				put(Keys.CURRENT_PROCESS_TYPE, type);
 			} catch(JSONException e) {}
 		}

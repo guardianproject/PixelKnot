@@ -75,11 +75,7 @@ public class PixelKnotNotification implements PixelKnotNotificationListener {
 
 	@Override
 	public void finish() {
-		// set resume intent bundle with finish bundle
-		PendingIntent content_intent = PendingIntent.getActivity(a, Constants.Source.NOTIFICATION, 
-				resume_intent, PendingIntent.FLAG_UPDATE_CURRENT);
-		
-		notification.setContentIntent(content_intent);
+		notification.setAutoCancel(true);
 		post();
 	}
 

@@ -13,13 +13,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/passphrase_protection_text" />
-    <EditText
+    <EditText style="@style/dialog_edittext"
         android:id="@+id/passphrase_holder"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textMultiLine" >
-
+        android:layout_height="wrap_content" >
         <requestFocus />
     </EditText>
 

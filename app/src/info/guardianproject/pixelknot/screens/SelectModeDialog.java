@@ -1,8 +1,6 @@
 package info.guardianproject.pixelknot.screens;
 
 import info.guardianproject.pixelknot.R;
-import info.guardianproject.pixelknot.R.layout;
-import info.guardianproject.pixelknot.R.string;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;

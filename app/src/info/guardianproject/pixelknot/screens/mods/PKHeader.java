@@ -23,7 +23,7 @@ public class PKHeader extends TextView {
 		if (!isSet)
 		{
 			if(t == null)
-				t = Typeface.createFromAsset(this.c.getAssets(), "steelfish_rg.ttf");
+				t = Typeface.createFromAsset(this.c.getAssets(), "oswald_regular.ttf");
 			
 			setTypeface(t);
 			isSet = true;

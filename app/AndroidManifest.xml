@@ -40,6 +40,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".Preferences" />
+        <service android:name="info.guardianproject.f5android.stego.StegoProcessorService" />
     </application>
 
 </manifest>
