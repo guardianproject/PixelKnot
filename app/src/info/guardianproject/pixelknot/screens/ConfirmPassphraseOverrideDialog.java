@@ -33,7 +33,7 @@ public abstract class ConfirmPassphraseOverrideDialog {
 				((PixelKnotListener) a.getActivity()).getPixelKnot().setPasswordOverride(false);
 				dialog.cancel();
 			}
-		});
+		});		
 		
 		return builder.create();
 	}

@@ -18,6 +18,7 @@ import com.actionbarsherlock.app.SherlockFragment;
 import info.guardianproject.pixelknot.Constants;
 import info.guardianproject.pixelknot.Constants.PixelKnot.Keys;
 import info.guardianproject.pixelknot.R;
+import info.guardianproject.pixelknot.screens.mods.PKDialogOnShowListener;
 import info.guardianproject.pixelknot.utils.ActivityListener;
 import info.guardianproject.pixelknot.utils.PassphraseDialogListener;
 import info.guardianproject.pixelknot.utils.PixelKnotListener;
@@ -78,6 +79,7 @@ public class SetMessageFragment extends SherlockFragment implements Constants, A
 		}
 
 		passphrase_dialog = SetPassphraseDialog.getDialog(this, passphrase);
+		passphrase_dialog.setOnShowListener(new PKDialogOnShowListener(a));
 		passphrase_dialog.show();
 	}
 	

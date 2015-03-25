@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal"
-    android:background="#ff434343" >
+    android:background="@color/pk_white" >
 
     <LinearLayout
         android:layout_width="match_parent"

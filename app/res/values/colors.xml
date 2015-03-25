@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="pk_white" type="color">#ffdddddd</item>
+    <item name="pk_grey" type="color">#80dddddd</item>
+    <item name="pk_yellow" type="color">#ffd9f710</item>
+    <item name="pk_black" type="color">#ff000000</item>
+</resources>

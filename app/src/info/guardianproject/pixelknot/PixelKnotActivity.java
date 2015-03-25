@@ -59,6 +59,7 @@ import info.guardianproject.pixelknot.screens.SelectModeDialog;
 import info.guardianproject.pixelknot.screens.SetMessageFragment;
 import info.guardianproject.pixelknot.screens.ShareFragment;
 import info.guardianproject.pixelknot.screens.StegoImageFragment;
+import info.guardianproject.pixelknot.screens.mods.PKDialogOnShowListener;
 import info.guardianproject.pixelknot.utils.ActivityListener;
 import info.guardianproject.pixelknot.utils.PixelKnotListener;
 import info.guardianproject.pixelknot.utils.IO;
@@ -174,7 +175,9 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements Const
 				}
 			};
 			
-			SelectModeDialog.getDialog(this, select_encrypt_listener, select_decrypt_listener).show();
+			AlertDialog ad = SelectModeDialog.getDialog(this, select_encrypt_listener, select_decrypt_listener);
+			ad.setOnShowListener(new PKDialogOnShowListener(this));
+			ad.show();
 		}
 
 		last_diff = 0;
@@ -360,6 +363,7 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements Const
 		for(int l=0; l<licenses.length; l++) {
 			TextView license = new TextView(this);
 			license.setText(licenses[l]);
+			license.setTextColor(getResources().getColor(R.color.pk_black));
 			license.setTextSize(20);
 			
 			TextView license_ = new TextView(this);
@@ -639,7 +643,9 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements Const
 
 				@Override
 				public void onBackPressed() {
-					OnLoaderCanceledDialog.getDialog(PixelKnotActivity.this, oda_message, PixelKnot.this.abort).show();
+					AlertDialog ad = OnLoaderCanceledDialog.getDialog(PixelKnotActivity.this, oda_message, PixelKnot.this.abort);
+					ad.setOnShowListener(new PKDialogOnShowListener(PixelKnotActivity.this));
+					ad.show();
 				}
 			};
 			loader.show();
@@ -706,7 +712,9 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements Const
 
 				@Override
 				public void onBackPressed() {
-					OnLoaderCanceledDialog.getDialog(PixelKnotActivity.this, oda_message, pixel_knot.abort).show();
+					AlertDialog ad = OnLoaderCanceledDialog.getDialog(PixelKnotActivity.this, oda_message, pixel_knot.abort);
+					ad.setOnShowListener(new PKDialogOnShowListener(PixelKnotActivity.this));
+					ad.show();
 				}
 			};
 			loader.show();

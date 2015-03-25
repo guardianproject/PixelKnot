@@ -1,6 +1,7 @@
 package info.guardianproject.pixelknot.screens;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -16,6 +17,7 @@ import com.actionbarsherlock.app.SherlockFragment;
 import info.guardianproject.pixelknot.Constants;
 import info.guardianproject.pixelknot.Constants.PixelKnot.Keys;
 import info.guardianproject.pixelknot.R;
+import info.guardianproject.pixelknot.screens.mods.PKDialogOnShowListener;
 import info.guardianproject.pixelknot.utils.ActivityListener;
 import info.guardianproject.pixelknot.utils.PassphraseDialogListener;
 import info.guardianproject.pixelknot.utils.PixelKnotListener;
@@ -51,7 +53,10 @@ public class DecryptImageFragment extends SherlockFragment implements Constants,
 	@Override
 	public void updateUi() {
 		if(!((PixelKnotListener) a).getPixelKnot().getPasswordOverride() && !((PixelKnotListener) a).getPixelKnot().hasPassword()) {
-			InputPassphraseDialog.getDialog(this).show();
+			AlertDialog ad = InputPassphraseDialog.getDialog(this);
+			ad.setOnShowListener(new PKDialogOnShowListener(a));
+			ad.show();
+			
 			return;
 		}
 		

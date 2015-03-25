@@ -6,43 +6,43 @@
 	</style>
     
 	<style name="Widget.Pixelknot.ActionBar" parent="Widget.Sherlock.Light.ActionBar.Solid.Inverse">
-	    <item name="background">#ff434343</item>
-	    <item name="android:background">#ff434343</item>
+	    <item name="background">@color/pk_white</item>
+	    <item name="android:background">@color/pk_white</item>
 	</style>
     
     <style name="action_display">
-        <item name="android:background">#00000000</item>
+        <item name="android:background">@color/pk_white</item>
         <item name="android:padding">0dip</item>
     </style>
     <style name="progress_button">
-        <item name="android:background">#00000000</item>
+        <item name="android:background">@color/pk_white</item>
     </style>
     <style name="message_holder">
-        <item name="android:background">#80000000</item>
+        <item name="android:background">@color/pk_grey</item>
         <item name="android:textColor">#ffffffff</item>
         <item name="android:layout_margin">2dp</item>
         <item name="android:gravity">top|left</item>
         <item name="android:textSize">20sp</item>
     </style>
     <style name="dialog_holder">
-        <item name="android:background">#ffffff</item>
-        <item name="android:textColor">#000000</item>
+        <item name="android:background">@color/pk_white</item>
+        <item name="android:textColor">@color/pk_black</item>
     </style>
     <style name="dialog_button">
-        <item name="android:background">#ffffff</item>
+        <item name="android:background">@color/pk_white</item>
     </style>
     <style name="dialog_edittext">
-        <item name="android:textColor">#80000000</item>
+        <item name="android:textColor">@color/pk_black</item>
         <item name="android:inputType">textMultiLine</item>
         <item name="android:minLines">3</item>
     </style>
     <style name="h1">
         <item name="android:textSize">36sp</item>
-        <item name="android:textColor">#ffffffff</item>
+        <item name="android:textColor">@color/pk_black</item>
     </style>
     <style name="h2">
         <item name="android:textSize">28sp</item>
-        <item name="android:textColor">#ffffffff</item>
+        <item name="android:textColor">@color/pk_black</item>
         <item name="android:layout_marginBottom">10dip</item>
         <item name="android:padding">6dip</item>
         <item name="android:layout_width">match_parent</item>
@@ -50,7 +50,7 @@
     </style>
     <style name="h2_dialog">
         <item name="android:textSize">24sp</item>
-        <item name="android:textColor">#000000</item>
+        <item name="android:textColor">@color/pk_black</item>
         <item name="android:layout_marginBottom">10dip</item>
         <item name="android:padding">6dip</item>
         <item name="android:layout_width">match_parent</item>
@@ -58,19 +58,19 @@
     </style>
     <style name="h1_loader">
         <item name="android:textSize">46sp</item>
-        <item name="android:textColor">#ffffffff</item>
+        <item name="android:textColor">@color/pk_black</item>
     </style>
     <style name="p">
         <item name="android:textSize">20sp</item>
         <item name="android:padding">6dip</item>
-        <item name="android:textColor">#ffffffff</item>
+        <item name="android:textColor">@color/pk_black</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
     <style name="p_dialog">
         <item name="android:textSize">16sp</item>
         <item name="android:padding">6dip</item>
-        <item name="android:textColor">#000000</item>
+        <item name="android:textColor">@color/pk_black</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
     </style>

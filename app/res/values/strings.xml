@@ -68,7 +68,7 @@
     <string name="about_license_bcc">Bouncy Castle Crypto</string>
     <string name="about_license_pgp">PGP</string>
     <string name="about_license_apg">Android Privacy Guard</string>
-    <string name="about_license_iconmonstr">Iconmonstr</string>
+    <string name="about_license_other_icons">OtherIcons</string>
     <string name="about_license_deviantart">DeviantArt</string>
     <string name="about_license_">Built using 3rd-Party open source software:</string>
     <string name="about_lovingly_">Lovingly made in NYC.</string>
