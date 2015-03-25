@@ -84,7 +84,9 @@ public class SetMessageFragment extends SherlockFragment implements Constants, A
 	}
 	
 	private void confirmPassphraseOverride() {
-		ConfirmPassphraseOverrideDialog.getDialog(this).show();
+		AlertDialog ad = ConfirmPassphraseOverrideDialog.getDialog(this);
+		ad.setOnShowListener(new PKDialogOnShowListener(a));
+		ad.show();
 	}
 
 	@Override

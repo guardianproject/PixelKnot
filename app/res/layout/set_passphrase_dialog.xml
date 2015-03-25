@@ -30,7 +30,7 @@
 	        android:layout_weight="0.2" />
     </LinearLayout>
 
-    <EditText style="@style/dialog_edittext"
+    <EditText style="@style/passphrase_holder"
         android:id="@+id/passphrase_holder"
         android:layout_width="match_parent"
         android:layout_height="0dp"

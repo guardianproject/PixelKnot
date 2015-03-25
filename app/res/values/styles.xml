@@ -19,10 +19,18 @@
     </style>
     <style name="message_holder">
         <item name="android:background">@color/pk_grey</item>
-        <item name="android:textColor">#ffffffff</item>
+        <item name="android:textColor">@color/pk_black</item>
         <item name="android:layout_margin">2dp</item>
         <item name="android:gravity">top|left</item>
         <item name="android:textSize">20sp</item>
+    </style>
+    <style name="passphrase_holder">
+        <item name="android:background">@drawable/pk_passphrase_holder</item>
+        <item name="android:textColor">@color/pk_black</item>
+        <item name="android:inputType">textMultiLine|textNoSuggestions</item>
+        <item name="android:minLines">3</item>
+        <item name="android:layout_margin">4dp</item>
+        <item name="android:padding">2dp</item>
     </style>
     <style name="dialog_holder">
         <item name="android:background">@color/pk_white</item>
@@ -41,7 +49,7 @@
         <item name="android:textColor">@color/pk_black</item>
     </style>
     <style name="h2">
-        <item name="android:textSize">28sp</item>
+        <item name="android:textSize">24sp</item>
         <item name="android:textColor">@color/pk_black</item>
         <item name="android:layout_marginBottom">10dip</item>
         <item name="android:padding">6dip</item>

@@ -57,6 +57,7 @@ public class ShareFragment extends SherlockFragment implements Constants, Activi
 			title.setText(getString(R.string.warning));
 			
 			TextView content = new TextView(a);
+			content.setTextAppearance(a, R.style.p);
 			content.setText(getString(R.string.error_password_required));
 			content_holder.addView(content);
 			
@@ -67,6 +68,7 @@ public class ShareFragment extends SherlockFragment implements Constants, Activi
 			title.setText(getString(R.string.oh_no));
 
 			TextView content = new TextView(a);
+			content.setTextAppearance(a, R.style.p);
 			content.setText(getString(R.string.error_no_secret_message));
 			content_holder.addView(content);
 			return;
@@ -76,6 +78,7 @@ public class ShareFragment extends SherlockFragment implements Constants, Activi
 			title.setText(getString(R.string.uh_oh));
 
 			TextView content = new TextView(a);
+			content.setTextAppearance(a, R.style.p);
 			content.setText(getString(R.string.error_no_cover_image));
 			content_holder.addView(content);
 			return;
