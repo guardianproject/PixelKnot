@@ -126,7 +126,12 @@ public class PixelKnotRandomPhraseGenerator implements SpellCheckerSessionListen
 			return;
 		}
 		
-		random_phrase.add(random_words.get(this.r.nextInt(random_words.size() - 1)));
+		try {
+			random_phrase.add(random_words.get(this.r.nextInt(random_words.size() - 1)));
+		} catch(IllegalArgumentException e) {
+			Log.e(LOG, e.toString());
+		}
+		
 		if(buildRandomPhrase()) {
 			((PixelKnotRandomPhraseGeneratorListener) a).onRandomPhraseGenerated(concatPhrase());
 		}
