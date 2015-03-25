@@ -24,7 +24,7 @@ public class PixelKnotRandomPhraseGenerator implements SpellCheckerSessionListen
 	 * 2) random bag of consonants, vowels
 	 * 3) a few permutations to choose from [[c,v,v], [c,c,v], [v, c, v], [v, c, c]]
 	 * 4) start a word according to random permutation
-	 * 5) send through spellcheck; take first choice where choice.length >= 5 letters
+	 * 5) send through spellcheck; take random choice where choice.length >= 5 letters
 	 * 6) repeat steps 4 and 5 until random_phrase.join(" ").length >= tl.length
 	 * 
 	 */
