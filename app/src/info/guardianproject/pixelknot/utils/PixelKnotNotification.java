@@ -4,6 +4,7 @@ import info.guardianproject.pixelknot.Constants;
 import info.guardianproject.pixelknot.PixelKnotActivity;
 import info.guardianproject.pixelknot.R;
 import android.app.Activity;
+import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -76,6 +77,7 @@ public class PixelKnotNotification implements PixelKnotNotificationListener {
 	@Override
 	public void finish() {
 		notification.setAutoCancel(true);
+		notification.setDefaults(Notification.DEFAULT_SOUND | Notification.DEFAULT_VIBRATE);
 		post();
 	}
 

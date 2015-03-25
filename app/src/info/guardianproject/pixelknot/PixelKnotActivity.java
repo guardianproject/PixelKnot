@@ -342,45 +342,8 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements Const
 	
 	@SuppressLint("InflateParams")
 	private void showAbout() {
-		AlertDialog.Builder ad = new AlertDialog.Builder(this);
-		View about = LayoutInflater.from(this).inflate(R.layout.about_fragment, null);
-		
-		TextView about_gp_email = (TextView) about.findViewById(R.id.about_gp_email);
-		about_gp_email.setText(Html.fromHtml("<a href='mailto:" + about_gp_email.getText().toString() + "'>" + about_gp_email.getText().toString() + "</a>"));
-		
-		TextView about_version = (TextView) about.findViewById(R.id.about_version);
-		try {
-			about_version.setText(getPackageManager().getPackageInfo(getPackageName(), 0).versionName);
-		} catch (NameNotFoundException e) {
-			Log.e(LOG, e.toString());
-			e.printStackTrace();
-			about_version.setText("1.0");
-		}
-		
-		LinearLayout license_holder = (LinearLayout) about.findViewById(R.id.about_license_holder);
-		String[] licenses = getResources().getStringArray(R.array.about_software);
-		String[] licenses_ = getResources().getStringArray(R.array.about_software_);
-		for(int l=0; l<licenses.length; l++) {
-			TextView license = new TextView(this);
-			license.setText(licenses[l]);
-			license.setTextColor(getResources().getColor(R.color.pk_black));
-			license.setTextSize(20);
-			
-			TextView license_ = new TextView(this);
-			license_.setText(Html.fromHtml("<a href='" + licenses_[l] + "'>" + licenses_[l] + "</a>"));
-			license_.setLinksClickable(true);
-			Linkify.addLinks(license_, Linkify.ALL);
-			license_.setPadding(0, 0, 0, 30);
-			license_.setTextSize(20);
-			
-			license_holder.addView(license);
-			license_holder.addView(license_);
-		}
-		
-		
-		
-		ad.setView(about);
-		ad.setPositiveButton(getString(R.string.ok), null);
+		AlertDialog ad = AboutDialog.getDialog(this);
+		ad.setOnShowListener(new PKDialogOnShowListener(this));
 		ad.show();
 	}
 
@@ -737,6 +700,11 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements Const
 				}
 				
 				Log.d(LOG, "SETTING CURRENT PROCESS " + thread.getId());
+			} else {
+				Log.d(LOG, "JFYI Setting current process to null.");
+				if(current_process != null) {
+					current_process.destroy();
+				}
 			}
 			
 			try {
@@ -795,10 +763,7 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements Const
 								result_text = PixelKnotActivity.this.getString(R.string.could_not_decrypt_message);
 							}
 							
-							try {
-								loader.finish(result_text);
-								notification.finish(result_text);
-							} catch(NullPointerException e) {}
+							onProcessComplete(result_text);
 						}
 					});
 				}
@@ -927,8 +892,8 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements Const
 				pixel_knot.setSecretMessage(new String(baos.toByteArray()));
 
 				if(pixel_knot.hasPassword()) {
-					pixel_knot.unlock();
 					update_loader = false;
+					pixel_knot.unlock();
 				}
 				
 				if(pixel_knot.checkForPGPProtection()) {
@@ -938,13 +903,9 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements Const
 				String result_text = PixelKnotActivity.this.getString(R.string.message_extracted);
 				
 				if(update_loader) {
-					try {
-						loader.finish(result_text);
-					} catch(NullPointerException e) {}
+					onProcessComplete(result_text);
 				}
 				
-				notification.finish(result_text);
-
 				hasSuccessfullyExtracted = true;
 				((ActivityListener) pk_pager.getItem(view_pager.getCurrentItem())).updateUi();
 			}
@@ -973,14 +934,7 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements Const
 				((ImageButton) options_holder.getChildAt(0)).setEnabled(true);
 				
 				String result_text = PixelKnotActivity.this.getString(R.string.message_embedded);
-
-				try {
-					loader.finish(result_text);
-					notification.finish(result_text);
-				} catch(NullPointerException e) {
-					Log.e(Logger.UI, e.toString());
-					e.printStackTrace();
-				}
+				onProcessComplete(result_text);
 
 				((ActivityListener) pk_pager.getItem(view_pager.getCurrentItem())).updateUi();
 			}
@@ -1189,15 +1143,50 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements Const
 		
 		try {
 			loader.fail(with_message);
-			notification.fail(with_message);
-			pixel_knot.setCurrentProcess(null, 0);
 		} catch(NullPointerException e) {
-			Log.e(LOG, e.toString());
+			Log.e(Logger.UI, e.toString());
+			e.printStackTrace();
 		}
 		
-		Log.e(Logger.F5, "sorry, we failed to extract/decrypt.");
+		try {
+			notification.fail(with_message);
+		} catch(NullPointerException e) {
+			Log.e(Logger.UI, e.toString());
+			e.printStackTrace();
+		}
+		
+		try{
+			pixel_knot.setCurrentProcess(null, 0);
+		} catch(NullPointerException e) {
+			Log.e(Logger.UI, e.toString());
+			e.printStackTrace();
+		}
 		
 		// TODO: notify of failure instead of finish.  maybe retry.
+	}
+	
+	@Override
+	public void onProcessComplete(String result_text) {
+		try {
+			loader.finish(result_text);
+		} catch(NullPointerException e) {
+			Log.e(Logger.UI, e.toString());
+			e.printStackTrace();
+		}
+		
+		try{
+			notification.finish(result_text);
+		} catch(NullPointerException e) {
+			Log.e(Logger.UI, e.toString());
+			e.printStackTrace();
+		}
+		
+		try {
+			pixel_knot.setCurrentProcess(null, 0);
+		} catch(NullPointerException e) {
+			Log.e(Logger.UI, e.toString());
+			e.printStackTrace();
+		}
 	}
 	
 	@Override

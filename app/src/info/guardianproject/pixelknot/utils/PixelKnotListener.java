@@ -38,4 +38,5 @@ public interface PixelKnotListener {
 	public void showKeyboard(View target);
 	public void hideKeyboard();
 	public void doWait(boolean status);
+	public void onProcessComplete(String result_text);
 }
