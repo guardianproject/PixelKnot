@@ -43,7 +43,7 @@ import info.guardianproject.f5android.plugins.f5.Embed;
 import info.guardianproject.f5android.plugins.f5.Embed.EmbedListener;
 import info.guardianproject.f5android.plugins.f5.Extract;
 import info.guardianproject.f5android.plugins.f5.Extract.ExtractionListener;
-import info.guardianproject.f5android.plugins.f5.F5Buffers.F5Notification;
+import info.guardianproject.f5android.plugins.PluginNotificationListener;
 import info.guardianproject.pixelknot.Constants.PixelKnot.Keys;
 import info.guardianproject.pixelknot.Constants.Screens.Loader;
 import info.guardianproject.pixelknot.crypto.Aes;
@@ -80,7 +80,7 @@ import java.util.Locale;
 import java.util.Map.Entry;
 import java.util.Vector;
 
-public class PixelKnotActivity extends SherlockFragmentActivity implements Constants, F5Notification, PixelKnotListener, ViewPager.OnPageChangeListener, OnGlobalLayoutListener, MediaScannerListener, EmbedListener, ExtractionListener, StegoProcessorListener {
+public class PixelKnotActivity extends SherlockFragmentActivity implements Constants, PluginNotificationListener, PixelKnotListener, ViewPager.OnPageChangeListener, OnGlobalLayoutListener, MediaScannerListener, EmbedListener, ExtractionListener, StegoProcessorListener {
 	private PKPager pk_pager;
 	private ViewPager view_pager;
 
@@ -452,9 +452,7 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements Const
 		DialogInterface.OnClickListener abort = new DialogInterface.OnClickListener() {
 			
 			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				Log.d(LOG, "ABORTING THIS THING!");
-				
+			public void onClick(DialogInterface dialog, int which) {				
 				if(stego_processor != null) {
 					try {
 						stego_processor.destroy();
