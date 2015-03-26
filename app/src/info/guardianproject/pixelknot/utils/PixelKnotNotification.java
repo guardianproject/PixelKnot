@@ -66,11 +66,17 @@ public class PixelKnotNotification implements PixelKnotNotificationListener {
 	public void post() {
 		notification_manager.notify(Constants.Source.NOTIFICATION, notification.getNotification());
 	}
+	
+	public void fail(String with_message, boolean recoverable) {
+		fail(with_message);
+		if(!recoverable) {
+			notification.setDefaults(0);
+			post();
+		}
+	}
 
 	@Override
 	public void fail(String with_message) {
-		// set resume intent bundle to fail bundle
-		
 		finish(with_message);
 	}
 

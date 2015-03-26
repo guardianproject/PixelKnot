@@ -5,11 +5,13 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import info.guardianproject.pixelknot.Constants.Logger;
 import info.guardianproject.pixelknot.Constants.Screens.Loader;
 import info.guardianproject.pixelknot.R;
 import info.guardianproject.pixelknot.utils.PixelKnotNotificationListener;
@@ -58,7 +60,12 @@ public class PixelKnotLoader extends AlertDialog implements PixelKnotNotificatio
 		randomizeOrder();
 		
 		load_engine = display_order.iterator();
-		show();
+		try {
+			show();
+		} catch(Exception e) {
+			Log.e(Logger.LOADER, e.toString());
+			e.printStackTrace();
+		}
 	}
 	
 	@Override
@@ -103,14 +110,20 @@ public class PixelKnotLoader extends AlertDialog implements PixelKnotNotificatio
 	
 	@Override
 	public void finish(final String result_text) {
+		Log.d(Logger.UI, "finishing.........");
 		h.post(new Runnable() {
 			@Override
 			public void run() {
 				if(load_engine.hasNext()) {
 					post();
-					h.postDelayed(this, 500);
+					h.postDelayed(this, 50);
 				} else {
-					PixelKnotLoader.this.cancel();
+					try {
+						PixelKnotLoader.this.cancel();
+					} catch(Exception e) {
+						Log.e(Logger.LOADER, e.toString());
+						e.printStackTrace();
+					}
 				}
 			}
 		});		
