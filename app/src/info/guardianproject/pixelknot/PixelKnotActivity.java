@@ -1,16 +1,13 @@
 package info.guardianproject.pixelknot;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.AlertDialog;
-import android.app.AlertDialog.Builder;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
-import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.pm.ResolveInfo;
 import android.content.res.Configuration;
 import android.graphics.Rect;
@@ -23,8 +20,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.text.Html;
-import android.text.util.Linkify;
 import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -33,7 +28,6 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -45,34 +39,39 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 
-import info.guardianproject.f5android.Embed;
-import info.guardianproject.f5android.Embed.EmbedListener;
-import info.guardianproject.f5android.Extract;
-import info.guardianproject.f5android.Extract.ExtractionListener;
-import info.guardianproject.f5android.F5Buffers.F5Notification;
+import info.guardianproject.f5android.plugins.f5.Embed;
+import info.guardianproject.f5android.plugins.f5.Embed.EmbedListener;
+import info.guardianproject.f5android.plugins.f5.Extract;
+import info.guardianproject.f5android.plugins.f5.Extract.ExtractionListener;
+import info.guardianproject.f5android.plugins.PluginNotificationListener;
 import info.guardianproject.pixelknot.Constants.PixelKnot.Keys;
 import info.guardianproject.pixelknot.Constants.Screens.Loader;
 import info.guardianproject.pixelknot.crypto.Aes;
-import info.guardianproject.pixelknot.crypto.Apg;
 import info.guardianproject.pixelknot.screens.CoverImageFragment;
 import info.guardianproject.pixelknot.screens.DecryptImageFragment;
+import info.guardianproject.pixelknot.screens.OnLoaderCanceledDialog;
 import info.guardianproject.pixelknot.screens.PixelKnotLoader;
+import info.guardianproject.pixelknot.screens.SelectModeDialog;
 import info.guardianproject.pixelknot.screens.SetMessageFragment;
 import info.guardianproject.pixelknot.screens.ShareFragment;
 import info.guardianproject.pixelknot.screens.StegoImageFragment;
+import info.guardianproject.pixelknot.screens.mods.PKDialogOnShowListener;
 import info.guardianproject.pixelknot.utils.ActivityListener;
-import info.guardianproject.pixelknot.utils.FragmentListener;
+import info.guardianproject.pixelknot.utils.PixelKnotListener;
 import info.guardianproject.pixelknot.utils.IO;
 import info.guardianproject.pixelknot.utils.Image;
 import info.guardianproject.pixelknot.utils.PixelKnotMediaScanner;
 import info.guardianproject.pixelknot.utils.PixelKnotMediaScanner.MediaScannerListener;
+import info.guardianproject.pixelknot.utils.PixelKnotNotification;
+import info.guardianproject.f5android.stego.StegoProcessor;
+import info.guardianproject.f5android.stego.StegoProcessThread;
+import info.guardianproject.f5android.stego.StegoProcessorListener;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -81,10 +80,7 @@ import java.util.Locale;
 import java.util.Map.Entry;
 import java.util.Vector;
 
-import javax.crypto.Cipher;
-
-@SuppressLint("NewApi")
-public class PixelKnotActivity extends SherlockFragmentActivity implements F5Notification, Constants, FragmentListener, ViewPager.OnPageChangeListener, OnGlobalLayoutListener, MediaScannerListener, EmbedListener, ExtractionListener {
+public class PixelKnotActivity extends SherlockFragmentActivity implements Constants, PluginNotificationListener, PixelKnotListener, ViewPager.OnPageChangeListener, OnGlobalLayoutListener, MediaScannerListener, EmbedListener, ExtractionListener, StegoProcessorListener {
 	private PKPager pk_pager;
 	private ViewPager view_pager;
 
@@ -102,6 +98,7 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements F5Not
 	private PixelKnot pixel_knot = new PixelKnot();
 
 	PixelKnotLoader loader;
+	PixelKnotNotification notification;
 	ProgressDialog please_wait;
 
 	Handler h = new Handler();
@@ -123,6 +120,7 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements F5Not
 	
 	private int steps_taken = 0;
 
+	@SuppressLint("InflateParams")
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
@@ -143,55 +141,76 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements F5Not
 		setContentView(R.layout.pixel_knot_activity);
 		
 		am = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
-		
 		imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
 
 		options_holder = (LinearLayout) findViewById(R.id.options_holder);
-
 		action_display = (LinearLayout) findViewById(R.id.action_display);
 		action_display_ = (LinearLayout) action_bar_root.findViewById(R.id.action_display_);
-
 		progress_holder = (LinearLayout) findViewById(R.id.progress_holder);
-
-		List<Fragment> fragments = new Vector<Fragment>();
-
+		
 		if(Intent.ACTION_MAIN.equals(getIntent().getAction())) {
-			Fragment cover_image_fragment = Fragment.instantiate(this, CoverImageFragment.class.getName());
-			Fragment set_message_fragment = Fragment.instantiate(this, SetMessageFragment.class.getName());
-			Fragment share_fragment = Fragment.instantiate(this, ShareFragment.class.getName());
-
-			fragments.add(0, cover_image_fragment);
-			fragments.add(1, set_message_fragment);
-			fragments.add(2, share_fragment);
+			initFragments(initForEncryption());
 		} else {
 			Log.d(LOG, "this type: " + getIntent().getType());
 			
-			setIsDecryptOnly(true);
+			/*
+			 *  TODO: if this is a PGP-encrypted message (or just text tbd...), 
+			 *  set to encryption mode and pre-input message
+			 */
 			
-			Fragment stego_image_fragment = Fragment.instantiate(this, StegoImageFragment.class.getName());
-			Bundle args = new Bundle();
-			
-			try {
-				args.putString(Keys.COVER_IMAGE_NAME, IO.pullPathFromUri(this, getIntent().getData()));
-			} catch(NullPointerException e) {
-				if(getIntent().hasExtra(Intent.EXTRA_STREAM)) {
-					args.putString(Keys.COVER_IMAGE_NAME, IO.pullPathFromUri(this, (Uri) getIntent().getExtras().get(Intent.EXTRA_STREAM)));
-				} else if(getIntent().hasExtra(Intent.EXTRA_TEXT)) {
-					args.putString(Keys.COVER_IMAGE_NAME, IO.pullPathFromUri(this, Uri.parse(getIntent().getStringExtra(Intent.EXTRA_TEXT))));
+			DialogInterface.OnClickListener select_encrypt_listener = new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					initFragments(initForEncryption(resolveIntentData(getIntent())));
 				}
-				
-			}
+			};
 			
-			stego_image_fragment.setArguments(args);
-
-			Fragment decrypt_image_fragment = Fragment.instantiate(this, DecryptImageFragment.class.getName());
-			Fragment share_fragment = Fragment.instantiate(this, ShareFragment.class.getName());
-
-			fragments.add(0, stego_image_fragment);
-			fragments.add(1, decrypt_image_fragment);
-			fragments.add(2, share_fragment);
+			DialogInterface.OnClickListener select_decrypt_listener = new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					initFragments(initForDecryption());
+				}
+			};
+			
+			AlertDialog ad = SelectModeDialog.getDialog(this, select_encrypt_listener, select_decrypt_listener);
+			ad.setOnShowListener(new PKDialogOnShowListener(this));
+			ad.show();
 		}
 
+		last_diff = 0;
+		activity_root = findViewById(R.id.activity_root);
+		activity_root.getViewTreeObserver().addOnGlobalLayoutListener(this);
+		
+		last_locale = PreferenceManager.getDefaultSharedPreferences(this).getString(Settings.LANGUAGE, "0");
+	}
+	
+	private Bundle resolveIntentData(Intent intent) {
+		Bundle args = new Bundle();
+		Uri uri = intent.getData();
+		
+		try {
+			args.putString(Keys.COVER_IMAGE_NAME, IO.pullPathFromUri(this, uri));
+		} catch(NullPointerException e) {
+			if(getIntent().hasExtra(Intent.EXTRA_STREAM)) {
+				uri = (Uri) intent.getExtras().get(Intent.EXTRA_STREAM);
+				args.putString(Keys.COVER_IMAGE_NAME, IO.pullPathFromUri(this, uri));
+			} else if(getIntent().hasExtra(Intent.EXTRA_TEXT)) {
+				uri = Uri.parse(intent.getStringExtra(Intent.EXTRA_TEXT));
+				args.putString(Keys.COVER_IMAGE_NAME, IO.pullPathFromUri(this, uri));
+			}
+		}
+		
+		args.putString(Keys.COVER_IMAGE_URI, uri.toString());
+		
+		Log.d(LOG, args.toString());
+		return args;
+	}
+	
+	private void initFragments(List<Fragment> fragments) {
+		try {
+			pixel_knot.clear();
+		} catch(NullPointerException e) {}
+		
 		pk_pager = new PKPager(getSupportFragmentManager(), fragments);
 		view_pager = (ViewPager) findViewById(R.id.fragment_holder);
 		view_pager.setAdapter(pk_pager);
@@ -206,12 +225,53 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements F5Not
 			progress_view.setBackgroundResource(p == 0 ? d_ : d);
 			progress_holder.addView(progress_view);
 		}
-
-		last_diff = 0;
-		activity_root = findViewById(R.id.activity_root);
-		activity_root.getViewTreeObserver().addOnGlobalLayoutListener(this);
+	}
+	
+	private List<Fragment> initForEncryption() {
+		return initForEncryption(null);
+	}
+	
+	private List<Fragment> initForEncryption(Bundle image_args) {
+		List<Fragment> fragments = new Vector<Fragment>();
+		Fragment cover_image_fragment = Fragment.instantiate(this, CoverImageFragment.class.getName());
 		
-		last_locale = PreferenceManager.getDefaultSharedPreferences(this).getString(Settings.LANGUAGE, "0");
+		if(image_args != null) {
+			cover_image_fragment.setArguments(image_args);
+		}
+		
+		Fragment set_message_fragment = Fragment.instantiate(this, SetMessageFragment.class.getName());
+		Fragment share_fragment = Fragment.instantiate(this, ShareFragment.class.getName());
+
+		fragments.add(0, cover_image_fragment);
+		fragments.add(1, set_message_fragment);
+		fragments.add(2, share_fragment);
+		
+		return fragments;
+	}
+	
+	private List<Fragment> initForDecryption() {
+		setIsDecryptOnly(true);
+		
+		List<Fragment> fragments = new Vector<Fragment>();
+		
+		Fragment stego_image_fragment = Fragment.instantiate(this, StegoImageFragment.class.getName());
+		
+		Bundle image_args = resolveIntentData(getIntent());
+		if(image_args == null) {
+			// TODO: fail nicely.
+			return null;
+		}
+		
+		stego_image_fragment.setArguments(image_args);
+
+		Fragment decrypt_image_fragment = Fragment.instantiate(this, DecryptImageFragment.class.getName());
+		Fragment share_fragment = Fragment.instantiate(this, ShareFragment.class.getName());
+
+		fragments.add(0, stego_image_fragment);
+		fragments.add(1, decrypt_image_fragment);
+		fragments.add(2, share_fragment);
+		
+		return fragments;
 	}
 	
 	@Override
@@ -281,45 +341,10 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements F5Not
 		});
 	}
 	
+	@SuppressLint("InflateParams")
 	private void showAbout() {
-		AlertDialog.Builder ad = new AlertDialog.Builder(this);
-		View about = LayoutInflater.from(this).inflate(R.layout.about_fragment, null);
-		
-		TextView about_gp_email = (TextView) about.findViewById(R.id.about_gp_email);
-		about_gp_email.setText(Html.fromHtml("<a href='mailto:" + about_gp_email.getText().toString() + "'>" + about_gp_email.getText().toString() + "</a>"));
-		
-		TextView about_version = (TextView) about.findViewById(R.id.about_version);
-		try {
-			about_version.setText(getPackageManager().getPackageInfo(getPackageName(), 0).versionName);
-		} catch (NameNotFoundException e) {
-			Log.e(LOG, e.toString());
-			e.printStackTrace();
-			about_version.setText("1.0");
-		}
-		
-		LinearLayout license_holder = (LinearLayout) about.findViewById(R.id.about_license_holder);
-		String[] licenses = getResources().getStringArray(R.array.about_software);
-		String[] licenses_ = getResources().getStringArray(R.array.about_software_);
-		for(int l=0; l<licenses.length; l++) {
-			TextView license = new TextView(this);
-			license.setText(licenses[l]);
-			license.setTextSize(20);
-			
-			TextView license_ = new TextView(this);
-			license_.setText(Html.fromHtml("<a href='" + licenses_[l] + "'>" + licenses_[l] + "</a>"));
-			license_.setLinksClickable(true);
-			Linkify.addLinks(license_, Linkify.ALL);
-			license_.setPadding(0, 0, 0, 30);
-			license_.setTextSize(20);
-			
-			license_holder.addView(license);
-			license_holder.addView(license_);
-		}
-		
-		
-		
-		ad.setView(about);
-		ad.setPositiveButton(getString(R.string.ok), null);
+		AlertDialog ad = AboutDialog.getDialog(this);
+		ad.setOnShowListener(new PKDialogOnShowListener(this));
 		ad.show();
 	}
 
@@ -398,6 +423,7 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements F5Not
 			});
 		}
 
+		@SuppressLint("InflateParams")
 		public void createView() {
 			view = LayoutInflater.from(PixelKnotActivity.this).inflate(R.layout.trusted_share_activity_view, null);
 
@@ -408,31 +434,37 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements F5Not
 			icon_holder.setImageDrawable(icon);
 		}
 	}
-
+	
 	public class PixelKnot extends JSONObject {
 		String cover_image_name = null;
 		String secret_message = null;
-
+		
+		// when password is not null, it will be atomized into 3: password, pw seed, and f5 seed
 		String password = null;
 
 		boolean can_save = false;
-		boolean has_encryption = false;
+		boolean has_pgp_encryption = false;
 		boolean password_override = false;
 
-		int capacity = 0;
-		Embed embed = null;
 		File out_file = null;
-
-		Apg apg = null;
-
-		public PixelKnot() {
-			try {
-				put(Keys.CAPACITY, capacity);
-			} catch (JSONException e) {
-				Log.e(LOG, e.toString());
-				e.printStackTrace();
+		StegoProcessor stego_processor = null;
+		
+		DialogInterface.OnClickListener abort = new DialogInterface.OnClickListener() {
+			
+			@Override
+			public void onClick(DialogInterface dialog, int which) {				
+				if(stego_processor != null) {
+					try {
+						stego_processor.destroy();
+					} catch(NullPointerException e) {
+						Log.e(LOG, e.toString());
+					}
+										
+				}
 			}
-		}
+		};
+
+		public PixelKnot() {}
 
 		private boolean checkIfReadyToSave() {
 			try {
@@ -442,12 +474,11 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements F5Not
 
 			return false;
 		}
-
+		
 		public void setCoverImageName(String cover_image_name) {
 			this.cover_image_name = cover_image_name;
 			try {
 				put(Keys.COVER_IMAGE_NAME, cover_image_name);
-				put(Keys.CAPACITY, capacity);
 			} catch (JSONException e) {}
 
 
@@ -456,6 +487,7 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements F5Not
 
 		public void setSecretMessage(String secret_message) {
 			this.secret_message = secret_message;
+			
 			try {
 				if(!secret_message.equals(""))
 					put(Keys.SECRET_MESSAGE, secret_message);
@@ -470,62 +502,74 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements F5Not
 			can_save = checkIfReadyToSave();
 		}
 		
+		public boolean hasSecretMessage() {
+			if(has(Keys.SECRET_MESSAGE)) {
+				return true;
+			}
+			
+			return false;
+		}
+		
 		public void setPasswordOverride(boolean password_override) {
 			this.password_override = password_override;
-			if(password_override && getPassword())
+			if(password_override && hasPassword()) {
 				remove(Keys.PASSWORD);
-				
+			}	
 		}
 		
 		public boolean getPasswordOverride() {
 			return this.password_override;
 		}
-
-		public void setPassword(String password) {
+		
+		public void setPassphrase(String password) {
 			this.password = password;
-			this.has_encryption = false;
 
 			try {
 				put(Keys.PASSWORD, password);
-				if(has(Keys.HAS_ENCRYPTION))
-					remove(Keys.HAS_ENCRYPTION);
 			} catch(JSONException e) {}
 		}
 
-		public boolean getPassword() {
+		public boolean hasPassword() {
 			if(has(Keys.PASSWORD))
 				return true;
 
 			return false;
 		}
-
-		public void setEncryption(boolean has_encryption, Apg apg) {
-			this.has_encryption = has_encryption;
-			if(has_encryption) {
-				this.password = null;
-				this.apg = apg;
-
-				try {
-					put(Keys.HAS_ENCRYPTION, true);
-					if(has(Keys.PASSWORD))
-						remove(Keys.PASSWORD);
-
-				} catch(JSONException e) {}
-			} else {
-				if(has(Keys.HAS_ENCRYPTION))
-					remove(Keys.HAS_ENCRYPTION);
+		
+		private String extractPasswordSalt(String from_password) {
+			return from_password.substring((int) (from_password.length()/3), (int) ((from_password.length()/3)*2));
+		}
+		
+		private String extractF5Seed(String from_password) {
+			return from_password.substring((int) ((from_password.length()/3)*2));
+		}
+		
+		private String extractPassword(String from_password) {
+			return from_password.substring(0, (int) (from_password.length()/3));
+		}
+		
+		public String getPassword() {
+			if(!hasPassword()) {
+				return null;
 			}
+			
+			return extractPassword(password);
 		}
-
-		public boolean getEncryption() {
-			return has_encryption;
+		
+		public byte[] getPasswordSalt() {
+			if(!hasPassword()) {
+				return Constants.DEFAULT_PASSWORD_SALT;
+			}
+			
+			return extractPasswordSalt(password).getBytes();
 		}
-
-		public void setCapacity(int capacity) {
-			this.capacity = capacity;
-			try {
-				put(Keys.CAPACITY, capacity);
-			} catch (JSONException e) {}
+		
+		public byte[] getF5Seed() {
+			if(!hasPassword()) {
+				return Constants.DEFAULT_F5_SEED;
+			}
+			
+			return extractF5Seed(password).getBytes();
 		}
 
 		public void clear() {
@@ -533,10 +577,9 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements F5Not
 			secret_message = null;
 			password = null;
 			can_save = false;
-			has_encryption = false;
-			capacity = 0;
+			has_pgp_encryption = false;
 			out_file = null;
-			apg = null;
+			stego_processor = null;
 
 			@SuppressWarnings("unchecked")
 			Iterator<String> keys = keys();
@@ -544,91 +587,122 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements F5Not
 			while(keys.hasNext()) 
 				keys_.add(keys.next());
 
-			for(String key : keys_)
-				remove(key);
-
-			try {
-				put(Keys.CAPACITY, capacity);
-			} catch (JSONException e) {}
+			for(String key : keys_) {
+				remove(key);		
+			}
 		}
 
 		public void save() {
-			if(hasSuccessfullyEmbed)
+			if(hasSuccessfullyEmbed) {
 				return;
+			}
 
-			loader = new PixelKnotLoader(PixelKnotActivity.this);
+			final String oda_message = PixelKnotActivity.this.getString(R.string.abort_encryption);
+			
+			loader = new PixelKnotLoader(PixelKnotActivity.this, PixelKnotActivity.this.getString(R.string.encrypting)) {
+
+				@Override
+				public void onBackPressed() {
+					AlertDialog ad = OnLoaderCanceledDialog.getDialog(PixelKnotActivity.this, oda_message, PixelKnot.this.abort);
+					ad.setOnShowListener(new PKDialogOnShowListener(PixelKnotActivity.this));
+					ad.show();
+				}
+			};
 			loader.show();
 			
-
-			if(pixel_knot.getPassword() && !hasSuccessfullyPasswordProtected) {
-				new Thread(new Runnable() {
+			notification = new PixelKnotNotification(PixelKnotActivity.this, PixelKnotActivity.this.getString(R.string.encrypting));
+			
+			loader.init(4);
+			notification.init(4);
+			
+			StegoProcessThread downsample = new StegoProcessThread(Logger.MODEL) {
+				@Override
+				public void run() {
+					super.run();
+					
+					// TODO: actually, save to the same dir as original cover image, but with spoofed name
+					setCoverImageName(Image.downsampleImage(pixel_knot.cover_image_name, dump));
+					stego_processor.routeNext();
+				}
+			};
+			pixel_knot.addProcess(downsample);
+			
+			if(pixel_knot.hasPassword()) {
+				StegoProcessThread encrypt = new StegoProcessThread(Logger.AES) {
+					
 					@Override
 					public void run() {
-						try {
-							loader.init(Loader.Steps.ENCRYPT);
-							onUpdate();
-							Entry<String, String> pack = Aes.EncryptWithPassword(pixel_knot.getString(Keys.PASSWORD), secret_message).entrySet().iterator().next();
-
-							secret_message = PASSWORD_SENTINEL.concat(new String(pack.getKey())).concat(pack.getValue());
-							hasSuccessfullyPasswordProtected = true;
-							h.post(new Runnable() {
-								@Override
-								public void run() {
-									try {
-										loader.finish();
-									} catch(NullPointerException e) {}
-									save();
-								}
-							});
-						} catch (JSONException e) {}
-					}
-				}).start();
-			}
-
-			if(pixel_knot.getEncryption() && !hasSuccessfullyEncrypted) {
-				apg.encrypt(PixelKnotActivity.this, pixel_knot.secret_message);
-				h.post(new Runnable() {
-					@Override
-					public void run() {
-						try {
-							loader.finish();
-						} catch(NullPointerException e) {}
-					}
-				});
-
-			}
-
-			if((!pixel_knot.has_encryption && !pixel_knot.getPassword()) || (hasSuccessfullyEncrypted || hasSuccessfullyPasswordProtected)) {
-				loader.init(Loader.Steps.EMBED);
-				
-				new Thread(new Runnable() {
-					@Override
-					public void run() {
-						pixel_knot.setCoverImageName(Image.downsampleImage(pixel_knot.cover_image_name, dump));
+						super.run();
 						
-						@SuppressWarnings("unused")
-						Embed embed = new Embed(PixelKnotActivity.this, dump.getName(), cover_image_name, secret_message);
-					}
-				}).start();
-			}
+						onUpdate(PixelKnotActivity.this.getString(R.string.encrypting));
+						Entry<String, String> pack = Aes.EncryptWithPassword(pixel_knot.getPassword(), secret_message, pixel_knot.getPasswordSalt()).entrySet().iterator().next();
 
+						setSecretMessage(PASSWORD_SENTINEL.concat(new String(pack.getKey())).concat(pack.getValue()));
+						
+						hasSuccessfullyPasswordProtected = true;
+						
+						loader.update(Loader.Steps.ENCRYPT);
+						notification.update(Loader.Steps.EMBED);
+						
+						stego_processor.routeNext();
+					}
+				};
+				
+				pixel_knot.addProcess(encrypt);
+			} else {
+				loader.update(Loader.Steps.EMBED);
+				notification.update(Loader.Steps.EMBED);
+			}
+			
+			Embed embed = new Embed(PixelKnotActivity.this, dump.getName(), cover_image_name, secret_message, pixel_knot.getF5Seed()) {
+				@Override
+				public void run() {
+					this.secret_message = pixel_knot.secret_message;
+					super.run();
+				}
+			};
+			pixel_knot.addProcess((StegoProcessThread) embed);
 		}
 
 		public void extract() {
 			Log.d(LOG, "now extracting " + cover_image_name);
 			pixel_knot.out_file = new File(cover_image_name);
 			
-			new Thread(new Runnable() {
-				@Override
-				public void run() {
-					@SuppressWarnings("unused")
-					Extract extract = new Extract(PixelKnotActivity.this, cover_image_name);
-				}
-			}).start();
+			final String oda_message = PixelKnotActivity.this.getString(R.string.abort_decryption);
+			
+			loader = new PixelKnotLoader(PixelKnotActivity.this, PixelKnotActivity.this.getString(R.string.decrypting)) {
 
-			loader = new PixelKnotLoader(PixelKnotActivity.this);
+				@Override
+				public void onBackPressed() {
+					AlertDialog ad = OnLoaderCanceledDialog.getDialog(PixelKnotActivity.this, oda_message, pixel_knot.abort);
+					ad.setOnShowListener(new PKDialogOnShowListener(PixelKnotActivity.this));
+					ad.show();
+				}
+			};
 			loader.show();
 			loader.init(Loader.Steps.EXTRACT);
+			
+			notification = new PixelKnotNotification(PixelKnotActivity.this, PixelKnotActivity.this.getString(R.string.decrypting));
+			notification.init(Loader.Steps.EXTRACT);
+			
+			Extract extract = new Extract(PixelKnotActivity.this, cover_image_name, getF5Seed());
+			pixel_knot.addProcess((StegoProcessThread) extract);
+		}
+		
+		private void addProcess(StegoProcessThread thread) {
+			if(thread != null) {
+				if(stego_processor == null) {
+					Log.d(LOG, "INITING STEGO PROCESS");
+					stego_processor = new StegoProcessor(PixelKnotActivity.this, thread);
+				} else {
+					stego_processor.addThread(thread);
+				}
+				
+				Log.d(LOG, "SETTING CURRENT PROCESS " + thread.getId());
+			} else {
+				Log.d(LOG, "JFYI Setting current process to null.");
+				
+			}
 		}
 
 		public void setOutFile(File out_file) {
@@ -639,67 +713,63 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements F5Not
 
 		}
 
-		public int checkForProtection(String sm) {
-			if(sm.contains(PGP_SENTINEL) && sm.indexOf(PGP_SENTINEL) == 0)
-				return Apg.DECRYPT_MESSAGE;
-			else if(sm.contains(PASSWORD_SENTINEL) && sm.indexOf(PASSWORD_SENTINEL) == 0)
-				return Cipher.DECRYPT_MODE;
-
-			return Activity.RESULT_OK;
+		public boolean checkForPGPProtection() {
+			if(hasSecretMessage()) {
+				return (secret_message.contains(PGP_SENTINEL) && secret_message.indexOf(PGP_SENTINEL) == 0);
+			}
+			
+			return false;
 		}
+		
+		private boolean unlock() {
+			if(!hasPassword() || !hasSecretMessage()) {
+				return false;
+			}
+			
+			if(secret_message.indexOf(PASSWORD_SENTINEL) != 0) {
+				return false;
+			}
 
-		public void unlock(String password, String message_string) {
-			final String total_message = message_string;
-
-			message_string = message_string.substring(PASSWORD_SENTINEL.length());
-
-			byte[] message = Base64.decode(message_string.split("\n")[1], Base64.DEFAULT);
-			byte[] iv =  Base64.decode(message_string.split("\n")[0], Base64.DEFAULT);
-
-			String sm = Aes.DecryptWithPassword(password, iv, message);
-			if(sm != null) {
-				pixel_knot.setSecretMessage(sm);
-				hasSuccessfullyUnlocked = true;
-			} else
-				pixel_knot.setSecretMessage(new String(message));
-
-			hasSuccessfullyExtracted = true;
-			h.post(new Runnable() {
+			StegoProcessThread decrypt = new StegoProcessThread(Logger.AES) {
+				
 				@Override
 				public void run() {
-					try {
-						loader.finish();
-					} catch(NullPointerException e) {}
+					super.run();
+					
+					secret_message = secret_message.substring(PASSWORD_SENTINEL.length());
+					
+					byte[] message = Base64.decode(secret_message.split("\n")[1], Base64.DEFAULT);
+					byte[] iv =  Base64.decode(secret_message.split("\n")[0], Base64.DEFAULT);
 
-					((ActivityListener) pk_pager.getItem(view_pager.getCurrentItem())).updateUi();
-					if(!hasSuccessfullyUnlocked) {
-						Builder ad = new AlertDialog.Builder(PixelKnotActivity.this);
-						ad.setMessage(PixelKnotActivity.this.getString(R.string.error_bad_password));
-						ad.setPositiveButton(PixelKnotActivity.this.getString(R.string.retry), new DialogInterface.OnClickListener() {
-
-							@Override
-							public void onClick(DialogInterface dialog, int which) {
-								loader = new PixelKnotLoader(PixelKnotActivity.this);
-								loader.show();
-								loader.init(Loader.Steps.DECRYPT);
-								
-								ByteArrayOutputStream baos = new ByteArrayOutputStream();
-								try {
-									baos.write(total_message.getBytes());
-								} catch (IOException e) {
-									Log.e(Logger.UI, e.toString());
-									e.printStackTrace();
-								}
-								onExtractionResult(baos);
-
-							}
-						});
-						ad.setNegativeButton(PixelKnotActivity.this.getString(R.string.ok), null);
-						ad.show();
+					String sm = Aes.DecryptWithPassword(extractPassword(password), iv, message, extractPasswordSalt(password).getBytes());
+					if(sm != null) {
+						pixel_knot.setSecretMessage(sm);
+						hasSuccessfullyUnlocked = true;
+					} else {
+						pixel_knot.setSecretMessage(new String(message));
 					}
+										
+					h.post(new Runnable() {
+						@Override
+						public void run() {
+							String result_text = PixelKnotActivity.this.getString(R.string.success);
+							if(!hasSuccessfullyUnlocked) {
+								result_text = PixelKnotActivity.this.getString(R.string.could_not_decrypt_message);
+							}
+							
+							onProcessComplete(result_text);
+							((ActivityListener) pk_pager.getItem(view_pager.getCurrentItem())).updateUi();
+						}
+					});
 				}
-			});
-
+			};
+			
+			addProcess(decrypt);
+			return true;
+		}
+		
+		private void PGPDecrypt() {
+			// TODO: hook into PGP apps
 		}
 	}
 
@@ -726,9 +796,7 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements F5Not
 
 	@Override
 	public void setButtonOptions(ImageButton[] options) {
-		// XXX: Samsung Galaxy S3 and Note are bullshit devices that for some reason tosses out declared views?
 		try {
-			Log.d(LOG, "The View in question is " + options_holder.getClass().getName() + "\nand you can see this because the device is functioning as it should...");
 			options_holder.removeAllViews();
 			
 			for(ImageButton o : options) {
@@ -743,10 +811,6 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements F5Not
 		} catch(NullPointerException e) {
 			Log.d(LOG, "for some reason, options_holder is null?");	
 		}
-		
-		
-		
-		
 	}
 
 	@Override
@@ -793,23 +857,18 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements F5Not
 	public void onPageScrolled(int arg0, float arg1, int arg2) {}
 
 	@Override
-	public void onPageSelected(int page) {
-		Log.d(LOG, "the current pager is " + view_pager.getCurrentItem());
-	}
-
+	public void onPageSelected(int page) {}
 
 	@Override
 	public PixelKnot getPixelKnot() {
 		return pixel_knot;
 	}
 
-
 	@Override
 	public void clearPixelKnot() {
 		pixel_knot.clear();
 		restart();
 	}
-
 
 	@Override
 	public void onMediaScanned(String path, Uri uri) {
@@ -820,64 +879,37 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements F5Not
 		}
 	}
 
-
 	@Override
 	public void onExtractionResult(final ByteArrayOutputStream baos) {
+		hasSuccessfullyExtracted = true;
+		boolean is_complete_ = true;
+		
+		pixel_knot.setSecretMessage(new String(baos.toByteArray()));
+		
+		if(pixel_knot.hasPassword()) {
+			is_complete_ = !pixel_knot.unlock();
+		}
+		
+		if(pixel_knot.checkForPGPProtection()) {
+			pixel_knot.PGPDecrypt();
+		}
+		
+		final boolean is_complete = is_complete_;
 		h.post(new Runnable() {
 			@Override
 			public void run() {
-				final String sm = new String(baos.toByteArray());
-
-				switch(pixel_knot.checkForProtection(sm)) {
-				case(Apg.DECRYPT_MESSAGE):
-					pixel_knot.setEncryption(true, Apg.getInstance());
-				pixel_knot.apg.decrypt(PixelKnotActivity.this, sm);
-				break;
-				case(Cipher.DECRYPT_MODE):
-					final EditText password_holder = new EditText(PixelKnotActivity.this);
-				password_holder.setHint(getString(R.string.password));
-
-				Builder builder = new AlertDialog.Builder(PixelKnotActivity.this);
-				builder.setView(password_holder);
-				builder.setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
-
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						if(password_holder.getText().length() > 0) {
-							new Thread(new Runnable() {
-								@Override
-								public void run() {
-									pixel_knot.unlock(password_holder.getText().toString(), sm);
-								}
-							}).start();								
-						}
-					}
-				});
-				builder.setOnCancelListener(new DialogInterface.OnCancelListener() {
-					@Override
-					public void onCancel(DialogInterface dialog) {
-						pixel_knot.setSecretMessage(sm);
-					}
-				});
-
-				builder.show();
-				break;
-				case(Activity.RESULT_OK):
-					pixel_knot.setSecretMessage(sm);
-				try {
-					loader.finish();
-				} catch(NullPointerException e) {}
-
-				hasSuccessfullyExtracted = true;
-				((ActivityListener) pk_pager.getItem(view_pager.getCurrentItem())).updateUi();
-				break;
+				String result_text = PixelKnotActivity.this.getString(R.string.message_extracted);
+				
+				if(!is_complete) {
+					notification.post(result_text);
+					pixel_knot.stego_processor.routeNext();
+				} else {
+					onProcessComplete(result_text);
+					((ActivityListener) pk_pager.getItem(view_pager.getCurrentItem())).updateUi();
 				}
-
-
 			}
 		});
 	}
-
 
 	@Override
 	public void onEmbedded(final File out_file) {
@@ -899,13 +931,9 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements F5Not
 					e.printStackTrace();
 				}
 				((ImageButton) options_holder.getChildAt(0)).setEnabled(true);
-
-				try {
-					loader.finish();
-				} catch(NullPointerException e) {
-					Log.e(Logger.UI, e.toString());
-					e.printStackTrace();
-				}
+				
+				String result_text = PixelKnotActivity.this.getString(R.string.message_embedded);
+				onProcessComplete(result_text);
 
 				((ActivityListener) pk_pager.getItem(view_pager.getCurrentItem())).updateUi();
 			}
@@ -927,11 +955,6 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements F5Not
 		}
 
 		last_diff = height_diff;
-	}
-
-	@Override
-	public void setEncryption(Apg apg) {
-		pixel_knot.setEncryption(true, apg);
 	}
 
 	@Override
@@ -1039,7 +1062,6 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements F5Not
 		this.hasSuccessfullyUnlocked = hasSuccessfullyUnlocked;
 	}
 	
-
 	@Override
 	public void setIsDecryptOnly(boolean isDecryptOnly) {
 		this.isDecryptOnly = isDecryptOnly;
@@ -1105,25 +1127,67 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements F5Not
 	}
 	
 	@Override
-	public void onUpdate(int steps, int interval) {
-		// XXX: I don't use this.
-	}
-
-	@Override
-	public void onUpdate() {
+	public void onUpdate(String with_message) {
 		steps_taken++;
-		loader.post();
+
+		loader.post(with_message);
+		notification.post();
+		
 		Log.d(Logger.UI, "steps taken: " + steps_taken);
 	}
 
 	@Override
 	public void onFailure() {
+		fail(getString(R.string.could_not_extract));
+		Log.d(LOG, "ON PROCESS FAILED");
+	}
+	
+	public void fail(String with_message) {
+		fail(with_message, true);
+	}
+	
+	public void fail(String with_message, boolean recoverable) {
 		try {
-			loader.cancel();
-		} catch(NullPointerException e) {}
-		finish();
+			loader.fail(with_message);
+		} catch(NullPointerException e) {
+			Log.e(Logger.UI, e.toString());
+			e.printStackTrace();
+		}
 		
-		// TODO: maybe there is a message, too.
+		try {
+			notification.fail(with_message, recoverable);
+		} catch(NullPointerException e) {
+			Log.e(Logger.UI, e.toString());
+			e.printStackTrace();
+		}
+		
+		// TODO: notify of failure instead of finish.  maybe retry.
+	}
+	
+	@Override
+	public void onProcessComplete(String result_text) {
+		try {
+			loader.finish(result_text);
+		} catch(NullPointerException e) {
+			Log.e(Logger.UI, e.toString());
+			e.printStackTrace();
+		}
+		
+		try{
+			notification.finish(result_text);
+		} catch(NullPointerException e) {
+			Log.e(Logger.UI, e.toString());
+			e.printStackTrace();
+		}
+		
+		try {
+			pixel_knot.stego_processor.cleanUp();
+		} catch(NullPointerException e) {
+			Log.e(Logger.UI, e.toString());
+			e.printStackTrace();
+		}
+		
+		Log.d(LOG, "ON PROCESS COMPLETE");
 	}
 
 	@Override
@@ -1140,5 +1204,12 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements F5Not
 			} catch(NullPointerException e) {}
 		}
 		
+	}
+
+	@Override
+	public void onProcessorQueueAborted() {
+		fail(getString(R.string.process_aborted), false);
+		Log.d(LOG, "ON PROCESS ABORTED");
+		restart();
 	}
 }

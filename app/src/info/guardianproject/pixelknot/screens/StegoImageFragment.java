@@ -16,7 +16,7 @@ import info.guardianproject.pixelknot.Constants;
 import info.guardianproject.pixelknot.Constants.PixelKnot.Keys;
 import info.guardianproject.pixelknot.R;
 import info.guardianproject.pixelknot.utils.ActivityListener;
-import info.guardianproject.pixelknot.utils.FragmentListener;
+import info.guardianproject.pixelknot.utils.PixelKnotListener;
 
 import java.io.File;
 
@@ -29,19 +29,18 @@ public class StegoImageFragment extends SherlockFragment implements Constants, A
 	
 	Activity a;
 	Handler h = new Handler();
-	
-	private static final String LOG = Logger.UI;
-		
+			
 	@Override
 	public View onCreateView(LayoutInflater li, ViewGroup container, Bundle savedInstanceState) {
 		root_view = li.inflate(R.layout.cover_image_fragment, container, false);
 		
 		cover_image_holder = (ImageView) root_view.findViewById(R.id.cover_image_holder);
-		if(!getArguments().containsKey(Keys.COVER_IMAGE_NAME))
+		if(!getArguments().containsKey(Keys.COVER_IMAGE_NAME)) {
 			a.finish();
+		}
 		
 		setImageData(getArguments().getString(Keys.COVER_IMAGE_NAME));
-				
+		
 		return root_view;
 	}
 	
@@ -56,7 +55,7 @@ public class StegoImageFragment extends SherlockFragment implements Constants, A
 		super.onActivityCreated(savedInstanceState);
 		
 		
-		((FragmentListener) a).getPixelKnot().setCoverImageName(getArguments().getString(Keys.COVER_IMAGE_NAME));
+		((PixelKnotListener) a).getPixelKnot().setCoverImageName(getArguments().getString(Keys.COVER_IMAGE_NAME));
 	}
 	
 	public void setImageData(String path_to_cover_image) {
@@ -72,6 +71,7 @@ public class StegoImageFragment extends SherlockFragment implements Constants, A
 				BitmapFactory.Options opts = new BitmapFactory.Options();
 				opts.inJustDecodeBounds = true;
 				
+				@SuppressWarnings("unused")
 				Bitmap b = BitmapFactory.decodeFile(path_to_cover_image, opts);
 				int scale = Math.min(4, opts.outWidth/10);
 				if(opts.outHeight > opts.outWidth)
@@ -88,10 +88,10 @@ public class StegoImageFragment extends SherlockFragment implements Constants, A
 		h.postDelayed(new Runnable() {
 			@Override
 			public void run() {
-				((FragmentListener) a).getPixelKnot().setCoverImageName(path_to_cover_image);
+				((PixelKnotListener) a).getPixelKnot().setCoverImageName(path_to_cover_image);
 				
-				((FragmentListener) a).setCanAutoAdvance(true);
-				((FragmentListener) a).autoAdvance();
+				((PixelKnotListener) a).setCanAutoAdvance(true);
+				((PixelKnotListener) a).autoAdvance();
 			}
 		}, 200);
 		

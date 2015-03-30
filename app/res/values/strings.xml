@@ -2,12 +2,38 @@
 
     <string name="app_name">PixelKnot</string>
     <string name="select_image">Select An Image</string>
+    <string name="image_detected">Image Detected!</string>
+    <string name="select_mode_text">Would you like to encrypt or decrypt this image?</string>
     <string name="oh_no">Oh no!</string>
     <string name="uh_oh">Uh oh!</string>
     <string name="error_no_secret_message">It looks like you haven\'t entered a secret message yet. Please enter one.</string>
     <string name="error_no_cover_image">There\'s no image to embed the message into. Please choose one.</string>
+    <string name="error_password_required">Passphrase-protecting your image is HIGHLY recommended.  Go back and set a good one.</string>
     <string name="error_bad_password">Bad Password.  Could not decrypt your message.</string>
     <string name="retry">Retry?</string>
+    <string name="warning">Warning!</string>
+    <string name="yes">yes</string>
+    <string name="no">no</string>
+    <string name="encrypting">Encrypting\u2026</string>
+    <string name="decrypting">Decrypting\u2026</string>
+    <string name="encrypt">encrypt</string>
+    <string name="decrypt">decrypt</string>
+    <string name="nevermind">Nevermind</string>
+    <string name="abort_encryption">Abort Encryption?</string>
+    <string name="abort_decryption">Abort Decryption?</string>
+    <string name="process_canceled">Process canceled.</string>
+    <string name="success">Success!</string>
+    <string name="failed">Failed.</string>
+    <string name="could_not_encrypt_message">Could not encrypt this message.</string>
+    <string name="message_encrypted">Message successfully encrypted to your password.</string>
+    <string name="could_not_decrypt_message">Could not decrypt this message.</string>
+    <string name="message_decrypted">Message successfully encrypted with your password.</string>
+    <string name="message_extracted">Message successfully extracted from the image.</string>
+    <string name="could_not_extract">Could not extract any message from the image.</string>
+    <string name="message_embedded">Message successfully embedded into image.</string>
+    <string name="could_not_embed">Could not embed your message into image.</string>
+    <string name="process_aborted">Process aborted.</string>
+    <string name="working">Working\u2026</string>
     
     <string name="secret_message_hint">Type your hidden message here</string>
     <string name="result_title">Secret Message:</string>
@@ -15,12 +41,18 @@
     <string name="share_with_selected_apps">Share with these trusted apps:</string>
     <string name="share_no_apps">There doesn\'t appear to be any apps you can share your image with.\n\nWhy not try using GMail, Dropbox, or Flickr?  Or try your luck by clicking the share button below.</string>
 
-    <string name="password">Password</string>
+    <string name="password">Passphrase must be at least 24 characters long</string>
     <string name="set">Set</string>
     <string name="ok">OK</string>
     <string name="please_wait">Please wait\u2026</string>
     <string name="loading">Loading\u2026</string>
     <string name="embed_success">Share your secret image\u2026</string>
+    <string name="password_monitor">Passphrase length: %1$d</string>
+    <string name="password_too_short">Passphrase is too short! Please try again.</string>
+    <string name="password_generating">Generating a random passphrase for you\u2026</string>
+    <string name="confirm_passphrase_override">Without protecting your image with a passphrase, your secret message may be discovered if intercepted.  Continue without passphrase protection?</string>
+    <string name="passphrase_protection">Passphrase Protection!</string>
+    <string name="passphrase_protection_text">Please enter your passphrase.  If you don\'t have one, leave this field blank.</string>
     
     <string name="about">About</string>
     <string name="about_us">About Us:</string>
@@ -36,7 +68,7 @@
     <string name="about_license_bcc">Bouncy Castle Crypto</string>
     <string name="about_license_pgp">PGP</string>
     <string name="about_license_apg">Android Privacy Guard</string>
-    <string name="about_license_iconmonstr">Iconmonstr</string>
+    <string name="about_license_other_icons">OtherIcons</string>
     <string name="about_license_deviantart">DeviantArt</string>
     <string name="about_license_">Built using 3rd-Party open source software:</string>
     <string name="about_lovingly_">Lovingly made in NYC.</string>

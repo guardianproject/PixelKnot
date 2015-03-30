@@ -9,6 +9,7 @@
         style="@style/message_holder"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:hint="@string/secret_message_hint" />
+        android:hint="@string/secret_message_hint"
+        android:inputType="textNoSuggestions" />
 
 </LinearLayout>

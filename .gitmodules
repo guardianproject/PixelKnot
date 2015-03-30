@@ -1,6 +1,6 @@
 [submodule "external/F5Android"]
 	path = external/F5Android
-	url = https://github.com/harlo/F5Android.git
+	url = git@github.com:harlo/F5Android.git
 [submodule "external/ActionBarSherlock"]
 	path = external/ActionBarSherlock
-	url = https://github.com/JakeWharton/ActionBarSherlock.git
+	url = git@github.com:JakeWharton/ActionBarSherlock.git

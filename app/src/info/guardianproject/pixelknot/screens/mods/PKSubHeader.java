@@ -23,7 +23,7 @@ public class PKSubHeader extends TextView {
 		if (!isSet)
 		{
 			if(t == null)
-				t = Typeface.createFromAsset(this.c.getAssets(), "vladimir.ttf");
+				t = Typeface.createFromAsset(this.c.getAssets(), "oswald_light.ttf");
 			
 			setTypeface(t);
 			isSet = true;

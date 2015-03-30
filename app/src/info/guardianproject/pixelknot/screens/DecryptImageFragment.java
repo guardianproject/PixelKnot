@@ -1,6 +1,7 @@
 package info.guardianproject.pixelknot.screens;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -16,26 +17,25 @@ import com.actionbarsherlock.app.SherlockFragment;
 import info.guardianproject.pixelknot.Constants;
 import info.guardianproject.pixelknot.Constants.PixelKnot.Keys;
 import info.guardianproject.pixelknot.R;
+import info.guardianproject.pixelknot.screens.mods.PKDialogOnShowListener;
 import info.guardianproject.pixelknot.utils.ActivityListener;
-import info.guardianproject.pixelknot.utils.FragmentListener;
+import info.guardianproject.pixelknot.utils.PassphraseDialogListener;
+import info.guardianproject.pixelknot.utils.PixelKnotListener;
 
 import org.json.JSONException;
 
-public class DecryptImageFragment extends SherlockFragment implements Constants, ActivityListener {
+public class DecryptImageFragment extends SherlockFragment implements Constants, ActivityListener, PassphraseDialogListener {
 	View root_view;	
 	EditText secret_message_holder;
 
 	Activity a;
 	Handler h = new Handler();
 	
-	private static final String LOG = Logger.UI;
-
 	@Override
 	public View onCreateView(LayoutInflater li, ViewGroup container, Bundle savedInstanceState) {
 		root_view = li.inflate(R.layout.decryt_image_fragment, container, false);
-
 		secret_message_holder = (EditText) root_view.findViewById(R.id.secret_message_holder);
-
+		
 		return root_view;
 	}
 
@@ -48,20 +48,27 @@ public class DecryptImageFragment extends SherlockFragment implements Constants,
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		
-		Log.d(LOG, "onActivityCreated (fragment) called");
 	}
 
 	@Override
 	public void updateUi() {
-		if(!((FragmentListener) a).getHasSuccessfullyExtracted()) {
-			((FragmentListener) a).getPixelKnot().extract();
+		Log.d(Logger.UI, "UPDATE UI NOW!");
+		if(!((PixelKnotListener) a).getPixelKnot().getPasswordOverride() && !((PixelKnotListener) a).getPixelKnot().hasPassword()) {
+			AlertDialog ad = InputPassphraseDialog.getDialog(this);
+			ad.setOnShowListener(new PKDialogOnShowListener(a));
+			ad.show();
+			
+			return;
+		}
+		
+		if(!((PixelKnotListener) a).getHasSuccessfullyExtracted()) {
+			((PixelKnotListener) a).getPixelKnot().extract();
 			return;
 		}
 		
 		try {
-			secret_message_holder.setText(((FragmentListener) a).getPixelKnot().getString(Keys.SECRET_MESSAGE));
-			((FragmentListener) a).doWait(false);
+			secret_message_holder.setText(((PixelKnotListener) a).getPixelKnot().getString(Keys.SECRET_MESSAGE));
+			((PixelKnotListener) a).doWait(false);
 		} catch (JSONException e) {
 			Log.e(Logger.UI, e.toString());
 			e.printStackTrace();
@@ -77,9 +84,9 @@ public class DecryptImageFragment extends SherlockFragment implements Constants,
 
 			@Override
 			public void onClick(View v) {
-				((FragmentListener) a).getPixelKnot().setPasswordOverride(true);
-				((FragmentListener) a).setCanAutoAdvance(true);
-				((FragmentListener) a).autoAdvance();
+				((PixelKnotListener) a).getPixelKnot().setPasswordOverride(true);
+				((PixelKnotListener) a).setCanAutoAdvance(true);
+				((PixelKnotListener) a).autoAdvance();
 			}
 			
 		});
@@ -93,10 +100,23 @@ public class DecryptImageFragment extends SherlockFragment implements Constants,
 
 			@Override
 			public void onClick(View v) {
-				((FragmentListener) a).clearPixelKnot();
+				((PixelKnotListener) a).clearPixelKnot();
 			}
 		});
 
-		((FragmentListener) a).setButtonOptions(new ImageButton[] {start_over, share});
+		((PixelKnotListener) a).setButtonOptions(new ImageButton[] {start_over, share});
 	}
+
+	@Override
+	public void onPassphraseSuccessfullySet(String passphrase) {
+		if(passphrase == null) {
+			((PixelKnotListener) a).getPixelKnot().setPasswordOverride(true);
+		} else {
+			((PixelKnotListener) a).getPixelKnot().setPassphrase(passphrase);
+		}
+		updateUi();
+	}
+
+	@Override
+	public void onRandomPassphraseRequested() {}
 }
