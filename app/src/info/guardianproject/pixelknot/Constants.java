@@ -8,7 +8,7 @@ public interface Constants {
 	
 	public final static byte[] DEFAULT_PASSWORD_SALT = new String("When I say \"make some\", you say \"noise\"!").getBytes();
 	public final static byte[] DEFAULT_F5_SEED = new String("Make some [noise!]  Make some [noise!]").getBytes();
-	public final static int PASSPHRASE_MIN_LENGTH = 24;
+	public final static int PASSPHRASE_MIN_LENGTH = 4;
 	
 	public static class Logger {
 		public final static String UI = "***************** PixelKnot **************";
