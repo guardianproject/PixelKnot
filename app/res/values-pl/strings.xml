@@ -1,0 +1,67 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <string name="app_name">PixelKnot</string>
+  <string name="select_image">Wybierz Obraz</string>
+  <string name="oh_no">O nie!</string>
+  <string name="uh_oh">O o!</string>
+  <string name="error_no_secret_message">Wygląda na to, że nie wprowadziłeś jeszcze sekretnej wiadomości. Proszę wprowadź ją.</string>
+  <string name="error_no_cover_image">Brak obrazka do załączenia wiadomości. Proszę wybierz któryś.</string>
+  <string name="error_bad_password">Złe hasło. Nie można odszyfrować twojej wiadomości.</string>
+  <string name="retry">Ponów?</string>
+  <string name="secret_message_hint">Tytaj wpisz swoją ukrytą wiadomość</string>
+  <string name="result_title">Sekretna Wiadomość:</string>
+  <string name="share_again">Udostępnij</string>
+  <string name="share_with_selected_apps">Udostępnij do tych zaufanych aplikacji:</string>
+  <string name="set">Ustaw</string>
+  <string name="ok">OK</string>
+  <string name="please_wait">Proszę czekać\u2026</string>
+  <string name="loading">Ładowanie\u2026</string>
+  <string name="embed_success">Udostępnij swój sekretny obraz\u2026</string>
+  <string name="about">Informacje</string>
+  <string name="about_us">O Nas:</string>
+  <string name="about_us_gp_email">support@guardianproject.info</string>
+  <string name="about_stego">O Steganografi:</string>
+  <string name="about_version">Wersja:</string>
+  <string name="about_project_home">Strona Projektu:</string>
+  <string name="about_project_home_">http://guardianproject.info/apps/pixelknot</string>
+  <string name="about_license">Licencja:</string>
+  <string name="about_license_f_5_algorithm">algorytm f-5</string>
+  <string name="about_license_bcc">Bouncy Castle Crypto</string>
+  <string name="about_license_pgp">PGP</string>
+  <string name="about_license_apg">Android Privacy Guard</string>
+  <string name="about_license_deviantart">DeviantArt</string>
+  <string name="about_license_">Zbudowane z użyciem wbudowanego otwartego oprogramowania osób 3-cich:</string>
+  <string name="about_lovingly_">Lovingly made in NYC.</string>
+  <string name="preferences">Preferencje</string>
+  <string name="prefs_language_title">Język</string>
+  <string name="pref_languages_default">Domyślny Systemowy</string>
+  <string name="pref_languages_en_us">Angielski (US)</string>
+  <string name="pref_languages_fa">Perski</string>
+  <string name="pref_languages_de">Niemiecki</string>
+  <string name="pref_languages_el">Grecki</string>
+  <string name="pref_languages_es">Hiszpański</string>
+  <string name="pref_languages_vi">Wietnamski</string>
+  <!--KNOT NAMES-->
+  <string name="knot_double_overhand">Podwójny Zwykły</string>
+  <string name="knot_fishermans_eye">Pojedynczy Zderzakowy</string>
+  <string name="knot_overhand">Zwykły</string>
+  <string name="warn_password_message">Nie ustawiłeś hasła do twojego obrazka. Czy na pewno chcesz kontynuować?</string>
+  <string name="warn_password_yes">Tak, kontynuuj.</string>
+  <string name="warn_password_no">Nie, ustawię hasło.</string>
+  <string name="wait">Czekaj!</string>
+  <string name="memory_class_warning">PixelKnot pracuje, lecz stworzenie twojego obrazka może zająć chwilę.</string>
+  <!--APG related-->
+  <string name="apg_error_activity_not_found">Nie znaleziono pasujących aplikacji do wykonania tej akcji.</string>
+  <string name="apg_error_apg_version_not_supported">Zainstalowana wersja APG nie jest wspierana.</string>
+  <string name="apg_btn_crypto_sign">Podpisz</string>
+  <string name="apg_btn_encrypt">Zaszyfruj</string>
+  <string name="apg_btn_decrypt">Odszyfruj</string>
+  <string name="apg_btn_verify">Weryfikuj</string>
+  <string name="apg_btn_select">Wybierz</string>
+  <string name="unknown_crypto_signature_user_id">&lt;nieznany&gt;</string>
+  <string name="key_id">id: %s</string>
+  <string name="insufficient_apg_permissions">Ta aplikacja nie ma pełnych praw dostępu do AGP, proszę reinstalować aplikacje aby to naprawić.</string>
+  <string name="pgp_mime_unsupported">Wiadmości PGP/MIME nie są jeszcze wspaerane.</string>
+  <string name="attachment_encryption_unsupported">Uwaga: załączniki nie są jeszcze podpisane lub zaszyfrowane.</string>
+  <string name="send_aborted">Wysyłanie anulowano.</string>
+</resources>

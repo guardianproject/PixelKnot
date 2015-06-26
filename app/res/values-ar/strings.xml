@@ -1,0 +1,111 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <string name="app_name">عقدة البيكسل </string>
+  <string name="select_image">قم بإختيار صورة</string>
+  <string name="image_detected">تمّ رصد الصورة!</string>
+  <string name="select_mode_text">هل ترغب في تشفير أو فكّ تشفير هذه الصورة؟</string>
+  <string name="oh_no">أوه لا!</string>
+  <string name="uh_oh">أوه!</string>
+  <string name="error_no_secret_message">يبدو أنّك لم تكتب الرّسالة السريّة. قم فضلا بكتابة واحدة.</string>
+  <string name="error_no_cover_image">لا يوجد أيّ صورة لتضاف لها الرّسالة. قم فضلا بإختيار واحدة.</string>
+  <string name="error_password_required">الجملة السريّة لحماية الصورة منصوح بها بدرجة عالية. عُد للخلف وقم بكتابة واحدة جيّدة.</string>
+  <string name="error_bad_password">كلمة سرّ خاطئة. لا يمكن فكّ تشفير رسالتك.</string>
+  <string name="retry">إعادة؟</string>
+  <string name="warning">تحذير!</string>
+  <string name="yes">نعم</string>
+  <string name="no">لا</string>
+  <string name="encrypting">تشفير/u2026</string>
+  <string name="decrypting">فكّ تشفير/u2026</string>
+  <string name="encrypt">تشفير</string>
+  <string name="decrypt">فكّ تشفير</string>
+  <string name="nevermind">لا عليك</string>
+  <string name="abort_encryption">إلغاء التشفير؟</string>
+  <string name="abort_decryption">إلغاء فكّ التشفير؟</string>
+  <string name="process_canceled">تمّ إلغاء العمليّة.</string>
+  <string name="success">نجاح!</string>
+  <string name="failed">فشل.</string>
+  <string name="could_not_encrypt_message">لم نقدر على تشفير هذه الرسالة.</string>
+  <string name="message_encrypted">تمّ تشفير الرسالة بنجاح بالإعتماد على كلمة سرّك.</string>
+  <string name="could_not_decrypt_message">لم نقدر على فكّ تشفير هذه الرسالة.</string>
+  <string name="message_decrypted">تمّ تشفير الرسالة بنجاح بكلمة سرّك.</string>
+  <string name="message_extracted">تمّ إستخراج الرسالة من الصورة بنجاح.</string>
+  <string name="could_not_extract">لم نتمكّن من إستخراج أي رسالة من الصورة.</string>
+  <string name="message_embedded">تمّ تضمين الرّسالة في الصورة بنجاح.</string>
+  <string name="could_not_embed">لم نتمكنّ من تضمين الرسالة في الصورة.</string>
+  <string name="process_aborted">تمّ إلغاء العمليّة.</string>
+  <string name="working">نعمل/u2026</string>
+  <string name="secret_message_hint">أكتب رسالتك المخفيّة هنا</string>
+  <string name="result_title">الرّسالة السريّة:</string>
+  <string name="share_again">شارك</string>
+  <string name="share_with_selected_apps">شارك مع هذه التطبيقات الموثوقة:</string>
+  <string name="share_no_apps">يبدو أنّه لا يوجد أيّ تطبيق يمكنك أن تشارك به صورتك.
+لما لا تحاول إستعمال جيمايل، دروب بوكس، أو فليكر؟ أو جرّب إختيار زرّ المشاركة أدناه.</string>
+  <string name="password">جملة المرور يجب أن تتكوّن على الأقلّ من 24 حرف</string>
+  <string name="set">عدّل</string>
+  <string name="ok">موافق</string>
+  <string name="please_wait">يرجى الانتظار/u2026</string>
+  <string name="loading">تحميل/u2026</string>
+  <string name="embed_success">شارك صورتك السريّة/u2026</string>
+  <string name="password_monitor">طول جملة المرور: %1$d</string>
+  <string name="password_too_short">جملة المرور قصيرة! من فضلك حاول ثانية.</string>
+  <string name="password_generating">يتمّ إختيار جملة مرور عشوائيّة لك/u2026</string>
+  <string name="confirm_passphrase_override">بعدم حمايتك للصورة بجملة مرور، رسالتك السريّة يمكن إكتشافها إن تمّ إعتراض المراسلة. تواصل بدون حماية بجملة المرور؟</string>
+  <string name="passphrase_protection">حماية بجملة مرور!</string>
+  <string name="passphrase_protection_text">فضلا أدخل جملة مرورك. إن كنت لا تملك واحدة، أترك المكان فارغا.</string>
+  <string name="about">حوْل</string>
+  <string name="about_us">حولنا:</string>
+  <string name="about_us_">مشروع الحارس هو مجهود بحث وتطوير مدعوم من مناضلين مختصّين في التكنولوجيا، ومن مواطنين يشملهم هذا المشروع، ومن مخترقين مختصين في الحماية مفتوحة المصدر.
+نحن نصنّع أدوات مفتوحة المصدر بناءا على الخبرة المكتسبة ميدانيّا وردود الخبر.
+تطبيقاتنا هي تطبيقات شفّافة ومسؤولة.
+راسلونا على</string>
+  <string name="about_us_gp_email">support@guardianproject.info</string>
+  <string name="about_stego">حول ستيغانوغرافي:</string>
+  <string name="about_stego_">إن عملية تضمين رسائل سريّة في مواد ملتميديا تهدف لأن لا يعرف بوجود الرسالة السريّة أيّ شخص عدى المرسل والمتلقيّ.
+مع الخوارزميّة F5 المطوّرة حديثا، تمّ تحييد كل الهجمات المرئيّة والإحصائيّة، لكنها لازالت تمنح قدرات ستيغانوغرافيّة.
+F5 يعتمد مصفوفات تشفير لتطوير كفائة التضمين.
+وعليه فهو يقوم بتخفيض عدد التغييرات اللازمة.
+F5 يستعمل متغيّرات لتحويل التغييرات بالتساوي على كل الستيغانوغرام.</string>
+  <string name="about_version">النسخة:</string>
+  <string name="about_project_home">مركز المشروع:</string>
+  <string name="about_project_home_">http://guardianproject.info/apps/pixelknot</string>
+  <string name="about_license">الرخصة:</string>
+  <string name="about_license_f_5_algorithm">خوارزميّة f-5</string>
+  <string name="about_license_pgp">PGP</string>
+  <string name="about_license_apg">حراسة خصوصيّة الأندرويد</string>
+  <string name="about_license_other_icons">إيقونات أخرى</string>
+  <string name="about_license_deviantart">DeviantArt</string>
+  <string name="about_license_">تمّ بنائه إعتمادا على البرمجيّة مفتوحة المصدر 3rd-Party</string>
+  <string name="about_lovingly_">صنع بحبّ في نيويورك.</string>
+  <string name="preferences">تفضيلات</string>
+  <string name="prefs_language_title">اللغة</string>
+  <string name="pref_languages_default">النظام الافتراضي</string>
+  <string name="pref_languages_en_us">الإنغليزيّة (أمريكيّ)</string>
+  <string name="pref_languages_fa">الفارسي</string>
+  <string name="pref_languages_de">الألمانيّة</string>
+  <string name="pref_languages_el">اليونانيّة</string>
+  <string name="pref_languages_es">الإسبانيّة</string>
+  <string name="pref_languages_vi">الفيتناميّة</string>
+  <!--KNOT NAMES-->
+  <string name="knot_fishermans_eye">عين البحّار</string>
+  <string name="knot_running">يعمل</string>
+  <string name="knot_sailors">البحّار</string>
+  <string name="warn_password_message">لم تضع كلمة سرّ لصورتك. هل أنت واثق من أنّك تريد المواصلة؟</string>
+  <string name="warn_password_yes">نعم، واصل.</string>
+  <string name="warn_password_no">لا، ضع كلمة سرّي.</string>
+  <string name="wait">إنتظر!</string>
+  <string name="memory_class_warning">عقدة البيكسل لا يعمل، لكنّه قد يأخذ وقتا ليصنع صورتك.</string>
+  <!--APG related-->
+  <string name="apg_error_activity_not_found">لا يوجد تطبيق ملائم لهذه العملية.</string>
+  <string name="apg_error_apg_version_not_supported">نسخة الـ APG المنصّبة ليست مدعومة.</string>
+  <string name="apg_btn_crypto_sign">وقّع</string>
+  <string name="apg_btn_encrypt">شفّر</string>
+  <string name="apg_btn_decrypt">إزالة التعمية</string>
+  <string name="apg_btn_verify">تثبّت</string>
+  <string name="apg_btn_select">حدد</string>
+  <string name="unknown_crypto_signature_user_id">&lt;مجهول&gt;</string>
+  <string name="key_id">هويّة: %s</string>
+  <string name="insufficient_apg_permissions">لا تملك هذه التطبيقة الصلاحيّة لدخول الـ APG كاملا، من فضلك أعد تنصيبها لإصلاح هذه المشكلة.</string>
+  <string name="pgp_mime_unsupported">رسائل PGP/MIME ليست مدعومة لحدّ الآن.</string>
+  <string name="attachment_encryption_unsupported">تحذير: المرفقات لا يمكن توقيعها أو تشفيرها لحدّ الآن.</string>
+  <string name="send_aborted">تمّ إلغاء الإرسال.</string>
+</resources>

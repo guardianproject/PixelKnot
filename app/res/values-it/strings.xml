@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <string name="about">Info su</string>
+  <!--KNOT NAMES-->
+  <!--APG related-->
+  <string name="apg_btn_encrypt">Cripta</string>
+  <string name="apg_btn_decrypt">Decripta</string>
+</resources>

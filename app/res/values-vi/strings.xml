@@ -11,7 +11,6 @@
   <string name="result_title">Tin nhắn bí mật:</string>
   <string name="share_again">Chia sẻ</string>
   <string name="share_with_selected_apps">Chia sẻ với những phần mềm được tin tưởng sau:</string>
-  <string name="password">Mật khẩu</string>
   <string name="set">Đặt</string>
   <string name="ok">Đồng ý</string>
   <string name="please_wait">Xin vui lòng đợi\u2026</string>
@@ -30,7 +29,6 @@
   <string name="about_license_bcc">Bouncy Castle Crypto</string>
   <string name="about_license_pgp">PGP</string>
   <string name="about_license_apg">Bảo vệ sự riêng tư trên Android</string>
-  <string name="about_license_iconmonstr">Iconmonstr</string>
   <string name="about_license_deviantart">DeviantArt</string>
   <string name="about_license_">Sử dụng các phần mềm nguồn mở từ các bên thứ 3:</string>
   <string name="about_lovingly_">Được tạo dựng tại NYC.</string>
@@ -39,6 +37,7 @@
   <string name="pref_languages_default">Mặc định theo hệ thống</string>
   <string name="pref_languages_en_us">English (US)</string>
   <string name="pref_languages_fa">Farsi</string>
+  <!--KNOT NAMES-->
   <!--APG related-->
   <string name="apg_error_activity_not_found">Không tìm thấy ứng dụng thích hợp cho thao tác này</string>
   <string name="apg_error_apg_version_not_supported">Phiên bản APG đã cài đặt không được hỗ trợ.</string>
