@@ -306,6 +306,9 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements Const
 		case R.id.pk_about:
 			showAbout();
 			return true;
+		case R.id.pk_faq:
+			showFAQ();
+			return true;
 		case R.id.pk_preferences:
 			last_locale = PreferenceManager.getDefaultSharedPreferences(this).getString(Settings.LANGUAGE, "0");
 			startActivity(new Intent(this, Preferences.class));
@@ -344,6 +347,12 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements Const
 	@SuppressLint("InflateParams")
 	private void showAbout() {
 		AlertDialog ad = AboutDialog.getDialog(this);
+		ad.setOnShowListener(new PKDialogOnShowListener(this));
+		ad.show();
+	}
+	
+	private void showFAQ() {
+		AlertDialog ad = FAQDialog.getDialog(this);
 		ad.setOnShowListener(new PKDialogOnShowListener(this));
 		ad.show();
 	}
