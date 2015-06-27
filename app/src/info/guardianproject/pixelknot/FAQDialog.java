@@ -27,17 +27,16 @@ public abstract class FAQDialog {
 			
 			faq[0] = new TextView(a);
 			faq[0].setText(faq_q[f]);
-			faq[0].setTextSize(20);
 			faq[0].setTypeface(null, Typeface.BOLD);
 			
 			faq[1] = new TextView(a);
 			faq[1].setText(faq_a[f]);
-			faq[1].setTextSize(20);
 			faq[1].setPadding(0, 0, 0, 30);
 			Linkify.addLinks(faq[1], Linkify.WEB_URLS);
 			
 			for(TextView t : faq) {
 				t.setTextColor(a.getResources().getColor(R.color.pk_black));
+				t.setTextSize(20);
 				faq_holder.addView(t);
 			}
 		}
