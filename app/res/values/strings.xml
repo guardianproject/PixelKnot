@@ -61,7 +61,7 @@
     <string name="faq_q_2">What do you mean by a \"Trusted App\"?</string>
     <string name="faq_q_3">Where else can I put my stego\'d images?</string>
     <string name="faq_q_4">It Crashed!</string>
-    <string name="faq_a_0">We hope to retool the native code that handles the image quantization soon.  In the meanwhile, it will be a bit cludgy.</string>
+    <string name="faq_a_0">We hope to retool the native code that handles the image quantization soon.  In the meanwhile, it will be a bit cludgy.  Low battery can also affect performance.</string>
     <string name="faq_a_1">The best images to use have a varied color palate.</string>
     <string name="faq_a_2">Some apps will automatically downsample your images so they\'re less taxing on the service to transmit.  This process will cause a loss of image data, and will corrupt the original message.</string>
     <string name="faq_a_3">Same as with \"Trusted Apps,\" stego\'ed images can be hosted anywhere the original image is available to others.</string>
