@@ -63,7 +63,7 @@
     <string name="faq_q_4">It Crashed!</string>
     <string name="faq_a_0">We hope to retool the native code that handles the image quantization soon.  In the meanwhile, it will be a bit cludgy.  Low battery can also affect performance.</string>
     <string name="faq_a_1">The best images to use have a varied color palate.</string>
-    <string name="faq_a_2">Some apps will automatically downsample your images so they\'re less taxing on the service to transmit.  This process will cause a loss of image data, and will corrupt the original message.</string>
+    <string name="faq_a_2">Some apps will automatically downsample your images so they\'re less taxing on the service to transmit.  This process will cause a loss of image data, and will corrupt the original message.  \"Trusted Apps\" are apps we know that will not downsample your original image.  If you have success sharing a stego\'ed image with an app not yet included in our \"Trusted Apps\" whitelist, please let us know.</string>
     <string name="faq_a_3">Same as with \"Trusted Apps,\" stego\'ed images can be hosted anywhere the original image is available to others.</string>
     <string name="faq_a_4">Please submit your crash reports to the project\'s issue page: https://github.com/guardianproject/PixelKnot/issues</string>
     
