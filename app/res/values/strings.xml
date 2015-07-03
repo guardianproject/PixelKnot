@@ -27,6 +27,7 @@
     <string name="could_not_encrypt_message">Could not encrypt this message.</string>
     <string name="message_encrypted">Message successfully encrypted to your password.</string>
     <string name="could_not_decrypt_message">Could not decrypt this message.</string>
+    <string name="could_not_load_file">Could not load file.</string>
     <string name="message_decrypted">Message successfully encrypted with your password.</string>
     <string name="message_extracted">Message successfully extracted from the image.</string>
     <string name="could_not_extract">Could not extract any message from the image.</string>

@@ -49,6 +49,7 @@ import info.guardianproject.pixelknot.Constants.Screens.Loader;
 import info.guardianproject.pixelknot.crypto.Aes;
 import info.guardianproject.pixelknot.screens.CoverImageFragment;
 import info.guardianproject.pixelknot.screens.DecryptImageFragment;
+import info.guardianproject.pixelknot.screens.OnFailureDialog;
 import info.guardianproject.pixelknot.screens.OnLoaderCanceledDialog;
 import info.guardianproject.pixelknot.screens.PixelKnotLoader;
 import info.guardianproject.pixelknot.screens.SelectModeDialog;
@@ -119,7 +120,7 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements Const
 	public ActivityManager am;
 	
 	private int steps_taken = 0;
-
+	
 	@SuppressLint("InflateParams")
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -200,7 +201,14 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements Const
 			}
 		}
 		
-		args.putString(Keys.COVER_IMAGE_URI, uri.toString());
+		try {
+			args.putString(Keys.COVER_IMAGE_URI, uri.toString());
+		} catch(NullPointerException e) {
+			// XXX: https://github.com/guardianproject/PixelKnot/issues/12
+			// why no uri?
+			failAndRestart(getString(R.string.could_not_load_file));
+			return null;
+		}
 		
 		Log.d(LOG, args.toString());
 		return args;
@@ -210,6 +218,14 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements Const
 		try {
 			pixel_knot.clear();
 		} catch(NullPointerException e) {}
+		
+		try {
+			if(fragments == null) {
+				return;
+			}
+		} catch(NullPointerException e) {
+			return;
+		}
 		
 		pk_pager = new PKPager(getSupportFragmentManager(), fragments);
 		view_pager = (ViewPager) findViewById(R.id.fragment_holder);
@@ -1171,6 +1187,20 @@ public class PixelKnotActivity extends SherlockFragmentActivity implements Const
 		}
 		
 		// TODO: notify of failure instead of finish.  maybe retry.
+	}
+	
+	private void failAndRestart(String with_message) {
+		AlertDialog ad = OnFailureDialog.getDialog(PixelKnotActivity.this, with_message, new DialogInterface.OnClickListener() {
+
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				restart();
+			}
+			
+		});
+		
+		ad.setOnShowListener(new PKDialogOnShowListener(PixelKnotActivity.this));
+		ad.show();
 	}
 	
 	@Override
