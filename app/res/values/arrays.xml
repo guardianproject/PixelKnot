@@ -28,6 +28,22 @@
         <item>vi</item>
     </string-array>
     
+    <string-array name="faq_q">
+        <item>@string/faq_q_0</item>
+        <item>@string/faq_q_1</item>
+        <item>@string/faq_q_2</item>
+        <item>@string/faq_q_3</item>
+        <item>@string/faq_q_4</item>
+    </string-array>
+    
+    <string-array name="faq_a">
+        <item>@string/faq_a_0</item>
+        <item>@string/faq_a_1</item>
+        <item>@string/faq_a_2</item>
+        <item>@string/faq_a_3</item>
+        <item>@string/faq_a_4</item>
+    </string-array>
+    
     <string-array name="knot_names">
         <item>@string/knot_bow</item>
         <item>@string/knot_catspaw</item>

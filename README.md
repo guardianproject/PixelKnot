@@ -24,6 +24,8 @@ Follow these steps to setup your dev environment:
         external/ActionBarSherlock/library/
         external/F5Android/
 
+    Build the F5Android JNI library with `ndk-build -C external/F5Android/`.
+    
     Then, "Import -> General -> Existing Projects Into Workspace" for the `app/` directory.
 
 ## Building from the terminal
