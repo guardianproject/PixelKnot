@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main_content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="top"
+    android:focusableInTouchMode="true"
+    android:focusable="true"
+    android:descendantFocusability="beforeDescendants"
+    app:layout_behavior="info.guardianproject.pixelknot.ScrollViewBehaviorFix">
+    <RelativeLayout
+        android:id="@+id/rlNewMessage"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="top"
+        android:gravity="top"
+        android:background="@drawable/main_background"
+        android:orientation="vertical"
+        android:clipToPadding="true">
+        <LinearLayout
+            android:id="@+id/gallery_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="24dp"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearanceNormal"
+                android:text="@string/gallery_info_message"
+                android:textColor="@color/colorGalleryText"
+                />
+            <Button
+                android:id="@+id/btnGalleryInfoOk"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|end"
+                android:background="@null"
+                android:text="@string/gallery_info_ok"
+                android:textColor="@color/colorAccent" />
+        </LinearLayout>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_view_albums"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/gallery_info"
+            android:layout_alignWithParentIfMissing="true"
+            android:layout_alignParentBottom="true"
+            android:padding="@dimen/photo_padding"
+            />
+
+        <ImageView
+            android:id="@+id/selected_image"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentBottom="true"
+            android:scaleType="centerCrop"
+            android:elevation="3dp"
+            android:background="@android:color/white"
+            android:visibility="invisible"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            />
+
+        <info.guardianproject.pixelknot.views.FadingEditText
+            android:id="@+id/secret_message"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:elevation="3dp"
+            android:layout_gravity="top|left|start"
+            android:gravity="center_vertical"
+            android:hint="@string/secret_message_hint"
+            android:textColorHint="@color/colorSecretMessageHint"
+            android:textColor="@color/colorSecretMessage"
+            android:textSize="30sp"
+            android:clipToPadding="true"
+            android:background="#80000000"
+            android:inputType="textLongMessage|textCapSentences"
+            android:imeOptions="actionNext"
+            android:padding="10dp"
+            android:visibility="gone"
+            />
+
+        <LinearLayout
+            android:id="@+id/layout_password"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:elevation="3dp"
+            android:layout_centerInParent="true"
+            android:background="@color/colorPrimaryDark"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="24dp">
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/secret_password_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:theme="@style/EnterPasswordHint"
+                >
+                <info.guardianproject.pixelknot.views.FadingPasswordEditText
+                    android:id="@+id/secret_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/secret_password_hint"
+                    android:imeOptions="actionDone"
+                    android:inputType="textPassword"
+                    android:textColor="@android:color/white"
+                    />
+
+                <TextView
+                    android:id="@+id/secret_password_error"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="3dp"
+                    android:paddingBottom="3dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="@string/secret_password_too_short"
+                    android:textColor="@android:color/white"
+                    android:background="@drawable/edittext_error_background"
+                    android:visibility="invisible"
+                    android:layout_gravity="left|start" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/secret_password_minlength_info"
+                android:id="@+id/tvMinLengthInfo"
+                android:textColor="@android:color/white"
+                android:visibility="gone"
+                android:layout_gravity="left|start" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="right|end"
+                android:gravity="right|end">
+                <Button
+                    android:id="@+id/btnSkip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right|end"
+                    android:visibility="gone"
+                    android:background="@null"
+                    android:text="@string/password_skip"
+                    android:textColor="@color/colorButtonSecondary" />
+                <Button
+                    android:id="@+id/btnSet"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right|end"
+                    android:background="@null"
+                    android:text="@string/password_set"
+                    android:textColor="@color/colorAccent" />
+
+            </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/rlOutbox"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="top"
+        android:gravity="top"
+        android:background="@drawable/main_background"
+        android:clipToPadding="true"
+        android:visibility="invisible">
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_view_outbox"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            />
+        <info.guardianproject.pixelknot.views.RoundedImageView
+            android:id="@+id/outbox_zoom_container"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentBottom="true"
+            android:scaleType="centerCrop"
+            android:background="@android:color/transparent"
+            android:visibility="invisible"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            />
+    </RelativeLayout>
+
+
+</RelativeLayout>

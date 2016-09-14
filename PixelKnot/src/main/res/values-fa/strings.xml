@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="app_name">پیکسل‌نات</string>
+  <string name="apg_error_activity_not_found">هیچ برنامه مناسبی برای این عمل یافت نشد.</string>
+  <string name="apg_error_apg_version_not_supported">نسخه نصب شده APG  پشتیبانی نمی‌شود.</string>
+  <string name="insufficient_apg_permissions">این برنامه امکان دسترسی کامل به APG را ندارد. لطفا برای رفع این اشکال برنامه را مجددا نصب کن.</string>
+  <string name="secret_message_hint">پیام مخفی‌ات را اینجا تایپ کن</string>
+  <string name="unknown_crypto_signature_user_id">&lt;ناشناخته&gt;</string>
+</resources>

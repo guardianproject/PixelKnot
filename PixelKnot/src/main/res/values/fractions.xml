@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <fraction name="outbox_lightness_filter">50%</fraction>
+</resources>

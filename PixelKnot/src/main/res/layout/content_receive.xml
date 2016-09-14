@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main_content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="top"
+    android:descendantFocusability="beforeDescendants"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+    <info.guardianproject.pixelknot.views.ColorFilterImageView
+        android:id="@+id/selected_image"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentTop="true"
+        android:background="@android:color/white"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:scaleType="centerCrop"
+        app:filterEndColor="@color/colorImageFilterEnd"
+        app:filterStartColor="@color/colorImageFilterStart" />
+
+    <TextView
+        android:id="@+id/secret_message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|left|start"
+        android:clipToPadding="true"
+        android:gravity="center_vertical"
+        android:hint="@string/secret_message_hint"
+        android:layout_marginTop="40dp"
+        android:padding="24dp"
+        android:textColor="@color/colorSecretMessage"
+        android:textSize="30sp"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:id="@+id/layout_password"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:background="@color/colorAccent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:theme="@style/EnterMessagePasswordHint">
+
+            <info.guardianproject.pixelknot.views.FadingPasswordEditText
+                android:id="@+id/secret_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/enter_message_password"
+                android:imeOptions="actionDone"
+                android:textColor="@color/colorPrimary" />
+            <TextView
+                android:id="@+id/secret_password_error"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="3dp"
+                android:paddingBottom="3dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="@string/error_try_again"
+                android:textColor="@android:color/white"
+                android:background="@drawable/edittext_error_background"
+                android:visibility="invisible"
+                android:layout_gravity="left|start" />
+        </android.support.design.widget.TextInputLayout>
+
+        <Button
+            android:id="@+id/btnUnlock"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|end"
+            android:background="@null"
+            android:text="@string/unlock"
+            android:textColor="@color/colorPrimary" />
+    </LinearLayout>
+
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/layout_processing"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center"
+        android:padding="24dp">
+
+        <info.guardianproject.pixelknot.views.CircularProgress
+            android:id="@+id/progress"
+            android:layout_width="@dimen/receive_progress_circle_size"
+            android:layout_height="@dimen/receive_progress_circle_size"
+            android:layout_gravity="center"
+            app:colorBackground="#85ffffff"
+            app:colorProgress="#ffffffff"
+            app:thickness="5dp" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvProgress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="84%"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textSize="50dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="@string/extracting_message"
+                android:textAppearance="@style/TextAppearanceNormal"
+                android:textColor="#000000" />
+        </LinearLayout>
+    </FrameLayout>
+
+</RelativeLayout>
