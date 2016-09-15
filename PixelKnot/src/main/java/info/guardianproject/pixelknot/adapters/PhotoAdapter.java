@@ -57,7 +57,7 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoViewHolder> {
             final String orderBy = MediaStore.Images.Media.DATE_TAKEN;
             String searchParams = null;
             if (!TextUtils.isEmpty(mAlbum)) {
-                searchParams = "bucket_display_name = \"" + mAlbum + "\"";
+                searchParams = MediaStore.Images.Media.BUCKET_ID + " = \"" + mAlbum + "\"";
             }
 
             Cursor photoCursor = mContext.getContentResolver().query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,

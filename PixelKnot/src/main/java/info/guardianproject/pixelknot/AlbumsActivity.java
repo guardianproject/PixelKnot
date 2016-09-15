@@ -74,8 +74,9 @@ public class AlbumsActivity extends ActivityBase implements AlbumAdapter.AlbumAd
     }
 
     @Override
-    public void onAlbumSelected(String album) {
-        setPhotosAdapter(album, false, false);
+    public void onAlbumSelected(String id, String albumName) {
+        getSupportActionBar().setTitle(albumName);
+        setPhotosAdapter(id, false, false);
     }
 
     @Override
@@ -122,7 +123,6 @@ public class AlbumsActivity extends ActivityBase implements AlbumAdapter.AlbumAd
     }
 
     private void setPhotosAdapter(String album, boolean showCamera, boolean showAlbums) {
-        getSupportActionBar().setTitle(album);
         mRecyclerView.setLayoutManager(mLayoutManager);
         PhotoAdapter adapter = new PhotoAdapter(this, album, showCamera, showAlbums);
         adapter.setListener(this);

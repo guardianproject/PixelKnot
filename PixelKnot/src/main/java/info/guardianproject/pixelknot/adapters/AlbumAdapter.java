@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,7 +22,7 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumViewHolder> {
     private static final String LOGTAG = "AlbumAdapter";
 
     public interface AlbumAdapterListener {
-        void onAlbumSelected(String album);
+        void onAlbumSelected(String id, String albumName);
         void onPickExternalSelected();
     }
 
@@ -47,7 +48,7 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumViewHolder> {
         album.count = 0;
         try {
             final String orderBy = MediaStore.Images.Media.DATE_TAKEN;
-            String searchParams = "bucket_display_name = \"" + album.albumName + "\"";
+            String searchParams = MediaStore.Images.Media.BUCKET_ID + " = \"" + album.id + "\"";
 
             Cursor photoCursor = mContext.getContentResolver().query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
                     null, searchParams, null, orderBy + " DESC");
@@ -60,6 +61,8 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumViewHolder> {
             photoCursor.close();
         } catch (Exception e) {
             e.printStackTrace();
+            if (LOGGING)
+                Log.e(LOGTAG, "Failed to get album info: " + e.toString());
         }
     }
 
@@ -81,30 +84,19 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumViewHolder> {
 
             if (cur.moveToFirst()) {
                 String bucket;
-                String date;
-                String data;
-                long bucketId;
+                String bucketId;
                 int bucketColumn = cur.getColumnIndex(MediaStore.Images.Media.BUCKET_DISPLAY_NAME);
-                int dateColumn = cur.getColumnIndex(MediaStore.Images.Media.DATE_TAKEN);
-                int dataColumn = cur.getColumnIndex(MediaStore.Images.Media.DATA);
                 int bucketIdColumn = cur.getColumnIndex(MediaStore.Images.Media.BUCKET_ID);
                 do {
                     // Get the field values
                     bucket = cur.getString(bucketColumn);
-                    date = cur.getString(dateColumn);
-                    data = cur.getString(dataColumn);
-                    bucketId = cur.getInt(bucketIdColumn);
-
-                    if (bucket != null && bucket.length() > 0) {
-                        try {
-                            AlbumInfo album = new AlbumInfo();
-                            album.albumName = bucket;
-                            getThumbnailAndCountForAlbum(album);
-                            mAlbums.add(album);
-                        } catch (Exception e) {
-                            if (LOGGING)
-                                Log.d(LOGTAG, "Failed to get album info: " + e.toString());
-                        }
+                    bucketId = cur.getString(bucketIdColumn);
+                    if (!TextUtils.isEmpty(bucketId)) {
+                        AlbumInfo album = new AlbumInfo();
+                        album.id = bucketId;
+                        album.albumName = bucket;
+                        getThumbnailAndCountForAlbum(album);
+                        mAlbums.add(album);
                     }
                 } while (cur.moveToNext());
             }
@@ -153,7 +145,13 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumViewHolder> {
         AlbumInfo album = mAlbums.get(position);
         holder.mAlbumName.setText(album.albumName);
         holder.mAlbumCount.setText(String.format("(%d)", album.count));
-        holder.mAlbumThumbnail.setImageURI(Uri.parse(album.thumbnail));
+        try {
+            holder.mAlbumThumbnail.setBackgroundResource(0);
+            holder.mAlbumThumbnail.setImageURI(Uri.parse(album.thumbnail));
+        } catch (Exception e) {
+            holder.mAlbumThumbnail.setBackgroundResource(R.drawable.camera_frame);
+            holder.mAlbumThumbnail.setImageDrawable(null);
+        }
     }
 
     @Override
@@ -164,6 +162,7 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumViewHolder> {
     private class AlbumInfo {
         public AlbumInfo() {
         }
+        public String id;
         public String albumName;
         public String thumbnail;
         public int count;
@@ -180,7 +179,7 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumViewHolder> {
         public void onClick(View view) {
             AlbumInfo album = mAlbums.get(mPosition);
             if (mListener != null) {
-                mListener.onAlbumSelected(album.albumName);
+                mListener.onAlbumSelected(album.id, album.albumName);
             }
         }
     }
