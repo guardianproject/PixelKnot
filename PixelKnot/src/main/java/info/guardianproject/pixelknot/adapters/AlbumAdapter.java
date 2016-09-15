@@ -17,16 +17,19 @@ import info.guardianproject.pixelknot.R;
 public class AlbumAdapter extends RecyclerView.Adapter<AlbumViewHolder> {
     public interface AlbumAdapterListener {
         void onAlbumSelected(String album);
+        void onPickExternalSelected();
     }
 
     private Context mContext;
     private ArrayList<AlbumInfo> mAlbums;
+    private boolean mShowPickExternal;
     private AlbumAdapterListener mListener;
 
-    public AlbumAdapter(Context context) {
+    public AlbumAdapter(Context context, boolean showPickExternal) {
         super();
         mContext = context;
         mAlbums = new ArrayList<AlbumInfo>();
+        mShowPickExternal = showPickExternal;
         getAlbums();
     }
 
@@ -99,13 +102,39 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumViewHolder> {
     }
 
     @Override
+    public int getItemViewType(int position) {
+        if (mShowPickExternal) {
+            if (position == 0)
+                return 1;
+            else
+                position--;
+        }
+        return 0;
+    }
+
+    @Override
     public AlbumViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.album_item, parent, false);
+        View view = LayoutInflater.from(mContext).inflate(viewType == 0 ? R.layout.album_item : R.layout.album_external_item, parent, false);
         return new AlbumViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(AlbumViewHolder holder, int position) {
+        if (mShowPickExternal) {
+            if (position == 0) {
+                holder.mRootView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (mListener != null) {
+                            mListener.onPickExternalSelected();
+                        }
+                    }
+                });
+                return;
+            } else {
+                position--; //Offset by this item
+            }
+        }
         holder.mRootView.setOnClickListener(new ItemClickListener(position));
         AlbumInfo album = mAlbums.get(position);
         holder.mAlbumName.setText(album.albumName);
@@ -115,7 +144,7 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumViewHolder> {
 
     @Override
     public int getItemCount() {
-        return mAlbums.size();
+        return (mShowPickExternal ? 1 : 0) + mAlbums.size();
     }
 
     private class AlbumInfo {

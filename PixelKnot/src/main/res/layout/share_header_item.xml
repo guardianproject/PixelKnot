@@ -8,7 +8,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAppearance="@style/TextAppearanceSmall"
+        android:textAppearance="@style/TextAppearanceNormal"
         android:text="Small Text"
         android:id="@+id/tvShare"
         android:textColor="@android:color/black"

@@ -61,7 +61,6 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import info.guardianproject.pixelknot.adapters.AlbumAdapter;
 import info.guardianproject.pixelknot.adapters.AskForPermissionAdapter;
 import info.guardianproject.pixelknot.adapters.OutboxAdapter;
 import info.guardianproject.pixelknot.adapters.OutboxViewHolder;
@@ -70,16 +69,15 @@ import info.guardianproject.pixelknot.views.FadingEditText;
 import info.guardianproject.pixelknot.views.FadingPasswordEditText;
 import info.guardianproject.pixelknot.views.RoundedImageView;
 
-public class SendActivity extends ActivityBase implements AlbumAdapter.AlbumAdapterListener, PhotoAdapter.PhotoAdapterListener, OutboxAdapter.OutboxAdapterListener, TabLayout.OnTabSelectedListener, View.OnClickListener {
+public class SendActivity extends ActivityBase implements PhotoAdapter.PhotoAdapterListener, OutboxAdapter.OutboxAdapterListener, TabLayout.OnTabSelectedListener, View.OnClickListener {
+
+    private static final boolean LOGGING = false;
+    private static final String LOGTAG = "SendActivity";
 
     private static final int READ_EXTERNAL_STORAGE_PERMISSION_REQUEST = 1;
     private static final int CAPTURE_IMAGE_REQUEST = 2;
     private static final int SHARE_REQUEST = 3;
     private static final int SELECT_FROM_ALBUMS_REQUEST = 4;
-    private static final int PICK_EXTERNAL_REQUEST = 5;
-
-    private static final boolean LOGGING = false;
-    private static final String LOGTAG = "SendActivity";
 
     private CoordinatorLayout mRootView;
     private TabLayout mTabs;
@@ -112,16 +110,6 @@ public class SendActivity extends ActivityBase implements AlbumAdapter.AlbumAdap
 
     private Handler mHandler = new Handler();
     private MenuItem mMenuItemDone;
-    private MenuItem mMenuItemPickExternal;
-
-    private enum GalleryMode {
-        PHOTOS,
-        ALBUMS,
-        CAMERA
-    }
-
-    ;
-    private GalleryMode mCurrentMode = GalleryMode.PHOTOS;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -247,7 +235,7 @@ public class SendActivity extends ActivityBase implements AlbumAdapter.AlbumAdap
 
         setupOutboxRecyclerView();
         mTabs.getTabAt(0).select();
-        setCurrentMode(GalleryMode.PHOTOS);
+        setCurrentMode();
         onStatusUpdated();
     }
 
@@ -300,7 +288,6 @@ public class SendActivity extends ActivityBase implements AlbumAdapter.AlbumAdap
         getMenuInflater().inflate(R.menu.manu_send, menu);
         mMenuItemDone = menu.findItem(R.id.action_done);
         mMenuItemDone.setVisible(false);
-        mMenuItemPickExternal = menu.findItem(R.id.action_pick_external);
         return true;
     }
 
@@ -316,10 +303,6 @@ public class SendActivity extends ActivityBase implements AlbumAdapter.AlbumAdap
             }
         } else if (item.getItemId() == R.id.action_done && hasStatusFlag(FLAG_PHOTO_SET) && !hasStatusFlag(FLAG_MESSAGE_SET)) {
             moveToPasswordScreen();
-        } else if (item.getItemId() == R.id.action_pick_external) {
-            Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-            intent.setType("image/*");
-            startActivityForResult(intent, PICK_EXTERNAL_REQUEST);
         }
         return super.onOptionsItemSelected(item);
     }
@@ -365,11 +348,6 @@ public class SendActivity extends ActivityBase implements AlbumAdapter.AlbumAdap
     }
 
     @Override
-    public void onAlbumSelected(String album) {
-        setPhotosAdapter(album, false, false);
-    }
-
-    @Override
     public void onPhotoSelected(String photo, final View thumbView) {
         final Uri uri = Uri.parse(photo);
         mSelectedImageName = uri.getLastPathSegment();
@@ -391,7 +369,7 @@ public class SendActivity extends ActivityBase implements AlbumAdapter.AlbumAdap
 
     @Override
     public void onCameraSelected() {
-        setCurrentMode(GalleryMode.CAMERA);
+        takePicture();
     }
 
     @Override
@@ -426,23 +404,12 @@ public class SendActivity extends ActivityBase implements AlbumAdapter.AlbumAdap
         });
     }
 
-    @Override
-    public void onBackPressed() {
-        if (mCurrentMode == GalleryMode.ALBUMS && mRecyclerView.getAdapter() instanceof PhotoAdapter) {
-            // On albums tab, but showing one album. Make "back" go back to album view!
-            applyCurrentMode();
-            return;
-        }
-        super.onBackPressed();
-    }
-
-    private void setCurrentMode(GalleryMode mode) {
-        mCurrentMode = mode;
+    private void setCurrentMode() {
         int permissionCheck = ContextCompat.checkSelfPermission(this,
                 Manifest.permission.READ_EXTERNAL_STORAGE);
         if (Build.VERSION.SDK_INT <= 18)
             permissionCheck = PackageManager.PERMISSION_GRANTED; // For old devices we ask in the manifest!
-        if (mode != GalleryMode.CAMERA && permissionCheck != PackageManager.PERMISSION_GRANTED) {
+        if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
             AskForPermissionAdapter adapter = new AskForPermissionAdapter(this);
             mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
             mRecyclerView.setAdapter(adapter);
@@ -458,22 +425,7 @@ public class SendActivity extends ActivityBase implements AlbumAdapter.AlbumAdap
 
     private void applyCurrentMode() {
         mLayoutGalleryInfo.setVisibility(App.getInstance().getSettings().skipGalleryInfo() ? View.GONE : View.VISIBLE);
-        if (mCurrentMode == GalleryMode.ALBUMS) {
-            setAlbumAdapter();
-        } else if (mCurrentMode == GalleryMode.CAMERA) {
-            takePicture();
-        } else {
-            setPhotosAdapter(null, true, true);
-        }
-    }
-
-    private void setAlbumAdapter() {
-        mRecyclerView.setLayoutManager(mLayoutManager);
-        AlbumAdapter adapter = new AlbumAdapter(this);
-        adapter.setListener(this);
-        int colWidth = getResources().getDimensionPixelSize(R.dimen.album_column_size);
-        mLayoutManager.setColumnWidth(colWidth);
-        mRecyclerView.setAdapter(adapter);
+        setPhotosAdapter(null, true, true);
     }
 
     private void setPhotosAdapter(String album, boolean showCamera, boolean showAlbums) {
@@ -541,10 +493,6 @@ public class SendActivity extends ActivityBase implements AlbumAdapter.AlbumAdap
             if (resultCode == RESULT_OK && data != null && data.hasExtra("uri")) {
                 onPhotoSelected(data.getStringExtra("uri"), null);
             }
-        } else if (requestCode == PICK_EXTERNAL_REQUEST) {
-            if (resultCode == RESULT_OK && data != null && data.getData() != null) {
-                onPhotoSelected(data.getData().toString(), null);
-            }
         }
     }
 
@@ -570,9 +518,6 @@ public class SendActivity extends ActivityBase implements AlbumAdapter.AlbumAdap
         mLayoutPassword.setVisibility((hasStatusFlag(FLAG_PHOTO_SET) && hasStatusFlag(FLAG_MESSAGE_SET)) ? View.VISIBLE : View.GONE);
         if (mMenuItemDone != null) {
             mMenuItemDone.setVisible(hasStatusFlag(FLAG_PHOTO_SET) && !hasStatusFlag(FLAG_MESSAGE_SET));
-        }
-        if (mMenuItemPickExternal != null) {
-            mMenuItemPickExternal.setVisible(!hasStatusFlag(FLAG_PHOTO_SET) && !hasStatusFlag(FLAG_MESSAGE_SET));
         }
         if (hasStatusFlag(FLAG_PHOTO_SET)) {
             mTabs.setVisibility(View.GONE);
@@ -669,7 +614,7 @@ public class SendActivity extends ActivityBase implements AlbumAdapter.AlbumAdap
         mSelectedImageName = null;
         mCurrentStatus = 0;
         onStatusUpdated();
-        setCurrentMode(GalleryMode.PHOTOS);
+        setCurrentMode();
         mTabs.getTabAt(1).select();
     }
 
@@ -846,6 +791,15 @@ public class SendActivity extends ActivityBase implements AlbumAdapter.AlbumAdap
     public void onOutboxItemClicked(StegoEncryptionJob job) {
         if (job.getProcessingStatus() == StegoJob.ProcessingStatus.EMBEDDED_SUCCESSFULLY) {
             mLastSharedJob = job;
+
+            //Intent intent = new Intent();
+            //intent.setAction(Intent.ACTION_SEND);
+            //intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            //intent.putExtra(Intent.EXTRA_STREAM, Uri.parse(PixelKnotContentProvider.CONTENT_URI + job.getId()));
+            //intent.setType("*/*");
+            //Intent chooser = Intent.createChooser(intent, "test");
+            //startActivityForResult(chooser, SHARE_REQUEST);
+
             ShareChooserDialog.createChooser(mRootView, this, SHARE_REQUEST, Uri.parse(PixelKnotContentProvider.CONTENT_URI + job.getId()));
         } else if (job.getProcessingStatus() == StegoJob.ProcessingStatus.ERROR) {
             job.Run(); // retry

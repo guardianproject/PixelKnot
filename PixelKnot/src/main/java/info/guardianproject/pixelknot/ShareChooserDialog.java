@@ -103,7 +103,7 @@ public class ShareChooserDialog extends BottomSheetDialogFragment {
             public void onShow(DialogInterface dialogINterface) {
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 dialog.getWindow().setLayout(
-                        mParentWidth - UIHelpers.dpToPx(48, getContext()),
+                        mParentWidth - UIHelpers.dpToPx(0, getContext()), // Set margins here!
                         ViewGroup.LayoutParams.MATCH_PARENT);
             }
         });

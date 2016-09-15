@@ -1,8 +1,8 @@
 package info.guardianproject.pixelknot;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
@@ -16,6 +16,8 @@ public class AlbumsActivity extends ActivityBase implements AlbumAdapter.AlbumAd
 
     private static final boolean LOGGING = false;
     private static final String LOGTAG = "AlbumsActivity";
+
+    private static final int PICK_EXTERNAL_REQUEST = 5;
 
     private View mRootView;
     private RecyclerView mRecyclerView;
@@ -77,8 +79,15 @@ public class AlbumsActivity extends ActivityBase implements AlbumAdapter.AlbumAd
     }
 
     @Override
+    public void onPickExternalSelected() {
+        Intent intent = new Intent(Build.VERSION.SDK_INT >= 19 ? Intent.ACTION_OPEN_DOCUMENT : Intent.ACTION_GET_CONTENT);
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        intent.setType("image/*");
+        startActivityForResult(intent, PICK_EXTERNAL_REQUEST);
+    }
+
+    @Override
     public void onPhotoSelected(String photo, final View thumbView) {
-        //final Uri uri = Uri.parse(photo);
         Intent data = new Intent();
         data.putExtra("uri", photo);
         setResult(RESULT_OK, data);
@@ -105,7 +114,7 @@ public class AlbumsActivity extends ActivityBase implements AlbumAdapter.AlbumAd
     private void setAlbumAdapter() {
         getSupportActionBar().setTitle(R.string.title_albums);
         mRecyclerView.setLayoutManager(mLayoutManager);
-        AlbumAdapter adapter = new AlbumAdapter(this);
+        AlbumAdapter adapter = new AlbumAdapter(this, true);
         adapter.setListener(this);
         int colWidth = getResources().getDimensionPixelSize(R.dimen.album_column_size);
         mLayoutManager.setColumnWidth(colWidth);
@@ -120,5 +129,14 @@ public class AlbumsActivity extends ActivityBase implements AlbumAdapter.AlbumAd
         int colWidth = getResources().getDimensionPixelSize(R.dimen.photo_column_size);
         mLayoutManager.setColumnWidth(colWidth);
         mRecyclerView.setAdapter(adapter);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == PICK_EXTERNAL_REQUEST) {
+            if (resultCode == RESULT_OK && data != null && data.getData() != null) {
+                onPhotoSelected(data.getData().toString(), null);
+            }
+        }
     }
 }

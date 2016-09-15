@@ -7,6 +7,7 @@
     <string name="action_done">Done</string>
     <string name="action_albums">Show albums</string>
     <string name="action_pick_external">Pick from external app</string>
+    <string name="action_pick_external_album_name">Other</string>
 
     <string name="gallery_info_message">Tap a photo to start creating a hidden message</string>
     <string name="gallery_info_ok">Got it</string>
@@ -59,8 +60,8 @@
     <string name="error_try_again">Try again</string>
 
     <string name="chooser_title_share">Share with</string>
-    <string name="chooser_share_safe">Apps that we know work</string>
-    <string name="chooser_share_unsafe">Apps we know nothing about</string>
+    <string name="chooser_share_safe">Apps that will work</string>
+    <string name="chooser_share_unsafe">Apps that may work</string>
 
     <!-- APG related -->
     <string name="apg_error_activity_not_found">No suitable application for this action found.</string>
