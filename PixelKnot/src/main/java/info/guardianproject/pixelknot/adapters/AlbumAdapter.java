@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,10 @@ import info.guardianproject.pixelknot.R;
 
 
 public class AlbumAdapter extends RecyclerView.Adapter<AlbumViewHolder> {
+
+    private static final boolean LOGGING = false;
+    private static final String LOGTAG = "AlbumAdapter";
+
     public interface AlbumAdapterListener {
         void onAlbumSelected(String album);
         void onPickExternalSelected();
@@ -61,44 +66,53 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumViewHolder> {
     private void getAlbums() {
 
         mAlbums.clear();
+        try {
+            String[] PROJECTION_BUCKET = {MediaStore.Images.ImageColumns.BUCKET_ID,
+                    MediaStore.Images.ImageColumns.BUCKET_DISPLAY_NAME, MediaStore.Images.ImageColumns.DATE_TAKEN,
+                    MediaStore.Images.ImageColumns.DATA};
 
-        String[] PROJECTION_BUCKET = {MediaStore.Images.ImageColumns.BUCKET_ID,
-                MediaStore.Images.ImageColumns.BUCKET_DISPLAY_NAME, MediaStore.Images.ImageColumns.DATE_TAKEN,
-                MediaStore.Images.ImageColumns.DATA};
+            String BUCKET_GROUP_BY = "1) GROUP BY 1,(2";
+            String BUCKET_ORDER_BY = "MAX(datetaken) DESC";
 
-        String BUCKET_GROUP_BY = "1) GROUP BY 1,(2";
-        String BUCKET_ORDER_BY = "MAX(datetaken) DESC";
+            Uri images = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
 
-        Uri images = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
+            Cursor cur = mContext.getContentResolver().query(images, PROJECTION_BUCKET,
+                    BUCKET_GROUP_BY, null, BUCKET_ORDER_BY);
 
-        Cursor cur = mContext.getContentResolver().query(images, PROJECTION_BUCKET,
-                BUCKET_GROUP_BY, null, BUCKET_ORDER_BY);
+            if (cur.moveToFirst()) {
+                String bucket;
+                String date;
+                String data;
+                long bucketId;
+                int bucketColumn = cur.getColumnIndex(MediaStore.Images.Media.BUCKET_DISPLAY_NAME);
+                int dateColumn = cur.getColumnIndex(MediaStore.Images.Media.DATE_TAKEN);
+                int dataColumn = cur.getColumnIndex(MediaStore.Images.Media.DATA);
+                int bucketIdColumn = cur.getColumnIndex(MediaStore.Images.Media.BUCKET_ID);
+                do {
+                    // Get the field values
+                    bucket = cur.getString(bucketColumn);
+                    date = cur.getString(dateColumn);
+                    data = cur.getString(dataColumn);
+                    bucketId = cur.getInt(bucketIdColumn);
 
-        if (cur.moveToFirst()) {
-            String bucket;
-            String date;
-            String data;
-            long bucketId;
-            int bucketColumn = cur.getColumnIndex(MediaStore.Images.Media.BUCKET_DISPLAY_NAME);
-            int dateColumn = cur.getColumnIndex(MediaStore.Images.Media.DATE_TAKEN);
-            int dataColumn = cur.getColumnIndex(MediaStore.Images.Media.DATA);
-            int bucketIdColumn = cur.getColumnIndex(MediaStore.Images.Media.BUCKET_ID);
-            do {
-                // Get the field values
-                bucket = cur.getString(bucketColumn);
-                date = cur.getString(dateColumn);
-                data = cur.getString(dataColumn);
-                bucketId = cur.getInt(bucketIdColumn);
-
-                if (bucket != null && bucket.length() > 0) {
-                    AlbumInfo album = new AlbumInfo();
-                    album.albumName = bucket;
-                    getThumbnailAndCountForAlbum(album);
-                    mAlbums.add(album);
-                }
-            } while (cur.moveToNext());
+                    if (bucket != null && bucket.length() > 0) {
+                        try {
+                            AlbumInfo album = new AlbumInfo();
+                            album.albumName = bucket;
+                            getThumbnailAndCountForAlbum(album);
+                            mAlbums.add(album);
+                        } catch (Exception e) {
+                            if (LOGGING)
+                                Log.d(LOGTAG, "Failed to get album info: " + e.toString());
+                        }
+                    }
+                } while (cur.moveToNext());
+            }
+            cur.close();
+        } catch (Exception e) {
+            if (LOGGING)
+                Log.e(LOGTAG, "Failed to get albums: " + e.toString());
         }
-        cur.close();
     }
 
     @Override

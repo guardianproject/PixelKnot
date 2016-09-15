@@ -144,7 +144,7 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoViewHolder> {
 
     @Override
     public int getItemCount() {
-        return (mShowCamera ? 1 : 0) + mPhotos.size();
+        return (mShowCamera ? 1 : 0) + (mShowAlbums ? 1 : 0) + mPhotos.size();
     }
 
     private class PhotoInfo {
