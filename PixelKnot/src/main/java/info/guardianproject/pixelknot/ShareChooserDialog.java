@@ -48,7 +48,7 @@ public class ShareChooserDialog extends BottomSheetDialogFragment {
         activities.add("com.bumptech.bumpga"); //, ActivityNames.BUMP);
         activities.add("com.google.android.apps.docs"); //, ActivityNames.DRIVE);
         activities.add("com.google.android.apps.plus"); //, ActivityNames.GOOGLE_PLUS);
-        activities.add("com.instagram.android"); //, ActivityNames.INSTAGRAM);
+        //activities.add("com.instagram.android"); //, ActivityNames.INSTAGRAM);
         activities.add("com.tumblr"); //, ActivityNames.TUMBLR);
         activities.add("org.wordpress.android"); //, ActivityNames.WORDPRESS);
         //activities.add("com.skype.raider"); //, ActivityNames.SKYPE);
