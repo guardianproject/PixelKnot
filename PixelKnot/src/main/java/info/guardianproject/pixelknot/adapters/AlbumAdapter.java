@@ -1,8 +1,10 @@
 package info.guardianproject.pixelknot.adapters;
 
+import android.content.AsyncTaskLoader;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.provider.MediaStore;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -95,7 +97,6 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumViewHolder> {
                         AlbumInfo album = new AlbumInfo();
                         album.id = bucketId;
                         album.albumName = bucket;
-                        getThumbnailAndCountForAlbum(album);
                         mAlbums.add(album);
                     }
                 } while (cur.moveToNext());
@@ -151,6 +152,23 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumViewHolder> {
         } catch (Exception e) {
             holder.mAlbumThumbnail.setBackgroundResource(R.drawable.camera_frame);
             holder.mAlbumThumbnail.setImageDrawable(null);
+        }
+
+        if (album.thumbnail == null && album.count == 0) {
+            // Fetch info
+            AsyncTask<AlbumInfo,Void,AlbumInfo> task = new AsyncTask<AlbumInfo, Void, AlbumInfo>() {
+                @Override
+                protected AlbumInfo doInBackground(AlbumInfo... albumInfos) {
+                    getThumbnailAndCountForAlbum(albumInfos[0]);
+                    return albumInfos[0];
+                }
+
+                @Override
+                protected void onPostExecute(AlbumInfo albumInfo) {
+                    super.onPostExecute(albumInfo);
+                    AlbumAdapter.this.notifyItemChanged((mShowPickExternal ? 1 : 0) + mAlbums.indexOf(albumInfo));
+                }
+            }.execute(album);
         }
     }
 
