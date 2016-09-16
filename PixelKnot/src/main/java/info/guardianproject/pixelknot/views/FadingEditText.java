@@ -73,6 +73,7 @@ public class FadingEditText extends TextInputEditText {
             public void onAnimationStart(Animation animation) {
             }
         });
+        setEnabled(true);
         FadingEditText.super.setVisibility(View.VISIBLE);
         startAnimation(animAlpha);
     }
@@ -96,6 +97,7 @@ public class FadingEditText extends TextInputEditText {
             public void onAnimationStart(Animation animation) {
             }
         });
+        setEnabled(false);
         startAnimation(animAlpha);
     }
 }
