@@ -3,6 +3,7 @@ package info.guardianproject.pixelknot.adapters;
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Color;
+import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -132,14 +133,17 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoViewHolder> {
             } else {
                 position--; //Offset by this item
             }
-        }        PhotoInfo photo = mPhotos.get(position);
+        }
+        PhotoInfo photo = mPhotos.get(position);
         holder.mPhoto.setBackgroundColor(Color.TRANSPARENT);
         holder.mRootView.setOnClickListener(new ItemClickListener(position, holder.mPhoto));
-        Picasso.with(mContext)
-                .load(new File(photo.thumbnail))
-                .resize(400, 400) //TODO - change to actual size
-                .centerCrop()
-                .into(holder.mPhoto);
+        try {
+            Picasso.with(mContext)
+                    .load(new File(photo.thumbnail))
+                    .fit()
+                    .centerCrop()
+                    .into(holder.mPhoto);
+        } catch (Exception e) {}
     }
 
     @Override

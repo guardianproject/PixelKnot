@@ -13,6 +13,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.squareup.picasso.Picasso;
+
+import java.io.File;
 import java.util.ArrayList;
 
 import info.guardianproject.pixelknot.R;
@@ -148,7 +151,13 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumViewHolder> {
         holder.mAlbumCount.setText(String.format("(%d)", album.count));
         try {
             holder.mAlbumThumbnail.setBackgroundResource(0);
-            holder.mAlbumThumbnail.setImageURI(Uri.parse(album.thumbnail));
+            try {
+                Picasso.with(mContext)
+                        .load(new File(album.thumbnail))
+                        .fit()
+                        .centerCrop()
+                        .into(holder.mAlbumThumbnail);
+            } catch (Exception e) {}
         } catch (Exception e) {
             holder.mAlbumThumbnail.setBackgroundResource(R.drawable.camera_frame);
             holder.mAlbumThumbnail.setImageDrawable(null);
