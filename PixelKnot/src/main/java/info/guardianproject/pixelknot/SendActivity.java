@@ -42,6 +42,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -50,7 +51,9 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.squareup.picasso.Callback;
@@ -99,6 +102,7 @@ public class SendActivity extends ActivityBase implements PhotoAdapter.PhotoAdap
     private View mContainerNewMessage;
     private View mContainerOutbox;
     private View mLayoutGalleryInfo;
+    private RoundedImageView mOutboxZoomContainer;
 
     private static final int FLAG_PHOTO_SET = 1;
     private static final int FLAG_MESSAGE_SET = 2;
@@ -239,6 +243,8 @@ public class SendActivity extends ActivityBase implements PhotoAdapter.PhotoAdap
         mLayoutManager = new AlbumLayoutManager(this, colWidth);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
+        mOutboxZoomContainer = (RoundedImageView) mContainerOutbox.findViewById(R.id.outbox_zoom_container);
+
         setupOutboxRecyclerView();
         mTabs.getTabAt(0).select();
         setCurrentMode();
@@ -315,12 +321,6 @@ public class SendActivity extends ActivityBase implements PhotoAdapter.PhotoAdap
 
     private void moveToPasswordScreen() {
         setStatusFlag(FLAG_MESSAGE_SET);
-        mPassword.post(new Runnable() {
-            @Override
-            public void run() {
-                mPassword.requestFocus();
-            }
-        });
     }
 
     @Override
@@ -539,8 +539,10 @@ public class SendActivity extends ActivityBase implements PhotoAdapter.PhotoAdap
 
     private void onStatusUpdated() {
         mPhotoView.setVisibility(hasStatusFlag(FLAG_PHOTO_SET) ? View.VISIBLE : View.INVISIBLE);
-        mMessage.setVisibility((hasStatusFlag(FLAG_PHOTO_SET) && !hasStatusFlag(FLAG_MESSAGE_SET)) ? View.VISIBLE : View.GONE);
         mLayoutPassword.setVisibility((hasStatusFlag(FLAG_PHOTO_SET) && hasStatusFlag(FLAG_MESSAGE_SET)) ? View.VISIBLE : View.GONE);
+        if (mLayoutPassword.getVisibility() == View.VISIBLE)
+            mPassword.requestFocus();
+        mMessage.setVisibility((hasStatusFlag(FLAG_PHOTO_SET) && !hasStatusFlag(FLAG_MESSAGE_SET)) ? View.VISIBLE : View.GONE);
         if (mMenuItemDone != null) {
             mMenuItemDone.setVisible(hasStatusFlag(FLAG_PHOTO_SET) && !hasStatusFlag(FLAG_MESSAGE_SET));
         }
@@ -612,13 +614,15 @@ public class SendActivity extends ActivityBase implements PhotoAdapter.PhotoAdap
         App.getInstance().storeJob(job);
 
         // Cover the screen with dark blue at the moment, will zoom down to outbox once the image is loaded!
-        final RoundedImageView expandedImageView = (RoundedImageView) mContainerOutbox.findViewById(R.id.outbox_zoom_container);
-        expandedImageView.setBackgroundResource(R.drawable.main_background);
-        expandedImageView.setTranslationX(0);
-        expandedImageView.setTranslationY(0);
-        expandedImageView.setScaleX(1.0f);
-        expandedImageView.setScaleY(1.0f);
-        expandedImageView.setVisibility(View.VISIBLE);
+        mOutboxZoomContainer.setBackgroundResource(R.drawable.main_background);
+        mOutboxZoomContainer.setTranslationX(0);
+        mOutboxZoomContainer.setTranslationY(0);
+        mOutboxZoomContainer.setScaleX(1.0f);
+        mOutboxZoomContainer.setScaleY(1.0f);
+        FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) mOutboxZoomContainer.getLayoutParams(); // Make it square, so that zoom down animation looks smooth (the target is square)
+        params.width = params.height = Math.max(mContainerOutbox.getWidth(), mContainerOutbox.getHeight());
+        mOutboxZoomContainer.setLayoutParams(params);
+        mOutboxZoomContainer.setVisibility(View.VISIBLE);
 
         reset();
         animateImageToOutboxJob(job);
@@ -849,8 +853,6 @@ public class SendActivity extends ActivityBase implements PhotoAdapter.PhotoAdap
     private void animateImageToOutboxJob(final StegoEncryptionJob job) {
         final int position = App.getInstance().getJobs().indexOf(job);
         if (position >= 0) {
-            final RoundedImageView expandedImageView = (RoundedImageView) mContainerOutbox.findViewById(R.id.outbox_zoom_container);
-
             new Thread(new Runnable() {
                 @Override
                 public void run() {
@@ -859,7 +861,7 @@ public class SendActivity extends ActivityBase implements PhotoAdapter.PhotoAdap
                         int viewSize = UIHelpers.dpToPx(180, SendActivity.this);
                         bmp = Picasso.with(SendActivity.this)
                                 .load(job.getBitmapFile())
-                                .resize(viewSize, viewSize) //expandedImageView.getWidth(), expandedImageView.getHeight())
+                                .resize(viewSize, viewSize)
                                 .centerCrop()
                                 .get();
                     } catch (Exception e) {
@@ -868,14 +870,14 @@ public class SendActivity extends ActivityBase implements PhotoAdapter.PhotoAdap
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            expandedImageView.setImageBitmap(finalBmp);
+                            mOutboxZoomContainer.setImageBitmap(finalBmp);
                             mRecyclerViewOutbox.getLayoutManager().scrollToPosition(position);
                             mRecyclerViewOutbox.post(new Runnable() {
                                 @Override
                                 public void run() {
                                     OutboxViewHolder viewHolder = (OutboxViewHolder) mRecyclerViewOutbox.findViewHolderForAdapterPosition(position);
                                     if (viewHolder != null) {
-                                        zoomImageToThumb(expandedImageView, viewHolder.getPhotoView());
+                                        zoomImageToThumb(mOutboxZoomContainer, viewHolder.getPhotoView());
                                     }
                                 }
                             });
@@ -909,6 +911,10 @@ public class SendActivity extends ActivityBase implements PhotoAdapter.PhotoAdap
         thumbView.getGlobalVisibleRect(startBounds);
         findViewById(R.id.rlOutbox)
                 .getGlobalVisibleRect(finalBounds, globalOffset);
+
+        expandedImageView.getDrawingRect(finalBounds);
+        ((ViewGroup)mContainerOutbox).offsetDescendantRectToMyCoords(expandedImageView, finalBounds);
+
         startBounds.offset(-globalOffset.x, -globalOffset.y);
         finalBounds.offset(-globalOffset.x, -globalOffset.y);
 
@@ -944,7 +950,7 @@ public class SendActivity extends ActivityBase implements PhotoAdapter.PhotoAdap
                         1f, startScaleY))
                 .with(ObjectAnimator.ofFloat(expandedImageView, "rounding", 0f, 1f))
                 .with(ObjectAnimator.ofFloat(expandedImageView, "lightFilter", 0f, getResources().getFraction(R.fraction.outbox_lightness_filter, 1, 1)));
-        set.setDuration(8000); //mShortAnimationDuration);
+        set.setDuration(mShortAnimationDuration);
         set.setInterpolator(new DecelerateInterpolator());
         set.addListener(new AnimatorListenerAdapter() {
             @Override
