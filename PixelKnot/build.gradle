@@ -6,9 +6,9 @@ android {
 
     defaultConfig {
         applicationId "info.guardianproject.pixelknot"
-        minSdkVersion 14
+        minSdkVersion 17
         targetSdkVersion 24
-        versionCode 1
+        versionCode 7
         versionName "1.0"
     }
     buildTypes {
