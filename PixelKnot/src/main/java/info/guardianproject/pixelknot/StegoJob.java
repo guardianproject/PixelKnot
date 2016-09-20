@@ -99,10 +99,11 @@ public class StegoJob {
         return mProcessingStatus;
     }
 
-    protected void abortJob() {
+    public void abortJob() {
         // Interrupt the thread so no more processing is done on this thread
         try {
-            getThread().requestInterrupt();
+            if (getThread() != null)
+                getThread().requestInterrupt();
         } catch (Exception ex) {}
     }
 

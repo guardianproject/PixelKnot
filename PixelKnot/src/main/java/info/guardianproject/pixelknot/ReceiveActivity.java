@@ -26,6 +26,7 @@ import com.squareup.picasso.Picasso;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.util.UUID;
 
 import info.guardianproject.pixelknot.views.CircularProgress;
 import info.guardianproject.pixelknot.views.ColorFilterImageView;
@@ -117,6 +118,14 @@ public class ReceiveActivity extends ActivityBase implements StegoDecryptionJob.
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
+        if (mJob != null) {
+            StegoDecryptionJob tempJob = mJob;
+            mJob = null; // Set this to null here because the following will call callback
+            tempJob.abortJob();
+        }
+        mMessage.setText("");
+        mPassword.setText("");
+        setMode(Mode.IDLE);
         handleIntentData(intent);
     }
 
@@ -152,8 +161,11 @@ public class ReceiveActivity extends ActivityBase implements StegoDecryptionJob.
             }
             if (uri != null) {
                 try {
-                    if (mOutputFile == null)
-                        mOutputFile = App.getInstance().getFileManager().createFileForJob("inbox");
+                    if (mOutputFile != null) {
+                        if (mOutputFile.exists())
+                            mOutputFile.delete();
+                    }
+                    mOutputFile = App.getInstance().getFileManager().createFileForJob("inbox_" + UUID.randomUUID().toString());
                     InputStream is = getContentResolver().openInputStream(uri);
                     if (is != null) {
                         FileOutputStream fos = new FileOutputStream(mOutputFile, false);
@@ -223,6 +235,12 @@ public class ReceiveActivity extends ActivityBase implements StegoDecryptionJob.
     public void onProgressUpdate(final StegoDecryptionJob job, final int percent) {
         if (LOGGING)
             Log.d(LOGTAG, "onProgressUpdate: " + percent);
+
+        if (job != mJob) {
+            if (LOGGING)
+                Log.d(LOGTAG, "onProgressUpdate: stale job, ignoring");
+            return;
+        }
 
         runOnUiThread(new Runnable() {
             @Override
