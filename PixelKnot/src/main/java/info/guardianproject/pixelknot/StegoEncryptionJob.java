@@ -8,6 +8,8 @@ import android.os.FileObserver;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.squareup.picasso.Picasso;
+
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -32,6 +34,7 @@ public class StegoEncryptionJob extends StegoJob {
     private String mImageName;
     private String mMessage;
     private String mPassword;
+    private File mInputFile;
     private File mOutputFile;
     private FileObserver mOutputFileObserver;
     private boolean mHasBeenShared;
@@ -39,9 +42,9 @@ public class StegoEncryptionJob extends StegoJob {
     private boolean mDeleteOutputFileOnClose;
     private OnProgressListener mOnProgressListener;
 
-    public StegoEncryptionJob(IStegoThreadHandler threadHandler, Bitmap bitmap, String imageName, String message, String password) {
+    public StegoEncryptionJob(final IStegoThreadHandler threadHandler, File imageFile, String imageName, String message, String password) {
         super(threadHandler);
-        mBitmap = bitmap.copy(bitmap.getConfig(), false);
+        mInputFile = App.getInstance().getFileManager().moveInputFileToJob(imageFile, getId());
         mImageName = imageName;
         mMessage = message;
         mPassword = password;
@@ -50,17 +53,19 @@ public class StegoEncryptionJob extends StegoJob {
         mActivity = new DummyListenerActivity();
 
         addProcess(new Runnable() {
+            @SuppressLint("LongLogTag")
             @Override
             public void run() {
-                if (mBitmap.getWidth() > Constants.MAX_IMAGE_PIXEL_SIZE || mBitmap.getHeight() > Constants.MAX_IMAGE_PIXEL_SIZE) {
-                    int newWidth = Constants.MAX_IMAGE_PIXEL_SIZE;
-                    int newHeight = Constants.MAX_IMAGE_PIXEL_SIZE;
-                    if (mBitmap.getWidth() > mBitmap.getHeight()) {
-                        newHeight = (int)(mBitmap.getHeight() * ((float)Constants.MAX_IMAGE_PIXEL_SIZE / (float)mBitmap.getWidth()));
-                    } else {
-                        newWidth = (int)(mBitmap.getWidth() * ((float)Constants.MAX_IMAGE_PIXEL_SIZE / (float)mBitmap.getHeight()));
-                    }
-                    mBitmap = Bitmap.createScaledBitmap(mBitmap, newWidth, newHeight, true);
+                try {
+                    mBitmap = Picasso.with(threadHandler.getContext()).load(mInputFile)
+                            .resize(Constants.MAX_IMAGE_PIXEL_SIZE, Constants.MAX_IMAGE_PIXEL_SIZE)
+                            .onlyScaleDown()
+                            .centerInside()
+                            .get();
+                } catch (Exception e) {
+                    Log.e(Jpeg.LOG, e.toString());
+                    e.printStackTrace();
+                    abortJob();
                 }
                 onProgressTick();
             }
@@ -85,7 +90,7 @@ public class StegoEncryptionJob extends StegoJob {
                 try {
                     createOutputFile();
                     FileOutputStream fos = new FileOutputStream(mOutputFile);
-                    JpegEncoder jpg = new JpegEncoder(mActivity /*mThreadHandler.getActivity()*/, mBitmap.copy(mBitmap.getConfig(), false), Constants.OUTPUT_IMAGE_QUALITY, fos, getF5Seed(), getThread());
+                    JpegEncoder jpg = new JpegEncoder(mActivity /*mThreadHandler.getActivity()*/, mBitmap, Constants.OUTPUT_IMAGE_QUALITY, fos, getF5Seed(), getThread());
                     success = jpg.Compress(new ByteArrayInputStream(mMessage.getBytes()));
                     fos.close();
                 } catch (Exception e) {
@@ -175,8 +180,8 @@ public class StegoEncryptionJob extends StegoJob {
         return extractF5Seed(mPassword).getBytes();
     }
 
-    public Bitmap getBitmap() {
-        return mBitmap;
+    public File getBitmapFile() {
+        return mInputFile;
     }
 
     public long getOutputLength() {
@@ -233,6 +238,11 @@ public class StegoEncryptionJob extends StegoJob {
         super.cleanup();
         try {
             synchronized (this) {
+                if (mInputFile != null) {
+                    if (mInputFile.exists())
+                        mInputFile.delete();
+                    mInputFile = null;
+                }
                 if (mOutputFile != null) {
                     if (mOutputFileHandleCount == 0) {
                         if (LOGGING)

@@ -2,9 +2,12 @@ package info.guardianproject.pixelknot.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -14,6 +17,7 @@ import info.guardianproject.pixelknot.ObservableArrayList;
 import info.guardianproject.pixelknot.R;
 import info.guardianproject.pixelknot.StegoEncryptionJob;
 import info.guardianproject.pixelknot.StegoJob;
+import info.guardianproject.pixelknot.UIHelpers;
 
 public class OutboxAdapter extends RecyclerView.Adapter<OutboxViewHolder> implements ObservableArrayList.OnChangeListener {
 
@@ -69,7 +73,11 @@ public class OutboxAdapter extends RecyclerView.Adapter<OutboxViewHolder> implem
         holder.mJob = job;
         holder.mRootView.setOnClickListener(new ItemClickListener(job));
         holder.mPhoto.setRounding(1f);
-        holder.mPhoto.setImageBitmap(job.getBitmap());
+        int viewSize = UIHelpers.dpToPx(180, mContext);
+        Picasso.with(mContext).load(job.getBitmapFile())
+                .resize(viewSize, viewSize)
+                .centerCrop()
+                .into(holder.mPhoto);
         holder.mProgressText.setText("" + job.getProgressPercent() + "%");
         holder.mStatusText.setText(R.string.tap_to_send);
         holder.mProgress.setMax(100);
@@ -87,7 +95,6 @@ public class OutboxAdapter extends RecyclerView.Adapter<OutboxViewHolder> implem
                 viewHolder.itemView.post(new Runnable() {
                     @Override
                     public void run() {
-                        viewHolder.mPhoto.setImageBitmap(job.getBitmap()); //May have been updated!
                         viewHolder.mProgressText.setText("" + percent + "%");
                         viewHolder.mProgress.setProgress(percent);
                         updateBasedOnStatus(viewHolder, job);

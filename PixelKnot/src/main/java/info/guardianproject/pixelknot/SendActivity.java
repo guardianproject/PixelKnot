@@ -10,7 +10,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
@@ -57,9 +57,14 @@ import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.UUID;
+import java.util.concurrent.Exchanger;
 
 import info.guardianproject.pixelknot.adapters.AskForPermissionAdapter;
 import info.guardianproject.pixelknot.adapters.OutboxAdapter;
@@ -83,6 +88,7 @@ public class SendActivity extends ActivityBase implements PhotoAdapter.PhotoAdap
     private TabLayout mTabs;
     private RecyclerView mRecyclerView;
     private ImageView mPhotoView;
+    private File mSelectedImageFile;
     private String mSelectedImageName;
     private FadingEditText mMessage;
     private FadingPasswordEditText mPassword;
@@ -350,21 +356,49 @@ public class SendActivity extends ActivityBase implements PhotoAdapter.PhotoAdap
     @Override
     public void onPhotoSelected(String photo, final View thumbView) {
         final Uri uri = Uri.parse(photo);
-        mSelectedImageName = uri.getLastPathSegment();
-        Picasso.with(this)
-                .load(new File(uri.toString()))
-                .into(mPhotoView, new Callback() {
-                    @Override
-                    public void onSuccess() {
-                        onPostPhotoSelected(thumbView);
+        if (uri != null) {
+            try {
+                if (mSelectedImageFile != null) {
+                    if (mSelectedImageFile.exists())
+                        mSelectedImageFile.delete();
+                }
+                mSelectedImageFile = App.getInstance().getFileManager().createFileForJob("selected_" + UUID.randomUUID().toString());
+                InputStream is = null;
+                if (uri.getScheme() == "content")
+                    is = getContentResolver().openInputStream(uri);
+                else
+                    is = new FileInputStream(new File(uri.toString()));
+                if (is != null) {
+                    FileOutputStream fos = new FileOutputStream(mSelectedImageFile, false);
+                    byte[] buffer = new byte[8196];
+                    int bytesRead;
+                    while ((bytesRead = is.read(buffer)) != -1) {
+                        fos.write(buffer, 0, bytesRead);
                     }
+                    fos.close();
+                    is.close();
+                    mSelectedImageName = uri.getLastPathSegment();
+                    Picasso.with(this)
+                            .load(mSelectedImageFile)
+                            .fit()
+                            .centerCrop()
+                            .into(mPhotoView, new Callback() {
+                                @Override
+                                public void onSuccess() {
+                                    onPostPhotoSelected(thumbView);
+                                }
 
-                    @Override
-                    public void onError() {
-                        mPhotoView.setImageURI(uri);
-                        onPostPhotoSelected(thumbView);
-                    }
-                });
+                                @Override
+                                public void onError() {
+                                    mPhotoView.setImageURI(uri);
+                                    onPostPhotoSelected(thumbView);
+                                }
+                            });
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     @Override
@@ -462,21 +496,12 @@ public class SendActivity extends ActivityBase implements PhotoAdapter.PhotoAdap
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == CAPTURE_IMAGE_REQUEST && resultCode == RESULT_OK) {
-
             try {
                 File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
                 File image = new File(storageDir, "cameracapture");
                 if (image.exists()) {
-                    final Bitmap bmp = BitmapFactory.decodeFile(image.getAbsolutePath());
-                    setStatusFlag(FLAG_PHOTO_SET);
+                    onPhotoSelected(image.getAbsolutePath(), null);
                     image.delete();
-                    mRootView.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            mPhotoView.setImageBitmap(bmp);
-                            onPostPhotoSelected(null);
-                        }
-                    });
                 }
             } catch (Exception ex) {
             }
@@ -583,8 +608,18 @@ public class SendActivity extends ActivityBase implements PhotoAdapter.PhotoAdap
         if (TextUtils.isEmpty(imageName)) {
             imageName = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date()) + ".jpg";
         }
-        StegoEncryptionJob job = new StegoEncryptionJob(App.getInstance(), ((BitmapDrawable) mPhotoView.getDrawable()).getBitmap(), imageName, mMessage.getText().toString(), mPassword.getText().toString());
+        StegoEncryptionJob job = new StegoEncryptionJob(App.getInstance(), mSelectedImageFile, imageName, mMessage.getText().toString(), mPassword.getText().toString());
         App.getInstance().storeJob(job);
+
+        // Cover the screen with dark blue at the moment, will zoom down to outbox once the image is loaded!
+        final RoundedImageView expandedImageView = (RoundedImageView) mContainerOutbox.findViewById(R.id.outbox_zoom_container);
+        expandedImageView.setBackgroundResource(R.drawable.main_background);
+        expandedImageView.setTranslationX(0);
+        expandedImageView.setTranslationY(0);
+        expandedImageView.setScaleX(1.0f);
+        expandedImageView.setScaleY(1.0f);
+        expandedImageView.setVisibility(View.VISIBLE);
+
         reset();
         animateImageToOutboxJob(job);
     }
@@ -612,6 +647,11 @@ public class SendActivity extends ActivityBase implements PhotoAdapter.PhotoAdap
         mPassword.setText("");
         mMessage.setText("");
         mSelectedImageName = null;
+        if (mSelectedImageFile != null) {
+            if (mSelectedImageFile.exists())
+                mSelectedImageFile.delete();
+            mSelectedImageFile = null;
+        }
         mCurrentStatus = 0;
         onStatusUpdated();
         setCurrentMode();
@@ -716,13 +756,13 @@ public class SendActivity extends ActivityBase implements PhotoAdapter.PhotoAdap
     }
 
     private void showOutbox() {
-        mContainerNewMessage.setVisibility(View.GONE);
+        mContainerNewMessage.setVisibility(View.INVISIBLE);
         mContainerOutbox.setVisibility(View.VISIBLE);
 
     }
 
     private void showNewMessage() {
-        mContainerOutbox.setVisibility(View.GONE);
+        mContainerOutbox.setVisibility(View.INVISIBLE);
         mContainerNewMessage.setVisibility(View.VISIBLE);
         if (mRecyclerView != null && mRecyclerView.getAdapter() instanceof PhotoAdapter) {
             ((PhotoAdapter) mRecyclerView.getAdapter()).update();
@@ -810,19 +850,39 @@ public class SendActivity extends ActivityBase implements PhotoAdapter.PhotoAdap
         final int position = App.getInstance().getJobs().indexOf(job);
         if (position >= 0) {
             final RoundedImageView expandedImageView = (RoundedImageView) mContainerOutbox.findViewById(R.id.outbox_zoom_container);
-            Bitmap bmp = job.getBitmap();
-            expandedImageView.setImageBitmap(bmp); //bmp.copy(bmp.getConfig(), false));
-            expandedImageView.setVisibility(View.VISIBLE);
-            mRecyclerViewOutbox.getLayoutManager().scrollToPosition(position);
-            mRecyclerViewOutbox.post(new Runnable() {
+
+            new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    OutboxViewHolder viewHolder = (OutboxViewHolder) mRecyclerViewOutbox.findViewHolderForAdapterPosition(position);
-                    if (viewHolder != null) {
-                        zoomImageToThumb(expandedImageView, viewHolder.getPhotoView());
+                    Bitmap bmp = null;
+                    try {
+                        int viewSize = UIHelpers.dpToPx(180, SendActivity.this);
+                        bmp = Picasso.with(SendActivity.this)
+                                .load(job.getBitmapFile())
+                                .resize(viewSize, viewSize) //expandedImageView.getWidth(), expandedImageView.getHeight())
+                                .centerCrop()
+                                .get();
+                    } catch (Exception e) {
                     }
+                    final Bitmap finalBmp = bmp;
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            expandedImageView.setImageBitmap(finalBmp);
+                            mRecyclerViewOutbox.getLayoutManager().scrollToPosition(position);
+                            mRecyclerViewOutbox.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    OutboxViewHolder viewHolder = (OutboxViewHolder) mRecyclerViewOutbox.findViewHolderForAdapterPosition(position);
+                                    if (viewHolder != null) {
+                                        zoomImageToThumb(expandedImageView, viewHolder.getPhotoView());
+                                    }
+                                }
+                            });
+                        }
+                    });
                 }
-            });
+            }).start();
         }
     }
 
@@ -832,6 +892,8 @@ public class SendActivity extends ActivityBase implements PhotoAdapter.PhotoAdap
         if (mCurrentAnimator != null) {
             mCurrentAnimator.cancel();
         }
+
+        expandedImageView.setBackgroundColor(Color.TRANSPARENT);
 
         // Calculate the starting and ending bounds for the zoomed-in image.
         // This step involves lots of math. Yay, math.
@@ -882,7 +944,7 @@ public class SendActivity extends ActivityBase implements PhotoAdapter.PhotoAdap
                         1f, startScaleY))
                 .with(ObjectAnimator.ofFloat(expandedImageView, "rounding", 0f, 1f))
                 .with(ObjectAnimator.ofFloat(expandedImageView, "lightFilter", 0f, getResources().getFraction(R.fraction.outbox_lightness_filter, 1, 1)));
-        set.setDuration(mShortAnimationDuration);
+        set.setDuration(8000); //mShortAnimationDuration);
         set.setInterpolator(new DecelerateInterpolator());
         set.addListener(new AnimatorListenerAdapter() {
             @Override

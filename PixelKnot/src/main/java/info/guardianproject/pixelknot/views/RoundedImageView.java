@@ -13,13 +13,18 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.graphics.RectF;
 import android.graphics.Shader;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
+
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
 import info.guardianproject.pixelknot.R;
 
-public class RoundedImageView extends View {
+public class RoundedImageView extends View implements Target {
 
     private Paint mPaint;
     private RectF mViewRect;
@@ -143,6 +148,7 @@ public class RoundedImageView extends View {
             updateLightFilter();
         }
         updateShader();
+        postInvalidate();
     }
 
     @Override
@@ -150,5 +156,20 @@ public class RoundedImageView extends View {
         super.onDraw(canvas);
         if (mPaint != null && mViewRect != null)
             canvas.drawRoundRect(mViewRect, getRounding() * ((float)getWidth() / 2f), getRounding() * ((float)getHeight() / 2f), mPaint);
+    }
+
+    @Override
+    public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom loadedFrom) {
+        setImageBitmap(bitmap);
+    }
+
+    @Override
+    public void onBitmapFailed(Drawable drawable) {
+        Log.d("LOG", "Failed");
+    }
+
+    @Override
+    public void onPrepareLoad(Drawable drawable) {
+
     }
 }

@@ -20,10 +20,19 @@ public class FileManager {
     }
 
     public File createFileForJob(String jobId) throws IOException {
-        File tempFile = File.createTempFile("pixelknot", ".jpg", mDirectory);
+        File tempFile = new File(mDirectory, "pixelknot_" + jobId + ".jpg");
+        if (!tempFile.exists())
+            tempFile.createNewFile();
         if (LOGGING)
             Log.d(LOGTAG, "created file: " + tempFile.getAbsolutePath());
         return tempFile;
+    }
+
+    // Take ownership of the temporary file
+    public File moveInputFileToJob(File file, String jobId) {
+        File newFile = new File(mDirectory, "pixelknot_i_" + jobId + ".jpg");
+        file.renameTo(newFile);
+        return newFile;
     }
 
     private void cleanupFiles() {
