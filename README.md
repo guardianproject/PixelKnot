@@ -1,13 +1,13 @@
 PixelKnot
 =========
 
-image stego app with old school F5 steganography
+PixelKnot is an image stego app with old school F5 steganography.
 
-## Dev Setup
+## Development Setup
 
-Follow these steps to setup your dev environment:
+Follow these steps to setup your development environment:
 
-1. Checkout PixelKnot git repo
+1. Checkout PixelKnot git repository
 2. Init and update git submodules
 
     cd PixelKnot
@@ -17,7 +17,7 @@ Follow these steps to setup your dev environment:
 
    **Using Eclipse**
 
-    Create a new Eclipse workspace in the root directory (PixelKnot) of the repo.
+    Create a new Eclipse workspace in the root directory (PixelKnot) of the repository.
 
     For each of the following directories, "Import -> Android -> Existing Android Code Into Workspace":
 
@@ -31,7 +31,7 @@ Follow these steps to setup your dev environment:
 ## Building from the terminal
 
 The nightly builds and the final release builds are made from the terminal
-using ant and ndk-build.  Here's how it is done:
+using `ant` and `ndk-build`.  Here's how it is done:
 
 0. git clone https://github.com/guardianproject/PixelKnot
 1. cd PixelKnot
