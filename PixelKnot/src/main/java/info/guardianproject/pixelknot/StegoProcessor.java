@@ -7,19 +7,18 @@ import java.util.ArrayList;
 
 import info.guardianproject.f5android.stego.StegoProcessThread;
 
-public class StegoProcessor {
+class StegoProcessor {
     private static final boolean LOGGING = false;
     private static final String LOGTAG = "StegoProcessor";
 
-    private ArrayList<StegoProcessThread> threads = new ArrayList<StegoProcessThread>();
-    private Thread mThisThread;
+    private final ArrayList<StegoProcessThread> threads;
     private boolean mStop = false;
 
     private static final String LOG = StegoProcessor.class.getName();
 
     public StegoProcessor(Context ctx) {
-        threads = new ArrayList<StegoProcessThread>();
-        mThisThread = new Thread() {
+        threads = new ArrayList<>();
+        Thread mThisThread = new Thread() {
             @Override
             public void run() {
                 super.run();

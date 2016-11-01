@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 import info.guardianproject.pixelknot.App;
 import info.guardianproject.pixelknot.ObservableArrayList;
@@ -20,19 +19,19 @@ import info.guardianproject.pixelknot.UIHelpers;
 
 public class OutboxAdapter extends RecyclerView.Adapter<OutboxViewHolder> implements ObservableArrayList.OnChangeListener {
 
-    private ArrayList<StegoEncryptionJob> mEncryptionJobs;
+    private final ArrayList<StegoEncryptionJob> mEncryptionJobs;
 
     public interface OutboxAdapterListener {
         void onOutboxItemClicked(StegoEncryptionJob job);
     }
 
-    private Context mContext;
+    private final Context mContext;
     private OutboxAdapterListener mListener;
 
     public OutboxAdapter(Context context) {
         super();
         mContext = context;
-        mEncryptionJobs = new ArrayList<StegoEncryptionJob>();
+        mEncryptionJobs = new ArrayList<>();
 
         // Listen to changes in underlying data
         App.getInstance().getJobs().setOnChangeListener(this);
@@ -41,9 +40,7 @@ public class OutboxAdapter extends RecyclerView.Adapter<OutboxViewHolder> implem
 
     private void updateList() {
         mEncryptionJobs.clear();
-        Iterator<StegoJob> iter = App.getInstance().getJobs().iterator();
-        while(iter.hasNext()) {
-            StegoJob job = iter.next();
+        for (StegoJob job : App.getInstance().getJobs()) {
             if (job instanceof StegoEncryptionJob)
                 mEncryptionJobs.add((StegoEncryptionJob) job);
         }
@@ -125,7 +122,7 @@ public class OutboxAdapter extends RecyclerView.Adapter<OutboxViewHolder> implem
     }
 
     private class ItemClickListener implements View.OnClickListener {
-        private StegoEncryptionJob mJob;
+        private final StegoEncryptionJob mJob;
 
         public ItemClickListener(StegoEncryptionJob job) {
             mJob = job;

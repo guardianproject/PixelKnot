@@ -7,8 +7,8 @@ import android.widget.ImageView;
 import info.guardianproject.pixelknot.R;
 
 public class PhotoViewHolder extends RecyclerView.ViewHolder {
-    View mRootView;
-    ImageView mPhoto;
+    final View mRootView;
+    final ImageView mPhoto;
 
     public PhotoViewHolder(View itemView) {
         super(itemView);

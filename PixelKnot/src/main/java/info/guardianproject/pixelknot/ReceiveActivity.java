@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.ResultReceiver;
@@ -57,7 +58,6 @@ public class ReceiveActivity extends ActivityBase implements StegoDecryptionJob.
         SHOWING
     }
 
-    ;
     private Mode mCurrentMode = Mode.IDLE;
 
     @Override
@@ -67,7 +67,12 @@ public class ReceiveActivity extends ActivityBase implements StegoDecryptionJob.
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        final ColorDrawable cd = new ColorDrawable(getResources().getColor(R.color.colorPrimary));
+        int color;
+        if (Build.VERSION.SDK_INT >= 23)
+            color = getResources().getColor(R.color.colorPrimary, getTheme());
+        else
+            color = getResources().getColor(R.color.colorPrimary);
+        final ColorDrawable cd = new ColorDrawable(color);
         cd.setAlpha(0);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setBackgroundDrawable(cd);
@@ -134,7 +139,7 @@ public class ReceiveActivity extends ActivityBase implements StegoDecryptionJob.
         try {
             if (mOutputFile != null && mOutputFile.exists())
                 mOutputFile.delete();
-        } catch (Exception e) {
+        } catch (Exception ignored) {
         }
         super.finish();
     }
@@ -148,14 +153,14 @@ public class ReceiveActivity extends ActivityBase implements StegoDecryptionJob.
     }
 
     private void handleIntentData(Intent intent) {
-        if (intent.getType() != null && intent.getType().indexOf("image/") != -1) {
+        if (intent.getType() != null && intent.getType().contains("image/")) {
             Uri uri = null;
             if (intent.getData() != null && intent.getData() instanceof Uri) {
-                uri = (Uri) intent.getData();
+                uri = intent.getData();
             } else if (intent.getDataString() != null) {
                 uri = Uri.parse(intent.getDataString());
             } else if (intent.hasExtra(Intent.EXTRA_STREAM)) {
-                uri = (Uri) intent.getExtras().getParcelable(Intent.EXTRA_STREAM);
+                uri = intent.getExtras().getParcelable(Intent.EXTRA_STREAM);
             } else if (intent.hasExtra(Intent.EXTRA_TEXT)) {
                 uri = Uri.parse(intent.getStringExtra(Intent.EXTRA_TEXT));
             }

@@ -59,7 +59,8 @@
         <provider
             android:name=".PixelKnotContentProvider"
             android:authorities="info.guardianproject.pixelknot"
-            android:exported="true" />
+            android:exported="false"
+            android:grantUriPermissions="true"/>
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="info.guardianproject.pixelknot.camera_capture"

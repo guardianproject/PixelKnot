@@ -8,10 +8,10 @@ import android.widget.TextView;
 import info.guardianproject.pixelknot.R;
 
 public class AlbumViewHolder extends RecyclerView.ViewHolder {
-    View mRootView;
-    TextView mAlbumName;
-    TextView mAlbumCount;
-    ImageView mAlbumThumbnail;
+    final View mRootView;
+    final TextView mAlbumName;
+    final TextView mAlbumCount;
+    final ImageView mAlbumThumbnail;
 
     public AlbumViewHolder(View itemView) {
         super(itemView);

@@ -76,7 +76,7 @@ public class RoundedImageView extends View implements Target {
         update();
     }
 
-    public float getRounding() {
+    private float getRounding() {
         return mRounding;
     }
 
@@ -105,7 +105,7 @@ public class RoundedImageView extends View implements Target {
 
             float dx = 0;
             float dy = 0;
-            float scale = 1f;
+            float scale;
             if (mBitmap.getWidth() * getHeight() > getWidth() * mBitmap.getHeight()) {
                 scale = (float)getHeight() / (float) mBitmap.getHeight();
                 dx = (getWidth() - mBitmap.getWidth() * scale) * 0.5f;

@@ -15,7 +15,7 @@ import info.guardianproject.f5android.plugins.f5.Extract;
 import info.guardianproject.f5android.plugins.f5.james.Jpeg;
 import info.guardianproject.pixelknot.crypto.Aes;
 
-public class StegoDecryptionJob extends StegoJob {
+class StegoDecryptionJob extends StegoJob {
     private static final boolean LOGGING = false;
     private static final String LOGTAG = "StegoDecryptionJob";
 
@@ -23,10 +23,10 @@ public class StegoDecryptionJob extends StegoJob {
         void onProgressUpdate(StegoDecryptionJob job, int percent);
     }
 
-    private DummyListenerActivity mActivity;
+    private final DummyListenerActivity mActivity;
     private String mMessage;
-    private String mPassword;
-    private File mOutputFile;
+    private final String mPassword;
+    private final File mOutputFile;
     private OnProgressListener mOnProgressListener;
 
     public StegoDecryptionJob(IStegoThreadHandler threadHandler, File outputFile, String password) {
@@ -41,7 +41,6 @@ public class StegoDecryptionJob extends StegoJob {
             @SuppressLint("LongLogTag")
             @Override
             public void run() {
-                boolean success = false;
                 try {
                     Extract extract = new Extract(mActivity, mOutputFile, getF5Seed());
                     extract.run();
@@ -94,22 +93,20 @@ public class StegoDecryptionJob extends StegoJob {
         mOnProgressListener = listener;
     }
 
-    public boolean hasPassword() {
-        if(!TextUtils.isEmpty(mPassword))
-            return true;
-        return false;
+    private boolean hasPassword() {
+        return !TextUtils.isEmpty(mPassword);
     }
 
     private String extractPasswordSalt(String from_password) {
-        return from_password.substring((int) (from_password.length()/3), (int) ((from_password.length()/3)*2));
+        return from_password.substring(from_password.length()/3, (from_password.length()/3)*2);
     }
 
     private String extractF5Seed(String from_password) {
-        return from_password.substring((int) ((from_password.length()/3)*2));
+        return from_password.substring((from_password.length()/3)*2);
     }
 
     private String extractPassword(String from_password) {
-        return from_password.substring(0, (int) (from_password.length()/3));
+        return from_password.substring(0, from_password.length()/3);
     }
 
     private String getPassword() {
@@ -136,7 +133,7 @@ public class StegoDecryptionJob extends StegoJob {
     }
 
     @Override
-    protected void setProcessingStatus(ProcessingStatus processingStatus) {
+    void setProcessingStatus(ProcessingStatus processingStatus) {
         super.setProcessingStatus(processingStatus);
         if (mOnProgressListener != null) {
             mOnProgressListener.onProgressUpdate(StegoDecryptionJob.this, getProgressPercent());
@@ -144,7 +141,7 @@ public class StegoDecryptionJob extends StegoJob {
     }
 
     @Override
-    protected void onProgressTick() {
+    void onProgressTick() {
         super.onProgressTick();
         if (mOnProgressListener != null) {
             mOnProgressListener.onProgressUpdate(StegoDecryptionJob.this, getProgressPercent());

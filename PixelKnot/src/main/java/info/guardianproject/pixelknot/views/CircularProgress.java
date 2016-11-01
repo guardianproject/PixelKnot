@@ -100,7 +100,7 @@ public class CircularProgress extends View {
         }
     }
 
-    private Runnable mAnimationRunnable = new Runnable() {
+    private final Runnable mAnimationRunnable = new Runnable() {
         @Override
         public void run() {
             long ms = AnimationUtils.currentAnimationTimeMillis();

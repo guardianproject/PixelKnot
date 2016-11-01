@@ -29,7 +29,7 @@ public class App extends Application implements IStegoThreadHandler {
         super.onCreate();
         mSettings = new Settings(this);
         mFileManager = new FileManager(this);
-        mJobs = new ObservableArrayList<StegoJob>();
+        mJobs = new ObservableArrayList<>();
     }
 
     public Settings getSettings() { return mSettings; }

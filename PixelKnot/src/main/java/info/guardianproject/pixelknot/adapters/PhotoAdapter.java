@@ -25,18 +25,18 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoViewHolder> {
         void onAlbumsSelected();
     }
 
-    private Context mContext;
-    private String mAlbum;
-    private ArrayList<PhotoInfo> mPhotos;
-    private boolean mShowCamera;
-    private boolean mShowAlbums;
+    private final Context mContext;
+    private final String mAlbum;
+    private final ArrayList<PhotoInfo> mPhotos;
+    private final boolean mShowCamera;
+    private final boolean mShowAlbums;
     private PhotoAdapterListener mListener;
 
     public PhotoAdapter(Context context, String album, boolean showCamera, boolean showAlbums) {
         super();
         mContext = context;
         mAlbum = album;
-        mPhotos = new ArrayList<PhotoInfo>();
+        mPhotos = new ArrayList<>();
         mShowCamera = showCamera;
         mShowAlbums = showAlbums;
         getPhotos();
@@ -142,7 +142,7 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoViewHolder> {
                     .fit()
                     .centerCrop()
                     .into(holder.mPhoto);
-        } catch (Exception e) {}
+        } catch (Exception ignored) {}
     }
 
     @Override
@@ -157,8 +157,8 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoViewHolder> {
     }
 
     private class ItemClickListener implements View.OnClickListener {
-        private int mPosition;
-        private View mThumbView;
+        private final int mPosition;
+        private final View mThumbView;
 
         public ItemClickListener(int position, View thumbView) {
             mPosition = position;

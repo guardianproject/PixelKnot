@@ -11,14 +11,14 @@ import info.guardianproject.pixelknot.views.RoundedImageView;
 
 public class OutboxViewHolder extends RecyclerView.ViewHolder {
     StegoEncryptionJob mJob;
-    View mRootView;
-    RoundedImageView mPhoto;
-    TextView mProgressText;
-    TextView mStatusText;
-    CircularProgress mProgress;
-    View mLayoutDone;
-    View mLayoutError;
-    TextView mTimestamp;
+    final View mRootView;
+    final RoundedImageView mPhoto;
+    final TextView mProgressText;
+    final TextView mStatusText;
+    final CircularProgress mProgress;
+    final View mLayoutDone;
+    final View mLayoutError;
+    private final TextView mTimestamp;
 
     public OutboxViewHolder(View itemView) {
         super(itemView);

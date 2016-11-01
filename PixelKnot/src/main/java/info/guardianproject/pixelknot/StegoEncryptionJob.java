@@ -29,11 +29,11 @@ public class StegoEncryptionJob extends StegoJob {
         void onProgressUpdate(StegoEncryptionJob job, int percent);
     }
 
-    private DummyListenerActivity mActivity;
+    private final DummyListenerActivity mActivity;
     private Bitmap mBitmap;
-    private String mImageName;
+    private final String mImageName;
     private String mMessage;
-    private String mPassword;
+    private final String mPassword;
     private File mInputFile;
     private File mOutputFile;
     private FileObserver mOutputFileObserver;
@@ -139,10 +139,8 @@ public class StegoEncryptionJob extends StegoJob {
         mOnProgressListener = listener;
     }
 
-    public boolean hasPassword() {
-        if(!TextUtils.isEmpty(mPassword))
-            return true;
-        return false;
+    private boolean hasPassword() {
+        return !TextUtils.isEmpty(mPassword);
     }
 
     private String extractPasswordSalt(String from_password) {
@@ -256,11 +254,11 @@ public class StegoEncryptionJob extends StegoJob {
                     }
                 }
             }
-        } catch (Exception e) {}
+        } catch (Exception ignored) {}
     }
 
     @Override
-    protected void setProcessingStatus(ProcessingStatus processingStatus) {
+    void setProcessingStatus(ProcessingStatus processingStatus) {
         super.setProcessingStatus(processingStatus);
         if (mOnProgressListener != null) {
             mOnProgressListener.onProgressUpdate(StegoEncryptionJob.this, getProgressPercent());
@@ -268,7 +266,7 @@ public class StegoEncryptionJob extends StegoJob {
     }
 
     @Override
-    protected void onProgressTick() {
+    void onProgressTick() {
         super.onProgressTick();
         if (mOnProgressListener != null) {
             mOnProgressListener.onProgressUpdate(StegoEncryptionJob.this, getProgressPercent());

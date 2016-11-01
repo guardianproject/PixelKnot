@@ -115,7 +115,7 @@ public class SendActivity extends ActivityBase implements PhotoAdapter.PhotoAdap
     private RecyclerView mRecyclerViewOutbox;
     private OutboxAdapter mOutboxAdapter;
 
-    private Handler mHandler = new Handler();
+    private final Handler mHandler = new Handler();
     private MenuItem mMenuItemDone;
 
     @Override
@@ -143,7 +143,12 @@ public class SendActivity extends ActivityBase implements PhotoAdapter.PhotoAdap
         mMessage.setLines(1); // desired number of lines
         mMessage.setMaxLines(5);
         mMessage.setHorizontallyScrolling(false);
-        mMessage.setHighlightColor(getResources().getColor(R.color.colorAccent));
+        int colorAccent;
+        if (Build.VERSION.SDK_INT >= 23)
+            colorAccent = getResources().getColor(R.color.colorAccent, getTheme());
+        else
+            colorAccent = getResources().getColor(R.color.colorAccent);
+        mMessage.setHighlightColor(colorAccent);
         mMessage.setOnBackListener(new FadingEditText.OnBackListener() {
             @Override
             public boolean onBackPressed(FadingEditText textView) {
@@ -166,7 +171,7 @@ public class SendActivity extends ActivityBase implements PhotoAdapter.PhotoAdap
         mLayoutPassword = findViewById(R.id.layout_password);
 
         mPassword = (FadingPasswordEditText) findViewById(R.id.secret_password);
-        mPassword.setHighlightColor(getResources().getColor(R.color.colorAccent));
+        mPassword.setHighlightColor(colorAccent);
         mPassword.setOnBackListener(new FadingEditText.OnBackListener() {
             @Override
             public boolean onBackPressed(FadingEditText textView) {
@@ -261,10 +266,9 @@ public class SendActivity extends ActivityBase implements PhotoAdapter.PhotoAdap
         if (intent.hasExtra("showTab")) {
             try {
                 mTabs.getTabAt(intent.getIntExtra("showTab", 0)).select();
-            } catch (Exception e) {
+            } catch (Exception ignored) {
             }
-            ;
-        } else if (intent.hasExtra("share") && intent.getBooleanExtra("share", false) == true) {
+        } else if (intent.hasExtra("share") && intent.getBooleanExtra("share", false)) {
             Log.d(LOGTAG, "Share");
         }
     }
@@ -286,7 +290,6 @@ public class SendActivity extends ActivityBase implements PhotoAdapter.PhotoAdap
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     applyCurrentMode();
                 }
-                return;
             }
         }
     }
@@ -360,8 +363,8 @@ public class SendActivity extends ActivityBase implements PhotoAdapter.PhotoAdap
                         mSelectedImageFile.delete();
                 }
                 mSelectedImageFile = App.getInstance().getFileManager().createFileForJob("selected_" + UUID.randomUUID().toString());
-                InputStream is = null;
-                if (uri.getScheme() == "content")
+                InputStream is;
+                if (uri.getScheme() != null && uri.getScheme().contentEquals("content"))
                     is = getContentResolver().openInputStream(uri);
                 else
                     is = new FileInputStream(new File(uri.toString()));
@@ -485,7 +488,7 @@ public class SendActivity extends ActivityBase implements PhotoAdapter.PhotoAdap
                         image);
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
                 startActivityForResult(takePictureIntent, CAPTURE_IMAGE_REQUEST);
-            } catch (IOException ex) {
+            } catch (IOException ignored) {
             }
         }
     }
@@ -500,7 +503,7 @@ public class SendActivity extends ActivityBase implements PhotoAdapter.PhotoAdap
                     onPhotoSelected(image.getAbsolutePath(), null);
                     image.delete();
                 }
-            } catch (Exception ex) {
+            } catch (Exception ignored) {
             }
         } else if (requestCode == SHARE_REQUEST) {
             // Only remove if we really shared
@@ -861,7 +864,7 @@ public class SendActivity extends ActivityBase implements PhotoAdapter.PhotoAdap
                                 .resize(viewSize, viewSize)
                                 .centerCrop()
                                 .get();
-                    } catch (Exception e) {
+                    } catch (Exception ignored) {
                     }
                     final Bitmap finalBmp = bmp;
                     runOnUiThread(new Runnable() {
@@ -1046,7 +1049,7 @@ public class SendActivity extends ActivityBase implements PhotoAdapter.PhotoAdap
         }
     }
 
-    private Runnable mUpdateTimestampsInOutboxRunnable = new Runnable() {
+    private final Runnable mUpdateTimestampsInOutboxRunnable = new Runnable() {
         @Override
         public void run() {
             LinearLayoutManager lm = (LinearLayoutManager)mRecyclerViewOutbox.getLayoutManager();

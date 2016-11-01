@@ -10,10 +10,10 @@ public class StegoJob {
     private static final boolean LOGGING = false;
     private static final String LOGTAG = "StegoJob";
 
-    private String mId;
-    private Date mCreationDate;
-    protected IStegoThreadHandler mThreadHandler;
-    private ArrayList<StegoJobProcess> mProcesses;
+    private final String mId;
+    private final Date mCreationDate;
+    final IStegoThreadHandler mThreadHandler;
+    private final ArrayList<StegoJobProcess> mProcesses;
     private int mMaxProgressTicks = 0;
     private int mCurrentProgressTick = 0;
     private int mCurrentProcess = 0;
@@ -25,10 +25,10 @@ public class StegoJob {
         ERROR,
         EMBEDDED_SUCCESSFULLY,
         EXTRACTED_SUCCESSFULLY
-    };
+    }
     private ProcessingStatus mProcessingStatus = ProcessingStatus.PROCESSING;
 
-    public StegoJob(IStegoThreadHandler threadHandler) {
+    StegoJob(IStegoThreadHandler threadHandler) {
         mThreadHandler = threadHandler;
         mProcesses = new ArrayList<>();
         mId = UUID.randomUUID().toString();
@@ -53,7 +53,7 @@ public class StegoJob {
         }
     }
 
-    protected void addProcess(Runnable runnable, int numberOfProgressTicks) {
+    void addProcess(Runnable runnable, int numberOfProgressTicks) {
         mProcesses.add(new StegoJobProcess(runnable, numberOfProgressTicks));
         mMaxProgressTicks += numberOfProgressTicks;
     }
@@ -62,7 +62,7 @@ public class StegoJob {
         return mMaxProgressTicks;
     }
 
-    protected void Run() {
+    void Run() {
         mThread = new StegoProcessThread() {
             @Override
             public void run() {
@@ -102,10 +102,10 @@ public class StegoJob {
         try {
             if (getThread() != null)
                 getThread().requestInterrupt();
-        } catch (Exception ex) {}
+        } catch (Exception ignored) {}
     }
 
-    protected void setProcessingStatus(ProcessingStatus processingStatus) {
+    void setProcessingStatus(ProcessingStatus processingStatus) {
         mProcessingStatus = processingStatus;
         if (mProcessingStatus == ProcessingStatus.ERROR) {
             mCurrentProcess = 0; // reset
@@ -113,7 +113,7 @@ public class StegoJob {
         }
     }
 
-    protected void onProgressTick() {
+    void onProgressTick() {
         mCurrentProgressTick++;
     }
 

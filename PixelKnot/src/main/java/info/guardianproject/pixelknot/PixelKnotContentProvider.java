@@ -38,8 +38,8 @@ public class PixelKnotContentProvider extends ContentProvider {
         if (projection == null) {
             projection = DEFAULT_COLUMNS;
         }
-        ArrayList<String> cols = new ArrayList<String>();
-        ArrayList<Object> values = new ArrayList<Object>();
+        ArrayList<String> cols = new ArrayList<>();
+        ArrayList<Object> values = new ArrayList<>();
         int i = 0;
         for (String col : projection) {
             if (OpenableColumns.DISPLAY_NAME.equals(col)) {
@@ -60,8 +60,7 @@ public class PixelKnotContentProvider extends ContentProvider {
         if (TextUtils.isEmpty(jobId))
             return null;
 
-        StegoEncryptionJob job = (StegoEncryptionJob) App.getInstance().getJobById(jobId);
-        return job;
+        return (StegoEncryptionJob) App.getInstance().getJobById(jobId);
     }
 
     @Nullable
@@ -92,8 +91,7 @@ public class PixelKnotContentProvider extends ContentProvider {
         if (job == null)
             return null;
         try {
-            ParcelFileDescriptor pfd = ParcelFileDescriptor.open(job.getOutputFile(), ParcelFileDescriptor.MODE_READ_ONLY);
-            return pfd;
+            return ParcelFileDescriptor.open(job.getOutputFile(), ParcelFileDescriptor.MODE_READ_ONLY);
         } catch (IOException e) {
             throw new FileNotFoundException("Failed to open " + uri.toString());
         }

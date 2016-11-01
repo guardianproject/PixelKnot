@@ -10,7 +10,7 @@ import info.guardianproject.pixelknot.SendActivity;
 
 
 public class AskForPermissionAdapter extends RecyclerView.Adapter<AskForPermissionAdapter.RootViewHolder> {
-    private SendActivity mActivity;
+    private final SendActivity mActivity;
 
     public AskForPermissionAdapter(SendActivity parentActivity) {
         super();
@@ -39,7 +39,7 @@ public class AskForPermissionAdapter extends RecyclerView.Adapter<AskForPermissi
     }
 
     public class RootViewHolder extends RecyclerView.ViewHolder {
-        View mRootView;
+        final View mRootView;
         public RootViewHolder(View itemView) {
             super(itemView);
             this.mRootView = itemView;

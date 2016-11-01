@@ -5,7 +5,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.TypedValue;
 
-public class AlbumLayoutManager extends GridLayoutManager {
+class AlbumLayoutManager extends GridLayoutManager {
 
     private int mColumnWidth;
     private boolean mColumnWidthChanged = true;

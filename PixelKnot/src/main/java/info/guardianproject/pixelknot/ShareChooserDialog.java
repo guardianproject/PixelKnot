@@ -35,10 +35,10 @@ public class ShareChooserDialog extends BottomSheetDialogFragment {
     private ArrayList<ResolveInfo> mTargets;
     private int mParentWidth;
 
-    public final static Set<String> gSafeApps;
+    private final static Set<String> gSafeApps;
     static {
         // package names from appbrain.com
-        HashSet<String> activities = new HashSet<String>();
+        HashSet<String> activities = new HashSet<>();
         activities.add("com.twitter.android"); //, ActivityNames.TWITTER);
         activities.add("com.facebook.katana"); //, ActivityNames.FACEBOOK);
         activities.add("com.google.android.gm"); //, ActivityNames.GMAIL);
@@ -67,7 +67,7 @@ public class ShareChooserDialog extends BottomSheetDialogFragment {
         super();
     }
 
-    public void setListener(ShareChooserDialogListener listener) {
+    private void setListener(ShareChooserDialogListener listener) {
         mListener = listener;
     }
 
@@ -82,7 +82,7 @@ public class ShareChooserDialog extends BottomSheetDialogFragment {
         intent.putExtra(Intent.EXTRA_STREAM, uri);
         intent.setType("image/jpeg");
 
-        mTargets = new ArrayList<ResolveInfo>();
+        mTargets = new ArrayList<>();
         List<ResolveInfo> resInfo = App.getInstance().getPackageManager().queryIntentActivities(intent, 0);
         if (resInfo != null && resInfo.size() > 0) {
             for (ResolveInfo resolveInfo : resInfo) {
@@ -154,9 +154,9 @@ public class ShareChooserDialog extends BottomSheetDialogFragment {
             private ArrayList<Object> mIntents;
 
             RecyclerView.Adapter init(List<ResolveInfo> targetedShareIntents) {
-                mIntents = new ArrayList<Object>();
-                ArrayList<ResolveInfo> safe = new ArrayList<ResolveInfo>();
-                ArrayList<ResolveInfo> unsafe = new ArrayList<ResolveInfo>();
+                mIntents = new ArrayList<>();
+                ArrayList<ResolveInfo> safe = new ArrayList<>();
+                ArrayList<ResolveInfo> unsafe = new ArrayList<>();
                 for (ResolveInfo ri : targetedShareIntents) {
                     if (gSafeApps.contains(ri.activityInfo.packageName)) {
                         safe.add(ri);

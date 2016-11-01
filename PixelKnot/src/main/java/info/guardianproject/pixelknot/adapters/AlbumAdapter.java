@@ -16,6 +16,7 @@ import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Locale;
 
 import info.guardianproject.pixelknot.R;
 
@@ -30,15 +31,15 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumViewHolder> {
         void onPickExternalSelected();
     }
 
-    private Context mContext;
-    private ArrayList<AlbumInfo> mAlbums;
-    private boolean mShowPickExternal;
+    private final Context mContext;
+    private final ArrayList<AlbumInfo> mAlbums;
+    private final boolean mShowPickExternal;
     private AlbumAdapterListener mListener;
 
     public AlbumAdapter(Context context, boolean showPickExternal) {
         super();
         mContext = context;
-        mAlbums = new ArrayList<AlbumInfo>();
+        mAlbums = new ArrayList<>();
         mShowPickExternal = showPickExternal;
         getAlbums();
     }
@@ -115,8 +116,6 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumViewHolder> {
         if (mShowPickExternal) {
             if (position == 0)
                 return 1;
-            else
-                position--;
         }
         return 0;
     }
@@ -147,7 +146,7 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumViewHolder> {
         holder.mRootView.setOnClickListener(new ItemClickListener(position));
         AlbumInfo album = mAlbums.get(position);
         holder.mAlbumName.setText(album.albumName);
-        holder.mAlbumCount.setText(String.format("(%d)", album.count));
+        holder.mAlbumCount.setText(String.format(Locale.getDefault(), "(%d)", album.count));
         try {
             holder.mAlbumThumbnail.setBackgroundResource(0);
             try {
@@ -156,7 +155,7 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumViewHolder> {
                         .fit()
                         .centerCrop()
                         .into(holder.mAlbumThumbnail);
-            } catch (Exception e) {}
+            } catch (Exception ignored) {}
         } catch (Exception e) {
             holder.mAlbumThumbnail.setBackgroundResource(R.drawable.camera_frame);
             holder.mAlbumThumbnail.setImageDrawable(null);
@@ -195,7 +194,7 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumViewHolder> {
     }
 
     private class ItemClickListener implements View.OnClickListener {
-        private int mPosition;
+        private final int mPosition;
 
         public ItemClickListener(int position) {
             mPosition = position;
