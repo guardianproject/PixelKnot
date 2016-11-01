@@ -27,7 +27,7 @@
         android:id="@+id/secret_message"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="top|left|start"
+        android:layout_gravity="top|start"
         android:clipToPadding="true"
         android:gravity="center_vertical"
         android:hint="@string/secret_message_hint"
@@ -66,21 +66,21 @@
                 android:layout_height="wrap_content"
                 android:paddingTop="3dp"
                 android:paddingBottom="3dp"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:text="@string/error_try_again"
                 android:textColor="@android:color/white"
                 android:background="@drawable/edittext_error_background"
                 android:visibility="invisible"
-                android:layout_gravity="left|start" />
+                android:layout_gravity="start" />
         </android.support.design.widget.TextInputLayout>
 
         <Button
             android:id="@+id/btnUnlock"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="right|end"
+            android:layout_gravity="end"
             android:background="@null"
             android:text="@string/unlock"
             android:textColor="@color/colorPrimary" />

@@ -12,6 +12,6 @@
         android:text="Small Text"
         android:id="@+id/tvShare"
         android:textColor="@android:color/black"
-        android:gravity="left|start" />
+        android:gravity="start" />
 
 </LinearLayout>
