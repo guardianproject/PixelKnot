@@ -1,7 +1,9 @@
 package info.guardianproject.pixelknot.adapters;
 
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import info.guardianproject.pixelknot.R;
@@ -30,6 +32,8 @@ public class OutboxViewHolder extends RecyclerView.ViewHolder {
         this.mLayoutDone = itemView.findViewById(R.id.layout_done);
         this.mLayoutError = itemView.findViewById(R.id.layout_error);
         this.mTimestamp = (TextView)itemView.findViewById(R.id.tvTimestamp);
+        ImageView ivSend = (ImageView) itemView.findViewById(R.id.ivSend);
+        DrawableCompat.setAutoMirrored(ivSend.getDrawable(), true);
     }
 
     public RoundedImageView getPhotoView() {

@@ -101,6 +101,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="40dp"
                 android:theme="@style/EnterPasswordHint"
+                app:passwordToggleEnabled="true"
+                app:passwordToggleTint="@null"
+                app:passwordToggleDrawable="@drawable/ic_eye_white_18dp"
                 >
                 <info.guardianproject.pixelknot.views.FadingPasswordEditText
                     android:id="@+id/secret_password"

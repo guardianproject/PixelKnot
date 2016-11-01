@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 
 import com.squareup.picasso.Picasso;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 
 import info.guardianproject.pixelknot.App;
@@ -74,7 +75,9 @@ public class OutboxAdapter extends RecyclerView.Adapter<OutboxViewHolder> implem
                 .resize(viewSize, viewSize)
                 .centerCrop()
                 .into(holder.mPhoto);
-        holder.mProgressText.setText("" + job.getProgressPercent() + "%");
+        NumberFormat format = NumberFormat.getPercentInstance();
+        format.setMaximumFractionDigits(0);
+        holder.mProgressText.setText(format.format((float)job.getProgressPercent() / 100f));
         holder.mStatusText.setText(R.string.tap_to_send);
         holder.mProgress.setMax(100);
         holder.mProgress.setProgress(job.getProgressPercent());
@@ -91,7 +94,9 @@ public class OutboxAdapter extends RecyclerView.Adapter<OutboxViewHolder> implem
                 viewHolder.itemView.post(new Runnable() {
                     @Override
                     public void run() {
-                        viewHolder.mProgressText.setText("" + percent + "%");
+                        NumberFormat format = NumberFormat.getPercentInstance();
+                        format.setMaximumFractionDigits(0);
+                        viewHolder.mProgressText.setText(format.format((float)percent / 100f));
                         viewHolder.mProgress.setProgress(percent);
                         updateBasedOnStatus(viewHolder, job);
                     }

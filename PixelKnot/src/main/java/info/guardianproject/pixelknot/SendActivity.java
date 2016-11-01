@@ -186,7 +186,6 @@ public class SendActivity extends ActivityBase implements PhotoAdapter.PhotoAdap
                 return true;
             }
         });
-        mPassword.setDisclosureIndicator(R.drawable.ic_eye_white_18dp);
         mPassword.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {

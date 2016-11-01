@@ -89,7 +89,6 @@ public class ReceiveActivity extends ActivityBase implements StegoDecryptionJob.
         mMessage.setMovementMethod(LinkMovementMethod.getInstance());
 
         mPassword = (FadingPasswordEditText) findViewById(R.id.secret_password);
-        mPassword.setDisclosureIndicator(R.drawable.ic_eye_primary_18dp);
         mPassword.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
