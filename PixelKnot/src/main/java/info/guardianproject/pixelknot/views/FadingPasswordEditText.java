@@ -9,8 +9,6 @@ import android.text.InputType;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 
-import info.guardianproject.pixelknot.R;
-
 public class FadingPasswordEditText extends FadingEditText {
 
     public FadingPasswordEditText(Context context) {

@@ -13,7 +13,6 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.Rect;
-import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -53,7 +52,6 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.squareup.picasso.Callback;
@@ -67,7 +65,6 @@ import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.UUID;
-import java.util.concurrent.Exchanger;
 
 import info.guardianproject.pixelknot.adapters.AskForPermissionAdapter;
 import info.guardianproject.pixelknot.adapters.OutboxAdapter;

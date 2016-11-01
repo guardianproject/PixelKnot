@@ -5,7 +5,6 @@ import android.content.Context;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 
 public class SquareFrameLayout extends FrameLayout {
     public SquareFrameLayout(Context context) {

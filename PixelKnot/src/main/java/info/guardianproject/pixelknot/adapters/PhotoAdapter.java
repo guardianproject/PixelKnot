@@ -3,7 +3,6 @@ package info.guardianproject.pixelknot.adapters;
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Color;
-import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;

@@ -1,6 +1,5 @@
 package info.guardianproject.pixelknot.adapters;
 
-import android.content.AsyncTaskLoader;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
