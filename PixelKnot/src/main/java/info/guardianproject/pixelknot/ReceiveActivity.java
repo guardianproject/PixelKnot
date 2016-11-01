@@ -10,6 +10,7 @@ import android.os.Handler;
 import android.os.ResultReceiver;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
+import android.text.InputType;
 import android.text.method.LinkMovementMethod;
 import android.text.util.Linkify;
 import android.util.Log;
@@ -129,6 +130,8 @@ public class ReceiveActivity extends ActivityBase implements StegoDecryptionJob.
         }
         mMessage.setText("");
         mPassword.setText("");
+        // Reset to invisible passwords
+        mPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
         setMode(Mode.IDLE);
         handleIntentData(intent);
     }

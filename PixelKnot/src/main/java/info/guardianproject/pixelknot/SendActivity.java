@@ -24,6 +24,7 @@ import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
@@ -33,6 +34,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.text.Editable;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -177,6 +179,8 @@ public class SendActivity extends ActivityBase implements PhotoAdapter.PhotoAdap
             public boolean onBackPressed(FadingEditText textView) {
                 clearStatusFlag(FLAG_MESSAGE_SET);
                 mPassword.setText("");
+                // Reset to invisible passwords
+                mPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
                 mMessage.post(new Runnable() {
                     @Override
                     public void run() {
@@ -191,6 +195,8 @@ public class SendActivity extends ActivityBase implements PhotoAdapter.PhotoAdap
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_NULL || actionId == EditorInfo.IME_ACTION_DONE) {
                     if (mPassword.length() >= Constants.PASSPHRASE_MIN_LENGTH || mPassword.length() == 0) {
+                        // Reset to invisible passwords
+                        mPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
                         onClick(mBtnPasswordSet);
                         return false;
                     }
