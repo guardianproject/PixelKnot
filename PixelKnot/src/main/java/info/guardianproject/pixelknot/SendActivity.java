@@ -86,6 +86,8 @@ public class SendActivity extends ActivityBase implements PhotoAdapter.PhotoAdap
     private static final int SHARE_REQUEST = 3;
     private static final int SELECT_FROM_ALBUMS_REQUEST = 4;
 
+    private static final String CAMERA_CAPTURE_FILENAME = "cameracapture";
+
     private CoordinatorLayout mRootView;
     private TabLayout mTabs;
     private RecyclerView mRecyclerView;
@@ -482,7 +484,7 @@ public class SendActivity extends ActivityBase implements PhotoAdapter.PhotoAdap
 
             try {
                 File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-                File image = new File(storageDir, "cameracapture");
+                File image = new File(storageDir, CAMERA_CAPTURE_FILENAME);
                 if (image.exists()) {
                     image.delete();
                 }
@@ -503,7 +505,7 @@ public class SendActivity extends ActivityBase implements PhotoAdapter.PhotoAdap
         if (requestCode == CAPTURE_IMAGE_REQUEST && resultCode == RESULT_OK) {
             try {
                 File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-                File image = new File(storageDir, "cameracapture");
+                File image = new File(storageDir, CAMERA_CAPTURE_FILENAME);
                 if (image.exists()) {
                     onPhotoSelected(image.getAbsolutePath(), null);
                     image.delete();
@@ -612,7 +614,7 @@ public class SendActivity extends ActivityBase implements PhotoAdapter.PhotoAdap
 
     private void doCreateEncryptionJob() {
         String imageName = mSelectedImageName;
-        if (TextUtils.isEmpty(imageName)) {
+        if (TextUtils.isEmpty(imageName) || CAMERA_CAPTURE_FILENAME.contentEquals(imageName)) {
             imageName = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date()) + ".jpg";
         }
         StegoEncryptionJob job = new StegoEncryptionJob(App.getInstance(), mSelectedImageFile, imageName, mMessage.getText().toString(), mPassword.getText().toString());
