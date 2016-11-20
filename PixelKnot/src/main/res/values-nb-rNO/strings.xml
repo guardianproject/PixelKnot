@@ -1,0 +1,57 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <string name="app_name">PikselKnop</string>
+  <string name="title_new">Ny</string>
+  <string name="title_albums">Album</string>
+  <string name="action_done">Ferdig</string>
+  <string name="action_albums">Vis album</string>
+  <string name="action_pick_external">Plukk fra eksternt program</string>
+  <string name="action_pick_external_album_name">Annet</string>
+  <string name="gallery_info_message">Trykk på et bilde for å igangsette inkorporering av en skjult beskjed</string>
+  <string name="gallery_info_ok">Skjønner</string>
+  <string name="gallery_need_permission">Ditt samtykke i å dele tilgang til bilder med PikselKnop behøves. Trykk hvor som helst for å tillate det.</string>
+  <string name="secret_message_hint">Skriv din melding…</string>
+  <string name="secret_password_hint">Velg et meldingspassord</string>
+  <string name="secret_password_minlength_info">Det må være ihvertfall %d tegn langt.</string>
+  <string name="secret_password_too_short">For kort</string>
+  <string name="password_skip">Hopp over</string>
+  <string name="password_set">Sett</string>
+  <string name="confirm_passphrase_override_title">Hopp over passord?</string>
+  <string name="confirm_passphrase_override">Uten å beskytte ditt bilde med ett passord, vil din hemmelige melding bli oppdaget hvis den blir snappet opp.</string>
+  <string name="confirm_passphrase_override_back">Gå tilbake</string>
+  <string name="confirm_passphrase_override_continue">Fortsett</string>
+  <string name="message_encrypting_title">Nesten ferdig!</string>
+  <string name="message_encrypting">Din melding blir nå skjult. Dette vil ta et par minutter. Du får beskjed når den er klar til forsendelse.</string>
+  <string name="image_sent_title">Fortell dem at den kommer!</string>
+  <string name="image_sent">Din mottaker må åpne bildet med PikselKnop for å lese din melding.</string>
+  <string name="tap_to_send">Trykk for å sende</string>
+  <string name="tap_to_retry">Feil, trykk for å prøve igjen</string>
+  <string name="sending">Sender…</string>
+  <string name="dont_show_again">Ikke vis igjen.</string>
+  <string name="unsafe_share_title">Usikker deling</string>
+  <string name="unsafe_share">Ikke bra for komprimerte bilder, osv.</string>
+  <string name="outbox_item_deleted">Bilde slettet</string>
+  <string name="outbox_item_deleted_undo">Angre</string>
+  <string name="outbox_item_created_recently">Opprettet for mindre enn ett minutt siden</string>
+  <string name="outbox_item_created_minutes">Opprettet for %1$d minutter siden</string>
+  <string name="outbox_item_created_minute">Opprettet for %1$d minutt siden</string>
+  <string name="outbox_item_created_hours">Opprettet for %1$d timer siden</string>
+  <string name="outbox_item_created_hour">Opprettet for %1$d time siden</string>
+  <string name="outbox_item_created_days">Opprettet for %1$d dager siden</string>
+  <string name="outbox_item_created_day">Opprettet for %1$d dag siden</string>
+  <string name="notification_message_ready">Melding klar</string>
+  <string name="notification_messages_ready">%d meldinger klare</string>
+  <!--Receiver-->
+  <string name="enter_message_password">Skriv inn meldingspassord</string>
+  <string name="unlock">Lås opp</string>
+  <string name="extracting_message">Henter inn din melding</string>
+  <string name="error_try_again">Prøv igjen</string>
+  <string name="chooser_title_share">Del med</string>
+  <string name="chooser_share_safe">Programmer som vil fungere</string>
+  <string name="chooser_share_unsafe">Programmer som kan fungere</string>
+  <!--APG related-->
+  <string name="apg_error_activity_not_found">Fant ingen passende applikasjon for å utøve denne funksjonen.</string>
+  <string name="apg_error_apg_version_not_supported">Installert APG-versjon ikke støttet.</string>
+  <string name="unknown_crypto_signature_user_id">&lt;ukjent&gt;</string>
+  <string name="insufficient_apg_permissions">Dette programmet har ikke full tilgang til APG, reinstaller det for å ordne opp.</string>
+</resources>

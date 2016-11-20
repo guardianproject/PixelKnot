@@ -1,0 +1,57 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <string name="app_name">PixelKnot</string>
+  <string name="title_new">Nouveau</string>
+  <string name="title_albums">Albums</string>
+  <string name="action_done">Terminé</string>
+  <string name="action_albums">Afficher les albums</string>
+  <string name="action_pick_external">Choisir d\'une appli extérieure</string>
+  <string name="action_pick_external_album_name">Autre</string>
+  <string name="gallery_info_message">Toquer sur une photo pour lancer la création d\'un message caché</string>
+  <string name="gallery_info_ok">Très bien</string>
+  <string name="gallery_need_permission">Nous avons besoin de votre permission pour accéder à vos photos. Veuillez toquer n\'importe où pour l\'autoriser.</string>
+  <string name="secret_message_hint">Rédiger votre message...</string>
+  <string name="secret_password_hint">Définir un mot de passe pour le message</string>
+  <string name="secret_password_minlength_info">Il doit comprendre au moins %d caractères.</string>
+  <string name="secret_password_too_short">Trop court</string>
+  <string name="password_skip">Ignorer</string>
+  <string name="password_set">Définir</string>
+  <string name="confirm_passphrase_override_title">Ignorer le mot de passe ?</string>
+  <string name="confirm_passphrase_override">Sans protéger votre image par mot de passe, votre message secret pourrait être découvert s\'il est intercepté.</string>
+  <string name="confirm_passphrase_override_back">Retour</string>
+  <string name="confirm_passphrase_override_continue">Poursuivre</string>
+  <string name="message_encrypting_title">Presque fini !</string>
+  <string name="message_encrypting">Nous dissimulons votre message. Cela prendra quelques minutes. Nous vous avertirons quand il sera prêt à envoyer.</string>
+  <string name="image_sent_title">Dites-leur que ça vient !</string>
+  <string name="image_sent">Votre destinataire doit ouvrir l\'image avec Pixelknot  afin de lire votre message.</string>
+  <string name="tap_to_send">Toquer pour envoyer</string>
+  <string name="tap_to_retry">Erreur, toquer pour ressayer</string>
+  <string name="sending">Envoi...</string>
+  <string name="dont_show_again">Ne plus afficher.</string>
+  <string name="unsafe_share_title">Partage risqué</string>
+  <string name="unsafe_share">N\'est pas approprié pour les images compressées, etc.</string>
+  <string name="outbox_item_deleted">L\'image a été supprimée</string>
+  <string name="outbox_item_deleted_undo">Annuler</string>
+  <string name="outbox_item_created_recently">Créé il y a moins d\'une minute</string>
+  <string name="outbox_item_created_minutes">Créé il y a %1$d minutes</string>
+  <string name="outbox_item_created_minute">Créé il y a %1$d minute</string>
+  <string name="outbox_item_created_hours">Créé il y a %1$d heures</string>
+  <string name="outbox_item_created_hour">Créé il y a %1$d heure</string>
+  <string name="outbox_item_created_days">Créé il y a %1$d jours</string>
+  <string name="outbox_item_created_day">Créé il y a %1$d jour</string>
+  <string name="notification_message_ready">Le message est prêt</string>
+  <string name="notification_messages_ready">%d messages sont prêts</string>
+  <!--Receiver-->
+  <string name="enter_message_password">Saisir le mot de passe du message</string>
+  <string name="unlock">Déverrouiller</string>
+  <string name="extracting_message">Récupération de votre message</string>
+  <string name="error_try_again">Ressayer</string>
+  <string name="chooser_title_share">Partager avec</string>
+  <string name="chooser_share_safe">Les applis qui fonctionneront</string>
+  <string name="chooser_share_unsafe">Les applis qui fonctionneront peut-être</string>
+  <!--APG related-->
+  <string name="apg_error_activity_not_found">Aucune application appropriée trouvée pour cette action.</string>
+  <string name="apg_error_apg_version_not_supported">La version d\'APG installée n\'est pas prise en charge.</string>
+  <string name="unknown_crypto_signature_user_id">&lt;inconnu&gt;</string>
+  <string name="insufficient_apg_permissions">Cette appli n\'a pas d\'accès complet à APG. Veuillez réinstaller l\'appli pour corriger ce problème.</string>
+</resources>
