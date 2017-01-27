@@ -75,8 +75,14 @@ public class StegoEncryptionJob extends StegoJob {
             addProcess(new Runnable() {
                 @Override
                 public void run() {
-                    Map.Entry<String, String> pack = Aes.EncryptWithPassword(getPassword(), mMessage, getPasswordSalt()).entrySet().iterator().next();
-                    mMessage = Constants.PASSWORD_SENTINEL.concat(new String(pack.getKey())).concat(pack.getValue());
+                    try {
+                        Map.Entry<String, String> pack = Aes.EncryptWithPassword(getPassword(), mMessage, getPasswordSalt()).entrySet().iterator().next();
+                        mMessage = Constants.PASSWORD_SENTINEL.concat(new String(pack.getKey())).concat(pack.getValue());
+                    } catch (Exception e) {
+                        Log.e(Jpeg.LOG, e.toString());
+                        e.printStackTrace();
+                        abortJob();
+                    }
                     onProgressTick();
                 }
             }, 1);
