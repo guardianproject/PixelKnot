@@ -5,10 +5,12 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.content.ClipData;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Point;
@@ -66,6 +68,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 import info.guardianproject.pixelknot.adapters.AskForPermissionAdapter;
@@ -86,6 +89,7 @@ public class SendActivity extends ActivityBase implements PhotoAdapter.PhotoAdap
     private static final int SHARE_REQUEST = 3;
     private static final int SELECT_FROM_ALBUMS_REQUEST = 4;
 
+    private static final String CAMERA_CAPTURE_DIRNAME = "camera";
     private static final String CAMERA_CAPTURE_FILENAME = "cameracapture";
 
     private CoordinatorLayout mRootView;
@@ -298,6 +302,7 @@ public class SendActivity extends ActivityBase implements PhotoAdapter.PhotoAdap
                     applyCurrentMode();
                 }
             }
+            break;
         }
     }
 
@@ -483,7 +488,10 @@ public class SendActivity extends ActivityBase implements PhotoAdapter.PhotoAdap
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
 
             try {
-                File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+                File storageDir = new File(getCacheDir(), CAMERA_CAPTURE_DIRNAME);
+                if (!storageDir.exists()) {
+                    storageDir.mkdir();
+                }
                 File image = new File(storageDir, CAMERA_CAPTURE_FILENAME);
                 if (image.exists()) {
                     image.delete();
@@ -494,6 +502,31 @@ public class SendActivity extends ActivityBase implements PhotoAdapter.PhotoAdap
                         "info.guardianproject.pixelknot.camera_capture",
                         image);
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+
+                // Need to grant uri permissions, see here:
+                // http://stackoverflow.com/questions/33650632/fileprovider-not-working-with-camera
+                if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.LOLLIPOP) {
+                    takePictureIntent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+                }
+                else if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.JELLY_BEAN) {
+                    ClipData clip=
+                            ClipData.newUri(getContentResolver(), "A photo", photoURI);
+
+                    takePictureIntent.setClipData(clip);
+                    takePictureIntent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+                }
+                else {
+                    List<ResolveInfo> resInfoList=
+                            getPackageManager()
+                                    .queryIntentActivities(takePictureIntent, PackageManager.MATCH_DEFAULT_ONLY);
+
+                    for (ResolveInfo resolveInfo : resInfoList) {
+                        String packageName = resolveInfo.activityInfo.packageName;
+                        grantUriPermission(packageName, photoURI,
+                                Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+                    }
+                }
+
                 startActivityForResult(takePictureIntent, CAPTURE_IMAGE_REQUEST);
             } catch (IOException ignored) {
             }
@@ -504,7 +537,7 @@ public class SendActivity extends ActivityBase implements PhotoAdapter.PhotoAdap
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == CAPTURE_IMAGE_REQUEST && resultCode == RESULT_OK) {
             try {
-                File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+                File storageDir = new File(getCacheDir(), CAMERA_CAPTURE_DIRNAME);
                 File image = new File(storageDir, CAMERA_CAPTURE_FILENAME);
                 if (image.exists()) {
                     onPhotoSelected(image.getAbsolutePath(), null);
@@ -1039,7 +1072,7 @@ public class SendActivity extends ActivityBase implements PhotoAdapter.PhotoAdap
     }
 
     private void onJobSent(StegoJob job) {
-        if (!App.getInstance().getSettings().skipSentDialog()) {
+        if (!App.getInstance().getSettings().skipSentDialog() && !isFinishing() && !isDestroyed()) {
             AlertDialog.Builder alert = new AlertDialog.Builder(this).setTitle(R.string.image_sent_title).setMessage(R.string.image_sent);
             final View view = LayoutInflater.from(this).inflate(R.layout.dialog_sent, null, false);
             alert.setView(view);
