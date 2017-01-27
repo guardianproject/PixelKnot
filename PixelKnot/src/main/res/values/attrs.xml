@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="ColorFilterImageView">
+        <attr name="filterCurrent" format="float" />
+        <attr name="filterStartColor" format="reference|color" />
+        <attr name="filterEndColor" format="reference|color" />
+    </declare-styleable>
+
+    <declare-styleable name="RoundedImageView">
+        <attr name="rounding" format="float" />
+        <attr name="lightFilter" format="reference|fraction" />
+    </declare-styleable>
+
+    <declare-styleable name="CircularProgress">
+        <attr name="colorBackground" format="reference|color" />
+        <attr name="colorProgress" format="reference|color" />
+        <attr name="thickness" format="dimension" />
+    </declare-styleable>
+</resources>
