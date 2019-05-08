@@ -34,3 +34,7 @@ app/src/preprocessed/
 build.xml
 .DS_Store
 *~
+
+# Fastlane
+/fastlane/report.xml
+/fastlane/README.md
