@@ -1,6 +1,3 @@
-PixelKnot Play Store, kuvaus
-
-
 Onko sinulla jokin salaisuus jonka tahtoisit jakaa? Miksi et kätkisi sitä kuvaan? PixelKnot'in avulla vain ystäväsi voivat lukea lähettämäsi viestin salasanan avulla. Kaikki muut näkevät vain kauniin kuvan. Koe helppo ja hauska tapa jakaa piilotettuja viestejä kenenkään tietämättä. Ota pikselit haltuun, väännä ne solmuun ja näe itse!
 
 
@@ -12,7 +9,7 @@ Tämän tiedonpiilotusapplikaation ominaisuuksiin kuuluu:
 *MATEMAATTISESTI SALATTU: Käytämme viestin piilottamiseen algoritmiä F5 jonka koodikaava on tehokas työkalu hajauttamaan muutokset tasaisesti koko kuvaan.
 *HYÖKKÄYKSEN KESTÄVÄ: Olemme testanneet kuvia joihin on kätketty viestejä ohjelmilla, jotka on erityisesti suunniteltu havaitsemaan steganografista sisältöä kuvista.
 *MAINOSVAPAA: Tahdomme tukesi, emme rahojasi.
-*PUHUMME KIELTÄSI: PixelKnot on saatavilla ystäville jotka puhuvat monia kieliä. Etkö löydä omaasi? Liity ja auta kääntämään sovellus omalle kielellesi: https://www.transifex.com/projects/p/pixelknot/
+*PUHUMME KIELTÄSI: PixelKnot on saatavilla ystäville jotka puhuvat monia kieliä. Etkö löydä omaasi? Liity ja auta kääntämään sovellus omalle kielellesi: https://hosted.weblate.org/projects/guardianproject
 
 
 

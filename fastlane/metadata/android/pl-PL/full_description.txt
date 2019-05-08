@@ -12,7 +12,7 @@ Co możesz zrobić za pomocą naszej aplikacji:
 * MATHEMATICALLY SECURE: We use the steganography algorithm F5 which implements matrix encoding to improve the efficiency of embedding and employs permutative straddling to uniformly spread out the changes over the whole steganogram.
 * ATTACK RESISTANT: We’ve tested discovery on images with messages hidden in them using a specialized version of stegdetect, an automated tool for detecting steganographic content in images.
 * BEZ REKLAM: Chcemy byś nas polubił, a nie nam płacił.
-* MÓWIMY W TWOIM JĘZYKU: PixelKnot jest dostępny w wielu językach. Nie widzisz swojego? Dołącz do nas i pomóż nam tłumaczyć aplikację: https://www.transifex.com/projects/p/pixelknot/
+* MÓWIMY W TWOIM JĘZYKU: PixelKnot jest dostępny w wielu językach. Nie widzisz swojego? Dołącz do nas i pomóż nam tłumaczyć aplikację: https://hosted.weblate.org/projects/guardianproject
 
 
 

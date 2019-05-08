@@ -12,7 +12,7 @@ Dette bildestenografiprogrammet inneholder:
 * MATEMATISK SIKKER: Vi bruker stenografialgoritmen F5, som implementerer matrise-koding for å forbedre effektiviteten av innbakingen. Mønsterbokkode med flere forvalg er brukt for å uniformt spre endringer over hele stenografiet.
 * ANGREPSRESISTANT: Vi har kjørt oppdagelsesforsøk på hemmelige meldinger med en spesialisert versjon av stegdetect, et automatisert verktøy for å oppdage stenografisk innhold i bilder.
 * REKLAMEFRI: Vi vil ha din kjærlighet, ikke pengene dine.
-* VI SNAKKER DITT SPRÅK: PikselKnop er lesbart for mange og enhver. Hvis du ikke ser ditt språk kan du hjelpe til med oversettingen: https://www.transifex.com/projects/p/pixelknot/
+* VI SNAKKER DITT SPRÅK: PikselKnop er lesbart for mange og enhver. Hvis du ikke ser ditt språk kan du hjelpe til med oversettingen: https://hosted.weblate.org/projects/guardianproject
 
 
 

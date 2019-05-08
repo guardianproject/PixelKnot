@@ -1,44 +1,28 @@
-PixelKnot - Play Store-omschrijving
-
-
 Heb je een geheim dat je wil delen? Waarom verberg je het dan niet in een afbeelding? Met PixelKnot kunnen alleen je vrienden, met een geheim wachtwoord, je speciale boodschap ontrafelen; alle anderen zien enkel een mooi plaatje. Het is een leuke en gemakkelijke manier om verborgen berichten te delen zonder dat iemand het doorheeft. Pak die pixels, draai ze in de knoop en ontdek het zelf!
 
-
 Deze afbeeldingsapplicatie voor stenografie beschikt over de volgende functies:
-
 
 * VERMOM JE BERICHTEN: Afbeeldingen zijn openbaar, de tekst zit erin verborgen. Zelfs een getraind oog denkt dat de afbeelding onbewerkt is[a].
 * ALLEEN VOOR JOU BESTEMD: Voeg een wachtwoord toe om er zeker van te zijn dat niemand de boodschap kan lezen behalve door de persoon waarvoor het bedoeld is.
 * WISKUNDIGE VEILIGHEID: Wij gebruiken het steganografie-algoritme F5, welke matrix-codering gebruikt om de efficiëntie te verbeteren van het toevoegen en permutative stradding om de wijzigingen uniform over het gehele steganogram te verspreiden.
 * RESISTENT TEGEN AANVALLEN: Wij hebben het ontdekken van afbeeldingen met boodschappen getest m.b.v. een gespecialiseerde versie van stegdetect, een geautomatiseerd hulpmiddel voor het detecteren van steganografische inhoud in afbeeldingen.
 * GEEN ADVERTENTIES: Wij willen je liefde, niet je geld.
-* WIJ SPREKEN JOUW TAAL: PixelKnot is beschikbaar in vele talen. Zie je jouw taal niet? Help ons dan mee om de app te vertalen: https://www.transifex.com/projects/p/pixelknot/
-
-
+* WIJ SPREKEN JOUW TAAL: PixelKnot is beschikbaar in vele talen. Zie je jouw taal niet? Help ons dan mee om de app te vertalen: https://hosted.weblate.org/projects/guardianproject
 
 De uitgave van PixelKnot bevat een verbeterde gebruikservaring:
-
 
 * EENVOUDIGER DELEN: Het is nu eenvoudiger om PixelKnot-afbeeldingen te delen met apps die jij en je vrienden regelmatig gebruiken. Let op: niet alle diensten voor het delen van foto's kunnen worden gebruikt i.c.m. PixelKnot, omdat bepaalde diensten foto's aanpassen voordat deze verstuurd worden. PixelKnot stelt apps voor die op een juiste manier foto's delen. Je bent echter vrij om je eigen apps toe te voegen.
 * EENVOUDIG VERSTUREN/ONTVANGEN: Wil je een boodschap versturen? Open meteen de PixelKnot-app en PixelKnot leidt je door het proces. Heb je een gedeelde stego-afbeelding ontvangen? Gebruik de ontvang-app om de afbeelding te delen met PixelKnot - deze haalt direct het bericht eruit. 
 * NIEUWE AFBEELDINGSKIEZER: Je kunt je camera gebruiken om je foto te maken of een gemaakte boodschap te kiezen. De nieuwe afbeeldingskiezer ondersteunt alle gebruikelijke mappen voor afbeeldingen en maakt het mogelijk om alternatieve mappen te kiezen (bijvoorbeeld een "privémap", welke gemaakt is door een bijzondere camera-applicatie).
 * VERZENDLIJST: PixelKnot heeft de mogelijkheid om een verzendlijst te maken met afbeeldingen voor verdere verwerking zodat je niet hoeft te wachten op het versleutelen van de boodschap (afhankelijk van de grootte van je afbeelding en lengte van je tekst kan dit meer tijd in beslag nemen).[b]
 
-
-OVER ONS: Guardian Project is een groep ontwikkelaars die zich richt op het ontwikkelen van veilige mobiele apps en open-source code voor een betere toekomst.
-
-
 ONZE WEBSITE: https://guardianproject.info
-
 
 ONZE TWITTER: https://twitter.com/guardianproject
 
-
 OPEN-SOURCE: PixelKnot is vrije software. Je kunt onze broncode bekijken, of helpen de software te verbeteren: https://github.com/guardianproject/pixelknot 
 
-
 STUUR ONS EEN BERICHT: Mis je belangrijke functionaliteit? Heb je een vervelende bug gevonden? Vertel het ons! We willen het graag weten. Stuur ons een e-mail: support@guardianproject.info
-
 
 ***Voorwaarden***
 Het Guardian Project maakt apps die ontworpen zijn om je veiligheid en anonimiteit te beschermen. De protocollen worden gezien als allerbeste in de beveiligingstechnologie. Hoewel wij onze software constant verbeteren om te wapenen tegen de laatste dreigingen en om bugs te verwijderen, is geen enkele technologie 100% waterdicht. Voor maximale veiligheid en anonimiteit moeten gebruikers de beste handelingen uitvoeren om zichzelf te beschermen. PixelKnot is een experimentele app en moet niet worden gebruikt in echte situaties. Je kunt een zelfstudie over deze onderwerpen vinden op https://securityinabox.org

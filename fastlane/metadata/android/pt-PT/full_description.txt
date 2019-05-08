@@ -1,23 +1,15 @@
-Descrição de PixelKnot na Play Store
-
-
 Tem um segredo que pretende partilhar? Porque não ocultá-lo numa imagem? Com o PixelKnot, apenas os seus amigos com a palavra-passe secreta podem desbloquear a sua mensagem especial. Todos os outros veem apenas uma imagem bonita. É uma forma fácil e divertida de partilhar mensagens ocultas sem ninguém desconfiar. Pegue naqueles píxeis, dê-lhes um nó, e veja por si mesmo!
 
-
 Esta aplicação de esteganografia de imagem apresenta:
-
 
 * DISFARCE AS SUAS MENSAGENS: as imagens são públicas, o texto está oculto dentro. Até mesmo um olho treinado irá pensar que a imagem não é editável[a].
 * APENAS PARA OS SEUS OLHOS: coloque uma palavra-passe na mensagem secreta para se certificar que ninguém a pode ler, exceto a pessoa a que esta é destinada.
 * MATEMATICAMENTE SEGURA: nós usamos o algoritmo de estenografia F5 que implementa a codificação matriz para melhorar a eficiência de integração e emprega a operação de permutação para espalhar uniformemente as alterações ao longo de toda a mensagem codificada.
 * RESISTENTE A ATAQUES: nós testámos a descoberta em imagens com mensagens ocultas nas mesmas, usando uma versão especializada de "stegdetect", uma ferramenta automatizada para a deteção de conteúdo de estenografia em imagens.
-* SEM PUBLICIDADE: nós queremos a sua dedicação, não o seu dinheiro.
-* NÓS FALAMOS O SEU IDIOMA:  PixelKnot está disponível para os amigos que falam muitos idiomas. Não vê o seu idioma? Junte-se a nós e ajude a traduzir a aplicação: https://www.transifex.com/projects/p/pixelknot/
-
+* NÓS FALAMOS O SEU IDIOMA:  PixelKnot está disponível para os amigos que falam muitos idiomas. Não vê o seu idioma? Junte-se a nós e ajude a traduzir a aplicação: https://hosted.weblate.org/projects/guardianproject
 
 
 O lançamento de PixelKnot apresenta uma experiência de utilizador melhorada:
-
 
 * PARTILHA MAIS FÁCIL: agora é mais fácil partilhar imagens PixelKnot com as aplicações que você e os seus amigos normalmente usam. Note que nem todos os serviços de partilha de imagem podem ser usados com o PixelKnot porque eles modificam as suas imagens antes de as colocarem na sua plataforma. PixelKnot sugere aplicações que sabe que irão partilhar corretamente, mas é bem-vindo para adicionar os seus próprios serviços.
 * ENVIAR / RECEBER SIMPLIFICADO: Pretende enviar uma mensagem? Abra a aplicação PixelKnot diretamente, e o PixelKnot irá guiá-lo através do processo.  Receber uma imagem esteganograma partilhada? Use a sua aplicação de receção para partilhar a imagem com o PixelKnot - Esta irá tomar conta diretamente da extração da mensagem.
@@ -25,19 +17,9 @@ O lançamento de PixelKnot apresenta uma experiência de utilizador melhorada:
 * FILA DE ENVIO: o PixelKnot permite-lhe colocar em fila uma lista de imagens para processamento, em vez de o forçar a esperar pela encriptação da mensagem para completar (dependendo do tamanho da sua imagem e comprimento do seu texto, isto poderá demorar bastante tempo).[b]
 
 
-SOBRE NÓS: o Projeto Guardian é um grupo de programadores que criam aplicações móveis seguras e de código fonte aberto para um futuro melhor.
-
-
-O NOSSO SITE DA WEB: https://guardianproject.info
-
-
 NO TWITTER: https://twitter.com/guardianproject
 
-
 CÓDIGO ABERTO: o PixelKnot é um software livre. Pode consultar o nosso código fonte, ou aderir à comunidade para ajudar a torná-lo ainda melhor: https://github.com/guardianproject/pixelknot 
-
-
-ENVIE-NOS UMA MENSAGEM: nós não temos a sua funcionalidade favorita? Encontrou um erro incómodo? Por favor, diga-nos! Nós gostaríamos de o ouvir. Envie-nos uma mensagem: support@guardianproject.info
 
 
 ***Limitação de Responsabilidade***

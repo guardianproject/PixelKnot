@@ -1,44 +1,19 @@
-﻿PixelKnot Descriere Magazin Play
-
-
-Ai un secret pe care dorești să-l distribuii? De ce să nu-l ascunzi într-o imagine? Folosind PixelNot doar prietenii tăi care dețin parola secretă pot debloca mesajele tale speciale. Toți ceilalți vor vedea doar o imagine frumoasă. Este distractiv și ușor să distribui mesaje ascunse fără ca cineva să afle. Ia acești pixeli, leagă-i într-un nod și vezi singur ce se întâmplă!
-
+﻿Ai un secret pe care dorești să-l distribuii? De ce să nu-l ascunzi într-o imagine? Folosind PixelNot doar prietenii tăi care dețin parola secretă pot debloca mesajele tale speciale. Toți ceilalți vor vedea doar o imagine frumoasă. Este distractiv și ușor să distribui mesaje ascunse fără ca cineva să afle. Ia acești pixeli, leagă-i într-un nod și vezi singur ce se întâmplă!
 
 This image steganography application features:
-
 
 * ASCUNDE-ȚI MESAJELE TALE: Pozele sunt publice, textul este ascuns înăuntru. Chiar și un ochi exersat va credea că imaginea este needitată[a].
 * DOAR PENTRU OCHII TĂI: Pune o parolă pe mesajul secret ca să fii sigur ca nimeni altcineva înafara de persoana destinată nu va putea citi mesajul.
 * SECURIZAT DIN PUNCT DE VEDERE MATEMATIC: Folosim algoritmul pentru stenografie F5, algoritm care implementeză codarea de tip matrix cu scopul de a îmbunătății eficacitatea de embedding și întrebuințează straddling pentru a împrăștia uniform modificările pe toată suprafața stenogramei.
 * ATTACK RESISTANT: We’ve tested discovery on images with messages hidden in them using a specialized version of stegdetect, an automated tool for detecting steganographic content in images.
 * FĂRĂ RECLAME: Îți vrem dragostea, nu banii.
-* VORBIM LIMBA TA: PixelKnot este disponibilă pentru prietenii care vorbesc mai multe limbi. Nu se regăsește limba ta? Alatură-te și ajută-ne să traducem aplicația: https://www.transifex.com/projects/p/pixelknot/
+* VORBIM LIMBA TA: PixelKnot este disponibilă pentru prietenii care vorbesc mai multe limbi. Nu se regăsește limba ta? Alatură-te și ajută-ne să traducem aplicația: https://hosted.weblate.org/projects/guardianproject
 
+* DESPRE NOI: Guardian Project este un grup de dezvoltatori care crează aplicații mobile sigure și open-source pentru o zi de mâine mai bună.
+* PAGINA NOASTRĂ: https://guardianproject.info
+* PE TWITTER: https://twitter.com/guardianproject
+* OPEN-SOURCE: PixelKnot este software liber. Poți arunca o privire la codul sursă sau te poți alătura comunității pentru a ajuta să devină mai bună: https://github.com/guardianproject/pixelknot 
+* TRIMITE-NE UN MESAJ: își lipsește caracteristica favorită? Ai găsit und bug enervant? Te rog informează-ne! Ne-ar plăcea să îți-i ascultăm părerea. Trimite-ne un email la: support@guardianproject.info
 
-
-The release of PixelKnot features an improved user experience:
-
-
-* EASIER SHARING: It’s now easier to share PixelKnot images with the applications you and your friends commonly use.  Note that not all image sharing services can be used with PixelKnot because they modify your images before posting them to their platform.  PixelKnot suggests apps it knows will share properly, but you’re welcome to add your own.
-* SIMPLIFIED SENDING / RECEIVING: Want to send a message? Open the PixelKnot app directly, and PixelKnot will walk you through the process.  Receiving a shared stego image? Use your receiving app to share the image with PixelKnot - it’ll take care of the message extraction directly.
-* NEW IMAGE CHOOSER:  You can use the camera to take your photo or select from picture you’ve already taken. The new chooser supports all the common image directories and allows you to select a different galleries if needed (such a “private” gallery created by a unique camera application).
-* SEND QUEUE: PixelKnot allows you to queue up a list of images for processing, rather than forcing you to wait for the message encryption to complete (depending on the size of your image and length of your text, this might be time-consuming).[b]
-
-
-DESPRE NOI: Guardian Project este un grup de dezvoltatori care crează aplicații mobile sigure și open-source pentru o zi de mâine mai bună.
-
-
-PAGINA NOASTRĂ: https://guardianproject.info
-
-
-PE TWITTER: https://twitter.com/guardianproject
-
-
-OPEN-SOURCE: PixelKnot este software liber. Poți arunca o privire la codul sursă sau te poți alătura comunității pentru a ajuta să devină mai bună: https://github.com/guardianproject/pixelknot 
-
-
-TRIMITE-NE UN MESAJ: își lipsește caracteristica favorită? Ai găsit und bug enervant? Te rog informează-ne! Ne-ar plăcea să îți-i ascultăm părerea. Trimite-ne un email la: support@guardianproject.info
-
-
-***Disclaimer***
+## Disclaimer
 The Guardian Project crează aplicații care sunt proiectate cu scopul de a-ți proteja securitatea și anonimitatea. Protocolurile folosite sunt încadrate ca fiind de ultimă oră în materie de securitate tehnologică. Deși acutalizăm constat software-ul cu scopul de a combate ultimele tipuri de atacuri și de a elimina bug-urile, nici o tehnologie nu este 100% perfect rezistentă. Pentru un maxim de securitate și anonimitate, utilizatorii trebuie să folosească cele mai bune metode pentru a se afla în siguranță. PixelKnot este încă o aplicație experimentală și nu ar trebuii fii folosită pentru diferite desfășurări în lumea reală. O introduce bună despre această temă se poate găsii la https://securityinabox.org
