@@ -1,0 +1,57 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <string name="app_name">PixelKnot</string>
+  <string name="title_new">Nieuw</string>
+  <string name="title_albums">Albums</string>
+  <string name="action_done">Voltooid</string>
+  <string name="action_albums">Albums tonen</string>
+  <string name="action_pick_external">Ophalen uit externe app</string>
+  <string name="action_pick_external_album_name">Andere</string>
+  <string name="gallery_info_message">Druk op een foto voor het toevoegen van een verborgen boodschap</string>
+  <string name="gallery_info_ok">Ik snap het</string>
+  <string name="gallery_need_permission">We hebben jouw machtiging nodig om toegang te krijgen tot je foto\'s. Druk ergens om dit toe te staan.</string>
+  <string name="secret_message_hint">Schrijf je boodschap...</string>
+  <string name="secret_password_hint">Stel een wachtwoord in voor je boodschap</string>
+  <string name="secret_password_minlength_info">Zorg voor tenminste %d tekens.</string>
+  <string name="secret_password_too_short">Te kort</string>
+  <string name="password_skip">Overslaan</string>
+  <string name="password_set">Instellen</string>
+  <string name="confirm_passphrase_override_title">Wachtwoord overslaan?</string>
+  <string name="confirm_passphrase_override">Als je je afbeelding niet beschermt met een wachtwoord, dan kan je geheime boodschap, indien onderschept, ontdekt worden.</string>
+  <string name="confirm_passphrase_override_back">Ga terug</string>
+  <string name="confirm_passphrase_override_continue">Doorgaan</string>
+  <string name="message_encrypting_title">Bijna klaar!</string>
+  <string name="message_encrypting">We verbergen je bericht. Dit kan enkele minuten duren. We laten je weten wanneer je het kunt versturen. </string>
+  <string name="image_sent_title">Vertel ze dat het eraan komt!</string>
+  <string name="image_sent">Je ontvanger dient de afbeelding te openen met PixelKnot om je boodschap te lezen.</string>
+  <string name="tap_to_send">Druk om te versturen</string>
+  <string name="tap_to_retry">Fout; druk om opnieuw te proberen</string>
+  <string name="sending">Bezig met versturen...</string>
+  <string name="dont_show_again">Niet meer tonen.</string>
+  <string name="unsafe_share_title">Onveilige gedeelde plek</string>
+  <string name="unsafe_share">Niet geschikt voor gecomprimeerde afbeeldingen, etc., etc.</string>
+  <string name="outbox_item_deleted">Afbeelding verwijderd</string>
+  <string name="outbox_item_deleted_undo">Ongedaan maken</string>
+  <string name="outbox_item_created_recently">Minder dan een minuut geleden gemaakt</string>
+  <string name="outbox_item_created_minutes">%1$d minuten geleden gemaakt</string>
+  <string name="outbox_item_created_minute">%1$d minuut geleden gemaakt</string>
+  <string name="outbox_item_created_hours">%1$d uur geleden gemaakt</string>
+  <string name="outbox_item_created_hour">%1$d uur geleden gemaakt</string>
+  <string name="outbox_item_created_days">%1$d dagen geleden gemaakt</string>
+  <string name="outbox_item_created_day">%1$d dag geleden gemaakt</string>
+  <string name="notification_message_ready">Bericht is klaar</string>
+  <string name="notification_messages_ready">%d berichten zijn klaar</string>
+  <!--Receiver-->
+  <string name="enter_message_password">Voer een wachtwoord in voor je bericht</string>
+  <string name="unlock">Ontgrendelen</string>
+  <string name="extracting_message">Bezig met ophalen van je bericht</string>
+  <string name="error_try_again">Opnieuw proberen</string>
+  <string name="chooser_title_share">Delen met</string>
+  <string name="chooser_share_safe">Apps die werken</string>
+  <string name="chooser_share_unsafe">Apps die mogelijk werken</string>
+  <!--APG related-->
+  <string name="apg_error_activity_not_found">Er is geen passende applicatie gevonden voor deze actie.</string>
+  <string name="apg_error_apg_version_not_supported">De geïnstalleerde versie van APG wordt niet ondersteund.</string>
+  <string name="unknown_crypto_signature_user_id">&lt;onbekend&gt;</string>
+  <string name="insufficient_apg_permissions">Deze app is niet gemachtigd om volledig toegang te krijgen tot APG. Herinstalleer de app om dit te herstellen.</string>
+</resources>

@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <string name="title_new">Nou</string>
+  <string name="action_done">Fet</string>
+  <string name="gallery_info_ok">D\'acord</string>
+  <string name="password_skip">Omet</string>
+  <string name="password_set">Col·locar</string>
+  <string name="confirm_passphrase_override_back">Enrere</string>
+  <string name="confirm_passphrase_override_continue">Continuar</string>
+  <!--Receiver-->
+  <string name="unlock">Desbloquejar</string>
+  <!--APG related-->
+</resources>

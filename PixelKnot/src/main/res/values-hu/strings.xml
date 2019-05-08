@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <string name="app_name">PixelKnot</string>
+  <string name="title_new">Új</string>
+  <string name="action_done">Kész </string>
+  <string name="gallery_info_ok">Megvan</string>
+  <string name="password_skip">Kihagy</string>
+  <string name="password_set">Beállít</string>
+  <string name="confirm_passphrase_override_continue">Folytatás</string>
+  <string name="outbox_item_deleted_undo">Visszavon</string>
+  <!--Receiver-->
+  <string name="unlock">Feloldás</string>
+  <!--APG related-->
+  <string name="apg_error_activity_not_found">Nincs megfelelő alkalmazás ehhez a funkcióhoz!</string>
+  <string name="apg_error_apg_version_not_supported">A telepített APG verzió nem támogatott!</string>
+  <string name="unknown_crypto_signature_user_id">&lt;ismeretlen&gt;</string>
+  <string name="insufficient_apg_permissions">Ez az alkalmazás nem rendelkezik teljes APG hozzáféréssel, kérlek telepítsd újra az alkalmazást a javításhoz!</string>
+</resources>

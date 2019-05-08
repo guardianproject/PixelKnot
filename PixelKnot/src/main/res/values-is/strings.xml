@@ -1,0 +1,57 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <string name="app_name">PixelKnot</string>
+  <string name="title_new">Nýtt</string>
+  <string name="title_albums">Albúm</string>
+  <string name="action_done">Lokið</string>
+  <string name="action_albums">Birta albúm</string>
+  <string name="action_pick_external">Ná í úr unaðaðkomandi forriti</string>
+  <string name="action_pick_external_album_name">Annað</string>
+  <string name="gallery_info_message">Bankaðu á mynd til að búa til falin skilaboð</string>
+  <string name="gallery_info_ok">Náði því</string>
+  <string name="gallery_need_permission">Við þurfum að fá aðgang að myndunum þínum. Bankaðu einhversstaðar til að leyfa það.</string>
+  <string name="secret_message_hint">Skrifaðu skilaboðin þín...</string>
+  <string name="secret_password_hint">Settu lykilorð fyrir skilaboðin</string>
+  <string name="secret_password_minlength_info">Hafðu það að minnsta kosti %d stafa langt.</string>
+  <string name="secret_password_too_short">Of stutt</string>
+  <string name="password_skip">Sleppa</string>
+  <string name="password_set">Setja</string>
+  <string name="confirm_passphrase_override_title">Sleppa lykilorði?</string>
+  <string name="confirm_passphrase_override">Ef þú verð ekki myndina þína með lykilorði, er hægt að ráða dulrituðu skilaboðin þín ef einhver nær að komast yfir hana.</string>
+  <string name="confirm_passphrase_override_back">Til baka</string>
+  <string name="confirm_passphrase_override_continue">Halda áfram</string>
+  <string name="message_encrypting_title">Næstum því búið!</string>
+  <string name="message_encrypting">Við erum að fela skilaboðin þín. Það getur tekið nokkrar mínútur. Við munum láta þig vita þegar þau eru tilbúin til sendingar.</string>
+  <string name="image_sent_title">Láttu þá vita að það er að koma!</string>
+  <string name="image_sent">Viðtakandinn verður að opna myndina með Pixelknot til að geta lesið skilaboðin frá þér.</string>
+  <string name="tap_to_send">Bankaðu til að senda</string>
+  <string name="tap_to_retry">Villa, bankaðu til að reyna aftur</string>
+  <string name="sending">Sendi...</string>
+  <string name="dont_show_again">Ekki birta þetta aftur.</string>
+  <string name="unsafe_share_title">Óörugg sameign</string>
+  <string name="unsafe_share">Ekki gott fyrir þjappaðar myndir, o.s.frv.</string>
+  <string name="outbox_item_deleted">Mynd eytt</string>
+  <string name="outbox_item_deleted_undo">Afturkalla</string>
+  <string name="outbox_item_created_recently">Búið til fyrir minna en mínútu síðan</string>
+  <string name="outbox_item_created_minutes">Búið til fyrir %1$d mínútum</string>
+  <string name="outbox_item_created_minute">Búið til fyrir %1$d mínútu síðan</string>
+  <string name="outbox_item_created_hours">Búið til fyrir %1$d klukkustundum síðan</string>
+  <string name="outbox_item_created_hour">Búið til fyrir %1$d klukkustund síðan</string>
+  <string name="outbox_item_created_days">Búið til fyrir %1$d dögum síðan</string>
+  <string name="outbox_item_created_day">Búið til fyrir %1$d degi síðan</string>
+  <string name="notification_message_ready">Skilaboð tilbúin</string>
+  <string name="notification_messages_ready">%d skilaboð tilbúin</string>
+  <!--Receiver-->
+  <string name="enter_message_password">Settu inn lykilorð skilaboðanna</string>
+  <string name="unlock">Aflæsa</string>
+  <string name="extracting_message">Sæki skilaboðin þín</string>
+  <string name="error_try_again">Reyndu aftur</string>
+  <string name="chooser_title_share">Deila með</string>
+  <string name="chooser_share_safe">Forrit sem munu virka</string>
+  <string name="chooser_share_unsafe">Forrit sem gætu virkað</string>
+  <!--APG related-->
+  <string name="apg_error_activity_not_found">Ekkert hentugt forrit fannst til að meðhöndla þessa aðgerð.</string>
+  <string name="apg_error_apg_version_not_supported">Ekki er stuðningur við þá útgáfu af APG sem er uppsett.</string>
+  <string name="unknown_crypto_signature_user_id">&lt;óþekkt&gt;</string>
+  <string name="insufficient_apg_permissions">Þetta forrit er ekki með heimild fyrir fullan aðgang að APG, settu forritið upp aftur til að laga það.</string>
+</resources>

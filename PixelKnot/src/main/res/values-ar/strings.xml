@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <string name="app_name">عقدة البيكسل </string>
+  <string name="title_new">جديد</string>
+  <string name="action_done">انتهى</string>
+  <string name="password_skip">تخطي</string>
+  <string name="password_set">عدّل</string>
+  <string name="confirm_passphrase_override_back">عودة</string>
+  <string name="confirm_passphrase_override_continue">استمرار</string>
+  <string name="outbox_item_deleted_undo">تراجَع</string>
+  <!--Receiver-->
+  <string name="unlock">إلغاء القفل</string>
+  <string name="error_try_again">أعد المحاولة</string>
+  <!--APG related-->
+  <string name="apg_error_activity_not_found">لا يوجد تطبيق ملائم لهذه العملية.</string>
+  <string name="apg_error_apg_version_not_supported">نسخة الـ APG المنصّبة ليست مدعومة.</string>
+  <string name="unknown_crypto_signature_user_id">&lt;مجهول&gt;</string>
+  <string name="insufficient_apg_permissions">لا تملك هذه التطبيقة الصلاحيّة لدخول الـ APG كاملا، من فضلك أعد تنصيبها لإصلاح هذه المشكلة.</string>
+</resources>

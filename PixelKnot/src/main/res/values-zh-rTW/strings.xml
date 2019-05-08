@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <string name="app_name">PixelKnot</string>
+  <string name="title_new">新增</string>
+  <string name="action_done">已完成</string>
+  <string name="action_pick_external_album_name">其它</string>
+  <string name="password_skip">跳過</string>
+  <string name="password_set">設置</string>
+  <string name="confirm_passphrase_override_back">返回</string>
+  <string name="confirm_passphrase_override_continue">繼續</string>
+  <string name="outbox_item_deleted_undo">復原</string>
+  <!--Receiver-->
+  <string name="unlock">解鎖</string>
+  <!--APG related-->
+</resources>

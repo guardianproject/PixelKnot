@@ -1,0 +1,57 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <string name="app_name">PixelKnot</string>
+  <string name="title_new">Новое секретное сообщение</string>
+  <string name="title_albums">Альбомы</string>
+  <string name="action_done">Готово</string>
+  <string name="action_albums">Отобразить альбомы</string>
+  <string name="action_pick_external">Выбрать файл из внешнего приложения</string>
+  <string name="action_pick_external_album_name">Другие</string>
+  <string name="gallery_info_message">Коснитесь фото, чтобы создать секретное сообщение</string>
+  <string name="gallery_info_ok">Понятно</string>
+  <string name="gallery_need_permission">Требуется разрешение для доступа к фотографиям. Коснитесь экрана, чтобы дать это разрешение.</string>
+  <string name="secret_message_hint">Напишите сообщение...</string>
+  <string name="secret_password_hint">Задайте пароль</string>
+  <string name="secret_password_minlength_info">Введите минимум %d символов.</string>
+  <string name="secret_password_too_short">Слишком коротко</string>
+  <string name="password_skip">Пропустить</string>
+  <string name="password_set">Установить</string>
+  <string name="confirm_passphrase_override_title">Точно не нужен пароль?</string>
+  <string name="confirm_passphrase_override">Если не задать пароль, то сообщение смогут прочитать в случае обнаружения</string>
+  <string name="confirm_passphrase_override_back">Назад</string>
+  <string name="confirm_passphrase_override_continue">Продолжить</string>
+  <string name="message_encrypting_title">Почти готово!</string>
+  <string name="message_encrypting">Мы прячем ваше сообщение. Это займёт несколько минут. Мы уведомим вас, как только оно будет готово к отправке</string>
+  <string name="image_sent_title">Сообщите адресату об отправке!</string>
+  <string name="image_sent">Ваш собеседник должен открыть изображение при помощи PixelKnot, чтобы прочитать его.</string>
+  <string name="tap_to_send">Коснитесь для отправки</string>
+  <string name="tap_to_retry">Ошибка. Коснитесь, чтобы попробовать снова</string>
+  <string name="sending">Идёт отправка...</string>
+  <string name="dont_show_again">Не показывать это снова.</string>
+  <string name="unsafe_share_title">Небезопасный метод отправки</string>
+  <string name="unsafe_share">Не подходит для сжатых изображений и т.д.</string>
+  <string name="outbox_item_deleted">Изображение удалено</string>
+  <string name="outbox_item_deleted_undo">Вернуть</string>
+  <string name="outbox_item_created_recently">Создано менее минуты назад</string>
+  <string name="outbox_item_created_minutes">Создано %1$d минут назад</string>
+  <string name="outbox_item_created_minute">Создано %1$d минуту назад</string>
+  <string name="outbox_item_created_hours">Создано %1$d часов назад</string>
+  <string name="outbox_item_created_hour">Создано %1$d час назад</string>
+  <string name="outbox_item_created_days">Создано %1$d дней назад</string>
+  <string name="outbox_item_created_day">Создано %1$d день назад</string>
+  <string name="notification_message_ready">Сообщение готово</string>
+  <string name="notification_messages_ready">%d сообщений готово</string>
+  <!--Receiver-->
+  <string name="enter_message_password">Введите пароль</string>
+  <string name="unlock">Разблокировать</string>
+  <string name="extracting_message">Получаем ваше сообщение</string>
+  <string name="error_try_again">Попробовать снова</string>
+  <string name="chooser_title_share">Поделиться при помощи</string>
+  <string name="chooser_share_safe">Приложения, которые смогут отправить</string>
+  <string name="chooser_share_unsafe">Приложения, которые возможно смогут отправить</string>
+  <!--APG related-->
+  <string name="apg_error_activity_not_found">Не найдено подходящего приложения для выполнения действия.</string>
+  <string name="apg_error_apg_version_not_supported">Установленная версия APG не поддерживается.</string>
+  <string name="unknown_crypto_signature_user_id">&lt;неизвестно&gt;</string>
+  <string name="insufficient_apg_permissions">У приложения не достаточно прав доступа к APG. Пожалуйста, переустановите приложение, чтобы это исправить. </string>
+</resources>

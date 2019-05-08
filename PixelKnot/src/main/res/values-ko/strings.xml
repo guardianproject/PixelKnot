@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <string name="title_new">새로 만들기</string>
+  <string name="action_done">완료</string>
+  <string name="gallery_info_ok">알겠습니다</string>
+  <string name="password_skip">무시</string>
+  <string name="password_set">셋</string>
+  <string name="confirm_passphrase_override_continue">Continue</string>
+  <string name="outbox_item_deleted_undo">실행 취소</string>
+  <!--Receiver-->
+  <string name="unlock">잠금 해제</string>
+  <!--APG related-->
+  <string name="apg_error_activity_not_found">이 작업에 적합한 응용 프로그램이 없습니다.</string>
+</resources>

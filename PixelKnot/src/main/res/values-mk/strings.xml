@@ -1,0 +1,57 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <string name="app_name">PixelKnot</string>
+  <string name="title_new">Ново</string>
+  <string name="title_albums">Албуми</string>
+  <string name="action_done">Готово</string>
+  <string name="action_albums">Покажи албуми</string>
+  <string name="action_pick_external">Одбери од екстерна апликација</string>
+  <string name="action_pick_external_album_name">Друго</string>
+  <string name="gallery_info_message">Допрете слика да почнете со создавање на сокриена порака</string>
+  <string name="gallery_info_ok">Разбирам</string>
+  <string name="gallery_need_permission">Потребнa е дозвола за пристап до вашите слики. Допрете било каде да дозволите.</string>
+  <string name="secret_message_hint">Напишете ја вашата порака...</string>
+  <string name="secret_password_hint">Поставете лозинка</string>
+  <string name="secret_password_minlength_info">Напишете барем %d карактери.</string>
+  <string name="secret_password_too_short">Многу кратко</string>
+  <string name="password_skip">Прескокни</string>
+  <string name="password_set">Постави</string>
+  <string name="confirm_passphrase_override_title">Прескокни лозинка?</string>
+  <string name="confirm_passphrase_override">Без заштитување на твојата слика со лозинка, твојата порака може да биде откриена или пресретната.</string>
+  <string name="confirm_passphrase_override_back">Назад</string>
+  <string name="confirm_passphrase_override_continue">Продолжи</string>
+  <string name="message_encrypting_title">Речиси готово!</string>
+  <string name="message_encrypting">Вашата порака се сокрива. Ова ќе потрае неколку минути. Ќе бидете известени кога ќе биде подготвена за праќање.</string>
+  <string name="image_sent_title">Кажете им дека доаѓа!</string>
+  <string name="image_sent">Примачот мора да ја отвори сликата со Pixelknot за да ја прочита пораката.</string>
+  <string name="tap_to_send">Допрете за праќање</string>
+  <string name="tap_to_retry">Грешкта, допрете пак</string>
+  <string name="sending">Праќање...</string>
+  <string name="dont_show_again">Не појавувај повторно.</string>
+  <string name="unsafe_share_title">Небезбедно споделување</string>
+  <string name="unsafe_share">Не добро за компресирани слики, итн, итн.</string>
+  <string name="outbox_item_deleted">Сликата е избришана</string>
+  <string name="outbox_item_deleted_undo">Врати назад</string>
+  <string name="outbox_item_created_recently">Создадено пред помалку од минута</string>
+  <string name="outbox_item_created_minutes">Создадено пред %1$d минути</string>
+  <string name="outbox_item_created_minute">Создадено пред %1$d минута</string>
+  <string name="outbox_item_created_hours">Создадено пред %1$dчасови</string>
+  <string name="outbox_item_created_hour">Создадено пред %1$d час</string>
+  <string name="outbox_item_created_days">Создадено пред %1$d денови</string>
+  <string name="outbox_item_created_day">Создадено пред %1$d ден</string>
+  <string name="notification_message_ready">Пораката е готова</string>
+  <string name="notification_messages_ready">%d готови пораки</string>
+  <!--Receiver-->
+  <string name="enter_message_password">Внесете лозинка на пораката</string>
+  <string name="unlock">Отклучи</string>
+  <string name="extracting_message">Преземање на пораката</string>
+  <string name="error_try_again">Обидете се повторно</string>
+  <string name="chooser_title_share">Сподели со</string>
+  <string name="chooser_share_safe">Апликации кои ќе работат</string>
+  <string name="chooser_share_unsafe">Апликации кои можеби ќе работат</string>
+  <!--APG related-->
+  <string name="apg_error_activity_not_found">Не е пронајдена соодветна апликација за ова.</string>
+  <string name="apg_error_apg_version_not_supported">Инсталираната APG верзија не е поддржана.</string>
+  <string name="unknown_crypto_signature_user_id">&lt;непознато&gt;</string>
+  <string name="insufficient_apg_permissions">Оваа апликација нема дозвола за целосен пристап до APG, ве моламе преинсталирајте ја апликацијата за да го поправите ова.</string>
+</resources>

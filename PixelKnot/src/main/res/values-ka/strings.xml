@@ -1,0 +1,57 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <string name="app_name">PixelKnot</string>
+  <string name="title_new">ახალი</string>
+  <string name="title_albums">ალბომები</string>
+  <string name="action_done">მზადაა</string>
+  <string name="action_albums">ალბომების ნახვა</string>
+  <string name="action_pick_external">არჩევა გარე აპლიკაციიდან</string>
+  <string name="action_pick_external_album_name">სხვა</string>
+  <string name="gallery_info_message">დააჭირეთ სურათს ან დაიწყეთ მალული შეტყობინების შექმნა</string>
+  <string name="gallery_info_ok">მიღებულია</string>
+  <string name="gallery_need_permission">ჩვენ გვჭირდება სურათების გახსნის უფლება. დააჭირეთ ნებისმიერ ადგილას რომ მოგვცეთ იგი.</string>
+  <string name="secret_message_hint">დაწერეთ თქვენი შეტყობინება</string>
+  <string name="secret_password_hint">დააყენეთ პაროლი შეტყობინებაზე</string>
+  <string name="secret_password_minlength_info">გაზარდეთ არანაკლებ %d სიმბოლომდე</string>
+  <string name="secret_password_too_short">ზედმეტად მოკლეა</string>
+  <string name="password_skip">გამოტოვება</string>
+  <string name="password_set">დაყენება</string>
+  <string name="confirm_passphrase_override_title">პაროლის გამოტოვება?</string>
+  <string name="confirm_passphrase_override">თუ თქვენს სურათს არ დაიცავთ პაროლით, თქვენი შეტყობინება შეიძლება წაიკითხონ არასასულვერმა პირებმა.</string>
+  <string name="confirm_passphrase_override_back">უკან</string>
+  <string name="confirm_passphrase_override_continue">გაგრძელება</string>
+  <string name="message_encrypting_title">ცოტაც და მორჩა!</string>
+  <string name="message_encrypting">მიმდინარეობს შეტყობინების დამალვა. გთხოვთ მოითბინოთ რამდენიმე წუთი. დასრულებისას შეგატყობინებთ.</string>
+  <string name="image_sent_title">უთხარით , რომ გზაშია!</string>
+  <string name="image_sent">შეტყობინების წასაკითხად , მიმღებმა უნდა გახსნას ეს სურათი PixelKnot-ით.</string>
+  <string name="tap_to_send">დააჭირეთ გასაგზავნად</string>
+  <string name="tap_to_retry">მოხდა შეცდომა , თავიდან ცდისთვის დააწირეთ</string>
+  <string name="sending">იგზავნება...</string>
+  <string name="dont_show_again">აღარ აჩვენო.</string>
+  <string name="unsafe_share_title">დაუცველი გაზიარება</string>
+  <string name="unsafe_share">არ არის კარგი შეკუმშული სურაებისათვის, და ა.შ.</string>
+  <string name="outbox_item_deleted">სურათი წაიშალა</string>
+  <string name="outbox_item_deleted_undo">უკან დაბრუნება</string>
+  <string name="outbox_item_created_recently">შეიქმნა არაუმეტეს ერთი წუთის წინ</string>
+  <string name="outbox_item_created_minutes">შეიქმა %1$d წუთის წინ</string>
+  <string name="outbox_item_created_minute">შეიქნა %1$d წუთის წინ</string>
+  <string name="outbox_item_created_hours">შეიქმნა %1$d საათის წინ</string>
+  <string name="outbox_item_created_hour">შეიქმნა %1$d საათის წინ</string>
+  <string name="outbox_item_created_days">შეიქმნა %1$d დღის წინ</string>
+  <string name="outbox_item_created_day">შეიქმნა %1$d დღის წინ</string>
+  <string name="notification_message_ready">შეტყობინება მზადაა</string>
+  <string name="notification_messages_ready">%d შეტყობინებაა მზად</string>
+  <!--Receiver-->
+  <string name="enter_message_password">შეიყვანეთ შეტყობინების პაროლი</string>
+  <string name="unlock">გახსნა</string>
+  <string name="extracting_message">მიმდინარეობს შეტყობინების ამოღება</string>
+  <string name="error_try_again">ცადეთ თავიდან</string>
+  <string name="chooser_title_share">გააზიარე</string>
+  <string name="chooser_share_safe">აპლიცაკიები რომლებიც იმუშსავებს</string>
+  <string name="chooser_share_unsafe">აპლიკაციები რომლებიც ვერ იმუშსავებს</string>
+  <!--APG related-->
+  <string name="apg_error_activity_not_found">ვერ მოიძებნა აპლიკაცია ამ მოქმედებისათვის</string>
+  <string name="apg_error_apg_version_not_supported">ამ სისტემის APG ვერსია არ არის მხარდაჭერილი</string>
+  <string name="unknown_crypto_signature_user_id">&amp;it;უცნობი&amp;gt;</string>
+  <string name="insufficient_apg_permissions">ამ აპლიკაციას არ აქვს APG სრულად გამოყენების უფლება, გთხოვთ თავიდან დაანისტალიროთ ეს აპლიკაცია ამის შესასწორებლად</string>
+</resources>

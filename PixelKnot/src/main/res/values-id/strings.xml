@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <string name="title_new">Baru</string>
+  <string name="action_done">Selesai</string>
+  <string name="password_skip">Lewati</string>
+  <string name="password_set">Set</string>
+  <string name="confirm_passphrase_override_continue">Teruskan</string>
+  <string name="outbox_item_deleted_undo">Undo</string>
+  <!--Receiver-->
+  <string name="unlock">Tidak terkunci</string>
+  <!--APG related-->
+</resources>

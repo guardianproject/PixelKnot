@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <string name="title_new">Novo</string>
+  <string name="action_done">Gotovo</string>
+  <string name="password_skip">Preskoči</string>
+  <string name="confirm_passphrase_override_continue">Nastavi</string>
+  <string name="outbox_item_deleted_undo">Poništi</string>
+  <!--Receiver-->
+  <string name="unlock">Otključaj</string>
+  <!--APG related-->
+</resources>

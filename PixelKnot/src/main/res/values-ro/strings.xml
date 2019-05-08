@@ -1,0 +1,57 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <string name="app_name">PixelKnot</string>
+  <string name="title_new">Nou</string>
+  <string name="title_albums">Albume</string>
+  <string name="action_done">Gata</string>
+  <string name="action_albums">Arată albumele</string>
+  <string name="action_pick_external">Alege dintr-o aplicație externă</string>
+  <string name="action_pick_external_album_name">Altele</string>
+  <string name="gallery_info_message">Apasă pe o poză pentru a crea un mesaj ascuns</string>
+  <string name="gallery_info_ok">Am înteles</string>
+  <string name="gallery_need_permission">Avem nevoie de permisia ta pentru a accesa pozele tale. Te rog apasă oriunde pentru a obține permisiunea.</string>
+  <string name="secret_message_hint">Scrie mesajul tău...</string>
+  <string name="secret_password_hint">Setează o parolă pentru mesaj</string>
+  <string name="secret_password_minlength_info">Asigură-te că are cel puțin %d caractere.</string>
+  <string name="secret_password_too_short">Prea scurtă</string>
+  <string name="password_skip">Omite</string>
+  <string name="password_set">Setează</string>
+  <string name="confirm_passphrase_override_title">Omit parola?</string>
+  <string name="confirm_passphrase_override">Dacă nu protejezi imaginea cu o parolă, mesajul tău secret poate fi descoperit dacă este interceptată.</string>
+  <string name="confirm_passphrase_override_back">Înapoi</string>
+  <string name="confirm_passphrase_override_continue">Continuă</string>
+  <string name="message_encrypting_title">Aproape gata!</string>
+  <string name="message_encrypting">Ascundem acum mesajul tău. Va dura câteva minute. O să te anunțăm când este gata pentru trimitere.</string>
+  <string name="image_sent_title">Spune-le că ajunge acum!</string>
+  <string name="image_sent">Destinatarul tău trebuie să deschidă imaginea cu Pixelknot pentru a citi mesajul tău.</string>
+  <string name="tap_to_send">Apasă pentru a trimite</string>
+  <string name="tap_to_retry">Eroare, apasă pentru a reîncerca</string>
+  <string name="sending">Se trimite...</string>
+  <string name="dont_show_again">Nu mai arăta</string>
+  <string name="unsafe_share_title">Partajare nesigură</string>
+  <string name="unsafe_share">Nepotrivită pentru imagini comprimate, etc etc.</string>
+  <string name="outbox_item_deleted">Imaginea a fost ștearsă</string>
+  <string name="outbox_item_deleted_undo">Undo</string>
+  <string name="outbox_item_created_recently">Creat mai puțin de un minut</string>
+  <string name="outbox_item_created_minutes">Creat acum %1$d minute</string>
+  <string name="outbox_item_created_minute">Creat acum %1$d minut</string>
+  <string name="outbox_item_created_hours">Creat acum %1$d ore</string>
+  <string name="outbox_item_created_hour">Creat acum %1$d oră</string>
+  <string name="outbox_item_created_days">Creat acum %1$d zile</string>
+  <string name="outbox_item_created_day">Creat acum %1$d zi</string>
+  <string name="notification_message_ready">Mesaj pregătit</string>
+  <string name="notification_messages_ready">%d Mesaje Pregătite</string>
+  <!--Receiver-->
+  <string name="enter_message_password">Introdu parola mesajului</string>
+  <string name="unlock">Deblochează</string>
+  <string name="extracting_message">Se obține mesajul tău</string>
+  <string name="error_try_again">Încearcă din nou</string>
+  <string name="chooser_title_share">Partajează cu</string>
+  <string name="chooser_share_safe">Aplicații care vor funcționa</string>
+  <string name="chooser_share_unsafe">Aplicații care s-ar putea să funcționeze</string>
+  <!--APG related-->
+  <string name="apg_error_activity_not_found">Nu a fost gasită nici o aplicație potrivită pentru această acțiune.</string>
+  <string name="apg_error_apg_version_not_supported">Versiunea instalată de APG nu este suportată.</string>
+  <string name="unknown_crypto_signature_user_id">&lt;necunoscut&gt;</string>
+  <string name="insufficient_apg_permissions">Acestă aplicație nu are permisiunea pentru a accesa APG în totalitate, vă rog reinstalați aplicația pentru a rezolva problema.</string>
+</resources>

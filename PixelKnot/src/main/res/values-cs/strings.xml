@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <string name="title_new">Nove</string>
+  <string name="action_done">Hotovo</string>
+  <string name="gallery_info_ok">Chápu</string>
+  <string name="password_skip">Přeskočit</string>
+  <string name="password_set">Nastavit</string>
+  <string name="confirm_passphrase_override_continue">Pokračovat</string>
+  <string name="outbox_item_deleted_undo">Zpět</string>
+  <!--Receiver-->
+  <string name="unlock">Odemknout</string>
+  <!--APG related-->
+</resources>

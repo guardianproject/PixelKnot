@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <string name="title_new">Uusi</string>
+  <string name="action_done">Valmis</string>
+  <string name="gallery_info_ok">Selvä</string>
+  <string name="password_skip">Ohita</string>
+  <string name="password_set">Aseta</string>
+  <string name="confirm_passphrase_override_continue">Jatka</string>
+  <string name="outbox_item_deleted_undo">Kumoa</string>
+  <!--Receiver-->
+  <string name="unlock">Poista lukitus</string>
+  <!--APG related-->
+</resources>

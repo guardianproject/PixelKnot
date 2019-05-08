@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <string name="app_name">PixelKnot</string>
+  <string name="title_new">Ny</string>
+  <string name="action_done">Färdig</string>
+  <string name="password_skip">Hoppa över</string>
+  <string name="password_set">Ställ in</string>
+  <string name="confirm_passphrase_override_back">Tillbaka</string>
+  <string name="confirm_passphrase_override_continue">Fortsätt</string>
+  <string name="outbox_item_deleted_undo">Ångra</string>
+  <!--Receiver-->
+  <string name="unlock">Lås upp</string>
+  <!--APG related-->
+</resources>

@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <string name="app_name">PixelKnot</string>
+  <string name="title_new">Berria</string>
+  <string name="action_done">Eginda</string>
+  <string name="gallery_info_ok">Ulertu dut</string>
+  <string name="password_set">Ezarri</string>
+  <string name="confirm_passphrase_override_continue">Jarraitu</string>
+  <string name="outbox_item_deleted_undo">Desegin</string>
+  <!--Receiver-->
+  <string name="unlock">Desblokeatu</string>
+  <!--APG related-->
+  <string name="unknown_crypto_signature_user_id">&lt;ezezaguna&gt;</string>
+</resources>

@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <string name="action_done">Graet</string>
+  <string name="gallery_info_ok">Deuet eo ganin</string>
+  <string name="password_skip">Lammat</string>
+  <string name="confirm_passphrase_override_continue">Kenderc\'hel</string>
+  <string name="outbox_item_deleted_undo">Dizober</string>
+  <!--Receiver-->
+  <!--APG related-->
+</resources>

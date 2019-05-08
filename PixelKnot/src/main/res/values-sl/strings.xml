@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <string name="action_done">Opravl.</string>
+  <string name="confirm_passphrase_override_continue">Nadaljuj</string>
+  <!--Receiver-->
+  <!--APG related-->
+</resources>

@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <string name="app_name">PixelKnot</string>
+  <string name="title_new">Mới</string>
+  <string name="action_done">Xong</string>
+  <string name="password_skip">Bỏ qua</string>
+  <string name="password_set">Chọn</string>
+  <string name="confirm_passphrase_override_continue">Tiếp tục</string>
+  <!--Receiver-->
+  <string name="unlock">Mở khóa</string>
+  <!--APG related-->
+  <string name="apg_error_activity_not_found">Không tìm thấy ứng dụng thích hợp cho thao tác này</string>
+  <string name="apg_error_apg_version_not_supported">Phiên bản APG đã cài đặt không được hỗ trợ.</string>
+  <string name="unknown_crypto_signature_user_id">&lt;chưa rõ&gt;</string>
+  <string name="insufficient_apg_permissions">Ứng dụng này không có quyền truy cập đầy đủ với dịch vụ APG, vui lòng cài lại ứng dụng này để sửa lỗi này.</string>
+</resources>
