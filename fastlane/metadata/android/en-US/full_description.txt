@@ -1,41 +1,23 @@
 Have a secret that you want to share? Why not hide it in a picture? With PixelKnot, only your friends with the secret password can unlock your special message. Everyone else just sees a pretty picture. It’s a fun and easy way to share hidden messages without anyone knowing. Take those pixels, twist them in a knot, and see for yourself!
 
+★ DISGUISE YOUR MESSAGES: Pictures are public, the text is hidden inside. Even a trained eye will think the image is unedited. It’s security through obscurity!
+★ FOR YOUR EYES ONLY: Put a password on the secret message to make sure that no one can read it except the person it’s meant for.
+★ EASY IMAGE CHOOSER:  You can use the camera to take photos, or just use photos you’ve already taken.
+★ INVISIBLE CHANGES: Even a trained analyst analyst shouldn’t be able to detect any message. The image bytes should seem undistorted.
+★ SHARE ACROSS PLATFORMS: Want to share the images over email, file sharing tools (like Dropbox & Sparkleshare), social media (like Google+ & Flickr) or directly through Bluetooth or NFC? Not a problem! The messages are still recoverable on the other side. We'll have even more tools (like Facebook) working soon, so stay tuned!
+★ AD-FREE: We want your love, not your money.
+★ MATHEMATICALLY SECURE: We use the newly developed steganography algorithm F5 which implements matrix encoding to improve the efficiency of embedding and employs permutative straddling to uniformly spread out the changes over the whole steganogram.
+★ ATTACK RESISTANT: We’ve launched attacks on images with messages hidden in them using a specialized version of stegdetect, an automated tool for detecting steganographic content in images. In most cases, the pictures have been impervious to attack. We will be including detection in an upcoming version of the application so you can easily test it yourself!
+Don’t see your language? Join us and help translate the app:
+https://hosted.weblate.org/projects/guardianproject/pixelknot
+https://hosted.weblate.org/projects/guardianproject/pixelknot-metadata
 
-This image steganography application features:
-
-
-* DISGUISE YOUR MESSAGES: Pictures are public, the text is hidden inside. Even a trained eye will think the image is unedited[a].
-* FOR YOUR EYES ONLY: Put a password on the secret message to make sure that no one can read it except the person it’s meant for.
-* MATHEMATICALLY SECURE: We use the steganography algorithm F5 which implements matrix encoding to improve the efficiency of embedding and employs permutative straddling to uniformly spread out the changes over the whole steganogram.
-* ATTACK RESISTANT: We’ve tested discovery on images with messages hidden in them using a specialized version of stegdetect, an automated tool for detecting steganographic content in images.
-* AD-FREE: We want your love, not your money.
-* WE SPEAK YOUR LANGUAGE:  PixelKnot is available for friends who speak many languages.  Don’t see your language? Join us and help translate the app: https://www.transifex.com/projects/p/pixelknot/
-
-
-
-The release of PixelKnot features an improved user experience:
-
-
-* EASIER SHARING: It’s now easier to share PixelKnot images with the applications you and your friends commonly use.  Note that not all image sharing services can be used with PixelKnot because they modify your images before posting them to their platform.  PixelKnot suggests apps it knows will share properly, but you’re welcome to add your own.
-* SIMPLIFIED SENDING / RECEIVING: Want to send a message? Open the PixelKnot app directly, and PixelKnot will walk you through the process.  Receiving a shared stego image? Use your receiving app to share the image with PixelKnot - it’ll take care of the message extraction directly.
-* NEW IMAGE CHOOSER:  You can use the camera to take your photo or select from picture you’ve already taken. The new chooser supports all the common image directories and allows you to select a different galleries if needed (such a “private” gallery created by a unique camera application).
-* SEND QUEUE: PixelKnot allows you to queue up a list of images for processing, rather than forcing you to wait for the message encryption to complete (depending on the size of your image and length of your text, this might be time-consuming).[b]
-
-
-ABOUT US: Guardian Project is a group of developers that make secure mobile apps and open-source code for a better tomorrow.
-
-
-OUR WEBSITE: https://guardianproject.info
-
-
-ON TWITTER: https://twitter.com/guardianproject
-
-
-OPEN-SOURCE: PixelKnot is free software. You can take a look at our source code, or join the community to help make it even better: https://github.com/guardianproject/pixelknot 
-
-
-MESSAGE US: Are we missing your favorite feature? Found an annoying bug? Please tell us! We’d love to hear from you. Send us an email: support@guardianproject.info
-
+***Learn More***
+★ ABOUT US: Guardian Project is a group of developers that make secure mobile apps and open-source code for a better tomorrow.
+★ OUR WEBSITE: https://GuardianProject.info.
+★ ON TWITTER: https://twitter.com/guardianproject
+★ OPEN-SOURCE: PixelKnot is free software. You can take a look at our source code, or join the community to help make it even better: https://github.com/guardianproject/pixelknot
+★ MESSAGE US: Are we missing your favorite feature? Found an annoying bug? Please tell us! We’d love to hear from you. Send us an email: support@guardianproject.info
 
 ***Disclaimer***
 The Guardian Project makes apps that are designed to protect your security and anonymity. The protocols that we use are widely regarded as the state of the art in security technology. While we are constantly upgrading our software to combat the latest threats and eliminate bugs, no technology is 100% foolproof. For maximum security and anonymity users must utilize best practices to keep themselves safe. PixelKnot is still an experimental application and should not be used in real world deployments. You can find a good introductory guide to these topics at https://securityinabox.org

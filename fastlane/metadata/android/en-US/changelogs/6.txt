@@ -1,0 +1,6 @@
+New and improved in v0.3.3:
+* Updated F5 steganography library
+* Improved password security feature
+* Cleaned up user interface for a more modern look
+* Added background processing of encode/decode steps (you can do other things while it works!)
+* More language support than ever!
