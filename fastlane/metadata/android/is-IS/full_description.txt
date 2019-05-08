@@ -1,0 +1,44 @@
+Lýsing á ﻿PixelKnot fyrir Play Store
+
+
+Áttu leyndarmál sem þú vilt deila með einhverjum? Því ekki að fela það í mynd? Með PixelKnot geta vinir þínir sem hafa leynilegt lykilorð undir höndum aflæst skilaboðunum frá þér. Allir aðrir sjá bara fallega mynd. Þetta er skemmtileg og auðveld leið til að deila skilaboðum án þess að nokkur viti. Taktu alla þessa mynddíla, snúðu upp á þá í hnút og sjáðu hvað gerist!
+
+
+Helstu eiginleikar þessa mynd-dulritunarforrits eru:
+
+
+* DULBÚÐU SKILABOÐIN ÞÍN: Myndirnar eru opinberar, textinn er falinn innan í þeim. Jafnvel þrautþjálfað auga mun halda að myndunum hafi ekki verið breytt á neinn hátt [a].
+* EINUNGIS FYRIR AUGU ÞÍN: Settu lykilorð á leyniskilaboðin svo að það sé öruggt að enginn geti lesið þau nema sá sem þau eru ætluð.
+* STÆRÐFRÆÐILEGA ÖRUGGT: Við notum dulmálsmynda-reikniritið F5 (steganography algorithm) sem innifelur fylkiskóðun til að bæta gæði ívafningar og virkjar umraðaða tvístrun (permutative straddling) til að dreifa breytingunum jafnt út um alla dulmálsmyndina (steganogram).
+* MÓTSTAÐA GEGN ÁRÁSUM: Við höfum prófað greiningu á myndum með dulmálsskilaboðum, meðal annars með sérhæfðri útgáfu af stegdetect, sjálfvirku verkfæri sem ætlað er að finna dulin skilaboð í myndum (steganography).
+* ÁN AUGLÝSINGA: Við viljum væntumþykjuna þína, ekki peninga.
+* VIÐ TÖLUM MÖRG TUNGUMÁL: PixelKnot er tiltækt fyrir vini okkar sem tala mörg ólík tungumál. Sérðu ekki tungumálið þitt? Gakktu til liðs við hópinn og hjálpaðu til við þýðingar á forritinu: https://www.transifex.com/projects/p/pixelknot/
+
+
+
+Þessi útgáfa PixelKnot kemur með bættum eiginleikum fyrir notandann:
+
+
+* AUÐVELDARI DEILING: Núna er auðveldara að deila PixelKnot-myndum með þeim forritum sem þú og félagar þínir notið oftast.  Athugaðu samt að ekki er hægt að nota allar myndaupphleðsluþjónustur með PixelKnot, vegna þess að þær breyta myndunum þínum um leið og þeim er hlaðið inn.  PixelKnot stingur upp á forritum/þjónustum sem vitað er að deili myndum rétt, en þér er auðvitað frjálst að bæta við þínum eigin.
+* EINFÖLDUN Á SENDINGU / MÓTTÖKU: Þarftu að senda skilaboð? Opnaðu PixelKnot forritið beint, og PixelKnot mun leiðbeina þér í gegnum ferlið.  Fékkstu í hendurnar dulmálsmynd? Láttu forritið sem þú notar við móttöku myndarinnar deila henni með PixelKnot - sem sér um að nálgast skilaboðin úr myndinni.
+* NÝ AÐFERÐ VIÐ VAL Á MYNDUM:  Þú getur notað myndavélina til að taka mynd eða valið mynd úr safninu þínu. Nýi myndavalsglugginn styður allar algengar myndamöppur og gerir þér kleift að velja önnur myndasöfn ef þörf krefur (til dæmis sérstök “einka”myndasöfn sem búin væru til af ákveðnum myndavélaforritum).
+* SENDIBIÐRÖÐ: PixelKnot leyfir þér að safna myndum í biðröð til vinnslu, fremur en að þú þurfir að bíða eftir að dulkóðun hvers skeytis ljúki (það fer eftir stærð mynda og lengd texta hve langan tíma þarf til). [b]
+
+
+UM OKKUR: Guardian Project er hópur forritara sem býr til öruggari snjalltækjaforrit og opinn/frjálsan kóða í þeim tilgangi að framtíðin verði betri.
+
+
+VEFSVÆÐIÐ OKKAR: https://GuardianProject.info
+
+
+Á TWITTER: https://twitter.com/guardianproject
+
+
+OPINN OG FRJÁLS HUGBÚNAÐUR: Þetta er frjáls hugbúnaður. Þú getur skoðað grunnkóðann okkar, eða tekið þátt í að gera hann enn betri: https://github.com/guardianproject/pixelknot 
+
+
+SENDU OKKUR SKILABOÐ: Vantar einhvern eiginleika sem þú getur ekki verið án? Fannstu leiðinda villu? Endilega segðu okkur frá! Við viljum gjarnan heyra hvað þér finnst. Sendu okkur tölvupóst: support@guardianproject.info
+
+
+***Fyrirvarar***
+Guardian Project verkefnið býr til forrit hönnuð til að verja öryggi þitt og nafnleysi. Samskiptamátarnir sem við styðjumst við eru álitnir það besta sem býðst í öryggistækni. Þrátt fyrir að við séum sífellt að uppfæra hugbúnaðinn okkar til að berjast við nýjustu ógnirnar og til að útrýma villum, verður að hafa í huga að engin tækni getur verið 100% skotheld. Til að hámarka öryggi og nafnleysi verða notendurnir eftir sem áður að temja sér ákveðnar reglur varðandi nethegðun sína. PixelKnot forritið er ennþá á tilraunastigi og ætti ekki að treysta fullkomlega við raunverulegar aðstæður. Þú getur séð góða kynningu á slíkum atriðum á https://securityinabox.org

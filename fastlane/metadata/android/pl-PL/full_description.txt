@@ -1,0 +1,44 @@
+Opis aplikacji PixelKnot
+
+
+Masz sekret którym chcesz się podzielić? Czemu nie ukryć  go w obrazku? Z PixelKnotem tylko twoi znajomi posiadający tajne hasło mogą odblokować twoją specjalną wiadomość. Wszyscy inni widzą tylko ładny obrazek. To fajny i łatwy sposób na udostępnianie ukrytych wiadomości bez wiedzy innych. Weź piksele, zawiąż je w węzeł i zobacz sam!
+
+
+Co możesz zrobić za pomocą naszej aplikacji:
+
+
+* ZAKAMUFLUJ SWOJE WIADOMOŚCI: Obrazki może zobaczyć każdy, ale Twoja wiadomość jest w nich dobrze ukryta. Nawet specjalista nie wpadnie na to, że obrazek może kryć jakiś sekret. 
+* TYLKO DLA TWOICH OCZU: Hasło założone na ukrytą wiadomość sprawia, że nie przeczyta jej nikt inny oprócz Ciebie i odbiorcy, który zna hasło.
+* MATHEMATICALLY SECURE: We use the steganography algorithm F5 which implements matrix encoding to improve the efficiency of embedding and employs permutative straddling to uniformly spread out the changes over the whole steganogram.
+* ATTACK RESISTANT: We’ve tested discovery on images with messages hidden in them using a specialized version of stegdetect, an automated tool for detecting steganographic content in images.
+* BEZ REKLAM: Chcemy byś nas polubił, a nie nam płacił.
+* MÓWIMY W TWOIM JĘZYKU: PixelKnot jest dostępny w wielu językach. Nie widzisz swojego? Dołącz do nas i pomóż nam tłumaczyć aplikację: https://www.transifex.com/projects/p/pixelknot/
+
+
+
+Ta wersja PixelKnota wprowadza następujące ulepszenia:
+
+
+* ŁATWIEJSZE DZIELENIE SIĘ: Teraz jest jeszcze łatwiej dzielić się obrazkami z PixelKnot poprzez aplikacje, które używasz Ty i Twoi znajomi. Pamiętaj jednak, że nie wszystkie usługi pozwalające na dzielenie się zdjęciami mogą być użyte razem z naszą aplikacją ponieważ mogą one modyfikować obraz przed umieszczeniem go na platformie. PixelKnot sugeruje aplikacje, co do których ma pewność, że będą współpracowały poprawnie. Oczywiście jeśli chcesz, możesz dodać własne.
+* SIMPLIFIED SENDING / RECEIVING: Want to send a message? Open the PixelKnot app directly, and PixelKnot will walk you through the process.  Receiving a shared stego image? Use your receiving app to share the image with PixelKnot - it’ll take care of the message extraction directly.
+* NOWY SPOSÓB WYBIERANIA OBRAZÓW: Możesz użyć aparatu by zrobić zdjęcie lub wybrać takie, które zrobiłeś wcześniej. Ta opcja wspiera wszystkie popularne katalogi ze zdjęciami, a także pozwala wybrać inne, jeśli zajdzie taka potrzeba (np. "prywatną" galerię stworzoną na potrzeby innej aplikacji do robienia zdjęć).
+* USTAW KOLEJKĘ: PixelKnot pozwala na kolejkowanie obrazów do przetwarzania, co pozwala uniknąć czekania, aż proces szyfrowania wiadomości się zakończy (co w zależności od rozmiaru obrazu i długości tekstu może zająć nieco czasu).[b]
+
+
+O NAS: Guardian Project jest grupą developerów tworzących bezpieczne aplikacje mobilne o otwartym kodzie dla lepszego jutra.
+
+
+NASZA STRONA: https://guardianproject.info
+
+
+NASZ TWITTER: https://twitter.com/guardianproject
+
+
+OPEN-SOURCE: PixelKnot jest wolnym oprogramowaniem. Możesz przejrzeć nasz kod źródłowy lub dołączyć do społeczności, by pomóc nam ulepszać naszą aplikację: https://github.com/guardianproject/pixelknot 
+
+
+NAPISZ DO NAS: Uważasz, że powinniśmy coś dodać? Znalazłeś błąd? Napisz do nas! Chętnie zapoznamy się z każdą opinią. Czekamy na wiadomości pod adresem: support@guardianproject.info
+
+
+***Zastrzeżenie***
+The Guardian Project makes apps that are designed to protect your security and anonymity. The protocols that we use are widely regarded as the state of the art in security technology. While we are constantly upgrading our software to combat the latest threats and eliminate bugs, no technology is 100% foolproof. For maximum security and anonymity users must utilize best practices to keep themselves safe. PixelKnot is still an experimental application and should not be used in real world deployments. You can find a good introductory guide to these topics at https://securityinabox.org

@@ -1,0 +1,41 @@
+Hai un segreto da condividere? Perché non nasconderlo in un'immagine? Con PixelKnot solo i tuoi amici potranno sbloccare il tuo messaggio speciale con una password segreta. Chiunque altro vedrà soltanto una semplice immagine. È un modo divertente e facile per condividere messaggi nascosti senza che nessuno lo sappia. Prendi questi pixel, attorcigliali in un nodo, e vedili solo tu stesso!.
+
+
+Le funzionalità di questa applicazione di steganografia per immagini:
+
+
+* NASCONDI IL TUO MESSAGGIO: Le immagini sono pubbliche, il testo è nascosto all'interno. Anche un occhio addestrato penserà che l'immagine non è stata editata.
+* SOLO PER I TUOI OCCHI: Utilizza una password per il messaggio segreto per essere sicuro che nessun altro può leggerlo tranne la persona a cui è destinato.
+* MATEMATICAMENTE SICURO: Usiamo l'algoritmo steganografico F5 che implementa la codifica a matrice per migliorare l'efficienza nell'incorporamento e impiega permutative transzonali per distribuire uniformemente le modifiche su tutto lo steganogramma.
+* RESISTENTE AGLI ATTACCHI: Abbiamo testato la ricerca in immagini con messaggi nascosti all'interno usando una versione specializzata di stegdetect, uno strumento automatico per rilevare contenuto steganografico nelle immagini.
+* AD-FREE: Vogliamo il vostro bene, non i vostri soldi.
+* PARLIAMO LA VOSTRA LINGUA: PixelKnot è disponibile per gli amici che parlano molte lingue. Non trovi la tua lingua? Unisciti a noi e aiutaci a tradurre l'app: https://www.transifex.com/projects/p/pixelknot/
+
+
+
+La versione di PixelKnot dispone di una migliorata esperienza utente:
+
+
+* FACILE CONDIVISIONE: Ora è più semplice condividere le immagini di PixelKnot con l'applicazione che tu e i tuoi amici usate più frequentemente. Tieni conto che non tutti i servizi di condivisione immagini possono essere usati con PixelKnot a causa delle modifiche che apportano alle immagini prima di postarle, ma sei invitato ad aggiungere la tua.
+* SEMPLIFICATO INVIO / RICEZIONE: Vuoi mandare un messaggio? Apri direttamente l'app PixelKnot, e PixelKnot ti guiderà attraverso il procedimento. Ricevuta un'immagine steganografica? Usa l'app con cui l'hai ricevuta e condividi l'immagine con PixelKnot - esso si occuperà direttamente dell'estrazione del messaggio.
+* NUOVO MENU PER LA SCELTA DELLE IMMAGINI: Puoi usare la fotocamera per scattare una foto o selezionarne una che hai già. Il nuovo menu supporta tutte le più comuni directory di immagini e ti permette di selezionare una galleria differente se necessario (come una galleria "privata" creata da una particolare applicazione per foto).
+* CODA DI INVIO:  PixelKnot ti permette di accodare una lista di immagini da processare, piuttosto che forzarti ad aspettare che la criptazione del messaggio sia completa (a seconda della grandezza dell'immagine e della lunghezza del messaggio ció potrebbe richiedere un po' di tempo).
+
+
+CHI SIAMO: Guardian Project è un gruppo di sviluppatori che crea app sicure e open-source per un futuro migliore.
+
+
+IL NOSTRO SITO WEB: https://guardianproject.info
+
+
+SU TWITTER: https://twitter.com/guardianproject
+
+
+OPEN-SOURCE: PixelKnot è software libero. Puoi dare un'occhiata al codice sorgente, o unirti alla community per aiutare a migliorarlo: https://github.com/guardianproject/pixelknot 
+
+
+SCRIVICI: Abbiamo dimenticato la tua feature favorita? Hai trovato un fastidioso bug? Per favore comunicacelo! Ci piacerebbe ce lo dicessi. Mandaci una mail: support@guardianproject.info
+
+
+***Disclaimer***
+The Guardian Project crea applicazioni progettate per proteggere la tua sicurezza e il tuo anonimato. I protocolli che utilizziamo sono ampiamente considerati lo stato dell'arte nella sicurezza tecnologica. Sebbene stiamo costantemente aggiornando il nostro software per combattere  le minacce più recenti e per eliminare i bug, nessuna tecnologia è infallibile al 100%. Per la massima sicurezza e anonimato gli utenti devono utilizzare le migliori prassi per mantenersi sicuri. PixelKnot è ancora una applicazione sperimentale e non dovrebbe essere usata in implementazioni reali. Puoi trovare una buona guida introduttiva a questi argomenti in https://securityinabox.org

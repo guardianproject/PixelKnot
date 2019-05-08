@@ -1,0 +1,44 @@
+Descripción de PixelKnot de la Play Store
+
+
+¿Tiene un secreto que quiere compartir? ¿Por qué no esconderlo en una imagen? Con PixelKnot, solo sus amigos pueden acceder a su mensaje mediante una contraseña secreta. El resto solo verá una imagen. Se trata de una forma divertida y fácil de compartir mensajes ocultos sin que nadie lo sepa. ¡Tome unos pixels, anúdelos y verá!
+
+
+Esta aplicación de estaganografía de imágenes tiene como características:
+
+
+* DISFRAZE SUS MENSAJES: Las fotos son públicas, el texto se oculta dentro. Incluso un ojo entrenado creerá que la imagen no está editada. [a]
+* SÓLO PARA SUS OJOS: Ponga una contraseña al mensaje secreto para asegurarse de que nadie puede leerlo excepto la persona a la que va dirigido.
+* ASEGURADO MATEMÁTICAMENTE: Usamos el algoritmo de estaganografía F5 que implementa codificación matricial para mejorar la eficiencia del incrustado, y emplea dispersión permutativa para extender uniformemente los cambios por todo el esteganograma.
+* RESISTENTE A LOS ATAQUES: Hemos probado el desvelado contra imágenes con mensajes ocultos en ellas usando una versión especializada de stegdetect, una herramienta automatizada para la detección de esteganografía contenida en imágenes.
+* SIN PUBLICIDAD: Queremos su cariño, no su dinero.
+* HABLAMOS SU IDIOMA: PixelKnot está disponible para amistades que hablan muchos idiomas. ¿No ve su idioma? Únase a nosotros y traduzca la aplicación: https://www.transifex.com/projects/p/pixelknot/
+
+
+
+La versión de PixelKnot presenta una experiencia de usuario mejorada:
+
+
+* COMPARTICIÓN MÁS FÁCIL: Ahora es más fácil compartir imágenes de PixelKnot con las aplicaciones que usted y sus amigos usan habitualmente. Observe que no todos los servicios de compartición de imágenes se pueden usar con PixelKnot porque modifican sus imágenes antes de publicarlas en sus plataformas. PixelKnot sugiere aplicaciones que sabe que compartirán la imagen adecuadamente, pero es bienvenido a añadir la que a usted le parezca.
+* ENVÍO / RECEPCIÓN SIMPLIFICADO: ¿Quiere enviar un mensaje? Abra directamente la aplicación PixelKnot, y le guiará a través del proceso. ¿Está recibiendo una imagen esteganográfica compartida? Utilice su aplicación receptora para compartir la imagen con PiixelKnot - se ocupará de la extracción de la imagen directamente.
+* NUEVO SELECTOR DE IMAGEN: Puede usar la cámara para hacer su foto o seleccionar entre las imágenes que ya ha tomado. El nuevo selector soporta todos los directorios comunes de imágenes y le permite seleccionar una galería distinta si es necesario (como una galería "privada" creada por una aplicación exclusiva de cámara).
+* COLA DE ENVÍO: PixelKnot le permite poner en cola una lista de imágenes a procesar, en lugar de forzarle a esperar a que se complete el cifrado del mensaje (esto podría llevar bastante tiempo, dependiendo del tamaño de su imagen y la longitud de su texto). [b]
+
+
+ACERCA DE NOSOTROS: Guardian Project es un grupo de desarrolladores que elaboran aplicaciones móviles seguras y de código abierto para un mejor mañana.
+
+
+NUESTRO SITIO WEB: https://guardianproject.info
+
+
+EN TWITTER: https://twitter.com/guardianproject
+
+
+CÓDIGO ABIERTO: PixelKnot es software libre. Puede echar un vistazo a nuestro código, o unirse a la comunidad para ayudar a hacerlo incluso mejor: https://github.com/guardianproject/pixelknot 
+
+
+ESCRÍBANOS UN MENSAJE: ¿Nos hemos dejado su característica favorita? ¿Encontró un fallo molesto? Por favor, ¡cuéntenoslo! Nos encanta escucharlo de usted. Envíenos un correo a: support@guardianproject.info
+
+
+***Declinación de responsabilidades***
+Guardian Project crea aplicaciones diseñadas para garantizar su seguridad y anonimato. Los protocolos que utilizamos se consideran dentro del estado del arte en seguridad. No obstante, a pesar de que estamos continuamente actualizando nuestro software para mitigar las últimas amenazas y eliminar errores, ninguna tecnología es 100% infalible. Así, para garantizar los máximos niveles de seguridad y anonimato, los usuarios deben seguir determinadas prácticas. Puede consultar https://securityinabox.org para obtener una introducción a esos hábitos.

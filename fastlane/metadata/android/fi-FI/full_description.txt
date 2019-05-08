@@ -1,0 +1,44 @@
+PixelKnot Play Store, kuvaus
+
+
+Onko sinulla jokin salaisuus jonka tahtoisit jakaa? Miksi et kätkisi sitä kuvaan? PixelKnot'in avulla vain ystäväsi voivat lukea lähettämäsi viestin salasanan avulla. Kaikki muut näkevät vain kauniin kuvan. Koe helppo ja hauska tapa jakaa piilotettuja viestejä kenenkään tietämättä. Ota pikselit haltuun, väännä ne solmuun ja näe itse!
+
+
+Tämän tiedonpiilotusapplikaation ominaisuuksiin kuuluu:
+
+
+*NAAMIOI VIESTISI: Kuvat  voivat olla julkisia joiden sisään viestisi on piilotettu. Edes harjaantunut silmä ei huomaa eroa muokkaamattomaan kuvaan.
+* VAIN SINUN NÄHTÄVÄKSESI: Suojaa viestisi salasanalla jotta voit varmistua, että vain valitut henkilöt voivat sen avata.
+*MATEMAATTISESTI SALATTU: Käytämme viestin piilottamiseen algoritmiä F5 jonka koodikaava on tehokas työkalu hajauttamaan muutokset tasaisesti koko kuvaan.
+*HYÖKKÄYKSEN KESTÄVÄ: Olemme testanneet kuvia joihin on kätketty viestejä ohjelmilla, jotka on erityisesti suunniteltu havaitsemaan steganografista sisältöä kuvista.
+*MAINOSVAPAA: Tahdomme tukesi, emme rahojasi.
+*PUHUMME KIELTÄSI: PixelKnot on saatavilla ystäville jotka puhuvat monia kieliä. Etkö löydä omaasi? Liity ja auta kääntämään sovellus omalle kielellesi: https://www.transifex.com/projects/p/pixelknot/
+
+
+
+Julkaistun PixelKnoti'n ominaisuuksia entistä parempaan käyttäjäkokemukseen:
+
+
+*HELPOMPI JAKAA: PixelKnot kuvat on nyt entistä helpompi jakaa sovelluksella joita sinä ja ystäväsi yleensä käytätte. Huomioi kuitenkin, ettei sellaisia kuvanjakosovelluksia voi käyttää PixelKnotin kanssa jotka muokkaavat kuvaa ennen lähetystä. PixelKnot'in suosittelee sovelluksia, joiden se tietää jakavan kuvat niin että ne toimivat.
+* YKSINKERTAINEN  LÄHETTÄÄ/VASTAANOTTAA: Tahdotko lähettää viestin? Avaa PixelKnot sovellus ja se ohjaa sinut läpi koko prosessin. Vastaanotitko piiloviestikuvan? Käytä vastaanottosovellustasi joka purkaa viestin suoraan.
+* UUDISTUNUT KUVAN VALINTA: Voit käyttää kameraa ottaaksesi kuvan tai valita jonkin galleriastasi. Ominaisuus tukee kuvan valintaa yleisimmistä kirjastoista sekä mahdollistaa "yksityisen" galleria käytön ja toisen kamera sovelluksen luoman kansion. 
+* SEND QUEUE: PixelKnot allows you to queue up a list of images for processing, rather than forcing you to wait for the message encryption to complete (depending on the size of your image and length of your text, this might be time-consuming).[b]
+
+
+ABOUT US: Guardian Project is a group of developers that make secure mobile apps and open-source code for a better tomorrow.
+
+
+OUR WEBSITE: https://guardianproject.info
+
+
+ON TWITTER: https://twitter.com/guardianproject
+
+
+OPEN-SOURCE: PixelKnot is free software. You can take a look at our source code, or join the community to help make it even better: https://github.com/guardianproject/pixelknot 
+
+
+MESSAGE US: Are we missing your favorite feature? Found an annoying bug? Please tell us! We’d love to hear from you. Send us an email: support@guardianproject.info
+
+
+***Disclaimer***
+The Guardian Project makes apps that are designed to protect your security and anonymity. The protocols that we use are widely regarded as the state of the art in security technology. While we are constantly upgrading our software to combat the latest threats and eliminate bugs, no technology is 100% foolproof. For maximum security and anonymity users must utilize best practices to keep themselves safe. PixelKnot is still an experimental application and should not be used in real world deployments. You can find a good introductory guide to these topics at https://securityinabox.org

@@ -1,0 +1,48 @@
+Beskrivelse av PikselKnop i Play-butikken
+
+
+Har du en hemmelighet som du vil dele? Hvorfor ikke gjemme den i et bilde? Med PikselKnop, kan bare venner med et hemmelig passord få innsikt i den gjemte beskjeden. Alle andre ser bare et fint bilde. Det er gøy og enkelt å dele hemmelige meldinger, uten at noen vet noe. Ta pikslene, slå en knute, og se selv!
+
+
+Dette bildestenografiprogrammet inneholder:
+
+
+★ GJEM DINE MELDINGER: Bildene er offentlige, teksten er gjemt unna i dem. Selv et trenet øye vil si at bildet er uredigert[a].
+* IKKE FOR UVEDKOMMENDE: Passordbeskytt den hemmelige meldingen for å unngå at noen leser den, bortsett fra personen den er ment for.
+* MATEMATISK SIKKER: Vi bruker stenografialgoritmen F5, som implementerer matrise-koding for å forbedre effektiviteten av innbakingen. Mønsterbokkode med flere forvalg er brukt for å uniformt spre endringer over hele stenografiet.
+* ANGREPSRESISTANT: Vi har kjørt oppdagelsesforsøk på hemmelige meldinger med en spesialisert versjon av stegdetect, et automatisert verktøy for å oppdage stenografisk innhold i bilder.
+* REKLAMEFRI: Vi vil ha din kjærlighet, ikke pengene dine.
+* VI SNAKKER DITT SPRÅK: PikselKnop er lesbart for mange og enhver. Hvis du ikke ser ditt språk kan du hjelpe til med oversettingen: https://www.transifex.com/projects/p/pixelknot/
+
+
+
+Slippversjonen av PikselKnop har forbedret brukeropplevelse:
+
+
+* ENKLERE DELING: Det er nå enklere å dele PikselKnop-bilder med programmene du og dine venner vanligvis bruker. Merk at ikke alle bildedelingstjenester kan brukes med PikselKnop fordi de endrer bildet før det blir lastet opp på deres plattform. PikselKnop anbefaler programmer det ved deler på rett vis, men du kan legge til egne selv.
+* FORENKLET FORSENDELSE / MOTTAK: Ønsker du å sende ei melding? Åpne PikselKnop direkte, og det vil ta deg gjennom prosessen. Mottak at et delt steno-bilde? Bruk ditt mottakerprogram for å dele bilde med PikselKnop - det tar hånd om meldingsutdrag direkte.
+* NY BILDEVELGER: Du kan bruke kameraet for å ta bilder eller velge fra bilder du allerede har tatt. Den nye velgeren støtter alle vanlige bildemapper og lar deg velge forskjellige galleri hvis nødvendig (som et "privat" galleri opprettet av et unikt kameraprogram).
+* FORSENDELSESKØ: PikselKnop lar deg opprette en behandlingskø for bilder, snarere enn å tvinge deg til å vente på at meldingen skal bli kryptert for å fortsette (avhenging av størrelsen på bildet og tekstlengden kan dette ta sin tid.[b]
+
+
+OM OSS: Guardian-prosjektet er en gruppe utviklere som lager sikre mobiltelefoniprogrammer og friprog for en bedre fremtid.
+
+
+VÅR NETTSIDE: https://guardianproject.info
+
+
+* PÅ MIKROBLOGG: https://twitter.com/guardianproject
+
+
+* FRIPROG: PikselKnop er fri programvare. Du kan ta en titt på vår kildekode, og melde deg inn i fellesskapet for å gjøre det enda bedre: https://github.com/guardianproject/pixelknot 
+
+
+TA KONTAKT: Mangler vi din favorittfunksjon? Funnet en feil? Fortell oss om det! Vi elsker å høre tilbakemeldinger. Send oss epost: support@guardianproject.info
+
+
+***Ansvarsfraskrivelse***
+Guardian-prosjektet lager app-er som er bygd for å verne om din sikkerhet og anonymitet. Protokollene vi bruker er viden ansett for å være det beste som finnes innen sikkerhetsteknologi. Programvaren er i konstant oppdatering for å håndtere de seneste sikkerhetstruslene, men ingen teknologi er 100% idiotsikker. For maksimal sikkerhet og anonymitet bør brukerne holde seg til en sikkerhetspraksis for å ivareta egen sikkerhet. PikselKnop er fremdeles en eksperimentell applikasjon, og burde ikke brukes til å beskytte ømfintlig data i den virkelige verden. Du finner en god introduksjonsguide om disse temaene på https://securityinabox.org
+
+
+[a]Jeg har fjernet linjen som forvoldte problemer her. Husker du at dette orginalt ble forfattet av Mark Belinsky, ikke meg.
+[b]du burde sjekke at alt dette stemmer

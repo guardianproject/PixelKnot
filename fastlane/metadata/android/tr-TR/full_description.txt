@@ -1,0 +1,41 @@
+Paylaşmak istediğin bir sırrın mı var?Neden bir resim içine gizlemeyesin?Pixelknot ile, sadece gizli parolaya sahip olan arkadaşların özel mesajını görebilir.Diğerleri ise sadece güzel bir resim.Kimse bilmeden, gizli mesajlarını paylaşmanın eğlenceli ve kolay yolu.Pixelleri al, karıştır, düğümle ve kendin gör!
+
+
+Resim içine mesaj gizleme uygulama özellikleri:
+
+
+* MESAJLARININ KILIĞINI DEĞİŞTİRME: Resimleri herkes görebilir, mesaj içerisinde gizli. Eğitimli bir göz bile resmin üzerinde oynanmadığını düşünecek.
+* SADECE SANA ÖZEL: Göndereceğin kişi hariç kimsenin gizli mesajı okuyamamasını sağlamak için ayrıca parola ayarla.
+* MATEMATİKSEL GÜVENLİK: gömülü mesaj resminde değişiklikleri eşit oranda yaymak için ayrık sıralı, gömme verimini arttırmak için matris kodlamayı taklit eden resim içine mesaj gizleme F5 algoritması kullanıyoruz.
+* SALDIRI DİRENCİ: Mesajları okuyabilmek için, gizli mesaj okuyucunun özelleştirilmiş bir versiyonu ile resimler üzerindeki mesaji keşif için test ettik.
+* REKLAM YOK: Sevginizi istiyoruz, paranızı değil.
+* SİZİN DİLİNİZİ KONUŞUYORUZ: Pixelknot birçok dilde kullanılabilir. Kendi dilin eklenmemiş mi? Uygulamayı çevirmek için bize katıl: https://www.transifex.com/projects/p/pixelknot
+
+
+
+Uygulama özellikleri ve kullanıcı deneyimi:
+
+
+* DAHA KOLAY PAYLAŞIM: Pixelknot resimlerinizi sizin ve arkaşlarınızın kullandığı uygulamalarla paylaşmak daha kolay. Ancak resimlerinizi otomatik olarak modifiye eden ve gönderen uygulamalarla değil. Pixelknot size uyumlu uygulamaları sıralayacak, tabi sizde bildiğiniz uygulama ile kullanabilirsiniz.
+*DAHA BASİT ALIM VE GÖNDERİM: Mesaj mı göndermek isyorsun? Pixelknot'ı aç, Pixelknot adımları seninle beraber atacak. Mesaj gömülü resim mi aldın? Pixelknot ile paylaşmak için aldığın uygulamayı aç gerisini Pixelknot halledecek.
+* YENİ RESİM SEÇİCİ: İstediğin resim için kamerayı kullanabilir veya hazır olan fotoğrafların birini seçebilirsin. Yeni resim seçici tüm resimleri görebilir ve seçmene olanak sağlar.
+*SIRALI GÖNDERİM: 
+
+
+HAKKIMIZDA: Guardian Project, daha iyi yarınlar için güvenli mobil uygulamalar yapan ve açık-kaynak kodu yazan bir grup gelişticinin oluşturduğu oluşum.
+
+
+WEB SİTEMİZ: https://guardianproject.info
+
+
+TWİTTER'DA: https://twitter.com/guardianproject
+
+
+AÇIK-KAYNAK: Pixelknot ücretsiz bir yazılımdır. Kaynak kodumuza göz atabilirsin ya da daha iyi duruma getirmek için katılım sağlayabilirsin: https://github.com/guardianproject/pixelknot 
+
+
+* BİZE YAZ: Bir özellik mi eklensin istiyorsun? Sinir bozucu bir açık mı buldun? Lütfen bizimle paylaş! Senden duymayı çok isteriz. Bize eposta gönder: support@guardianproject.info
+
+
+***Feragatname***
+The Guardian Project, güvenliğiniz ve gizliliğiniz için uygulamalar dizayn eder.Kullandığımız protokollerin akıllıca geliştirilmiş olduğu güvenlik teknolojisince kabul görür.Son olası tehditler ve açıklara karşı yazılımlarımızı sıklıkla güncellesekte hiçbir teknoloji %100 mükemmel değildir.En iyi güvelik ve gizlilik için kullanıcılar en iyi pratikleri uygulamalı ve faydalanmalı.Pixelknot hala deneysel bir uygulama ve yayılma için kullanılmamalı.Bu konuları açıklayan iyi giriş rehberlerine ulaşabilirsiniz: https://securityinabox.org
