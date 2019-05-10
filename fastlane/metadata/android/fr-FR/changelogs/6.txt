@@ -1,0 +1,6 @@
+Nouveau et amélioré dans v0.3.3 :
+* Bibliothèque F5 de stéganographie mise à jour
+* Fonction amélioré de sécurité des mots de passe
+* Interface utilisateur épurée pour une apparence plus moderne
+* Ajout du traitement en arrière-plan des étapes d’encodage et de décodage (vous pouvez faire d’autres choses pendant qu’il tourne).
+* Plus de langues que jamais sont prises en charge !
