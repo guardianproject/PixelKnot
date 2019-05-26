@@ -1,0 +1,13 @@
+Großes Update auf v1.0.1:
+* Korrektur der JPEG-Kodierung zur Abwehr von Erkennungsangriffen
+
+Großes Update auf v1.0.0.0:
+* Eine brandneue Benutzererfahrung.... einfach und unkompliziert!
+* Jetzt kompatibel mit den neuesten Android-Betriebssystemen und -Geräten
+
+Neu in v0.3.3.3:
+* Aktualisierte F5 Steganographie
+* Verbesserte Passwortsicherheit
+* Bereinigte Benutzeroberfläche für einen moderneren Look
+* Hintergrundverarbeitung von Encode-/Decodeschritten hinzugefügt
+* Mehr Sprachunterstützung!
