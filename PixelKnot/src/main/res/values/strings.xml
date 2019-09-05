@@ -13,7 +13,7 @@
     <string name="gallery_info_ok">Got it</string>
     <string name="gallery_need_permission">We need your permission to access your photos. Please tap anywhere to allow it.</string>
 
-    <string name="secret_message_hint">Write your message...</string>
+    <string name="secret_message_hint">Write your message…</string>
     <string name="secret_password_hint">Set a message password</string>
     <string name="secret_password_minlength_info">Make it at least %d characters.</string>
     <string name="secret_password_too_short">Too short</string>
@@ -33,7 +33,7 @@
 
     <string name="tap_to_send">Tap to send</string>
     <string name="tap_to_retry">Error, tap to retry</string>
-    <string name="sending">Sending...</string>
+    <string name="sending">Sending…</string>
     <string name="dont_show_again">Don\'t show again.</string>
 
     <string name="unsafe_share_title">Unsafe share</string>
