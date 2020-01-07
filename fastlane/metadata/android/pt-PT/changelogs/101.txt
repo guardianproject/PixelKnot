@@ -1,0 +1,13 @@
+Big update to v1.0.1:
+* Fix in JPEG encoding to defend against detection attack
+
+Big update to v1.0.0:
+* A brand new user experience... simple and streamlined!
+* Now compatible with the latest Android OS and devices
+
+New and improved in v0.3.3:
+* Updated F5 steganography library
+* Improved password security feature
+* Cleaned up user interface for a more modern look
+* Added background processing of encode/decode steps (you can do other things while it works!)
+* More language support than ever!
