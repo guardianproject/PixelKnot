@@ -33,7 +33,7 @@
     <string name="outbox_item_deleted">Bild gelöscht</string>
     <string name="outbox_item_deleted_undo">Rückgängig machen</string>
     <string name="outbox_item_created_recently">Vor weniger als einer Minute erstellt</string>
-    <string name="outbox_item_created_minutes">vor %1$d Minuten erstellt</string>
+    <string name="outbox_item_created_minutes">Vor %1$d Minuten erstellt</string>
     <string name="outbox_item_created_minute">Vor %1$d Minute erstellt</string>
     <string name="outbox_item_created_hours">Vor %1$d Stunden erstellt</string>
     <string name="outbox_item_created_hour">Vor %1$d Stunde erstellt</string>
@@ -53,5 +53,5 @@
     <string name="apg_error_activity_not_found">Keine geeignete Anwendung für diese Aktion gefunden.</string>
     <string name="apg_error_apg_version_not_supported">Die installierte APG-Version wird nicht unterstützt.</string>
     <string name="unknown_crypto_signature_user_id">&lt;unbekannt&gt;</string>
-    <string name="insufficient_apg_permissions">Diese App hat nicht die Berechtigung für den vollen Zugriff auf APG, installieren Sie bitte die App um das zu beheben.</string>
+    <string name="insufficient_apg_permissions">Diese App hat nicht die Berechtigung für den vollen Zugriff auf APG, installieren Sie bitte die App neu, um das zu beheben.</string>
 </resources>
