@@ -105,7 +105,7 @@ public class OutboxAdapter extends RecyclerView.Adapter<OutboxViewHolder> implem
         }.init(holder));
     }
 
-    private void updateBasedOnStatus(OutboxViewHolder holder, StegoEncryptionJob job) {
+    private static void updateBasedOnStatus(OutboxViewHolder holder, StegoEncryptionJob job) {
         if (job.getProcessingStatus() == StegoJob.ProcessingStatus.ERROR) {
             holder.mProgressText.setVisibility(View.GONE);
             holder.mLayoutDone.setVisibility(View.GONE);
