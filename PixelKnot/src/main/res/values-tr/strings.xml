@@ -51,7 +51,7 @@
     <string name="chooser_share_unsafe">Çalışabilecek uygulamalar</string>
     <!--APG related-->
     <string name="apg_error_activity_not_found">Bu işlem için uygun bir program bulunamadı.</string>
-    <string name="apg_error_apg_version_not_supported">Yüklü APG versiyonu desteklenmemektedir.</string>
+    <string name="apg_error_apg_version_not_supported">Yüklü APG sürümü desteklenmemektedir.</string>
     <string name="unknown_crypto_signature_user_id">&lt;bilinmiyor&gt;</string>
     <string name="insufficient_apg_permissions">Bu program APG\'ye tam olarak erişim iznine sahip değil, bunu çözmek için programı yeniden yükleyin.</string>
 </resources>
