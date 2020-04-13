@@ -1,41 +1,23 @@
-Paylaşmak istediğin bir sırrın mı var?Neden bir resim içine gizlemeyesin?Pixelknot ile, sadece gizli parolaya sahip olan arkadaşların özel mesajını görebilir.Diğerleri ise sadece güzel bir resim.Kimse bilmeden, gizli mesajlarını paylaşmanın eğlenceli ve kolay yolu.Pixelleri al, karıştır, düğümle ve kendin gör!
+Paylaşmak istediğiniz bir sırrınız mı var? Neden bir resmin içine gizlemiyorsunuz? PixelKnot ile, sadece gizli parolaya sahip olan arkadaşlarınız özel mesajınızı görebilir. Diğerleri ise sadece güzel bir resim. Kimse bilmeden, gizli mesajları paylaşmanın eğlenceli ve kolay bir yoludur. Pixelleri alın,, düğümleyerek karıştırın ve kendiniz görün!
 
+★ MESAJLARINIZI GİZLEYİN: Resimleri herkes görebilir, metin içerisinde gizlidir. Eğitimli bir göz bile görüntünün düzenlenmediğini düşünecektir. Belirsizlik yoluyla güvenlik!
+★ SADECE SİZE ÖZEL: Gizli mesaja, amaçlanan kişi dışında hiç kimsenin okuyamadığından emin olmak için bir parola koyun.
+★  KOLAY GÖRÜNTÜ SEÇİCİ: Fotoğraf çekmek için kamerayı kullanabilirsiniz, veya önceden çektiklerinizi kullanabilirsiniz.
+★  GÖRÜNMEZ DEĞİŞİKLİKLER: Eğitimli bir analist bile herhangi bir mesajı tespit edememelidir. Görüntü baytları bozulmamış görünmelidir.
+★ PLATFORMLARDA PAYLAŞIN: Görüntüleri e-posta, dosya paylaşım araçları (Dropbox ve Sparkleshare gibi), sosyal medya (Google+ ve Flickr gibi) veya doğrudan Bluetooth veya NFC üzerinden paylaşmak mı istiyorsunuz? Problem değil! Mesajlar diğer tarafta hala kurtarılabilir. Yakında daha fazla araca (Facebook gibi) sahip olacağız, bizi izlemeye devam edin!
+★ REKLAM YOK: Sevginizi istiyoruz, paranızı değil.
+★ MATEMATİKSEL GÜVENLİK: Gömülü mesaj resminde değişiklikleri eşit oranda yaymak için ayrık sıralama, ve gömme verimini arttırmak için matris kodlamayı uygulayan F5 resim içine mesaj gizleme algoritmasını kullanıyoruz.
+★ SALDIRIYA DAYANIKLI: Görüntülerdeki gizli mesajı tespit etmek için otomatik bir araç olan stegdetect'in özel bir sürümünü kullanarak içinde gizli mesajlar bulunan görüntülere saldırılar başlattık. Çoğu durumda, resimler saldırıya karşı dayanıklı olmuştur. Uygulamanın yaklaşan bir sürümüne algılama dahil edeceğiz, böylece kendiniz kolayca test edebilirsiniz!
+Dilinizi görmüyor musunuz? Bize katılın ve uygulamayı tercüme etmeye yardım edin:
+https://hosted.weblate.org/projects/guardianproject/pixelknot
+https://hosted.weblate.org/projects/guardianproject/pixelknot-metadata
 
-Resim içine mesaj gizleme uygulama özellikleri:
+***Daha Fazlasını Öğrenin***
+★ HAKKIMIZDA: Guardian Project, daha iyi bir yarın için güvenli mobil uygulamalar ve açık kaynaklı kodlar yazan bir geliştirici grubudur.
+★ WEB SİTEMİZ: https://GuardianProject.info.
+★ TWITTER: https://twitter.com/guardianproject
+★ AÇIK KAYNAKLI: PixelKnot özgür bir yazılımdır. Kaynak kodumuza göz atabilir veya onu daha iyi yapmaya yardım etmek için topluluğa katılabilirsiniz: https://github.com/guardianproject/pixelknot
+★ BİZE MESAJ GÖNDERİN: En sevdiğiniz özellik eksik mi? Can sıkıcı bir hata mı buldunuz? Lütfen bize bildirin! Duymak isteriz. Bize bir e-posta gönderin: support@guardianproject.info
 
-
-* MESAJLARININ KILIĞINI DEĞİŞTİRME: Resimleri herkes görebilir, mesaj içerisinde gizli. Eğitimli bir göz bile resmin üzerinde oynanmadığını düşünecek.
-* SADECE SANA ÖZEL: Göndereceğin kişi hariç kimsenin gizli mesajı okuyamamasını sağlamak için ayrıca parola ayarla.
-* MATEMATİKSEL GÜVENLİK: gömülü mesaj resminde değişiklikleri eşit oranda yaymak için ayrık sıralı, gömme verimini arttırmak için matris kodlamayı taklit eden resim içine mesaj gizleme F5 algoritması kullanıyoruz.
-* SALDIRI DİRENCİ: Mesajları okuyabilmek için, gizli mesaj okuyucunun özelleştirilmiş bir versiyonu ile resimler üzerindeki mesaji keşif için test ettik.
-* REKLAM YOK: Sevginizi istiyoruz, paranızı değil.
-* SİZİN DİLİNİZİ KONUŞUYORUZ: Pixelknot birçok dilde kullanılabilir. Kendi dilin eklenmemiş mi? Uygulamayı çevirmek için bize katıl: https://www.transifex.com/projects/p/pixelknot
-
-
-
-Uygulama özellikleri ve kullanıcı deneyimi:
-
-
-* DAHA KOLAY PAYLAŞIM: Pixelknot resimlerinizi sizin ve arkaşlarınızın kullandığı uygulamalarla paylaşmak daha kolay. Ancak resimlerinizi otomatik olarak modifiye eden ve gönderen uygulamalarla değil. Pixelknot size uyumlu uygulamaları sıralayacak, tabi sizde bildiğiniz uygulama ile kullanabilirsiniz.
-*DAHA BASİT ALIM VE GÖNDERİM: Mesaj mı göndermek isyorsun? Pixelknot'ı aç, Pixelknot adımları seninle beraber atacak. Mesaj gömülü resim mi aldın? Pixelknot ile paylaşmak için aldığın uygulamayı aç gerisini Pixelknot halledecek.
-* YENİ RESİM SEÇİCİ: İstediğin resim için kamerayı kullanabilir veya hazır olan fotoğrafların birini seçebilirsin. Yeni resim seçici tüm resimleri görebilir ve seçmene olanak sağlar.
-*SIRALI GÖNDERİM: 
-
-
-HAKKIMIZDA: Guardian Project, daha iyi yarınlar için güvenli mobil uygulamalar yapan ve açık-kaynak kodu yazan bir grup gelişticinin oluşturduğu oluşum.
-
-
-WEB SİTEMİZ: https://guardianproject.info
-
-
-TWİTTER'DA: https://twitter.com/guardianproject
-
-
-AÇIK-KAYNAK: Pixelknot ücretsiz bir yazılımdır. Kaynak kodumuza göz atabilirsin ya da daha iyi duruma getirmek için katılım sağlayabilirsin: https://github.com/guardianproject/pixelknot 
-
-
-* BİZE YAZ: Bir özellik mi eklensin istiyorsun? Sinir bozucu bir açık mı buldun? Lütfen bizimle paylaş! Senden duymayı çok isteriz. Bize eposta gönder: support@guardianproject.info
-
-
-***Feragatname***
-The Guardian Project, güvenliğiniz ve gizliliğiniz için uygulamalar dizayn eder.Kullandığımız protokollerin akıllıca geliştirilmiş olduğu güvenlik teknolojisince kabul görür.Son olası tehditler ve açıklara karşı yazılımlarımızı sıklıkla güncellesekte hiçbir teknoloji %100 mükemmel değildir.En iyi güvelik ve gizlilik için kullanıcılar en iyi pratikleri uygulamalı ve faydalanmalı.Pixelknot hala deneysel bir uygulama ve yayılma için kullanılmamalı.Bu konuları açıklayan iyi giriş rehberlerine ulaşabilirsiniz: https://securityinabox.org
+***Sorumluluk reddi***
+Guardian Project, güvenliğinizi ve anonimliğinizi korumak için tasarlanmış uygulamalar yapar. Kullandığımız protokoller, güvenlik teknolojisinde son teknoloji olarak kabul edilmektedir. En son tehditlerle mücadele etmek ve hataları ortadan kaldırmak için yazılımımızı sürekli olarak geliştirmemize rağmen, hiçbir teknoloji %100 kusursuz değildir. Maksimum güvenlik ve anonimlik için, kullanıcılar kendilerini güvende tutmak için en iyi pratikleri uygulamalıdır. PixelKnot hala deneysel bir uygulamadır ve gerçek dünya dağıtımlarında kullanılmamalıdır. Bu konulara ilişkin iyi bir tanıtım kılavuzunu https://securityinabox.org adresinde bulabilirsiniz
