@@ -1,4 +1,4 @@
-Storoppd. til  v1.0.1:
+Storoppd. til v1.0.1:
 * Fiks i JPEG-koding for beskyttelse mot oppdagelsesangrep
 
 Storoppd. til v1.0.0:
