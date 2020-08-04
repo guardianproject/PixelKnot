@@ -40,7 +40,7 @@
     <string name="outbox_item_created_days">Stworzono %1$d dni temu</string>
     <string name="outbox_item_created_day">Stworzono %1$d dzień temu</string>
     <string name="notification_message_ready">Wiadomość Gotowa</string>
-    <string name="notification_messages_ready">%d Wiadomości Gotowych</string>
+    <string name="notification_messages_ready">%d Wiadomości Gotowe</string>
     <!--Receiver-->
     <string name="enter_message_password">Wpisz hasło</string>
     <string name="unlock">Odblokuj</string>
@@ -53,5 +53,5 @@
     <string name="apg_error_activity_not_found">Nie znaleziono pasujących aplikacji do wykonania tej akcji.</string>
     <string name="apg_error_apg_version_not_supported">Zainstalowana wersja APG nie jest wspierana.</string>
     <string name="unknown_crypto_signature_user_id">&lt;nieznany&gt;</string>
-    <string name="insufficient_apg_permissions">Ta aplikacja nie ma pełnych praw dostępu do AGP, proszę reinstalować aplikacje aby to naprawić.</string>
+    <string name="insufficient_apg_permissions">Ta aplikacja nie ma pełnych praw dostępu do AGP, aby to naprawić zainstaluj aplikację ponownie.</string>
 </resources>
