@@ -1,0 +1,13 @@
+Duża aktualizacja do wersji 1.0.1:
+* Poprawka w kodowaniu JPEG chroniąca przed atakiem wykrycia
+
+Duża aktualizacja do wersji 1.0.0:
+* Nowy interfejs użytkownika... prosty i usprawniony!
+* Kompatybilny z najnowszym systemem operacyjnym Android
+
+Nowe i ulepszone w wersji 0.3.3:
+* Zaktualizowana biblioteka steganografii F5
+* Ulepszone zabezpieczenie hasłem
+* Ulepszony interfejs użytkownika z bardziej nowoczesnym wyglądem
+* Dodano przetwarzanie w tle kroków kodowania/dekodowania
+* Wielojęzyczny!
