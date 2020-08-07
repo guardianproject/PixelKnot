@@ -29,7 +29,7 @@
     <string name="sending">Gönderiliyor…</string>
     <string name="dont_show_again">Tekrar gösterme.</string>
     <string name="unsafe_share_title">Güvenli olmayan paylaşım</string>
-    <string name="unsafe_share">Sıkıştırılmış resimler için iyi değil, vb vb.</string>
+    <string name="unsafe_share">Sıkıştırılmış resimler için iyi değil, vb. vb.</string>
     <string name="outbox_item_deleted">Resim silindi</string>
     <string name="outbox_item_deleted_undo">Geri al</string>
     <string name="outbox_item_created_recently">1 dakikadan az bir süre önce oluşturuldu</string>
