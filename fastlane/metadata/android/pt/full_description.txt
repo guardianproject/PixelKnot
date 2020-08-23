@@ -1,0 +1,23 @@
+Tem um segredo que gostaria de compartilhar? Por que não escondê-lo em uma foto? Com PixelKnot, apenas seus amigos com a palavra-passe secreta podem desbloquear sua mensagem especial. Todos os outros veem apenas uma bela figura. É um jeito divertido e fácil de compartilhar mensagens ocultas sem que ninguém saiba. Pegue esses pixels, torça-os num nó, e veja por si mesmo!
+
+★ DISFARÇAR SUAS MENSAGENS: imagens são públicas, o texto é escondido nelas. Até um olho bem treinado pensaria que a imagem não foi editada. É segurança por obscuridade!
+★ PARA APENAS VOCÊ VER: configure uma palavra-passe para a mensagem secreta para ter a certeza de que a mensagem não será lida por pessoas não autorizadas ou bisbilhoteiros.
+★ SELETOR FÁCIL DE IMAGES: pode usar a câmera para tirar fotos, ou apenas usar fotos que já tirou
+★ MUDANÇAS INVISÍVEIS: nem mesmo um analista treinado deve ser capaz de detectar nenhuma mensagem. Os bytes da imagem devem parecer sem distorção.
+★ COMPARTILHE ATRAVÉS DE PLATAFORMAS: Deseja compartilhar imagens por e-mail, ferramentas de compartilhamento de ficheiros (como Dropbox e Sparkleshare), mídias sociais (como Google+ e Flickr) ou diretamente por Bluetooth ou NFC? Não é um problema! As mensagens ainda são recuperáveis do outro lado. Em breve teremos ainda mais ferramentas (como o Facebook) funcionando, portanto, fique atento!
+★ É LIVRE DE ANÚNCIOS/PROPAGANDA: Queremos seu amor, não seu dinheiro.
+★ PROTEGER COM MATEMÁTICA: Usamos o algoritmo de esteganografia F5, que implementa codificação de matriz para melhorar a eficiência da incorporação da mensagem, e emprega "straddling" (espalhamento) permutativo para espalhar as mudanças pelo esteganograma inteiro.
+★ RESISTENTE A ATAQUES: Fizemos ataques a imagens com mensagens ocultas usando uma versão especializada do stegdetect, uma ferramenta automatizada para detectar conteúdo esteganográfico nas imagens. Na maioria dos casos, as imagens são impermeáveis ao ataque. Incluiremos a detecção numa versão futura da aplicação para que possa testá-lo facilmente!
+Não vê seu idioma? Junte-se a nós e ajude a traduzir a aplicação:
+https://hosted.weblate.org/projects/guardianproject/pixelknot
+https://hosted.weblate.org/projects/guardianproject/pixelknot-metadata
+
+***Saiba mais***
+★ SOBRE NÓS: O Guardian Project é um grupo de programadores que cria aplicações móveis seguros e código-fonte aberto para um amanhã melhor.
+★ NOSSO SITE: https://GuardianProject.info.
+★ NO TWITTER: https://twitter.com/guardianproject
+★ CÓDIGO ABERTO (OPEN-SOURCE): PixelKnot é um software livre. Pode examinar o código ou se juntar à comunidade para tornar esta aplicação ainda melhor: https://github.com/guardianproject/pixelknot 
+★ FALE CONOSCO: Sentindo falta do seu recurso favorito? Encontrou um bug irritante? Por favor, nos aviso! Gostaríamos muito de ouvir sua opinião. Envie-nos um email: support@guardianproject.info
+
+***Aviso Legal***
+O Guardian Project faz aplicações que são projetados para proteger sua segurança e anonimidade. Os protocolos que nós usamos são amplamente considerados como estado da arte em tecnologia de segurança. Enquanto nós estamos constantemente atualizando nosso software para combater as últimas ameaças e eliminar bugs, nenhuma tecnologia é 100% infalível. Para segurança máxima e anonimidade, utilizadores devem utilizar as melhores práticas para se manterem seguros. PixelKnot ainda é uma aplicação experimental e não deve ser usada para aplicações reais. Pode encontrar um bom guia introdutório a esses temas em https://securityinabox.org
