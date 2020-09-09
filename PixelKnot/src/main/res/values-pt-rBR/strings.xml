@@ -1,45 +1,35 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">PixelKnot</string>
-
     <string name="title_new">Novo</string>
     <string name="title_albums">Álbuns</string>
-
     <string name="action_done">Feito</string>
     <string name="action_albums">Mostrar álbuns</string>
     <string name="action_pick_external">Selecionar de uma aplicação externa</string>
     <string name="action_pick_external_album_name">Outro</string>
-
     <string name="gallery_info_message">Selecione uma foto para criar uma mensagem oculta</string>
     <string name="gallery_info_ok">Pronto</string>
     <string name="gallery_need_permission">Precisamos de permissão para acessar suas fotos. Por favor, toque na tela para permitir..</string>
-
-    <string name="secret_message_hint">Escreva sua mensagem...</string>
+    <string name="secret_message_hint">Escreva a sua mensagem…</string>
     <string name="secret_password_hint">Insira uma senha</string>
     <string name="secret_password_minlength_info">Senha com no mínimo %d caracteres.</string>
     <string name="secret_password_too_short">Senha muito curta</string>
     <string name="password_skip">Ignorar</string>
     <string name="password_set">Confirmar</string>
-
     <string name="confirm_passphrase_override_title">Ignorar criação de senha?</string>
     <string name="confirm_passphrase_override">Sem proteger sua foto com uma senha, sua mensagem secreta poderá ser interceptada.</string>
     <string name="confirm_passphrase_override_back">Voltar</string>
     <string name="confirm_passphrase_override_continue">Continuar</string>
-
     <string name="message_encrypting_title">Quase pronto!</string>
     <string name="message_encrypting">Estamos ocultando sua mensagem. A tarefa poderá demorar alguns minutos. Notificaremos quando estviver pronto para enviar.</string>
-
     <string name="image_sent_title">Diga a eles que está a caminho!</string>
     <string name="image_sent">Seu destinatário deve abrir a foto com o Pixelknot para ler sua mensagem.</string>
-
     <string name="tap_to_send">Toque para enviar</string>
     <string name="tap_to_retry">Erro, toque para enviar novamente</string>
-    <string name="sending">Enviando...</string>
+    <string name="sending">Enviando…</string>
     <string name="dont_show_again">Não mostrar novamente.</string>
-
     <string name="unsafe_share_title">Compartilhamento não seguro</string>
     <string name="unsafe_share">Não recomendado para imagens comprimidas, etc etc.</string>
-
     <string name="outbox_item_deleted">Imagem apagada</string>
     <string name="outbox_item_deleted_undo">Desfazer</string>
     <string name="outbox_item_created_recently">Criada a menos de um minuto atrás</string>
@@ -49,20 +39,15 @@
     <string name="outbox_item_created_hour">Criada %1$d hora atrás</string>
     <string name="outbox_item_created_days">Criada %1$d dias atrás</string>
     <string name="outbox_item_created_day">Criada %1$d dia aatrás</string>
-
-
     <string name="notification_message_ready">Mensagem Pronta</string>
     <string name="notification_messages_ready">%d Mensagens Prontas</string>
-
     <string name="enter_message_password">Insira a senha da mensagem</string>
     <string name="unlock">Desbloquear</string>
     <string name="extracting_message">Buscando sua mensagem</string>
     <string name="error_try_again">Tente novamente</string>
-
     <string name="chooser_title_share">Compartilhar com</string>
     <string name="chooser_share_safe">Aplicações que funcionarão</string>
     <string name="chooser_share_unsafe">Aplicações que poderão funcionar</string>
-
     <string name="apg_error_activity_not_found">Não encontrada uma aplicação para essa ação.</string>
     <string name="apg_error_apg_version_not_supported">A versão de APG instalada não é suportada.</string>
     <string name="unknown_crypto_signature_user_id">&lt;desconhecido&gt;</string>
