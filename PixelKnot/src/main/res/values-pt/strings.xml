@@ -53,5 +53,5 @@
     <string name="apg_error_activity_not_found">Não foi encontrada qualquer aplicação apropriada para esta ação.</string>
     <string name="apg_error_apg_version_not_supported">A versão APG instalada não é suportada.</string>
     <string name="unknown_crypto_signature_user_id">&lt;desconhecido&gt;</string>
-    <string name="insufficient_apg_permissions">Esta aplicação não tem permissão para aceder a APG, por favor, reinstale a aplicação para corrigir o problema.</string>
+    <string name="insufficient_apg_permissions">Esta app não tem permissão para aceder a APG completamente, por favor, reinstale a app para corrigir o problema.</string>
 </resources>
