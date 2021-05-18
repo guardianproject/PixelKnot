@@ -1,0 +1,6 @@
+v0.3.3 sürümündeki yenilikler ve iyileştirmeler:
+* F5 steganografi kütüphanesi güncellendi
+* Parola güvenliği özelliği iyileştirildi
+* Daha modern bir görünüm için kullanıcı arayüzü sadeleştirildi
+* Kodlama/kod çözme adımlarının arka planda işlenmesi eklendi (çalışırken başka şeyler yapabilirsiniz!)
+* Her zamankinden daha fazla dil desteği!

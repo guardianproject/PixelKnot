@@ -1,0 +1,24 @@
+Ĉu vi havas iun sekreton, kiun vi volas kunhavigi? Kial ne kaŝi ĝin en bildo? Per la aplikaĵo PixelKnot nur viaj amikoj (sciantaj pasvorton) povos legi vian kaŝitan mesaĝon. Ĉiu vidos nur kutiman bildon. Estas oportune kaj amuze sendi kaŝitajn mesaĝojn sen avertante aliuloj. Prenu rastrumerojn kaj tordu ilin al maŝo!
+
+★ Kaŝi mesaĝojn: bildoj estas publikaj, la teksto estas maskita ene. Eĉ sperta okulo pensos, ke la bildo estas neredaktita. Sekureco per malklareco!
+★ Nur por viaj okuloj: sekurigi la sekretan mesaĝon por esti certa, ke neniu povos legi ĝin escepte la destinita ricevonto.
+★ Facile elekti bildojn: uzu vian fotilon por fari foton aŭ elektu bildojn el via aparato.
+★ Nevideblaj ŝanĝoj: eĉ sperta komputika analizisto ne povos eltrovi iujn ajn mesaĝojn, bitoj de la bilddosiero aspektos ne misformitaj.
+★ Kunhavigi per diversaj platformoj: ĉu vi volas kunhavigi bildon per retpoŝto, dosierkunhavigiloj (ekz. Dropbox, Sparkleshare), amaskumunikiloj (ekz. Flickr), Bludento aŭ NFC? Senprobleme! La mesaĝoj plue estos legeblaj de la ricevonto. Aliaj platformoj (ekz. Facebook) estos subtenataj estontece, do esperu aktualigojn!
+★ Neniuj reklamoj: ni volas vian kontenton, ne vian monon.
+★ Matematike sekura: ni uzas ĵus-prilaboritan mesaĝkaŝadan algoritmon F5, kiu uzas matric‑kodadon por pliigi efikecon de enkorpigado kaj uzas permutajn metodojn por egale disigi ŝanĝojn sur la tuta bildo.
+★ Atakrezista: ni plenumis atakojn sur bildoj kun kaŝitaj mesaĝoj per la speciala versio de stegdetect – aŭtomata ilo por eltrovi kaŝitan enhavon en bildoj. En plejparto da provoj, la bildoj rezistis atakon. En la ventontaj versioj de la aplikaĵo ni inkluzivos eltrovilon por ke vi povu mem testi la bildojn!
+
+Por traduki la aplikaĵon, vizitu:
+https://hosted.weblate.org/projects/guardianproject/pixelknot
+https://hosted.weblate.org/projects/guardianproject/pixelknot-metadata
+
+***PLIAJ INFORMOJ***
+★ Pri: Guardian Project estas grupo da programistoj laborantaj pri sekuraj malfermkodaj poŝtelefonaj aplikaĵoj por li bona estonteco.
+★ Retejo: https://GuardianProject.info
+★ Twitter: https://twitter.com/guardianproject
+★ Libera programaro: PixelKnot estas libera programaro. Vi povas kontroli la fontkodon aŭ kontribui por igi la aplikaĵon pli bona: https://github.com/guardianproject/pixelknot
+★ Kontakti: Ĉu iu eblaĵo mankas? Ĉu vi trovis eraron? Bonvolu sciigi nin! Ni tre volus aŭskulti vin. Skribu al ni retleteron: support@guardianproject.info aŭ trovu nin en la babilejo: https://guardianproject.info/contact
+
+***Malgarantio***
+La projekto «Guardian Project» evoluigas aplikaĵojn por protekti vian sekurecon kaj anonimecon. La uzataj protokoloj estas rigardataj kiel plej modernaj en la sekureca teĥnologio. Kvankam ni senĉese ĝisdatigas nian programaron por eviti nuntempajn atakojn kaj fliki erarojn, neniu teĥnologio estas en 100% sekura. Por maksimuma sekureco kaj anonimeco la uzantoj devas realigi certajn operaciojn por resti sekuraj. La aplikaĵo PixelKnot plue estas eksperimenta kaj ne estu uzata en la reala mondo. Vi trovos gvidilojn (ne Esperante) pri tiuj temoj ĉe la retejo https://securityinabox.org

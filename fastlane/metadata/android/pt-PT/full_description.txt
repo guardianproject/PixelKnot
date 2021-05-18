@@ -1,30 +1,24 @@
-Tem um segredo que pretende partilhar? Porque não ocultá-lo numa imagem? Com o PixelKnot, apenas os seus amigos com a palavra-passe secreta podem desbloquear a sua mensagem especial. Todos os outros veem apenas uma imagem bonita. É uma forma fácil e divertida de partilhar mensagens ocultas sem ninguém desconfiar. Pegue naqueles píxeis, dê-lhes um nó, e veja por si mesmo!
-
-Esta aplicação de esteganografia de imagem apresenta:
+Tem um segredo que deseja partilhar? Porque não escondê-lo numa imagem? Com o PixelKnot, apenas os seus amigos com a palavra-passe secreta podem desbloquear a sua mensagem especial. Todos os outros vêem apenas uma imagem bonita. É uma forma fácil e divertida de partilhar mensagens ocultas sem ninguém desconfiar. Pegue naqueles píxeis, dê-lhes um nó, e veja por si mesmo!
 
 * DISFARCE AS SUAS MENSAGENS: as imagens são públicas, o texto está oculto dentro. Até mesmo um olho treinado irá pensar que a imagem não é editável[a].
 * APENAS PARA OS SEUS OLHOS: coloque uma palavra-passe na mensagem secreta para se certificar que ninguém a pode ler, exceto a pessoa a que esta é destinada.
-* MATEMATICAMENTE SEGURA: nós usamos o algoritmo de estenografia F5 que implementa a codificação matriz para melhorar a eficiência de integração e emprega a operação de permutação para espalhar uniformemente as alterações ao longo de toda a mensagem codificada.
+* SELECIONADOR DE IMAGEM FÁCIL: pode utilizar a câmara para tirar fotografias ou selecionar uma imagem que já tenha tirado.
+* ALTERAÇÕES INVISÍVEIS: mesmo um analista treinado não deveria ser capaz de detetar nenhuma mensagem. Os bytes da imagem deverão parecer sem distorção.
+* PARTILHA ENTRE PLATAFORMAS: quer partilhar as imagens via e-mail, ferramentas de partilha de ficheiros (tais como Dropbox & Sparkleshare), rede social  (tais como Google+ e Flickr) ou diretamente através de Bluetooth ou NFC? Não tem problema! As mensagens ainda são recuperáveis no outro lado. Nós iremos ter brevemente ainda mais ferramentas (tal como Facebook), mantenha-se sincronizado!
+* SEM ANÚNCIOS: nós queremos o seu "amor", não o seu dinheiro.
+* MATEMATICAMENTE SEGURA: nós utilizamos o algoritmo de estenografia F5 que implementa a codificação de matriz para melhorar a eficiência de integração e emprega a operação de permutação para espalhar uniformemente as alterações ao longo de toda a mensagem codificada.
 * RESISTENTE A ATAQUES: nós testámos a descoberta em imagens com mensagens ocultas nas mesmas, usando uma versão especializada de "stegdetect", uma ferramenta automatizada para a deteção de conteúdo de estenografia em imagens.
-* NÓS FALAMOS O SEU IDIOMA:  PixelKnot está disponível para os amigos que falam muitos idiomas. Não vê o seu idioma? Junte-se a nós e ajude a traduzir a aplicação: https://hosted.weblate.org/projects/guardianproject
 
+Não vê o seu idioma? Junte-se a nós e ajude a traduzir a aplicação:
+ https://hosted.weblate.org/projects/guardianproject
+https://hosted.weblate.org/projects/guardianproject/pixelknot-metadata
 
-O lançamento de PixelKnot apresenta uma experiência de utilizador melhorada:
-
-* PARTILHA MAIS FÁCIL: agora é mais fácil partilhar imagens PixelKnot com as aplicações que você e os seus amigos normalmente usam. Note que nem todos os serviços de partilha de imagem podem ser usados com o PixelKnot porque eles modificam as suas imagens antes de as colocarem na sua plataforma. PixelKnot sugere aplicações que sabe que irão partilhar corretamente, mas é bem-vindo para adicionar os seus próprios serviços.
-* ENVIAR / RECEBER SIMPLIFICADO: Pretende enviar uma mensagem? Abra a aplicação PixelKnot diretamente, e o PixelKnot irá guiá-lo através do processo.  Receber uma imagem esteganograma partilhada? Use a sua aplicação de receção para partilhar a imagem com o PixelKnot - Esta irá tomar conta diretamente da extração da mensagem.
-* NOVO SELECIONADOR DE IMAGEM: pode usar a câmara para tirar a sua foto ou selecionar de uma imagem que já tenha tirado. O novo selecionador suporta todas as diretorias de imagem comuns e permite-lhe selecionar galerias diferentes se necessário (tais como uma galeria “privada” criado por uma aplicação de câmara única).
-* FILA DE ENVIO: o PixelKnot permite-lhe colocar em fila uma lista de imagens para processamento, em vez de o forçar a esperar pela encriptação da mensagem para completar (dependendo do tamanho da sua imagem e comprimento do seu texto, isto poderá demorar bastante tempo).[b]
-
-
-NO TWITTER: https://twitter.com/guardianproject
-
-CÓDIGO ABERTO: o PixelKnot é um software livre. Pode consultar o nosso código fonte, ou aderir à comunidade para ajudar a torná-lo ainda melhor: https://github.com/guardianproject/pixelknot 
-
+***Saiba Mais***
+* SOBRE NÓS: o Projeto Guardian é grupo de programadores que cria aplicações móveis seguras e de código aberto para um futuro melhor.
+* O NOSSO ''SITE'' DA WEB:  https://GuardianProject.info.
+* NO TWITTER: https://twitter.com/guardianproject
+* CÓDIGO ABERTO: o PixelKnot é um software livre. Pode consultar o nosso código fonte, ou aderir à comunidade para ajudar a torná-lo ainda melhor: https://github.com/guardianproject/pixelknot 
+* ENVIE_NOS UMA MENSAGEM: Nós não temos a sua funcionalidade favorita? Encontrou um erro irritável? Por favor, diga-nos! Nós gostaríamos de o ouvir. Envie-nos ema mensagem para: support@guardianproject.info
 
 ***Limitação de Responsabilidade***
-O Projeto Guardian cria aplicações que estão desenhadas para proteger a sua segurança e anonimato. Os protocolos que nós usamos são amplamente considerados como estado de arte em tecnologia de segurança. Enquanto nós estamos constantemente a atualizar o nosso software para combater as últimas ameaças e eliminar erros, nenhuma tecnologia é 100% infalível. Para uma máxima segurança e anonimato, os utilizadores devem usar as melhores práticas para se manterem seguros. PixelKnot ainda continua uma aplicação experimental e não deverá ser usada no mundo real das aplicações. Pode encontrar um bom guia introdutório para estes tópicos em https://securityinabox.org
-
-
-[a] Eu removi a linha ofensiva aqui. Lembra-se que isto foi originalmente criado por Mark Belinsky, não por mim.
-[b] Deveria certificar-se que tudo isto está correto
+O Projeto Guardian cria aplicações que são desenhadas para proteger a sua segurança e anonimato. Os protocolos que nós utilizamos são amplamente considerados como estado de arte em tecnologia de segurança. Enquanto nós estamos constantemente a atualizar o nosso software para combater as últimas ameaças e eliminar erros, nenhuma tecnologia é 100% infalível. Para uma máxima segurança e anonimato, os utilizadores devem usar as melhores práticas para se manterem seguros. PixelKnot ainda continua uma aplicação experimental e não deverá ser usada no mundo real das aplicações. Pode encontrar um bom guia introdutório para estes tópicos em: https://securityinabox.org

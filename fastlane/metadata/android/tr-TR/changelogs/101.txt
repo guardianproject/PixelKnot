@@ -1,0 +1,12 @@
+v1.0.1 için büyük güncelleme:
+* Algılama saldırısına karşı JPEG kodlama düzeltmesi
+
+v1.0.0 için büyük güncelleme:
+* Yepyeni bir kullanıcı deneyimi... basit ve akıcı!
+* Artık en son Android işletim sistemi ve cihazlarla uyumlu
+
+v0.3.3 sürümündeki yenilikler ve iyileştirmeler:
+* F5 steganografi kütüphanesi güncellendi
+* Parola güvenliği özelliği iyileştirildi
+* Daha modern bir görünüm için kullanıcı arayüzü sadeleştirildi
+* Kodlama/kod çözme adımlarının arka planda işlenmesi eklendi

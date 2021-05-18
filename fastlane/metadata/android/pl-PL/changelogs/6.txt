@@ -1,0 +1,6 @@
+Nowe i ulepszone w wersji 0.3.3:
+* Zaktualizowana biblioteka steganografii F5
+* Ulepszona funkcja bezpieczeństwa hasła
+* Oczyszczony interfejs użytkownika dla bardziej nowoczesnego wyglądu
+* Dodano przetwarzanie kroków kodowania/dekodowania w tle (można zrobić inne rzeczy, podczas gdy to działa!)
+* Więcej wsparcia językowego niż kiedykolwiek!

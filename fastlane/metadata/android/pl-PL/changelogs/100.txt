@@ -1,0 +1,10 @@
+Duża aktualizacja do wersji 1.0.0:
+* Nowy interfejs użytkownika... prosty i usprawniony!
+* Teraz kompatybilny z najnowszym systemem operacyjnym Android
+
+Nowe i ulepszone w wersji 0.3.3:
+* Zaktualizowana biblioteka steganografii F5
+* Ulepszona funkcja zabezpieczenia hasłem
+* Ulepszony interfejs użytkownika, aby uzyskać bardziej nowoczesny wygląd
+* Dodano przetwarzanie w tle kroków kodowania / dekodowania (możesz robić inne rzeczy, gdy to działa!)
+* Większa obsługa języków niż kiedykolwiek!

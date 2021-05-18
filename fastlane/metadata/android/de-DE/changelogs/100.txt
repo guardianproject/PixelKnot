@@ -1,0 +1,10 @@
+Großes Update auf v1.0.0:
+* Eine brandneue Benutzererfahrung… einfach und unkompliziert!
+* Jetzt kompatibel mit den neuesten Android-Betriebssystemen und -Geräten.
+
+Neu und verbessert in v0.3.3.3:
+* Aktualisierte F5 Steganographie-Bibliothek
+* Verbesserte Passwortsicherheitsfunktion
+* Bereinigte Benutzeroberfläche für einen moderneren Look
+* Hintergrundverarbeitung von Encode-/Decodeschritten hinzugefügt (Sie können andere Dinge tun, während es funktioniert!)
+* Mehr Sprachunterstützung denn je!
