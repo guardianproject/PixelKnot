@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="apg_error_activity_not_found">මෙම ක්‍රියාමාර්ගය සඳහා සුදුසු යෙදුමක් හමු නොවීය.</string>
+    <string name="chooser_title_share">සමඟ බෙදාගන්න</string>
+    <string name="error_try_again">යලි උත්සාහ කරන්න</string>
+    <string name="enter_message_password">පණිවිඩ මුරපදය යොදන්න</string>
+    <string name="notification_messages_ready">%d පණිවිඩ සූදානම්</string>
+    <string name="notification_message_ready">පණිවිඩය සූදානම්</string>
+    <string name="outbox_item_deleted_undo">පෙරසේ</string>
+    <string name="unsafe_share_title">අනාරක්ෂිත බෙදාගැනීම</string>
+    <string name="dont_show_again">නැවත පෙන්වන්න එපා.</string>
+    <string name="sending">යවමින්…</string>
+    <string name="tap_to_retry">දෝෂයකි, යලි උත්සාහයට තට්ටු කරන්න</string>
+    <string name="tap_to_send">යැවීමට තට්ටු කරන්න</string>
+    <string name="confirm_passphrase_override_continue">ඉදිරියට යන්න</string>
+    <string name="confirm_passphrase_override_back">ආපසු යන්න</string>
+    <string name="confirm_passphrase_override_title">මුරපදය මඟහරින්නද\?</string>
+    <string name="secret_password_too_short">ඉතා කෙටි ය</string>
+    <string name="password_skip">මඟහරින්න</string>
+    <string name="action_pick_external_album_name">වෙනත්</string>
+    <string name="title_new">නව</string>
+    <string name="app_name">පික්සල්නොට්</string>
+</resources>
