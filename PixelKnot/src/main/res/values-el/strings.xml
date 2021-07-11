@@ -18,8 +18,8 @@
     <string name="password_set">Ρύθμιση</string>
     <string name="confirm_passphrase_override_title">Παράλειψη ρύθμισης κωδικού κρυπτογράφησης;</string>
     <string name="confirm_passphrase_override">Χωρίς προστασία κρυπτογράφησης το μυστικό σας μήνυμα μπορεί και να μην παραμείνει μυστικό για πολύ...</string>
-    <string name="confirm_passphrase_override_back">Γυρίστε πίσω</string>
-    <string name="confirm_passphrase_override_continue">Συνεχίστε</string>
+    <string name="confirm_passphrase_override_back">Επιστροφή</string>
+    <string name="confirm_passphrase_override_continue">Συνέχεια</string>
     <string name="message_encrypting_title">Σχεδόν τελειώσατε!</string>
     <string name="message_encrypting">Κρύβουμε το μήνυμά σας αυτή την στιγμή. Θα χρειαστούμε λίγα λεπτά, μα θα σας ειδοποιήσουμε όταν θα είναι έτοιμο για αποστολή.</string>
     <string name="image_sent_title">Πείτε τους πως Ε-Ε-ΕΡΧΕΤΑΙ!</string>
