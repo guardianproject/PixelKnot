@@ -1,12 +1,20 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="title_new">Baru</string>
-  <string name="action_done">Selesai</string>
-  <string name="password_skip">Lewati</string>
-  <string name="password_set">Set</string>
-  <string name="confirm_passphrase_override_continue">Teruskan</string>
-  <string name="outbox_item_deleted_undo">Undo</string>
-  <!--Receiver-->
-  <string name="unlock">Tidak terkunci</string>
-  <!--APG related-->
+    <string name="title_new">Baru</string>
+    <string name="action_done">Selesai</string>
+    <string name="password_skip">Lewati</string>
+    <string name="password_set">Set</string>
+    <string name="confirm_passphrase_override_continue">Teruskan</string>
+    <string name="outbox_item_deleted_undo">Undo</string>
+    <!--Receiver-->
+    <string name="unlock">Tidak terkunci</string>
+    <!--APG related-->
+    <string name="unknown_crypto_signature_user_id">&lt;\?\?\?&gt;</string>
+    <string name="message_encrypting_title">Hampir selesai!</string>
+    <string name="outbox_item_created_days">Dibikin %1$d hari yang lalu</string>
+    <string name="outbox_item_created_hour">Dibikin %1$d jam yang lalu</string>
+    <string name="outbox_item_created_hours">Dibikin %1$d jam yang lalu</string>
+    <string name="outbox_item_created_minute">Dibikin %1$d menit yang lalu</string>
+    <string name="outbox_item_created_minutes">Dibikin %1$d menit yang lalu</string>
+    <string name="app_name">PixelKnot</string>
 </resources>
