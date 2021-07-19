@@ -10,7 +10,7 @@
     <string name="gallery_info_message">Dotknij zdjęcie, by zacząć tworzyć ukrytą wiadomość</string>
     <string name="gallery_info_ok">Zrobione</string>
     <string name="gallery_need_permission">Potrzebujemy Twojego pozwolenia by otrzymać dostęp do Twoich zdjęć. Proszę, dotknij ekranu by zezwolić.</string>
-    <string name="secret_message_hint">Napisz swoją wiadomość...</string>
+    <string name="secret_message_hint">Napisz wiadomość…</string>
     <string name="secret_password_hint">Ustaw hasło dla wiadomości</string>
     <string name="secret_password_minlength_info">Hasło musi mieć przynajmniej %d znaków.</string>
     <string name="secret_password_too_short">Za krótkie</string>
@@ -26,7 +26,7 @@
     <string name="image_sent">Odbiorca musi otworzyć obrazek w Pixelknot by odczytać Twoją wiadomość.</string>
     <string name="tap_to_send">Dotknij by wysłać</string>
     <string name="tap_to_retry">Błąd, dotknij by spróbować ponownie</string>
-    <string name="sending">Wysyłanie...</string>
+    <string name="sending">Wysyłanie…</string>
     <string name="dont_show_again">Nie pokazuj ponownie.</string>
     <string name="unsafe_share_title">Niebezpieczna akcja</string>
     <string name="unsafe_share">Może nie działać poprawnie z obrazami skompresowanymi itp.</string>
@@ -40,7 +40,7 @@
     <string name="outbox_item_created_days">Stworzono %1$d dni temu</string>
     <string name="outbox_item_created_day">Stworzono %1$d dzień temu</string>
     <string name="notification_message_ready">Wiadomość Gotowa</string>
-    <string name="notification_messages_ready">%d Wiadomości Gotowych</string>
+    <string name="notification_messages_ready">%d Wiadomości Gotowe</string>
     <!--Receiver-->
     <string name="enter_message_password">Wpisz hasło</string>
     <string name="unlock">Odblokuj</string>
@@ -53,5 +53,5 @@
     <string name="apg_error_activity_not_found">Nie znaleziono pasujących aplikacji do wykonania tej akcji.</string>
     <string name="apg_error_apg_version_not_supported">Zainstalowana wersja APG nie jest wspierana.</string>
     <string name="unknown_crypto_signature_user_id">&lt;nieznany&gt;</string>
-    <string name="insufficient_apg_permissions">Ta aplikacja nie ma pełnych praw dostępu do AGP, proszę reinstalować aplikacje aby to naprawić.</string>
+    <string name="insufficient_apg_permissions">Ta aplikacja nie ma pełnych praw dostępu do AGP, aby to naprawić zainstaluj aplikację ponownie.</string>
 </resources>
