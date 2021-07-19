@@ -10,7 +10,7 @@
     <string name="gallery_info_message">Toquer sur une photo pour lancer la création d\'un message caché</string>
     <string name="gallery_info_ok">Très bien</string>
     <string name="gallery_need_permission">Nous avons besoin de votre permission pour accéder à vos photos. Veuillez toquer n\'importe où pour l\'autoriser.</string>
-    <string name="secret_message_hint">Rédiger votre message…</string>
+    <string name="secret_message_hint">Rédigez votre message…</string>
     <string name="secret_password_hint">Définir un mot de passe pour le message</string>
     <string name="secret_password_minlength_info">Il doit comprendre au moins %d caractères.</string>
     <string name="secret_password_too_short">Trop court</string>
@@ -20,7 +20,7 @@
     <string name="confirm_passphrase_override">Sans protéger votre image par mot de passe, votre message secret pourrait être découvert s\'il est intercepté.</string>
     <string name="confirm_passphrase_override_back">Retour</string>
     <string name="confirm_passphrase_override_continue">Poursuivre</string>
-    <string name="message_encrypting_title">Presque fini !</string>
+    <string name="message_encrypting_title">C’est presque terminé</string>
     <string name="message_encrypting">Nous dissimulons votre message. Cela prendra quelques minutes. Nous vous avertirons quand il sera prêt à envoyer.</string>
     <string name="image_sent_title">Dites-leur que ça vient !</string>
     <string name="image_sent">Votre destinataire doit ouvrir l\'image avec Pixelknot  afin de lire votre message.</string>
