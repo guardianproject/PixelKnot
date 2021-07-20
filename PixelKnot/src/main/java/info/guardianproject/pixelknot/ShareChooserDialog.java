@@ -55,6 +55,10 @@ public class ShareChooserDialog extends BottomSheetDialogFragment {
         activities.add("com.google.android.email"); //, ActivityNames.EMAIL);
         activities.add("com.htc.android.mail"); //, ActivityNames.EMAIL);
         activities.add("com.android.email"); //, ActivityNames.EMAIL);
+        activities.add("com.android.messaging");
+        activities.add("org.thoughtcrime.securesms");
+        activities.add("org.telegram.messenger");
+
         gSafeApps = Collections.unmodifiableSet(activities);
     }
 
