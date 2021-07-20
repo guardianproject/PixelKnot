@@ -1,0 +1,6 @@
+Nytt og forbedret i v0.3.3:
+* Oppdatert F5-stenografibibliotek
+* Forbedret funksjon for passordssikkerhet
+* Opprensket grensesnitt for mer moderne utseende
+* Tillagt bakgrunnsbehandling av koding/dekodings-steg (du kan gjøre endre ting mens programmet arbeider).
+* Flere språk enn noen gang.

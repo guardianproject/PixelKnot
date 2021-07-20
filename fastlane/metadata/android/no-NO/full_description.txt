@@ -37,12 +37,8 @@ VÅR NETTSIDE: https://guardianproject.info
 * FRIPROG: PikselKnop er fri programvare. Du kan ta en titt på vår kildekode, og melde deg inn i fellesskapet for å gjøre det enda bedre: https://github.com/guardianproject/pixelknot 
 
 
-TA KONTAKT: Mangler vi din favorittfunksjon? Funnet en feil? Fortell oss om det! Vi elsker å høre tilbakemeldinger. Send oss epost: support@guardianproject.info
+TA KONTAKT: Mangler vi din favorittfunksjon? Funnet en feil? Fortell oss om det! Vi elsker å høre tilbakemeldinger. Send oss e-post: support@guardianproject.info
 
 
 ***Ansvarsfraskrivelse***
-Guardian-prosjektet lager app-er som er bygd for å verne om din sikkerhet og anonymitet. Protokollene vi bruker er viden ansett for å være det beste som finnes innen sikkerhetsteknologi. Programvaren er i konstant oppdatering for å håndtere de seneste sikkerhetstruslene, men ingen teknologi er 100% idiotsikker. For maksimal sikkerhet og anonymitet bør brukerne holde seg til en sikkerhetspraksis for å ivareta egen sikkerhet. PikselKnop er fremdeles en eksperimentell applikasjon, og burde ikke brukes til å beskytte ømfintlig data i den virkelige verden. Du finner en god introduksjonsguide om disse temaene på https://securityinabox.org
-
-
-[a]Jeg har fjernet linjen som forvoldte problemer her. Husker du at dette orginalt ble forfattet av Mark Belinsky, ikke meg.
-[b]du burde sjekke at alt dette stemmer
+Guardian-prosjektet lager programmer som er bygd for å verne om din sikkerhet og anonymitet. Protokollene vi bruker er viden ansett for å være det beste som finnes innen sikkerhetsteknologi. Programvaren er i konstant oppdatering for å håndtere de seneste sikkerhetstruslene, men ingen teknologi er 100% idiotsikker. For maksimal sikkerhet og anonymitet bør brukerne holde seg til en sikkerhetspraksis for å ivareta egen sikkerhet. PikselKnop er fremdeles en eksperimentell applikasjon, og burde ikke brukes til å beskytte ømfintlig data i den virkelige verden. Du finner en god introduksjonsguide om disse temaene på https://securityinabox.org

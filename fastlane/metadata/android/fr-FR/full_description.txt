@@ -1,4 +1,4 @@
-Avez-vous un secret à partager ? Pourquoi ne pas le cacher dans une image ? Avec PixelKnot, seuls vos amis possédant le mot de passe peuvent déverrouiller votre message secret. Tous les autres ne voient qu’une belle image. Voici une façon amusante et facile de partager des messages cachés en toute discrétion. Prenez ces pixels, faites-en un nœud et constatez par vous-même !
+Avez-vous un secret à partager ? Pourquoi ne pas le cacher dans une image ? Avec PixelKnot, seuls vos amis qui possèdent le mot de passe peuvent déverrouiller votre message secret. Tous les autres ne voient qu’une belle image. Voici une façon amusante et facile de partager des messages cachés en toute discrétion. Prenez ces pixels, faites-en un nœud et constatez par vous-même !
 
 Les caractéristiques de cette application sténographique d’images sont :
 
@@ -9,14 +9,14 @@ Les caractéristiques de cette application sténographique d’images sont :
 * NOUS PARLONS VOTRE LANGUE : PixelKnot est proposé aux amis qui parlent de nombreuses langues. Vous ne voyez pas la vôtre ? Joignez-vous à nous et aidez-nous à traduire l’appli : https://hosted.weblate.org/projects/guardianproject
 
 
-Cette version de PixelKnot propose une expérience utilisateur améliorée :
+Cette version de PixelKnot propose une expérience utilisateur améliorée :
 
 * PARTAGE FACILITÉ : il est maintenant plus facile de partager des images PixelKnot avec les applications que vous et vos amis utilisez habituellement. Il faut remarquer que PixelKnot ne peut pas être utilisé avec tous les services de partage d’images, car ils modifient vos images avant de les publier sur leur plate-forme. PixelKnot suggère les applis qui, à sa connaissance, partageront adéquatement, mais vous pouvez ajouter les vôtres.
 * ENVOI ET RÉCEPTION SIMPLIFIÉS : vous souhaitez envoyer un message ? Ouvrez l’appli PixelKnot directement, et PixelKnot vous permettra de suivre toutes les étapes du processus. Vous recevez une image avec du contenu stéganographique ? Utilisez votre appli de réception pour partager l’image avec PixelKnot qui prendra directement en charge l’extraction du message.
 * NOUVEAU SÉLECTEUR D’IMAGE : vous pouvez utiliser l’appareil photo pour prendre votre photo ou sélectionner une photo que vous avez déjà prise. Le nouveau sélecteur prend en charge tous les répertoires d’images habituels et vous permet de sélectionner une galerie différente si besoin est (telle qu’une galerie « privée » créée par une application appareil photo unique).
 * FILE D’ENVOIS : PixelKnot vous permet de mettre en file d’attente une liste d’images à traiter, plutôt que de vous forcer à attendre la fin du chiffrement du message (selon la taille de votre image et la longueur de votre texte, cela peut prendre du temps).
 
-CODE SOURCE OUVERT : PixelKnot est un logiciel libre. Vous pouvez examiner notre code source ou vous joindre à la communauté pour aider à encore l’améliorer : https://github.com/guardianproject/pixelknot 
+CODE SOURCE OUVERT : PixelKnot est un logiciel libre. Vous pouvez examiner notre code source ou vous joindre à la communauté pour aider à encore l’améliorer : https://github.com/guardianproject/pixelknot 
 
 ****Avertissement****
-Le Projet Guardian développe des applis conçues pour protéger votre sécurité et votre anonymat. L’on considère généralement que les protocoles que nous utilisons sont à l’avant-garde des technologies de sécurité. Bien que nous mettions continuellement nos logiciels à niveau pour lutter contre les dernières menaces et éliminer les bogues, aucune technologie n’est infaillible à 100 %. Pour une sécurité et un anonymat maximaux, les utilisateurs doivent mettre en œuvre les meilleures pratiques pour se protéger. PixelKnot est encore une application expérimentale et ne devrait pas être utilisée pour des déploiements en conditions réelles. Vous trouverez un bon guide de présentation à ces sujets ici : https://securityinabox.org/fr.
+Le Projet Guardian développe des applis conçues pour protéger votre sécurité et votre anonymat. L’on considère généralement que les protocoles que nous utilisons sont à l’avant-garde des technologies de sécurité. Bien que nous mettions continuellement nos logiciels à niveau pour lutter contre les dernières menaces et éliminer les bogues, aucune technologie n’est infaillible à 100 %. Pour une sécurité et un anonymat maximaux, les utilisateurs doivent mettre en œuvre les meilleures pratiques pour se protéger. PixelKnot est encore une application expérimentale et ne devrait pas être utilisée pour des déploiements en conditions réelles. Vous trouverez un bon guide de présentation à ces sujets ici : https://securityinabox.org/fr
