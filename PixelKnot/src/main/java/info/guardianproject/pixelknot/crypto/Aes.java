@@ -10,6 +10,7 @@ import java.security.AlgorithmParameters;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.InvalidParameterSpecException;
 import java.security.spec.KeySpec;
@@ -28,8 +29,20 @@ import javax.crypto.spec.SecretKeySpec;
 
 public class Aes {
 	public final static String LOG = Logger.AES;
-	
+	private static byte[] IV = null;
+	private static SecureRandom random;
+	private static synchronized void initIV ()
+	{
+		if (IV == null) {
+			IV = new byte[16];
+			random = new SecureRandom();
+			random.nextBytes(IV);
+		}
+	}
 	public static String DecryptWithPassword(String password, byte[] iv, byte[] message, byte[] salt) {
+
+		initIV();
+
 		String new_message = null;
 		
 		try {
@@ -39,7 +52,8 @@ public class Aes {
 			SecretKey secret_key = new SecretKeySpec(tmp.getEncoded(), "AES");
 			
 			Cipher cipher = Cipher.getInstance("AES/GCM/NoPadding");
-			cipher.init(Cipher.DECRYPT_MODE, secret_key, new IvParameterSpec(iv));
+			IvParameterSpec ivSpec = new IvParameterSpec(IV);
+			cipher.init(Cipher.DECRYPT_MODE, secret_key, ivSpec);
 			
 			new_message = new String(cipher.doFinal(message));
 			
@@ -70,6 +84,9 @@ public class Aes {
 	}
 	
 	public static Map<String, String> EncryptWithPassword(String password, String message, byte[] salt) {
+
+		initIV();
+
 		Map<String, String> pack = null;
 		String new_message = null;
 		
@@ -85,7 +102,8 @@ public class Aes {
 			cipher.init(Cipher.ENCRYPT_MODE, secret_key);
 			
 			AlgorithmParameters params = cipher.getParameters();
-			String iv = Base64.encodeToString(params.getParameterSpec(IvParameterSpec.class).getIV(), Base64.DEFAULT);
+			IvParameterSpec ivSpec = new IvParameterSpec(IV);
+			String iv = Base64.encodeToString(ivSpec.getIV(), Base64.DEFAULT);
 			
 			new_message = Base64.encodeToString(cipher.doFinal(message.getBytes("UTF-8")), Base64.DEFAULT);
 			
@@ -110,9 +128,6 @@ public class Aes {
 			Log.e(Logger.UI, e.toString());
 			e.printStackTrace();
 		} catch (InvalidKeyException e) {
-			Log.e(Logger.UI, e.toString());
-			e.printStackTrace();
-		} catch (InvalidParameterSpecException e) {
 			Log.e(Logger.UI, e.toString());
 			e.printStackTrace();
 		}
