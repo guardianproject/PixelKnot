@@ -9,7 +9,7 @@
 
     <include layout="@layout/content_receive" />
 
-    <android.support.v7.widget.Toolbar
+    <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:theme="@style/ReceiverToolbarTheme"
         android:layout_width="match_parent"

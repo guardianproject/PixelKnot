@@ -63,7 +63,7 @@
             android:exported="false"
             android:grantUriPermissions="true"/>
         <provider
-            android:name="android.support.v4.content.FileProvider"
+            android:name="androidx.core.content.FileProvider"
             android:authorities="info.guardianproject.pixelknot.camera_capture"
             android:exported="false"
             android:grantUriPermissions="true">

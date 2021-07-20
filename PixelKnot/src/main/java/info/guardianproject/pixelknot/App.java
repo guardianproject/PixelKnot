@@ -8,7 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.BitmapFactory;
-import android.support.v4.app.NotificationCompat;
+import androidx.core.app.NotificationCompat;
 
 public class App extends Application implements IStegoThreadHandler {
     private static App gInstance;

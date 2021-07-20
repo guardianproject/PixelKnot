@@ -2,7 +2,7 @@ package info.guardianproject.pixelknot;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 
 /**
  * A common base class for activities, to support language handling

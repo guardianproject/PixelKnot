@@ -2,16 +2,11 @@ package info.guardianproject.pixelknot.views;
 
 
 import android.content.Context;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
 import android.os.Build;
-import android.support.v4.graphics.drawable.DrawableCompat;
-import android.support.v4.view.ViewCompat;
+import androidx.core.graphics.drawable.DrawableCompat;
+import androidx.core.view.ViewCompat;
 import android.text.InputType;
 import android.util.AttributeSet;
-import android.view.MotionEvent;
-
-import info.guardianproject.pixelknot.R;
 
 public class FadingPasswordEditText extends FadingEditText {
 

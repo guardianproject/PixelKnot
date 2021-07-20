@@ -41,7 +41,7 @@
                 android:text="@string/gallery_info_ok"
                 android:textColor="@color/colorAccent" />
         </LinearLayout>
-        <android.support.v7.widget.RecyclerView
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view_albums"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -95,7 +95,7 @@
             android:orientation="vertical"
             android:padding="24dp">
 
-            <android.support.design.widget.TextInputLayout
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/secret_password_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -130,7 +130,7 @@
                     android:visibility="invisible"
                     android:layout_gravity="start" />
 
-            </android.support.design.widget.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -183,7 +183,7 @@
         android:clipToPadding="false"
         android:clipChildren="false"
         android:visibility="invisible">
-        <android.support.v7.widget.RecyclerView
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view_outbox"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
