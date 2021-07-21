@@ -23,6 +23,7 @@ import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
+import javax.crypto.spec.GCMParameterSpec;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
@@ -39,6 +40,7 @@ public class Aes {
 			random.nextBytes(IV);
 		}
 	}
+
 	public static String DecryptWithPassword(String password, byte[] iv, byte[] message, byte[] salt) {
 
 		initIV();
@@ -52,7 +54,7 @@ public class Aes {
 			SecretKey secret_key = new SecretKeySpec(tmp.getEncoded(), "AES");
 			
 			Cipher cipher = Cipher.getInstance("AES/GCM/NoPadding");
-			IvParameterSpec ivSpec = new IvParameterSpec(IV);
+			IvParameterSpec ivSpec = new IvParameterSpec(iv);
 			cipher.init(Cipher.DECRYPT_MODE, secret_key, ivSpec);
 			
 			new_message = new String(cipher.doFinal(message));
@@ -102,7 +104,7 @@ public class Aes {
 			cipher.init(Cipher.ENCRYPT_MODE, secret_key);
 			
 			AlgorithmParameters params = cipher.getParameters();
-			IvParameterSpec ivSpec = new IvParameterSpec(IV);
+			GCMParameterSpec ivSpec = params.getParameterSpec(GCMParameterSpec.class);
 			String iv = Base64.encodeToString(ivSpec.getIV(), Base64.DEFAULT);
 			
 			new_message = Base64.encodeToString(cipher.doFinal(message.getBytes("UTF-8")), Base64.DEFAULT);
@@ -130,8 +132,10 @@ public class Aes {
 		} catch (InvalidKeyException e) {
 			Log.e(Logger.UI, e.toString());
 			e.printStackTrace();
+		} catch (InvalidParameterSpecException e) {
+			e.printStackTrace();
 		}
-		
+
 		return pack;
 	}
 }

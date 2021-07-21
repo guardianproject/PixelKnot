@@ -9,6 +9,7 @@ import android.util.Log;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.InputStream;
 
 import info.guardianproject.f5android.plugins.PluginNotificationListener;
 import info.guardianproject.f5android.plugins.f5.Extract;
@@ -26,12 +27,12 @@ class StegoDecryptionJob extends StegoJob {
     private final DummyListenerActivity mActivity;
     private String mMessage;
     private final String mPassword;
-    private final File mOutputFile;
+    private final InputStream mStream;
     private OnProgressListener mOnProgressListener;
 
-    public StegoDecryptionJob(IStegoThreadHandler threadHandler, File outputFile, String password) {
+    public StegoDecryptionJob(IStegoThreadHandler threadHandler, InputStream is, String password) {
         super(threadHandler);
-        mOutputFile = outputFile;
+        mStream = is;
         mMessage = null;
         mPassword = password;
 
@@ -42,7 +43,7 @@ class StegoDecryptionJob extends StegoJob {
             @Override
             public void run() {
                 try {
-                    Extract extract = new Extract(mActivity, mOutputFile, getF5Seed());
+                    Extract extract = new Extract(mActivity, mStream, getF5Seed());
                     extract.run();
                 } catch (Exception e) {
                     Log.e(Jpeg.LOG, e.toString());

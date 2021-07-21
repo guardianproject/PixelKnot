@@ -25,6 +25,6 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.3.0'
     implementation 'com.google.android.material:material:1.4.0'
     implementation 'com.squareup.picasso:picasso:2.5.2'
-    implementation 'com.github.guardianproject:F5Android:0.2'
+    implementation 'com.github.guardianproject:F5Android:0.3'
 
 }

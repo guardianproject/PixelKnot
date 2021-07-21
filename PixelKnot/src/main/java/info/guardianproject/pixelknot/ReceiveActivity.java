@@ -26,6 +26,8 @@ import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.util.UUID;
@@ -155,7 +157,7 @@ public class ReceiveActivity extends ActivityBase implements StegoDecryptionJob.
     }
 
     private void handleIntentData(Intent intent) {
-        if (intent.getType() != null && intent.getType().contains("image/")) {
+
             Uri uri = null;
             if (intent.getData() != null && intent.getData() instanceof Uri) {
                 uri = intent.getData();
@@ -199,7 +201,7 @@ public class ReceiveActivity extends ActivityBase implements StegoDecryptionJob.
                     e.printStackTrace();
                 }
             }
-        }
+
     }
 
     private void setMode(Mode mode) {
@@ -219,9 +221,25 @@ public class ReceiveActivity extends ActivityBase implements StegoDecryptionJob.
             mJob.getThread().requestInterrupt();
         }
         setMode(Mode.PROCESSING);
-        mJob = new StegoDecryptionJob(App.getInstance(), mOutputFile, mPassword.getText().toString());
-        mJob.setOnProgressListener(this);
-        onProgressUpdate(mJob, 0);
+        if (mOutputFile != null && mOutputFile.exists()) {
+            FileInputStream fis = null;
+            try {
+                fis = new FileInputStream(mOutputFile);
+
+                mJob = new StegoDecryptionJob(App.getInstance(), fis, mPassword.getText().toString());
+                mJob.setOnProgressListener(this);
+                onProgressUpdate(mJob, 0);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+                setMode(Mode.ERROR);
+
+            }
+        }
+        else
+        {
+            setMode(Mode.ERROR);
+
+        }
     }
 
     private void closeKeyboard() {
