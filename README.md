@@ -4,7 +4,7 @@ PixelKnot
 PixelKnot is an image stego app with old school F5 steganography.
 
 <a href="https://f-droid.org/packages/info.guardianproject.pixelknot" target="_blank">
-<img src="https://f-droid.org/badge/get-it-on.png" alt="Get it on F-Droid" height="100"/></a>
+<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png" alt="Get it on F-Droid" height="100"/></a>
 <a href="https://play.google.com/store/apps/details?id=info.guardianproject.pixelknot" target="_blank">
 <img src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png" alt="Get it on Google Play" height="100"/></a>
 
