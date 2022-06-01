@@ -8,8 +8,8 @@ android {
         applicationId "info.guardianproject.pixelknot"
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 101
-        versionName "1.0.1"
+        versionCode 1021
+        versionName "1.0.2.1"
     }
     buildTypes {
         release {
