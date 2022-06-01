@@ -6,7 +6,7 @@ Have a secret that you want to share? Why not hide it in a picture? With PixelKn
 ★ INVISIBLE CHANGES: Even a trained analyst analyst shouldn’t be able to detect any message. The image bytes should seem undistorted.
 ★ SHARE ACROSS PLATFORMS: Want to share the images over email, file sharing tools (like Dropbox & Sparkleshare), social media (like Google+ & Flickr) or directly through Bluetooth or NFC? Not a problem! The messages are still recoverable on the other side. We'll have even more tools (like Facebook) working soon, so stay tuned!
 ★ AD-FREE: We want your love, not your money.
-★ MATHEMATICALLY SECURE: We use the newly developed steganography algorithm F5 which implements matrix encoding to improve the efficiency of embedding and employs permutative straddling to uniformly spread out the changes over the whole steganogram.
+★ MATHEMATICALLY SECURE: We use the F5 steganography algorithm which implements matrix encoding to improve the efficiency of embedding and employs permutative straddling to uniformly spread out the changes over the whole steganogram.
 ★ ATTACK RESISTANT: We’ve launched attacks on images with messages hidden in them using a specialized version of stegdetect, an automated tool for detecting steganographic content in images. In most cases, the pictures have been impervious to attack. We will be including detection in an upcoming version of the application so you can easily test it yourself!
 Don’t see your language? Join us and help translate the app:
 https://hosted.weblate.org/projects/guardianproject/pixelknot
@@ -20,4 +20,4 @@ https://hosted.weblate.org/projects/guardianproject/pixelknot-metadata
 ★ MESSAGE US: Are we missing your favorite feature? Found an annoying bug? Please tell us! We’d love to hear from you. Send us an email: support@guardianproject.info
 
 ***Disclaimer***
-The Guardian Project makes apps that are designed to protect your security and anonymity. The protocols that we use are widely regarded as the state of the art in security technology. While we are constantly upgrading our software to combat the latest threats and eliminate bugs, no technology is 100% foolproof. For maximum security and anonymity users must utilize best practices to keep themselves safe. PixelKnot is still an experimental application and should not be used in real world deployments. You can find a good introductory guide to these topics at https://securityinabox.org
+The Guardian Project makes apps that are designed to protect your security and anonymity. The protocols that we use are widely regarded as the state of the art in security technology. While we are constantly upgrading our software to combat the latest threats and eliminate bugs, no technology is 100% foolproof. For maximum security and anonymity users must utilize best practices to keep themselves safe. 
