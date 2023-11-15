@@ -10,7 +10,7 @@
     <string name="gallery_info_message">Επιλέξτε την φωτογραφία στην οποία θα κρύψετε το μήνυμά σας</string>
     <string name="gallery_info_ok">Το \'πιασα</string>
     <string name="gallery_need_permission">Χρειαζόμαστε την άδειά σας για να αποκτήσουμε πρόσβαση στις εικόνες σας. Πιέστε οπουδήποτε για να μας το επιτρέψετε.</string>
-    <string name="secret_message_hint">Γράψε το μήνυμά σας εδώ...</string>
+    <string name="secret_message_hint">Γράψε το μήνυμά σας εδώ…</string>
     <string name="secret_password_hint">Επιλέξτε έναν κωδικό κρυπτογράφησης για το μηνυά σας</string>
     <string name="secret_password_minlength_info">Πληκτρολογήστε τουλάχιστον %d χαρακτήρες.</string>
     <string name="secret_password_too_short">Πολύ σύντομο</string>
@@ -26,7 +26,7 @@
     <string name="image_sent">ΠΡΟΣΟΧΗ! Ο παραλήπτης πρέπει να έχει το Pixelknot για να μπορέσει να διαβάσει το μήνυμά σας.</string>
     <string name="tap_to_send">Πιέστε εδώ για αποστολή</string>
     <string name="tap_to_retry">Σφάλμα, πιέστε για επανάληψη</string>
-    <string name="sending">Αποστολή σε εξέλιξη...</string>
+    <string name="sending">Αποστολή σε εξέλιξη…</string>
     <string name="dont_show_again">Να μην εμφανιστεί ξανά.</string>
     <string name="unsafe_share_title">Επισφαλής κοινοποίηση</string>
     <string name="unsafe_share">Δεν είναι καλό για συμπιεσμένες εικόνες, κλπ κλπ.</string>
