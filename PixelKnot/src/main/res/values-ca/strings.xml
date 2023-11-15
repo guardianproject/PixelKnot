@@ -1,13 +1,57 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="title_new">Nou</string>
-  <string name="action_done">Fet</string>
-  <string name="gallery_info_ok">D\'acord</string>
-  <string name="password_skip">Omet</string>
-  <string name="password_set">Col·locar</string>
-  <string name="confirm_passphrase_override_back">Enrere</string>
-  <string name="confirm_passphrase_override_continue">Continuar</string>
-  <!--Receiver-->
-  <string name="unlock">Desbloquejar</string>
-  <!--APG related-->
+    <string name="title_new">Nou</string>
+    <string name="action_done">Fet</string>
+    <string name="gallery_info_ok">D\'acord</string>
+    <string name="password_skip">Omet</string>
+    <string name="password_set">Col·locar</string>
+    <string name="confirm_passphrase_override_back">Enrere</string>
+    <string name="confirm_passphrase_override_continue">Continuar</string>
+    <!--Receiver-->
+    <string name="unlock">Desbloquejar</string>
+    <!--APG related-->
+    <string name="message_encrypting">Estem ocultant el missatge. Això trigarà uns minuts. Us notificarem en estar preparat per a ser enviat.</string>
+    <string name="outbox_item_deleted">S\'ha suprimit la imatge</string>
+    <string name="outbox_item_created_minutes">Creada fa %1$d minuts</string>
+    <string name="confirm_passphrase_override_title">Voleu ometre la contrasenya?</string>
+    <string name="notification_message_ready">Missatge a punt</string>
+    <string name="secret_password_hint">Establiu una contrasenya per al missatge</string>
+    <string name="tap_to_retry">Error, torneu a tocar</string>
+    <string name="chooser_share_safe">Aplicacions que funcionaran</string>
+    <string name="outbox_item_created_days">Creada fa %1$d dies</string>
+    <string name="chooser_share_unsafe">Aplicacions que podrien funcionar</string>
+    <string name="notification_messages_ready">%d missatges a punt</string>
+    <string name="confirm_passphrase_override">Si no protegiu la imatge amb una contrasenya, el missatge secret podria descobrir-se si l\'intercepten.</string>
+    <string name="apg_error_apg_version_not_supported">La versió de l\'APG instal·lada no és compatible.</string>
+    <string name="image_sent_title">Aviseu que arriba!</string>
+    <string name="apg_error_activity_not_found">No s\'ha trobat cap aplicació adequada.</string>
+    <string name="error_try_again">Torneu a provar</string>
+    <string name="secret_password_too_short">Massa curta</string>
+    <string name="dont_show_again">No ho tornis a mostrar.</string>
+    <string name="secret_password_minlength_info">Feu-la d\'almenys %d caràcters.</string>
+    <string name="secret_message_hint">Escriviu un missatge…</string>
+    <string name="unsafe_share">No recomanable per a imatges comprimides, etc.</string>
+    <string name="gallery_info_message">Toqueu una foto per a començar a crear un missatge ocult</string>
+    <string name="outbox_item_created_recently">Creada fa menys d\'un minut</string>
+    <string name="message_encrypting_title">Falta poc!</string>
+    <string name="gallery_need_permission">Ens cal el vostre permís per a accedir a les fotos. Toqueu en qualsevol lloc per a permetre-ho.</string>
+    <string name="unsafe_share_title">Compartició no segura</string>
+    <string name="chooser_title_share">Comparteix amb</string>
+    <string name="action_pick_external">Trieu d\'una aplicació externa</string>
+    <string name="outbox_item_created_hour">Creada fa %1$d hora</string>
+    <string name="title_albums">Àlbums</string>
+    <string name="action_pick_external_album_name">Altre</string>
+    <string name="outbox_item_created_hours">Creada fa %1$d hores</string>
+    <string name="outbox_item_created_day">Creada fa %1$d dia</string>
+    <string name="sending">S\'està enviant…</string>
+    <string name="image_sent">El destinatari ha d\'obrir la imatge amb el Pixelknot per a llegir el missatge.</string>
+    <string name="extracting_message">S\'està recuperant el missatge</string>
+    <string name="action_albums">Mostra els àlbums</string>
+    <string name="app_name">PixelKnot</string>
+    <string name="outbox_item_created_minute">Creada fa %1$d minut</string>
+    <string name="tap_to_send">Toqueu per a enviar</string>
+    <string name="outbox_item_deleted_undo">Desfés</string>
+    <string name="insufficient_apg_permissions">Aquesta aplicació no té permís per a accedir completament a l\'APG. Reinstal·leu-la per a corregir-ho.</string>
+    <string name="enter_message_password">Introduïu la contrasenya</string>
+    <string name="unknown_crypto_signature_user_id">&lt;desconegut&gt;</string>
 </resources>
