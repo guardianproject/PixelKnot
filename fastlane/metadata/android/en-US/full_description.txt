@@ -3,7 +3,7 @@ Have a secret that you want to share? Why not hide it in a picture? With PixelKn
 ★ DISGUISE YOUR MESSAGES: Pictures are public, the text is hidden inside. Even a trained eye will think the image is unedited. It’s security through obscurity!
 ★ FOR YOUR EYES ONLY: Put a password on the secret message to make sure that no one can read it except the person it’s meant for.
 ★ EASY IMAGE CHOOSER:  You can use the camera to take photos, or just use photos you’ve already taken.
-★ INVISIBLE CHANGES: Even a trained analyst analyst shouldn’t be able to detect any message. The image bytes should seem undistorted.
+★ INVISIBLE CHANGES: Even a trained analyst shouldn’t be able to detect any message. The image bytes should seem undistorted.
 ★ SHARE ACROSS PLATFORMS: Want to share the images over email, file sharing tools (like Dropbox & Sparkleshare), social media (like Google+ & Flickr) or directly through Bluetooth or NFC? Not a problem! The messages are still recoverable on the other side. We'll have even more tools (like Facebook) working soon, so stay tuned!
 ★ AD-FREE: We want your love, not your money.
 ★ MATHEMATICALLY SECURE: We use the F5 steganography algorithm which implements matrix encoding to improve the efficiency of embedding and employs permutative straddling to uniformly spread out the changes over the whole steganogram.
