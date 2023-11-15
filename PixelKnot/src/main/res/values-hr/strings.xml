@@ -1,11 +1,18 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="title_new">Novo</string>
-  <string name="action_done">Gotovo</string>
-  <string name="password_skip">Preskoči</string>
-  <string name="confirm_passphrase_override_continue">Nastavi</string>
-  <string name="outbox_item_deleted_undo">Poništi</string>
-  <!--Receiver-->
-  <string name="unlock">Otključaj</string>
-  <!--APG related-->
+    <string name="title_new">Novo</string>
+    <string name="action_done">Gotovo</string>
+    <string name="password_skip">Preskoči</string>
+    <string name="confirm_passphrase_override_continue">Nastavi</string>
+    <string name="outbox_item_deleted_undo">Poništi</string>
+    <!--Receiver-->
+    <string name="unlock">Otključaj</string>
+    <!--APG related-->
+    <string name="gallery_info_ok">Razumijem</string>
+    <string name="gallery_info_message">Dodirni sliku za početak stvaranja skrivene poruke</string>
+    <string name="gallery_need_permission">Trebamo tvoju dozvolu za pristup tvojim fotografijama. Za dozvoljavanje dodirni bilo gdje.</string>
+    <string name="action_pick_external">Odaberi iz eksterne aplikacije</string>
+    <string name="title_albums">Albumi</string>
+    <string name="action_pick_external_album_name">Drugi</string>
+    <string name="action_albums">Prikaži albume</string>
 </resources>

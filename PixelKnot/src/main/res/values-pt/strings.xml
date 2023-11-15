@@ -3,7 +3,7 @@
     <string name="app_name">PixelKnot</string>
     <string name="title_new">Nova</string>
     <string name="title_albums">Álbuns</string>
-    <string name="action_done">Concluído</string>
+    <string name="action_done">Feito</string>
     <string name="action_albums">Mostrar álbuns</string>
     <string name="action_pick_external">Escolher de aplicação externa</string>
     <string name="action_pick_external_album_name">Outro</string>

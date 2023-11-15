@@ -5,11 +5,11 @@
     <string name="title_albums">Álbumes</string>
     <string name="action_done">Hecho</string>
     <string name="action_albums">Mostrar álbumes</string>
-    <string name="action_pick_external">Seleccionar de una aplicación externa</string>
-    <string name="action_pick_external_album_name">Otra</string>
+    <string name="action_pick_external">Elija de la aplicación externa</string>
+    <string name="action_pick_external_album_name">Otro</string>
     <string name="gallery_info_message">Pulse en una foto para comenzar a crear un mensaje oculto</string>
-    <string name="gallery_info_ok">Lo tengo</string>
-    <string name="gallery_need_permission">Necesitamos su permiso para acceder a sus fotos. Por favor, pulse en cualquier parte para permitirlo.</string>
+    <string name="gallery_info_ok">Entiendo</string>
+    <string name="gallery_need_permission">Necesitamos su permiso para acceder a sus fotos. Toque en cualquier lugar para permitirlo.</string>
     <string name="secret_message_hint">Escriba su mensaje…</string>
     <string name="secret_password_hint">Establecer una contraseña de mensaje</string>
     <string name="secret_password_minlength_info">Use al menos %d caracteres.</string>
@@ -50,8 +50,8 @@
     <string name="chooser_share_safe">Aplicaciones que funcionarán</string>
     <string name="chooser_share_unsafe">Aplicaciones que pueden funcionar</string>
     <!--APG related-->
-    <string name="apg_error_activity_not_found">No se encontró una aplicación adecuada para realizar esta acción.</string>
-    <string name="apg_error_apg_version_not_supported">La versión de APG instalada no está soportada.</string>
+    <string name="apg_error_activity_not_found">No se encontró una aplicación adecuada para esta acción.</string>
+    <string name="apg_error_apg_version_not_supported">La versión APG instalada no es compatible.</string>
     <string name="unknown_crypto_signature_user_id">&lt;desconocido&gt;</string>
-    <string name="insufficient_apg_permissions">La aplicación no tiene permisos para acceder a APG totalmente. Por favor, reinstale la aplicación.</string>
+    <string name="insufficient_apg_permissions">Esta aplicación no tiene permiso para acceder a APG por completo, vuelve a instalar la aplicación para solucionarlo.</string>
 </resources>

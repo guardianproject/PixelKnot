@@ -10,9 +10,9 @@
     <string name="gallery_info_message">Fai Tap su una foto per creare un messaggio nascosto</string>
     <string name="gallery_info_ok">Fatto</string>
     <string name="gallery_need_permission">C\'è bisogno del tuo permesso per accedere alle tue foto. Fai Tap ovunque per permetterlo.</string>
-    <string name="secret_message_hint">Scrivi il tuo messaggio</string>
+    <string name="secret_message_hint">Scrivi il tuo messaggio…</string>
     <string name="secret_password_hint">Imposta una password</string>
-    <string name="secret_password_minlength_info">Metti almeno un carattere %d</string>
+    <string name="secret_password_minlength_info">Metti almeno un carattere %d.</string>
     <string name="secret_password_too_short">Troppo corta</string>
     <string name="password_skip">Salta</string>
     <string name="password_set">Imposta</string>
@@ -24,12 +24,12 @@
     <string name="message_encrypting">Stiamo nascondendo il tuo messaggio. Questo può richiedere alcuni minuti. Ti invieremo una notifica appena sarà pronto per essere spedito.</string>
     <string name="image_sent_title">Informali che sta arrivando!</string>
     <string name="image_sent">Il tuo destinatario deve aprire l\'immagine con Pixelknot per leggere il messaggio.</string>
-    <string name="tap_to_send">Fai Tap per spedire</string>
+    <string name="tap_to_send">Tocca per inviare</string>
     <string name="tap_to_retry">Errore, fai Tap per riprovare</string>
-    <string name="sending">Inviando...</string>
+    <string name="sending">Inviando…</string>
     <string name="dont_show_again">Non mostre nuovamente.</string>
     <string name="unsafe_share_title">Condivsione insicura</string>
-    <string name="unsafe_share">Non buono per immagini compresse, etc. etc.</string>
+    <string name="unsafe_share">Non buono per immagini compresse, ecc.</string>
     <string name="outbox_item_deleted">Immagine cancellata</string>
     <string name="outbox_item_deleted_undo">Cancella</string>
     <string name="outbox_item_created_recently">Creata meno di un minuto fa</string>
