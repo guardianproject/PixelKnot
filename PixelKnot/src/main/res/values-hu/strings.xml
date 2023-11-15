@@ -1,18 +1,57 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="app_name">PixelKnot</string>
-  <string name="title_new">Új</string>
-  <string name="action_done">Kész </string>
-  <string name="gallery_info_ok">Megvan</string>
-  <string name="password_skip">Kihagy</string>
-  <string name="password_set">Beállít</string>
-  <string name="confirm_passphrase_override_continue">Folytatás</string>
-  <string name="outbox_item_deleted_undo">Visszavon</string>
-  <!--Receiver-->
-  <string name="unlock">Feloldás</string>
-  <!--APG related-->
-  <string name="apg_error_activity_not_found">Nincs megfelelő alkalmazás ehhez a funkcióhoz!</string>
-  <string name="apg_error_apg_version_not_supported">A telepített APG verzió nem támogatott!</string>
-  <string name="unknown_crypto_signature_user_id">&lt;ismeretlen&gt;</string>
-  <string name="insufficient_apg_permissions">Ez az alkalmazás nem rendelkezik teljes APG hozzáféréssel, kérlek telepítsd újra az alkalmazást a javításhoz!</string>
+    <string name="app_name">PixelKnot</string>
+    <string name="title_new">Új</string>
+    <string name="action_done">Kész </string>
+    <string name="gallery_info_ok">Megvan</string>
+    <string name="password_skip">Kihagy</string>
+    <string name="password_set">Beállít</string>
+    <string name="confirm_passphrase_override_continue">Folytatás</string>
+    <string name="outbox_item_deleted_undo">Visszavonás</string>
+    <!--Receiver-->
+    <string name="unlock">Feloldás</string>
+    <!--APG related-->
+    <string name="apg_error_activity_not_found">Nem található megfelelő alkalmazás ehhez a művelethez.</string>
+    <string name="apg_error_apg_version_not_supported">A telepített APG verzió nem támogatott.</string>
+    <string name="unknown_crypto_signature_user_id">&lt;ismeretlen&gt;</string>
+    <string name="insufficient_apg_permissions">Az alkalmazásnak nincs engedélye az APG teljes eléréséhez. A probléma megoldásához telepítse újra az alkalmazást.</string>
+    <string name="chooser_share_unsafe">Alkalmazások amelyek működhetnek</string>
+    <string name="gallery_info_message">Egy rejtett üzenet létrehozásához érintsen meg egy képet</string>
+    <string name="confirm_passphrase_override">Jelszóvédelem nélkül a kép titkos üzenete felfedezhető, ha elfogják.</string>
+    <string name="unsafe_share_title">Nem biztonságos megosztás</string>
+    <string name="image_sent_title">Mondd el nekik, hogy küldöd!</string>
+    <string name="outbox_item_created_recently">Kevesebb mint egy perccel ezelőtt készült</string>
+    <string name="outbox_item_created_hours">%1$d órája készült</string>
+    <string name="image_sent">A címzettnek a Pixelknottal kell megnyitnia a képet, hogy el tudja olvasni az üzenetet.</string>
+    <string name="outbox_item_deleted">Kép törölve</string>
+    <string name="outbox_item_created_minute">%1$d perce készült</string>
+    <string name="outbox_item_created_hour">%1$d órája készült</string>
+    <string name="outbox_item_created_days">%1$d napja készült</string>
+    <string name="notification_message_ready">Az üzenet kész</string>
+    <string name="notification_messages_ready">%d üzenet kész</string>
+    <string name="error_try_again">Próbáld újra</string>
+    <string name="secret_message_hint">Írja be az üzenetet…</string>
+    <string name="sending">Küldés…</string>
+    <string name="chooser_title_share">Megosztás</string>
+    <string name="chooser_share_safe">Alkalmazások amelyek működni fognak</string>
+    <string name="extracting_message">Az üzenet letöltése</string>
+    <string name="enter_message_password">Adja meg a jelszót</string>
+    <string name="outbox_item_created_day">%1$d napja készült</string>
+    <string name="outbox_item_created_minutes">%1$d perce készült</string>
+    <string name="unsafe_share">Nem jó tömörített képekhez stb.</string>
+    <string name="dont_show_again">Ne mutasd újra.</string>
+    <string name="tap_to_retry">Hiba, próbálja újra</string>
+    <string name="tap_to_send">Érintse meg a küldéshez</string>
+    <string name="message_encrypting">Elrejtem az üzenetét. Ez eltart néhány percig. Értesítem ha elkészült és elküldhető.</string>
+    <string name="message_encrypting_title">Majdnem kész!</string>
+    <string name="confirm_passphrase_override_back">Visszalépés</string>
+    <string name="confirm_passphrase_override_title">Kihagyja a jelszót\?</string>
+    <string name="secret_password_too_short">Túl rövid</string>
+    <string name="secret_password_minlength_info">Legyen legalább %d karakterből álló.</string>
+    <string name="secret_password_hint">Állítsa be az üzenet jelszavát</string>
+    <string name="gallery_need_permission">Az engedélyére van szükségünk a fotóihoz való hozzáféréshez. Koppintson bárhova az engedélyezéséhez.</string>
+    <string name="action_pick_external_album_name">Egyéb</string>
+    <string name="action_pick_external">Válasszon külső alkalmazásból</string>
+    <string name="action_albums">Albumok megjelenítése</string>
+    <string name="title_albums">Albumok</string>
 </resources>
