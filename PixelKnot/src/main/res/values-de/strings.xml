@@ -10,7 +10,7 @@
     <string name="gallery_info_message">Tippen Sie auf ein Foto, um das Erstellen einer versteckten Nachricht zu beginnen</string>
     <string name="gallery_info_ok">Verstanden</string>
     <string name="gallery_need_permission">Wir brauchen Ihre Berechtigung zum Zugriff auf Ihre Fotos. Bitte tippen Sie irgendwohin, um es zu erlauben.</string>
-    <string name="secret_message_hint">Schreiben Sie Ihre Nachricht…</string>
+    <string name="secret_message_hint">Schreiben Sie Ihre Nachricht …</string>
     <string name="secret_password_hint">Legen Sie ein Nachrichtenpasswort fest</string>
     <string name="secret_password_minlength_info">Machen Sie es aus mindestens %d Zeichen.</string>
     <string name="secret_password_too_short">Zu kurz</string>
@@ -26,7 +26,7 @@
     <string name="image_sent">Ihr Empfänger muss das Bild mit Pixelknot öffnen, um Ihre Nachricht zu lesen.</string>
     <string name="tap_to_send">Zum Senden tippen</string>
     <string name="tap_to_retry">Fehler, zum Wiederholen tippen</string>
-    <string name="sending">Sendevorgang…</string>
+    <string name="sending">Sendevorgang …</string>
     <string name="dont_show_again">Nicht erneut anzeigen.</string>
     <string name="unsafe_share_title">Unsicheres Teilen</string>
     <string name="unsafe_share">Nicht gut für komprimierte Bilder, usw.</string>
