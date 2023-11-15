@@ -29,7 +29,7 @@
     <string name="sending">Inviando…</string>
     <string name="dont_show_again">Non mostre nuovamente.</string>
     <string name="unsafe_share_title">Condivsione insicura</string>
-    <string name="unsafe_share">Non buono per immagini compresse, etc. etc.</string>
+    <string name="unsafe_share">Non buono per immagini compresse, ecc.</string>
     <string name="outbox_item_deleted">Immagine cancellata</string>
     <string name="outbox_item_deleted_undo">Cancella</string>
     <string name="outbox_item_created_recently">Creata meno di un minuto fa</string>
