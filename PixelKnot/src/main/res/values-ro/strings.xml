@@ -3,7 +3,7 @@
     <string name="app_name">PixelKnot</string>
     <string name="title_new">Nou</string>
     <string name="title_albums">Albume</string>
-    <string name="action_done">Gata</string>
+    <string name="action_done">Realizat</string>
     <string name="action_albums">Arată albumele</string>
     <string name="action_pick_external">Alege dintr-o aplicație externă</string>
     <string name="action_pick_external_album_name">Altele</string>
