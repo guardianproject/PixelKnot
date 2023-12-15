@@ -1,13 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 30
+    compileSdkVersion 33
     buildToolsVersion "30.0.3"
 
     defaultConfig {
         applicationId "info.guardianproject.pixelknot"
         minSdkVersion 21
-        targetSdkVersion 30
+        //noinspection EditedTargetSdkVersion
+        targetSdkVersion 33
         versionCode 1021
         versionName "1.0.2.1"
     }

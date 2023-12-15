@@ -4,6 +4,7 @@
     package="info.guardianproject.pixelknot"
     android:installLocation="auto">
 
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission
         android:name="android.permission.WRITE_EXTERNAL_STORAGE"
@@ -29,6 +30,7 @@
         tools:replace="android:theme,android:icon">
         <activity
             android:name=".SendActivity"
+            android:exported="true"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
@@ -46,13 +48,14 @@
             android:windowSoftInputMode="adjustResize">
         </activity>
         <activity
+                android:exported="true"
             android:name=".ReceiveActivity"
             android:label="@string/app_name"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize">
-            <intent-filter>
+            <intent-filter tools:ignore="AppLinkUrlError">
                 <category android:name="android.intent.category.DEFAULT" />
 
                 <action android:name="android.intent.action.PICK" />

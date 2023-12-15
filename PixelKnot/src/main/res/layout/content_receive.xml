@@ -35,7 +35,8 @@
         android:padding="24dp"
         android:textColor="@color/colorSecretMessage"
         android:textSize="30sp"
-        android:visibility="gone" />
+        android:visibility="gone"
+        android:textIsSelectable="true"/>
 
     <LinearLayout
         android:id="@+id/layout_password"
