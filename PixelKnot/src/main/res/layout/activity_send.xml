@@ -42,7 +42,7 @@
                 android:layout_width="wrap_content"
                 android:icon="@drawable/tab_outbox"
                 />
-            </com.google.android.material.tabs.TabLayout>
+        </com.google.android.material.tabs.TabLayout>
     </com.google.android.material.appbar.AppBarLayout>
 
     <include layout="@layout/content_send" />
