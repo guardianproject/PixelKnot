@@ -64,8 +64,10 @@ public class StegoEncryptionJob extends StegoJob {
                             .get();
                 } catch (Exception e) {
                     Log.e(Jpeg.LOG, e.toString());
-                    e.printStackTrace();
                     abortJob();
+                    setProcessingStatus(ProcessingStatus.ERROR);
+                    if (mOnProgressListener != null) {
+                        mOnProgressListener.onProgressUpdate(StegoEncryptionJob.this, getProgressPercent());
                 }
                 onProgressTick();
             }
@@ -95,8 +97,10 @@ public class StegoEncryptionJob extends StegoJob {
                     fos.close();
                 } catch (Exception e) {
                     Log.e(Jpeg.LOG, e.toString());
-                    e.printStackTrace();
                     abortJob();
+                    setProcessingStatus(ProcessingStatus.ERROR);
+                    if (mOnProgressListener != null) {
+                        mOnProgressListener.onProgressUpdate(StegoEncryptionJob.this, getProgressPercent());
                 }
                 setProcessingStatus(success ? ProcessingStatus.EMBEDDED_SUCCESSFULLY : ProcessingStatus.ERROR);
             }
