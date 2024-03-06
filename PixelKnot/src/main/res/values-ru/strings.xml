@@ -26,25 +26,25 @@
     <string name="image_sent">Ваш собеседник должен открыть изображение при помощи PixelKnot, чтобы прочитать его.</string>
     <string name="tap_to_send">Коснитесь для отправки</string>
     <string name="tap_to_retry">Ошибка. Коснитесь, чтобы попробовать снова</string>
-    <string name="sending">Отправляю…</string>
-    <string name="dont_show_again">Не показывать это снова.</string>
+    <string name="sending">Отправка…</string>
+    <string name="dont_show_again">Не показывать снова.</string>
     <string name="unsafe_share_title">Небезопасный метод отправки</string>
-    <string name="unsafe_share">Не подходит для сжатых изображений и т.д.</string>
+    <string name="unsafe_share">Не подходит для сжатых изображений и т. д.</string>
     <string name="outbox_item_deleted">Изображение удалено</string>
     <string name="outbox_item_deleted_undo">Вернуть</string>
     <string name="outbox_item_created_recently">Создано менее минуты назад</string>
-    <string name="outbox_item_created_minutes">Создано %1$d минут назад</string>
+    <string name="outbox_item_created_minutes">Создано %1$d минут(ы) назад</string>
     <string name="outbox_item_created_minute">Создано %1$d минуту назад</string>
-    <string name="outbox_item_created_hours">Создано %1$d часов назад</string>
+    <string name="outbox_item_created_hours">Создано %1$d часа(ов) назад</string>
     <string name="outbox_item_created_hour">Создано %1$d час назад</string>
-    <string name="outbox_item_created_days">Создано %1$d дней назад</string>
+    <string name="outbox_item_created_days">Создано %1$d дня(ей) назад</string>
     <string name="outbox_item_created_day">Создано %1$d день назад</string>
     <string name="notification_message_ready">Сообщение готово</string>
-    <string name="notification_messages_ready">%d сообщений готово</string>
+    <string name="notification_messages_ready">%d сообщений(я) готово</string>
     <!--Receiver-->
     <string name="enter_message_password">Введите пароль</string>
     <string name="unlock">Разблокировать</string>
-    <string name="extracting_message">Получаем ваше сообщение</string>
+    <string name="extracting_message">Получение вашего сообщения</string>
     <string name="error_try_again">Попробовать снова</string>
     <string name="chooser_title_share">Поделиться при помощи</string>
     <string name="chooser_share_safe">Приложения, которые смогут отправить</string>
@@ -53,5 +53,5 @@
     <string name="apg_error_activity_not_found">Не найдено подходящего приложения для выполнения действия.</string>
     <string name="apg_error_apg_version_not_supported">Установленная версия APG не поддерживается.</string>
     <string name="unknown_crypto_signature_user_id">&lt;неизвестно&gt;</string>
-    <string name="insufficient_apg_permissions">У приложения не достаточно прав доступа к APG. Пожалуйста, переустановите приложение, чтобы это исправить. </string>
+    <string name="insufficient_apg_permissions">У приложения нет разрешения на полный доступ к APG. Пожалуйста, переустановите приложение, чтобы это исправить.</string>
 </resources>
