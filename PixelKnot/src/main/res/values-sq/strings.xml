@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="message_encrypting">Po fshehim mesazhin tuaj. Do të duhen pak minuta. Do t’ju njoftojmë, kur të jetë gati për ta dërguar.</string>
-    <string name="outbox_item_deleted">Figura u fshij</string>
+    <string name="outbox_item_deleted">Figura u fshi</string>
     <string name="outbox_item_created_minutes">Krijuar %1$d minuta më parë</string>
     <string name="confirm_passphrase_override_title">Të anashkalohet fjalëkalimi\?</string>
     <string name="notification_message_ready">Mesazhi Gati</string>
     <string name="secret_password_hint">Caktoni një fjalëkalim mesazhi</string>
-    <string name="tap_to_retry">Gabim, prekeni që të riprovohet</string>
+    <string name="tap_to_retry">Gabim, prekeni, që të riprovohet</string>
     <string name="unlock">Shkyçe</string>
     <string name="password_set">Vendose</string>
     <string name="chooser_share_safe">Aplikacione që do të punojnë</string>
@@ -15,25 +15,25 @@
     <string name="title_new">E re</string>
     <string name="notification_messages_ready">%d Mesazhe Gati</string>
     <string name="confirm_passphrase_override">Pa mbrojtur figurën tuaj me një fjalëkalim, lënda e mesazhit tuaj të fshehtë mund të zbulohet, po u kap.</string>
-    <string name="gallery_info_ok">Dakord</string>
-    <string name="apg_error_apg_version_not_supported">Versioni APG I instaluar nuk mbulohet.</string>
+    <string name="gallery_info_ok">E mora vesh</string>
+    <string name="apg_error_apg_version_not_supported">S’mbulohet versioni APG I instaluar.</string>
     <string name="image_sent_title">U thoni se po vjen!</string>
     <string name="apg_error_activity_not_found">S’u gjet aplikacion i përshtatshëm për këtë veprim.</string>
     <string name="error_try_again">Riprovoni</string>
     <string name="secret_password_too_short">Shumë i shkurtër</string>
     <string name="dont_show_again">Mos e shfaq më.</string>
     <string name="secret_password_minlength_info">Të jetë të paktën %d shenja.</string>
-    <string name="secret_message_hint">Shkruani mesazh…</string>
+    <string name="secret_message_hint">Shkruani mesazhin tuaj…</string>
     <string name="unsafe_share">Jo e mirë për figura të ngjeshura, etj etj.</string>
     <string name="gallery_info_message">Prekni një foto, që të filloni të krijoni një mesazh të fshehur</string>
     <string name="password_skip">Anashkaloje</string>
     <string name="confirm_passphrase_override_continue">Vazhdo</string>
     <string name="outbox_item_created_recently">Krijuar më pak se një minutë më parë</string>
-    <string name="message_encrypting_title">Pothuajse gati!</string>
+    <string name="message_encrypting_title">Thuajse gati!</string>
     <string name="gallery_need_permission">Na duhet leja juaj që të kemi hyrje tek fotografitë tuaja. Ju lutemi, për ta lejuar, prekni kudo qoftë.</string>
-    <string name="unsafe_share_title">Shpërndarje e pasigurt</string>
-    <string name="chooser_title_share">Shpërnda me</string>
-    <string name="action_pick_external">Zgjidh nga aplikacion I jashtëm</string>
+    <string name="unsafe_share_title">Ndarje jo e parrezik</string>
+    <string name="chooser_title_share">Ndajeni me</string>
+    <string name="action_pick_external">Zgjidh nga aplikacion i jashtëm</string>
     <string name="outbox_item_created_hour">Krijuar %1$d orë më parë</string>
     <string name="title_albums">Albume</string>
     <string name="action_pick_external_album_name">Tjetër</string>
@@ -42,14 +42,14 @@
     <string name="sending">Po dërgohet…</string>
     <string name="image_sent">Që të lexojë mesazhin tuaj, mrrësi duhet ta hapë figurën me Pixelknot-in.</string>
     <string name="extracting_message">Po sillet mesazhi juaj</string>
-    <string name="confirm_passphrase_override_back">Prapa</string>
-    <string name="action_done">Në rregull</string>
+    <string name="confirm_passphrase_override_back">Kthehu mbrapsht</string>
+    <string name="action_done">U bë</string>
     <string name="action_albums">Shfaq albumet</string>
     <string name="app_name">PixelKnot</string>
-    <string name="outbox_item_created_minute">Krijuaa %1$d minutë më parë</string>
-    <string name="tap_to_send">Prekeni për ta dërguar</string>
+    <string name="outbox_item_created_minute">Krijuar %1$d minutë më parë</string>
+    <string name="tap_to_send">Që të dërgohet, prekeni</string>
     <string name="outbox_item_deleted_undo">Zhbëje</string>
     <string name="insufficient_apg_permissions">Ky aplikacion nuk ka leje të hyjë në APG plotësisht, ju lutemi, që të ndreqet kjo, riinstaloni aplikacionin.</string>
     <string name="enter_message_password">Jepni fjalëkalim mesazhi</string>
-    <string name="unknown_crypto_signature_user_id">&lt;e panjohur&gt;</string>
+    <string name="unknown_crypto_signature_user_id">&lt;i panjohur&gt;</string>
 </resources>
